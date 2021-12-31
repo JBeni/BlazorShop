@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WebClient", "BlazorShop.WebClient\BlazorShop.WebClient.csproj", "{D98554C9-EA4C-4163-B6BA-AF79E601A392}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{4B4B6735-494E-48EF-8F61-C661FA4F00BD}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Application", "BlazorShop.Application\BlazorShop.Application.csproj", "{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Domain", "BlazorShop.Domain\BlazorShop.Domain.csproj", "{7484A3F6-36BA-4570-B234-92FA64D6FF35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Infrastructure", "BlazorShop.Infrastructure\BlazorShop.Infrastructure.csproj", "{B3B8431A-645C-4EB8-893D-D0481B58C1DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WebApi", "BlazorShop.WebApi\BlazorShop.WebApi.csproj", "{9B5C133D-4127-4F15-A598-96CA48676060}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D98554C9-EA4C-4163-B6BA-AF79E601A392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D98554C9-EA4C-4163-B6BA-AF79E601A392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D98554C9-EA4C-4163-B6BA-AF79E601A392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D98554C9-EA4C-4163-B6BA-AF79E601A392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7484A3F6-36BA-4570-B234-92FA64D6FF35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7484A3F6-36BA-4570-B234-92FA64D6FF35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7484A3F6-36BA-4570-B234-92FA64D6FF35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7484A3F6-36BA-4570-B234-92FA64D6FF35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B8431A-645C-4EB8-893D-D0481B58C1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B8431A-645C-4EB8-893D-D0481B58C1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B8431A-645C-4EB8-893D-D0481B58C1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B8431A-645C-4EB8-893D-D0481B58C1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5C133D-4127-4F15-A598-96CA48676060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5C133D-4127-4F15-A598-96CA48676060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5C133D-4127-4F15-A598-96CA48676060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5C133D-4127-4F15-A598-96CA48676060}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AF19CD5-6D43-40B0-AFF2-FAF1E9216A26}
+	EndGlobalSection
+EndGlobal
