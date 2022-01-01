@@ -1,13 +1,32 @@
 ﻿@inherits LayoutComponentBase
 
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>Blazor.Server</PageTitle>
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <div class="top-row">
+            <AuthorizeView>
+                <NotAuthorized>
+                    <NavLink class="nav-link" href="login">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                    </NavLink>
+                    <NavLink class="nav-link" href="register">
+                        <span class="oi oi-share-boxed" aria-hidden="true"></span> Register
+                    </NavLink>
+                </NotAuthorized>
+                <Authorized>
+                    Welcome @context.User.Claims.FirstOrDefault(x => x.Type == "name").Value
+                    <NavLink class="nav-link" href="logout">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
+                    </NavLink>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
         <article class="content px-4">
@@ -15,3 +34,18 @@
         </article>
     </main>
 </div>
+
+@code {
+    protected async override Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+
+        var claimEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+        var claimName = user.Claims.FirstOrDefault(x => x.Type == "name").Value;
+
+        var name = user.Identity.Name;
+    }
+}

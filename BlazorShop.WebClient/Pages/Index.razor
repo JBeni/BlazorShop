@@ -1,9 +1,15 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Welcome to your new app.</h1>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<AuthorizeView>
+    <Authorized>
+        <h3>You are logged in</h3>
+        <h1>The user @context.User.Claims.FirstOrDefault(x => x.Type == "email").Value is authorized</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h3>The user is not authorized</h3>
+    </NotAuthorized>
+</AuthorizeView>
