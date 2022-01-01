@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class AccountsController : ApiControllerBase
+    public class AccountsController : ApiBaseController
     {
         private readonly IConfiguration _configuration;
         private readonly IEncryptionService _encryptionService;
@@ -40,7 +40,7 @@
             await Mediator.Send(new CreateUserJwtTokenCommand
             {
                 UserId = userId.Id,
-                JwtToken = result.access_token,
+                JwtToken = result.Access_Token,
                 TokenTimestamp = DateTime.Now
             });
 

@@ -6,7 +6,7 @@
 
         public ValidationException() : base("One or more validation failures have occurred")
         {
-            Errors = new Dictionary<string?, string?[]>();
+            Errors = new Dictionary<string, string[]>();
         }
 
         public ValidationException(IEnumerable<ValidationFailure> failures) : this()

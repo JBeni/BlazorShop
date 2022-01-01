@@ -4,10 +4,10 @@
     [Route("api/[controller]")]
     [Authorize]
     [AllowAnonymous]
-    public abstract class ApiControllerBase : ControllerBase
+    public abstract class ApiBaseController : ControllerBase
     {
-        private ISender _mediator;
+        private readonly ISender? _mediator;
 
-        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
+        protected ISender Mediator => _mediator ?? HttpContext.RequestServices.GetService<ISender>();
     }
 }

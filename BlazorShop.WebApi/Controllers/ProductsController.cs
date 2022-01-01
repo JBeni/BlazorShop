@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class ProductsController : ApiControllerBase
+    public class ProductsController : ApiBaseController
     {
         [HttpPost("product")]
         public async Task<IActionResult> CreateProduct([FromQuery] CreateProductCommand command)

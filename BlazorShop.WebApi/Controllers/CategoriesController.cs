@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class CategoriesController : ApiControllerBase
+    public class CategoriesController : ApiBaseController
     {
         [HttpPost("category")]
         public async Task<IActionResult> CreateCategory([FromQuery] CreateCategoryCommand command)

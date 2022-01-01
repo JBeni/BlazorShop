@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class AppUsersController : ApiControllerBase
+    public class AppUsersController : ApiBaseController
     {
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser([FromQuery] CreateUserCommand command)

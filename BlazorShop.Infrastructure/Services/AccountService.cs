@@ -80,8 +80,8 @@
 
             return new JwtTokenResponse
             {
-                access_token = new JwtSecurityTokenHandler().WriteToken(token),
-                expires_in = (int)(expiresIn - DateTime.Now).TotalMinutes,
+                Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expires_In = (int)(expiresIn - DateTime.Now).TotalMinutes,
                 Successful = true
             };
         }
