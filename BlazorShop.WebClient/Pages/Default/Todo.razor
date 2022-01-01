@@ -1,0 +1,102 @@
+﻿@page "/todo"
+
+@inject TodoService TodoService
+@inject NavigationManager NavManager
+
+<h3>Todo (@todos.Count(todo => !todo.IsCompleted))</h3>
+
+<br/>
+<fieldset class="form-group">
+    <input class="form-control form-control-lg" type="text" placeholder="Title" @bind="_todo.Title" />
+</fieldset>
+<button @onclick="SaveTodo">Save Todo</button>
+
+<br/><br/>
+
+@if (todos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (todos.Count > 0)
+    {
+        <table class="table table-striped align-middle table-bordered">
+            <thead class="table-success">
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>IsCompleted</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in todos)
+                {
+                    <tr class="text-center">
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.IsCompleted</td>
+                        <td>
+                            @if (!@item.IsCompleted)
+                            {
+                                <button @onclick="(() => CompleteTodo(item.Id))">Complete Task</button>
+                            }
+                            else
+                            {
+                                <p>Todo Completed</p>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <h4>No record found</h4>
+        </div>
+    }
+}
+
+@code {
+    protected List<TodoResponse> todos = new();
+    protected TodoResponse _todo = new();
+
+    protected override void OnInitialized()
+    {
+        GetTodos();
+    }
+
+    protected void GetTodos()
+    {
+        todos = TodoService.GetAllTodos();
+    }
+
+    protected void SaveTodo()
+    {
+        if (_todo.Id == 0)
+        {
+            if (!string.IsNullOrWhiteSpace(_todo.Title))
+            {
+                TodoService.CreateTodo(_todo);
+            }
+        }
+        GetTodos();
+    }
+
+    protected void CompleteTodo(int todoId)
+    {
+        if (todoId != 0)
+        {
+            TodoService.CompleteTodo(todoId);
+        }
+        GetTodos();
+    }
+
+    public void Cancel()
+    {
+        NavManager.NavigateTo("/todo");
+    }
+}

@@ -1,0 +1,158 @@
+﻿@page "/product"
+
+@inject ProductService ProductService
+@attribute [Authorize]
+
+<h3>Products</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href='/product/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Product
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search product by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterProducts" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-info" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+
+@if (productList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (productList.Count > 0)
+    {
+        <table class="table table-striped align-middle table-bordered">
+            <thead class="table-success">
+                <tr class="text-center">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Brand</th>
+                    <th>Size Name</th>
+                    <th>Colour Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in productList)
+                {
+                    <tr class="text-center">
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Description</td>
+                        <td>@product.Price</td>
+                        <td>@product.Amount</td>
+                        <td>@product.Brand</td>
+                        <td>@product.SizeName</td>
+                        <td>@product.ColourName</td>
+                        <td>
+                            <a href='/product/edit/@product.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                            <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(product.Id); ModalShow(); })">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (showModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Delete Product</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Do you want to delete this product?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                DeleteProduct(product.Id); ModalOk();
+                            })">Delete</button>
+                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <h4>No record found</h4>
+        </div>
+    }
+}
+
+@code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected ProductResponse product = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected List<ProductResponse> productList = new();
+    protected List<ProductResponse> searchProductData = new();
+
+    protected override void OnInitialized()
+    {
+        GetProducts();
+    }
+
+    protected void GetProducts()
+    {
+        productList = ProductService.GetAllProducts();
+        searchProductData = productList;
+    }
+
+    protected void FilterProducts()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            productList = searchProductData.Where(x => x.Name.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            productList = searchProductData;
+        }
+    }
+
+    protected void DeleteConfirm(int Id)
+    {
+        product = productList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected void DeleteProduct(int empID)
+    {
+        ProductService.DeleteProduct(empID);
+        GetProducts();
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        productList = searchProductData;
+    }
+}

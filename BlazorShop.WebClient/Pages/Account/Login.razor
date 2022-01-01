@@ -1,0 +1,69 @@
+﻿@page "/login"
+
+@inject IAuthenticationService AuthService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+
+@if (showAuthenticationError)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@authenticationErrorText</p>
+    </div>
+}
+
+<div class="auth-page">
+    <div class="container page">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-xs-12">
+                <h1 class="text-xs-center">Sign in</h1>
+                <p class="text-xs-center">
+                    <a href="/register">Need an account?</a>
+                </p>
+                <form>
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="email" placeholder="Email" @bind="_loginCommand.Email" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input class="form-control form-control-lg" type="password" placeholder="Password" @bind="_loginCommand.Password" />
+                    </fieldset>
+                    <button class="btn btn-lg btn-primary pull-xs-right" type="button" @onclick="ExecuteLogin">
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginCommand _loginCommand = new();
+
+    private bool showAuthenticationError = false;
+    private string authenticationErrorText = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+
+    private async Task ExecuteLogin()
+    {
+        showAuthenticationError = false;
+
+        var result = await AuthService.Login(_loginCommand);
+        if (result is not null)
+        {
+            NavManager.NavigateTo("/");
+        }
+        else
+        {
+            authenticationErrorText = "There was an error when trying to log in.";
+            showAuthenticationError = true;
+        }
+    }
+}

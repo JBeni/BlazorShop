@@ -1,0 +1,103 @@
+﻿@page "/pizza/add"
+@page "/pizza/edit/{Id:int}"
+
+@inject PizzaService PizzaService
+@inject NavigationManager NavManager
+@attribute [Authorize]
+
+<h1>@Title Pizza</h1>
+<hr />
+
+<EditForm Model="@pizza" OnValidSubmit="SavePizza">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="pizza.Name" />
+        </div>
+        <ValidationMessage For="@(() => pizza.Name)" />
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="pizza.Description" />
+        </div>
+        <ValidationMessage For="@(() => pizza.Description)" />
+    </div>
+    <div class="mb-3">
+        <label for="Size" class="form-label">Size</label>
+        <div class="col-md-4">
+            <InputSelect class="form-control" @bind-Value="pizza.Size">
+                <option value="">-- Select Size --</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+                <option value="Extra Large">Extra Large</option>
+            </InputSelect>
+        </div>
+        <ValidationMessage For="@(() => pizza.Size)" />
+    </div>
+    <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="pizza.Price" />
+        </div>
+        <ValidationMessage For="@(() => pizza.Price)" />
+    </div>
+    <div class="mb-3">
+        <label for="ImageName" class="form-label">ImageName</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="pizza.ImageName" />
+        </div>
+        <ValidationMessage For="@(() => pizza.ImageName)" />
+    </div>
+    <div class="mb-3">
+        <label for="ImagePath" class="form-label">ImagePath</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="pizza.ImagePath" />
+        </div>
+        <ValidationMessage For="@(() => pizza.ImagePath)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected string Title = "Add";
+    public PizzaResponse pizza = new();
+
+    protected override void OnInitialized()
+    {
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Id != 0)
+        {
+            Title = "Edit";
+            pizza = PizzaService.GetPizzaData(Id);
+        }
+    }
+
+    protected void SavePizza()
+    {
+        if (pizza.Id != 0)
+        {
+            PizzaService.UpdatePizza(pizza);
+        }
+        else
+        {
+            PizzaService.AddPizza(pizza);
+        }
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavManager.NavigateTo("/pizza");
+    }
+}
