@@ -1,6 +1,6 @@
-﻿namespace Blazor.Server.Models
+﻿namespace BlazorShop.WebClient.Models
 {
-    public class JwAccessToken
+    public class JwtAccessToken
     {
         public string? Access_Token { get; set; }
         public string? UserName { get; set; }

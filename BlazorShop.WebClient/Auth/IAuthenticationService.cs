@@ -1,9 +1,9 @@
-﻿namespace Blazor.Server.Auth
+﻿namespace BlazorShop.WebClient.Auth
 {
     public interface IAuthenticationService
     {
-        Task<JwAccessToken> Login(LoginCommand userForAuthenticatrion);
-        Task<JwAccessToken> Register(RegisterCommand userForAuthenticatrion);
+        Task<JwtAccessToken> Login(LoginCommand userForAuthenticatrion);
+        Task<JwtAccessToken> Register(RegisterCommand userForAuthenticatrion);
         Task Logout();
     }
 }

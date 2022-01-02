@@ -8,6 +8,7 @@ global using System.Security.Claims;
 global using System.Text.Json;
 
 // Project Imports
-global using Blazor.Server.Models;
+global using BlazorShop.WebClient.Models;
 global using BlazorShop.Application.Commands.AccountCommand;
 global using BlazorShop.Application.Common.Interfaces;
+global using BlazorShop.WebClient.Auth;

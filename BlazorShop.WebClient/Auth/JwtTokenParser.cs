@@ -1,4 +1,4 @@
-﻿namespace Blazor.Server.Auth
+﻿namespace BlazorShop.WebClient.Auth
 {
     public static class JwtTokenParser
     {

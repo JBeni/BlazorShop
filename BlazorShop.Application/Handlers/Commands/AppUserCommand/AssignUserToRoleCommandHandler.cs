@@ -4,18 +4,24 @@
     {
         private readonly IAppUserService _AppUserService;
         private readonly IAppRoleService _AppRoleService;
-        public AssignUserToRoleCommandHandler(IAppUserService AppUserService, IAppRoleService AppRoleService)
+        private readonly RoleManager<AppRole> _roleManager;
+
+        public AssignUserToRoleCommandHandler(IAppUserService AppUserService,
+                                              IAppRoleService AppRoleService,
+                                              RoleManager<AppRole> roleManager)
         {
             _AppUserService = AppUserService;
             _AppRoleService = AppRoleService;
+            _roleManager = roleManager;
         }
 
         public async Task<RequestResponse> Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                //return await _AppRoleService.SetUserRoleAsync(request);
-                return RequestResponse.Success();
+                var user = await _AppUserService.FindUserByIdAsync(request.UserId);
+                var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
+                return await _AppRoleService.SetUserRoleAsync(user, role.Name);
             }
             catch (Exception ex)
             {
@@ -23,5 +29,4 @@
             }
         }
     }
-
 }

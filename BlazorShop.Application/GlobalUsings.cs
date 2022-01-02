@@ -28,3 +28,4 @@ global using BlazorShop.Application.Queries.ProductPhotoQuery;
 global using BlazorShop.Application.Queries.ProductQuery;
 global using BlazorShop.Application.Queries.OrderQuery;
 global using BlazorShop.Application.Queries.UserJwtTokenQuery;
+global using Microsoft.AspNetCore.Identity;
