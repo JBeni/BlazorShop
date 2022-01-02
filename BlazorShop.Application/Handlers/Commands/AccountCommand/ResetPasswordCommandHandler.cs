@@ -2,18 +2,29 @@
 {
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {
-        private readonly IAccountService _AcountService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ResetPasswordCommandHandler(IAccountService AcountService)
+        public ResetPasswordCommandHandler(UserManager<AppUser> userManager)
         {
-            _AcountService = AcountService;
+            _userManager = userManager;
         }
 
         public async Task<RequestResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AcountService.ResetPasswordUserAsync(request);
+                var user = await _userManager.FindByEmailAsync(request.Email);
+                if (user == null)
+                {
+                    throw new Exception("The user does not exist");
+                }
+                if (!request.NewPassword.Equals(request.NewConfirmPassword))
+                {
+                    throw new Exception("Passwords do not match");
+                }
+
+                await _userManager.ResetPasswordAsync(user, request.TokenReset, request.NewPassword);
+                return RequestResponse.Success();
             }
             catch (Exception ex)
             {

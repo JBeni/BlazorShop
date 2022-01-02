@@ -30,9 +30,6 @@
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IAppRoleService, AppRoleService>();
-            services.AddTransient<IAppUserService, AppUserService>();
 
             return services;
         }

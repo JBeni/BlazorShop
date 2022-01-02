@@ -2,17 +2,34 @@
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, RequestResponse>
     {
-        private readonly IAppUserService _AppUserService;
-        public CreateUserCommandHandler(IAppUserService AppUserService)
+        private readonly UserManager<AppUser> _userManager;
+         
+
+        public CreateUserCommandHandler(UserManager<AppUser> userManager)
         {
-            _AppUserService = AppUserService;
+            _userManager = userManager;
         }
 
         public async Task<RequestResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AppUserService.CreateUserAsync(request);
+                var existUser = _userManager.Users.SingleOrDefault(u => u.UserName == request.Email);
+                if (existUser != null) throw new Exception("The user with the unique identifier already exists");
+                var newUser = new AppUser
+                {
+                    UserName = request.Email,
+                    Email = request.Email,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                };
+
+                await _userManager.CreateAsync(newUser);
+                if (request.Role.Length > 0)
+                {
+                    await _userManager.AddToRoleAsync(newUser, request.Role);
+                }
+                return RequestResponse.Success();
             }
             catch (Exception ex)
             {

@@ -30,13 +30,6 @@
             return Ok(result);
         }
 
-        [HttpDelete("user")]
-        public async Task<IActionResult> RemoveUserFromRole([FromQuery] RemoveUserFromRoleCommand command)
-        {
-            var result = await Mediator.Send(command);
-            return Ok(result);
-        }
-
         [HttpGet("user")]
         public async Task<IActionResult> GetUserById([FromQuery] GetUserByIdQuery query)
         {

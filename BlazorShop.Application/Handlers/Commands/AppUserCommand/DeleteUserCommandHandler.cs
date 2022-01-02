@@ -2,17 +2,22 @@
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, RequestResponse>
     {
-        private readonly IAppUserService _AppUserService;
-        public DeleteUserCommandHandler(IAppUserService AppUserService)
+        private readonly UserManager<AppUser> _userManager;
+
+        public DeleteUserCommandHandler(UserManager<AppUser> userManager)
         {
-            _AppUserService = AppUserService;
+            _userManager = userManager;
         }
 
         public async Task<RequestResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AppUserService.DeleteUserAsync(request.Id);
+                var user = _userManager.Users.SingleOrDefault(u => u.Id == request.Id);
+                if (user == null) throw new Exception("The user doesn't exist");
+
+                await _userManager.UpdateAsync(user);
+                return RequestResponse.Success();
             }
             catch (Exception ex)
             {
