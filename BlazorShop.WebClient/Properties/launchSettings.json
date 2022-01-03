@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "BlazorShop": {
+    "WebClient": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

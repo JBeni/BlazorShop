@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BlazorShop.WebApi": {
+    "WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
