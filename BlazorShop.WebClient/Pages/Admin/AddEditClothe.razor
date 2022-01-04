@@ -1,0 +1,89 @@
+﻿@page "/admin/clothes/add"
+@page "/admin/clothes/edit/{Id:int}"
+
+@inject ClotheService ClotheService
+@inject NavigationManager NavManager
+@*@attribute [Authorize]
+*@
+
+<h1>@Title Clothe</h1>
+<hr />
+
+<EditForm Model="@clothe" OnValidSubmit="SaveClothe">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="clothe.Name" />
+        </div>
+        <ValidationMessage For="@(() => clothe.Name)" />
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="clothe.Description" />
+        </div>
+        <ValidationMessage For="@(() => clothe.Description)" />
+    </div>
+    <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="clothe.Price" />
+        </div>
+        <ValidationMessage For="@(() => clothe.Price)" />
+    </div>
+    <div class="mb-3">
+        <label for="ImageName" class="form-label">ImageName</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="clothe.ImageName" />
+        </div>
+        <ValidationMessage For="@(() => clothe.ImageName)" />
+    </div>
+    <div class="mb-3">
+        <label for="ImagePath" class="form-label">ImagePath</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="clothe.ImagePath" />
+        </div>
+        <ValidationMessage For="@(() => clothe.ImagePath)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected string Title = "Add";
+    public ClotheResponse clothe = new();
+
+    protected override void OnInitialized() { }
+
+    protected override void OnParametersSet()
+    {
+        if (Id != 0)
+        {
+            Title = "Edit";
+            clothe = ClotheService.GetClothe(Id);
+        }
+    }
+
+    protected void SaveClothe()
+    {
+        if (clothe.Id != 0)
+        {
+            ClotheService.UpdateClothe(clothe);
+        }
+        else
+        {
+            ClotheService.AddClothe(clothe);
+        }
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavManager.NavigateTo("/admin/clothes");
+    }
+}
