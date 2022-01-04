@@ -6,7 +6,7 @@
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    configuration["ConnectionStrings:WebApiConnection"],
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
             ));
 
