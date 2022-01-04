@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class HomeController : ApiBaseController
+    public class HomeController : ApiControllerBase
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

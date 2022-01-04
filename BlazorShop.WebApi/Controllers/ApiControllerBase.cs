@@ -4,7 +4,7 @@
     [Route("api/[controller]")]
     [Authorize]
     [AllowAnonymous]
-    public abstract class ApiBaseController : ControllerBase
+    public abstract class ApiControllerBase : ControllerBase
     {
         private readonly ISender? _mediator;
 

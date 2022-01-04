@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    public class AccountsController : ApiBaseController
+    public class AccountsController : ApiControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IEncryptionService _encryptionService;
@@ -34,15 +34,7 @@
                 Email = _encryptionService.DecryptData(login.Email),
                 Password = _encryptionService.DecryptData(login.Password)
             };
-
             var result = await Mediator.Send(loginCommand);
-            var userId = await Mediator.Send(new GetUserByEmailQuery { Email = loginCommand.Email });
-            await Mediator.Send(new CreateUserJwtTokenCommand
-            {
-                UserId = userId.Id,
-                JwtToken = result.Access_Token,
-                TokenTimestamp = DateTime.Now
-            });
 
             return result.Successful == true
                 ? Ok(result)
@@ -64,17 +56,6 @@
             };
 
             var result = await Mediator.Send(registerCommand);
-            return result.Successful == true ? Ok(result) : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
-        }
-
-        [HttpDelete("logout")]
-        public async Task<IActionResult> LogoutUser()
-        {
-            var result = await Mediator.Send(new DeleteUserJwtTokenCommand
-            {
-                // _currentUserService.UserId -> it returns null value
-                UserId = int.Parse(_currentUserService.UserId)
-            });
             return result.Successful == true ? Ok(result) : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
         }
 
