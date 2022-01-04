@@ -29,3 +29,4 @@ global using BlazorShop.Application.Commands.ClotheCommand;
 global using BlazorShop.Domain.Entities.Identity;
 global using BlazorShop.Infrastructure.Utils;
 global using Microsoft.AspNetCore.Identity;
+global using BlazorShop.Application.Common.Models;

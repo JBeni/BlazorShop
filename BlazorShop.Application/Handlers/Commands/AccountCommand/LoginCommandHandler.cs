@@ -32,7 +32,7 @@
                     throw new Exception("Email / password incorrect");
                 }
 
-                return await _accountMethods.GenerateToken(user);
+                return new JwtTokenResponse { Access_Token = "" };// _accountMethods.GenerateToken(user);
             }
             catch (Exception ex)
             {

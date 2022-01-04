@@ -17,25 +17,23 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<JwtAccessToken> Login(LoginCommand userForAuthenticatrion)
     {
-        /*
-                var data = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>("email", userForAuthenticatrion.Email),
-                    new KeyValuePair<string, string>("password", userForAuthenticatrion.Password),
-                });
-                var authResult = await _httpClient.PostAsync("https://localhost:5001/token", data);
-                var authContent = await authResult.Content.ReadAsStringAsync();
+        var data = new FormUrlEncodedContent(new[]
+        {
+            new KeyValuePair<string, string>("grant_type", "password"),
+            new KeyValuePair<string, string>("email", userForAuthenticatrion.Email),
+            new KeyValuePair<string, string>("password", userForAuthenticatrion.Password),
+        });
+        var authResult = await _httpClient.PostAsync("https://localhost:44351/api/account/login", data);
+        var authContent = await authResult.Content.ReadAsStringAsync();
 
-                if (authResult.IsSuccessStatusCode == false)
-                {
-                    return null;
-                }
-                var result = JsonSerializer.Deserialize<JwAccessToken>(
-                        authContent,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                    );
-        */
+        if (authResult.IsSuccessStatusCode == false)
+        {
+            return null;
+        }
+        var result = JsonSerializer.Deserialize<JwtAccessToken>(
+                authContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
 
 
         //var response = await _accountService.LoginAsync(userForAuthenticatrion);
@@ -44,14 +42,11 @@ public class AuthenticationService : IAuthenticationService
         //    return null;
         //}
 
-        //await _localStorage.SetItemAsync("authToken", response.Access_Token);
-        //((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(response.Access_Token);
+        await _localStorage.SetItemAsync("authToken", result.Access_Token);
+        ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
 
-        //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(response.Type, response.Access_Token);
-
-        //return new JwtAccessToken { Access_Token = response.Access_Token };
-
-        return new JwtAccessToken { Access_Token = "" };
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token);
+        return new JwtAccessToken { Access_Token = result.Access_Token };
     }
 
     public async Task<JwtAccessToken> Register(RegisterCommand userForAuthenticatrion)

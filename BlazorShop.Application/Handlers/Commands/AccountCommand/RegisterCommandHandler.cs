@@ -39,7 +39,8 @@
 
                 var role = await _roleManager.FindByNameAsync(request.RoleName);
                 await _userManager.AddToRoleAsync(newUser, role.Name);
-                return await _accountMethods.GenerateToken(newUser);
+
+                return new JwtTokenResponse { Access_Token = "" };//return await _accountMethods.GenerateToken(newUser);
             }
             catch (Exception ex)
             {

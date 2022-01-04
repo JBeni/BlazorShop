@@ -21,7 +21,6 @@ builder.Services.AddTransient<IEncryptionService, EncryptionService>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 builder.Services.AddControllers(options =>
     options.Filters.Add<ApiExceptionFilterAttribute>()).AddFluentValidation();
@@ -110,7 +109,6 @@ else
 }
 
 app.UseCors("EnableCORS");
-app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

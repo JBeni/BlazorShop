@@ -85,17 +85,17 @@
                 NewConfirmPassword = _encryptionService.DecryptData(resetPassword.NewConfirmPassword)
             };
 
-            //var email = _encryptionService.DecryptData(resetPassword.Email);
-            //var emailSettings = new EmailSettings
-            //{
-            //    Host = _configuration["EmailSettings:Host"],
-            //    Port = int.Parse(_configuration["EmailSettings:Port"]),
-            //    Subject = _configuration["EmailSettings:Subject"],
-            //    Message = _configuration["EmailSettings:Message"],
-            //    Username = _configuration["EmailSettings:Username"],
-            //    Password = _configuration["EmailSettings:Password"]
-            //};
-            //await _emailService.SendEmail(email, emailSettings);
+            var email = _encryptionService.DecryptData(resetPassword.Email);
+            var emailSettings = new EmailSettings
+            {
+                Host = _configuration["EmailSettings:Host"],
+                Port = int.Parse(_configuration["EmailSettings:Port"]),
+                Subject = _configuration["EmailSettings:Subject"],
+                Message = _configuration["EmailSettings:Message"],
+                Username = _configuration["EmailSettings:Username"],
+                Password = _configuration["EmailSettings:Password"]
+            };
+            await _emailService.SendEmail(email, emailSettings);
 
             var result = await Mediator.Send(resetCommand);
             return result.Successful == true ? Ok(result) : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
