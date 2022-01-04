@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Blazor.Server</a>
+        <a class="navbar-brand" href="">Blazor Shop</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,14 +18,46 @@
             <NavLink class="nav-link" href="weather">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Weather
             </NavLink>
+            <NavLink class="nav-link" href="products">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Products
+            </NavLink>
+            <NavLink class="nav-link" href="clothes">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes
+            </NavLink>
         </div>
-        <AuthorizeView>
+
+        <AuthorizeView Roles="Default">
             <Authorized>
-@*                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="todo">
-                        <span class="oi oi-list-rich" aria-hidden="true"></span> Todo
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="counter">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Counter
                     </NavLink>
-                </div>*@
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Admin
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/users">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Users
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/roles">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Roles
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/clothes">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes
+                    </NavLink>
+                </div>
             </Authorized>
         </AuthorizeView>
     </nav>
