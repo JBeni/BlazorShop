@@ -67,11 +67,7 @@ using (var scope = app.Services.CreateScope())
             context.Database.Migrate();
         }
 
-        await ApplicationDbContextSeed.SeedBrandsDataAsync(context);
-        await ApplicationDbContextSeed.SeedColorsDataAsync(context);
-        await ApplicationDbContextSeed.SeedSizesDataAsync(context);
         await ApplicationDbContextSeed.SeedProductDataAsync(context);
-        await ApplicationDbContextSeed.SeedProductPhotosDataAsync(context);
     }
     catch (Exception ex)
     {

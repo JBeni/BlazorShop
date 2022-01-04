@@ -6,6 +6,7 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<RootNamespace>BlazorShop.WebApi</RootNamespace>
     <AssemblyName>BlazorShop.WebApi</AssemblyName>
+    <UserSecretsId>c9955f7e-dcf0-4dda-8bf1-87d957f75766</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
