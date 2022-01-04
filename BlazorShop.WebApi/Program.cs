@@ -66,8 +66,29 @@ using (var scope = app.Services.CreateScope())
         {
             context.Database.Migrate();
         }
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
-        await ApplicationDbContextSeed.SeedProductDataAsync(context);
+        var rolesSeed = new RolesSeedModel
+        {
+            AdminRoleName = builder.Configuration["RolesSeedModel:AdminRoleName"],
+            AdminRoleNormalizedName = builder.Configuration["RolesSeedModel:AdminRoleNormalizedName"],
+            UserRoleName = builder.Configuration["RolesSeedModel:UserRoleName"],
+            UserRoleNormalizedName = builder.Configuration["RolesSeedModel:UserRoleNormalizedName"],
+            DefaultRoleName = builder.Configuration["RolesSeedModel:DefaultRoleName"],
+            DefaultRoleNormalizedName = builder.Configuration["RolesSeedModel:DefaultRoleNormalizedName"],
+        };
+        var adminSeed = new AdminSeedModel
+        {
+            FirstName = builder.Configuration["AdminSeedModel:FirstName"],
+            LastName = builder.Configuration["AdminSeedModel:LastName"],
+            Email = builder.Configuration["AdminSeedModel:Email"],
+            Password = builder.Configuration["AdminSeedModel:Password"],
+            RoleName = builder.Configuration["AdminSeedModel:RoleName"],
+        };
+
+        await ApplicationDbContextSeed.SeedRolesAsync(roleManager, rolesSeed);
+        await ApplicationDbContextSeed.SeedAdminUserAsync(userManager, roleManager, adminSeed);
     }
     catch (Exception ex)
     {
