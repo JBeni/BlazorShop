@@ -6,7 +6,7 @@
     [AllowAnonymous]
     public abstract class ApiControllerBase : ControllerBase
     {
-        private readonly ISender? _mediator;
+        private readonly ISender _mediator;
 
         protected ISender Mediator => _mediator ?? HttpContext.RequestServices.GetService<ISender>();
     }
