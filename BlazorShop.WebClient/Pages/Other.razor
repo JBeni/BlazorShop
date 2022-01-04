@@ -1,0 +1,93 @@
+﻿@page "/carts"
+
+@inject CartService CartService
+
+@if (!orderPlaced)
+{
+    <h3>Shopping Cart</h3>
+    @if (cartItems == null || cartItems.Count <= 0)
+    {
+        <span>You have no items in your cart.</span>
+    }
+    else
+    {
+        <div>
+            @foreach (var item in cartItems)
+            {
+                <div class="item-container">
+                    <div class="item-image-wrapper"><img src="@item.Image" class="item-image" /></div>
+                    <div class="item-name">
+                        <h5><a href="/product/@item.ProductId">@item.ProductTitle</a></h5>
+                        <span>@item.EditionName</span><br />
+                        <button class="btn-delete" @onclick="@(() => DeleteItem(item))">Delete</button>
+                        <EditForm Model="item">
+                            <InputNumber id="quantity" @bind-Value="item.Quantity"
+                                         class="form-control" style="width: 70px" />
+                        </EditForm>
+                    </div>
+                    <div class="item-price">$@(item.Price * item.Quantity)</div>
+                </div>
+            }
+            <div class="item-price">
+                Total (@cartItems.Count): $@cartItems.Sum(item => item.Price * item.Quantity)
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="btn btn-primary btn-lg" @onclick="PlaceOrder">Place Order</button>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h3>Thank you for your order!</h3>
+    <h4>Here's what you'll get:</h4>
+    <div>
+        @foreach (var item in cartItems)
+        {
+            <div class="item-container">
+                <div class="item-image-wrapper"><img src="@item.Image" class="item-image" /></div>
+                <div class="item-name">
+                    <h5><a href="/product/@item.ProductId">@item.ProductTitle</a></h5>
+                    <span>@item.EditionName</span><br />
+                </div>
+                <div class="item-price">$@(item.Price * item.Quantity)</div>
+            </div>
+        }
+        <div class="item-price">
+            Total (@cartItems.Count): $@cartItems.Sum(item => item.Price * item.Quantity)
+        </div>
+    </div>
+}
+
+@code {
+    List<CartItem> cartItems = new List<CartItem>();
+    bool orderPlaced = false;
+
+    protected override void OnInitialized()
+    {
+        cartItems = CartService.GetCartItems();
+    }
+
+    private void DeleteItem(CartItem item)
+    {
+        CartService.DeleteItem(item);
+        cartItems = CartService.GetCartItems();
+    }
+
+    private async Task PlaceOrder()
+    {
+        orderPlaced = true;
+        CartService.EmptyCart();
+    }
+
+    public class CartItem
+    {
+        public int ProductId { get; set; }
+        public int EditionId { get; set; }
+        public string ProductTitle { get; set; }
+        public string EditionName { get; set; }
+        public decimal Price { get; set; }
+        public string Image { get; set; }
+        public int Quantity { get; set; }
+    }
+}
