@@ -1,0 +1,99 @@
+﻿@page "/clothes"
+
+@inject ClotheService ClotheService
+@*@attribute [Authorize]
+*@
+
+<h3>Clothes Shop</h3>
+
+<div class="row">
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search pizza by name"
+            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterClothes" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-info" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+
+@if (clothesList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (clothesList.Count == 0)
+    {
+        <div class="d-flex justify-content-center">
+            <h4>No record found</h4>
+        </div>
+    }
+    else
+    {
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div class="col">
+                        <div class="card shadow-sm">
+        @*                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+        *@                    <img src="/images/clothes/@model.ImagePath" class="img-fluid" alt="Image Text" />
+                            <div class="card-body">
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View Product</button>
+                                    </div>
+                                <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    protected List<ClotheResponse> clothesList = new();
+    protected List<ClotheResponse> searchClothesData = new();
+
+    protected ClotheResponse model = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        GetClothes();
+    }
+
+    protected void GetClothes()
+    {
+        clothesList = ClotheService.GetClothes();
+        searchClothesData = clothesList;
+    }
+
+    protected void FilterClothes()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            clothesList = searchClothesData.Where(x => x.Name.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            clothesList = searchClothesData;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        clothesList = searchClothesData;
+    }
+}
