@@ -2,26 +2,19 @@
 {
     public class AssignUserToRoleCommandHandler : IRequestHandler<AssignUserToRoleCommand, RequestResponse>
     {
-        private readonly RoleManager<AppRole> _roleManager;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IAppUserService _AppUserService;
 
-        public AssignUserToRoleCommandHandler(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
+        public AssignUserToRoleCommandHandler(IAppUserService AppUserService)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
+            _AppUserService = AppUserService;
         }
 
         public async Task<RequestResponse> Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(request.UserId.ToString());
-                var userRole = await _userManager.GetRolesAsync(user);
-                await _userManager.RemoveFromRoleAsync(user, userRole[0]);
-
-                var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
-                await _userManager.AddToRoleAsync(user, role.Name);
-                return RequestResponse.Success();
+                var result = await _AppUserService.AssignUserToRoleAsync(request);
+                return result;
             }
             catch (Exception ex)
             {

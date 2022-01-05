@@ -2,33 +2,18 @@
 {
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, RequestResponse>
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IAccountService _AcountService;
 
-        public ChangePasswordCommandHandler(UserManager<AppUser> userManager)
+        public ChangePasswordCommandHandler(IAccountService AcountService)
         {
-            _userManager = userManager;
+            _AcountService = AcountService;
         }
 
         public async Task<RequestResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(request.UserId);
-                if (user == null)
-                {
-                    throw new Exception("The user does not exist");
-                }
-                if (!await _userManager.CheckPasswordAsync(user, request.OldPassword))
-                {
-                    throw new Exception("The credential is not valid");
-                }
-                if (!request.NewPassword.Equals(request.NewConfirmPassword))
-                {
-                    throw new Exception("Passwords do not match");
-                }
-
-                await _userManager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
-                return RequestResponse.Success();
+                return await _AcountService.ChangePasswordUserAsync(request);
             }
             catch (Exception ex)
             {

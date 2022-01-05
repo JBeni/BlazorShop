@@ -2,26 +2,19 @@
 {
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
-        private readonly RoleManager<AppRole> _roleManager;
+        private readonly IAppRoleService _AppRoleService;
 
-        public CreateRoleCommandHandler(RoleManager<AppRole> roleManager)
+        public CreateRoleCommandHandler(IAppRoleService AppRoleService)
         {
-            _roleManager = roleManager;
+            _AppRoleService = AppRoleService;
         }
 
         public async Task<RequestResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var role = await _roleManager.FindByNameAsync(request.Name);
-                if (role != null) throw new Exception("The role was already created");
-
-                await _roleManager.CreateAsync(new AppRole
-                {
-                    Name = request.Name,
-                    NormalizedName = request.Name.ToUpper()
-                });
-                return RequestResponse.Success();
+                var result = await _AppRoleService.CreateRoleAsync(request);
+                return result;
             }
             catch (Exception ex)
             {

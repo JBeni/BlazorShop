@@ -2,27 +2,25 @@
 {
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<AppUserResponse>>
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
+        private readonly IAppUserService _AppUserService;
 
-        public GetUsersQueryHandler(UserManager<AppUser> userManager, IMapper mapper)
+        public GetUsersQueryHandler(IAppUserService AppUserService)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            _AppUserService = AppUserService;
         }
 
         public Task<List<AppUserResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = _userManager.Users
-                    .ProjectTo<AppUserResponse>(_mapper.ConfigurationProvider)
-                    .ToList();
-                return Task.FromResult(user);
+                return Task.FromResult(_AppUserService.GetUsers(request));
             }
             catch (Exception ex)
             {
-                throw new Exception("There was an error getting the user... " + ex.Message ?? ex.InnerException.Message);
+                return Task.FromResult(new List<AppUserResponse>
+                {
+                    new AppUserResponse { Error = "There was an error getting the user... " + ex.Message ?? ex.InnerException.Message },
+                });
             }
         }
     }

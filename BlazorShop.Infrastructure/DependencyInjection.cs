@@ -10,6 +10,18 @@
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
             ));
 
+            // Inject services
+
+            //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IAppRoleService, AppRoleService>();
+
+            services.AddTransient<IDateTimeService, DateTimeService>();
+            services.AddTransient<IEmailService, EmailService>();
+
             var builder = services.AddIdentityCore<AppUser>(opt =>
             {
                 // configure password options & others
@@ -24,12 +36,8 @@
             builder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             builder.AddRoles<AppRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-            services.AddAuthorization(options => { });
-
-            // Inject services
-            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-            services.AddTransient<IDateTimeService, DateTimeService>();
-            services.AddTransient<IEmailService, EmailService>();
+            //services.AddAuthentication();
+            //services.AddAuthorization(options => options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
 
             return services;
         }

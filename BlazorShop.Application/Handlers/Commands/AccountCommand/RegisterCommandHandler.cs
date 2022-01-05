@@ -2,45 +2,18 @@
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, JwtTokenResponse>
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
-        private readonly AccountMethods _accountMethods;
+        private readonly IAccountService _AcountService;
 
-        public RegisterCommandHandler(UserManager<AppUser> userManager,
-                                      AccountMethods accountMethods,
-                                      RoleManager<AppRole> roleManager)
+        public RegisterCommandHandler(IAccountService AcountService)
         {
-            _userManager = userManager;
-            _accountMethods = accountMethods;
-            _roleManager = roleManager;
+            _AcountService = AcountService;
         }
 
         public async Task<JwtTokenResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var existUser = _userManager.Users.SingleOrDefault(u => u.Email == request.Email);
-                if (existUser != null) throw new Exception("The user with the unique identifier already exists");
-
-                AppUser newUser = new AppUser
-                {
-                    UserName = request.Email,
-                    Email = request.Email,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                };
-
-                if (!request.Password.Equals(request.ConfirmPassword))
-                {
-                    throw new Exception("Passwords do not match");
-                }
-
-                await _userManager.CreateAsync(newUser, request.Password);
-
-                var role = await _roleManager.FindByNameAsync(request.RoleName);
-                await _userManager.AddToRoleAsync(newUser, role.Name);
-
-                return new JwtTokenResponse { Access_Token = "" };//return await _accountMethods.GenerateToken(newUser);
+                return await _AcountService.RegisterAsync(request);
             }
             catch (Exception ex)
             {

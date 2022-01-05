@@ -2,22 +2,19 @@
 {
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, RequestResponse>
     {
-        private readonly RoleManager<AppRole> _roleManager;
+        private readonly IAppRoleService _AppRoleService;
 
-        public DeleteRoleCommandHandler(RoleManager<AppRole> roleManager)
+        public DeleteRoleCommandHandler(IAppRoleService AppRoleService)
         {
-            _roleManager = roleManager;
+            _AppRoleService = AppRoleService;
         }
 
         public async Task<RequestResponse> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var role = await _roleManager.FindByIdAsync(request.Id.ToString());
-                if (role == null) throw new Exception("The role was not created");
-
-                await _roleManager.DeleteAsync(role);
-                return RequestResponse.Success();
+                var result = await _AppRoleService.DeleteRoleAsync(request.Id);
+                return result;
             }
             catch (Exception ex)
             {

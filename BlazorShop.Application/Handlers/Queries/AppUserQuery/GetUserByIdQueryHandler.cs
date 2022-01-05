@@ -2,24 +2,18 @@
 {
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, AppUserResponse>
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
+        private readonly IAppUserService _AppUserService;
 
-        public GetUserByIdQueryHandler(UserManager<AppUser> userManager, IMapper mapper)
+        public GetUserByIdQueryHandler(IAppUserService AppUserService)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            _AppUserService = AppUserService;
         }
 
         public Task<AppUserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = _userManager.Users
-                    .Where(x => x.Id == request.Id)
-                    .ProjectTo<AppUserResponse>(_mapper.ConfigurationProvider)
-                    .FirstOrDefault();
-                return Task.FromResult(user);
+                return Task.FromResult(_AppUserService.GetUserById(request));
             }
             catch (Exception ex)
             {

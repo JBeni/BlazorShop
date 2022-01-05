@@ -2,37 +2,18 @@
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, JwtTokenResponse>
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly AccountMethods _accountMethods;
+        private readonly IAccountService _AcountService;
 
-        public LoginCommandHandler(UserManager<AppUser> userManager, AccountMethods accountMethods)
+        public LoginCommandHandler(IAccountService AcountService)
         {
-            _userManager = userManager;
-            _accountMethods = accountMethods;
-        }
-
-        public async Task<bool> CheckPasswordAsync(AppUser user, string? password)
-        {
-            var result = await _userManager.CheckPasswordAsync(user, password);
-            return result;
+            _AcountService = AcountService;
         }
 
         public async Task<JwtTokenResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = _userManager.Users.SingleOrDefault(u => u.Email == request.Email);
-                if (user == null)
-                {
-                    throw new Exception("Email / password incorrect");
-                }
-                var passwordValid = await CheckPasswordAsync(user, request.Password);
-                if (passwordValid == false)
-                {
-                    throw new Exception("Email / password incorrect");
-                }
-
-                return new JwtTokenResponse { Access_Token = "" };// _accountMethods.GenerateToken(user);
+                return await _AcountService.LoginAsync(request);
             }
             catch (Exception ex)
             {
