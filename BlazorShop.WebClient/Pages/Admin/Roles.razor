@@ -1,4 +1,7 @@
-﻿<h3>Roles</h3>
+﻿@page "/admin/roles"
+@attribute [Authorize(Policy = "Admin")]
+
+<h3>Roles</h3>
 
 @code {
 

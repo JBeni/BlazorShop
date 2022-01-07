@@ -1,5 +1,4 @@
 ﻿@page "/verifyauth"
-
 @attribute [Authorize]
 
 <h3>Verify Auth</h3>
@@ -11,6 +10,11 @@
         <li>Access to Admin Role: @isAdminUser</li>
         <li>Access to Cashier Role: @isCashier</li>
         <li>Access to Manager Role: @isManager</li>
+
+        <li></li>
+        <li>Access to Admin Claim: @isAdminClaim</li>
+        <li>Access to Default Claim: @isUserClaim</li>
+        <li>Access to User Claim: @isDefaultClaim</li>
     </ul>
 }
 else
@@ -27,6 +31,11 @@ else
     private bool isAdminUser = false;
     private bool isCashier = false;
     private bool isManager = false;
+    private bool isUser = false;
+
+    private bool isAdminClaim = false;
+    private bool isUserClaim = false;
+    private bool isDefaultClaim = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,11 +44,23 @@ else
         if (authState.User.Identity.IsAuthenticated)
         {
             isAuthenticated = true;
-            userName = authState.User.FindFirst(ClaimTypes.Name).Value;
+            userName = authState.User.FindFirst(x => x.Type == "unique_name").Value;
 
             isAdminUser = authState.User.IsInRole("Admin");
             isCashier = authState.User.IsInRole("Cashier");
             isManager = authState.User.IsInRole("Manager");
+
+            isUser = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Admin");
+
+            isAdminClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Admin");
+            isUserClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "User");
+            isDefaultClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Default");
+
+            var userClaims = authState.User.Claims;
+
+            var username = authState.User.Identity.Name;
+
+            var result = 0;
         }
     }
 }

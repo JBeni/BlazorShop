@@ -1,4 +1,7 @@
-﻿<h3>ClotheDetails</h3>
+﻿@page "/clothes/view"
+@attribute [Authorize(Policy = "User")]
+
+<h3>View Clothe Details</h3>
 
 @code {
 

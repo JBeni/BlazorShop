@@ -1,10 +1,9 @@
 ﻿@page "/admin/clothes/add"
 @page "/admin/clothes/edit/{Id:int}"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject ClotheService ClotheService
 @inject NavigationManager NavManager
-@*@attribute [Authorize]
-*@
 
 <h1>@Title Clothe</h1>
 <hr />

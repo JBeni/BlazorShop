@@ -1,11 +1,5 @@
 ﻿@page "/admin"
-
-
-
-
-
-
-
+@attribute [Authorize(Policy = "Admin")]
 
 <main class="form-signin mt-5">
     <form>

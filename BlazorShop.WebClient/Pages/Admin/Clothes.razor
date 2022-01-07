@@ -1,9 +1,8 @@
 ﻿@page "/admin/clothes"
+@attribute [Authorize(Policy = "Admin")]
 
 @inject ClotheService ClotheService
 @inject NavigationManager NavManager
-@*@attribute [Authorize]
-*@
 
 <h1>Clothes</h1>
 
@@ -64,7 +63,7 @@ else
                         <td>@clothe.ImagePath</td>
                         <td>@clothe.IsActive</td>
                         <td>
-                            <a href='/clothes/edit/@clothe.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                            <a href='admin/clothes/edit/@clothe.Id' class="btn btn-outline-dark" role="button">Edit</a>
                             <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(clothe.Id); ModalShow(); })">
                                 Delete
                             </button>

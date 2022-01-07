@@ -1,8 +1,7 @@
 ﻿@page "/clothes"
+@attribute [Authorize(Policy = "User")]
 
 @inject ClotheService ClotheService
-@*@attribute [Authorize]
-*@
 
 <h3>Clothes Shop</h3>
 
