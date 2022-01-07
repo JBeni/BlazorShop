@@ -1,6 +1,4 @@
 
-using Microsoft.AspNetCore.Authorization;
-
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.RootComponents.Add<App>("#app");
@@ -9,13 +7,19 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore(config =>
 {
-    config.AddPolicy("Admin", builder => builder.RequireClaim("Admin"));
-    config.AddPolicy("User", new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole("User").Build());
-    config.AddPolicy("Default", new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole("Default").Build());
+    config.AddPolicy("AdminAdvanced", builder => builder.RequireAuthenticatedUser());
+
+    config.AddPolicy("Admin", policy => policy.Requirements.Add(new AdminRoleRequirement("Admin")));
+    config.AddPolicy("User", policy => policy.Requirements.Add(new UserRoleRequirement("User")));
+    config.AddPolicy("Default", policy => policy.Requirements.Add(new DefaultRoleRequirement("Default")));
 });
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+
+builder.Services.AddSingleton<IAuthorizationHandler, AdminRoleHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, UserRoleHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, DefaultRoleHandler>();
 
 // Inject Services
 builder.Services.AddScoped<ClotheService>();
