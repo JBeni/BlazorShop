@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-
 @inject AuthenticationStateProvider AuthStateProvider
 
 <PageTitle>Blazor Shop</PageTitle>
@@ -21,10 +20,8 @@
                     </NavLink>
                 </NotAuthorized>
                 <Authorized>
-                    Welcome @context.User.Claims.FirstOrDefault(x => x.Type == "name").Value
-                    <NavLink class="nav-link" href="logout">
-                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
-                    </NavLink>
+                    Welcome @username
+                    <NavLink href="/cart" class="nav-link">Cart (0)</NavLink>
                 </Authorized>
             </AuthorizeView>
         </div>
@@ -36,16 +33,14 @@
 </div>
 
 @code {
+    private string username { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-
-        var claimEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
-        var claimName = user.Claims.FirstOrDefault(x => x.Type == "name").Value;
-
-        var name = user.Identity.Name;
+        username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value;
     }
 }
