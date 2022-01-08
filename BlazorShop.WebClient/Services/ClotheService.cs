@@ -1,27 +1,52 @@
 ﻿namespace BlazorShop.WebClient.Services
 {
-    public class ClotheService
+    public class ClotheService : IClotheService
     {
-        public List<ClotheResponse> GetClothes()
+        private readonly HttpClient _httpClient;
+
+        public ClotheService(HttpClient httpClient)
         {
-            return new List<ClotheResponse>();
+            _httpClient = httpClient;
         }
 
-        public ClotheResponse GetClothe(int id)
+        public async Task<List<ClotheResponse>> GetClothes()
         {
-            return new ClotheResponse();
+            var authResult = await _httpClient.GetAsync("Clothes/clothes");
+
+            var authContent = await authResult.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<ClotheResponse>>(
+                authContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return result;
         }
 
-        public void AddClothe(ClotheResponse clothe)
+        public async Task<ClotheResponse> GetClothe(int id)
         {
+            var authResult = await _httpClient.GetAsync($"Clothes/clothe/{id}");
+            var authContent = await authResult.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ClotheResponse>(
+                authContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return result;
         }
 
-        public void UpdateClothe(ClotheResponse clothe)
+        public async Task AddClothe(ClotheResponse clothe)
         {
+            await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
         }
 
-        public void DeleteClothe(int id)
+        public async Task UpdateClothe(ClotheResponse clothe)
         {
+            await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
+        }
+
+        public async Task DeleteClothe(int id)
+        {
+            await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
         }
     }
 }
