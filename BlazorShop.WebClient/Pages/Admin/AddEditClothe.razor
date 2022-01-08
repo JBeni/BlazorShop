@@ -2,7 +2,7 @@
 @page "/admin/clothes/edit/{Id:int}"
 @attribute [Authorize(Policy = "Admin")]
 
-@inject ClotheService ClotheService
+@inject IClotheService ClotheService
 @inject NavigationManager NavManager
 
 <h1>@Title Clothe</h1>
@@ -32,6 +32,13 @@
         <ValidationMessage For="@(() => clothe.Price)" />
     </div>
     <div class="mb-3">
+        <label for="Amount" class="form-label">Amount</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="clothe.Amount" />
+        </div>
+        <ValidationMessage For="@(() => clothe.Amount)" />
+    </div>
+    <div class="mb-3">
         <label for="ImageName" class="form-label">ImageName</label>
         <div class="col-md-4">
             <InputText class="form-control" @bind-Value="clothe.ImageName" />
@@ -59,24 +66,24 @@
 
     protected override void OnInitialized() { }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
         {
             Title = "Edit";
-            clothe = ClotheService.GetClothe(Id);
+            clothe = await ClotheService.GetClothe(Id);
         }
     }
 
-    protected void SaveClothe()
+    protected async Task SaveClothe()
     {
         if (clothe.Id != 0)
         {
-            ClotheService.UpdateClothe(clothe);
+            await ClotheService.UpdateClothe(clothe);
         }
         else
         {
-            ClotheService.AddClothe(clothe);
+            await ClotheService.AddClothe(clothe);
         }
         Cancel();
     }
