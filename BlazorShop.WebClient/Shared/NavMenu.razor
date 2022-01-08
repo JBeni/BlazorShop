@@ -14,19 +14,21 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Weather
-            </NavLink>
-            <NavLink class="nav-link" href="products">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Products
-            </NavLink>
-            <NavLink class="nav-link" href="clothes">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes
-            </NavLink>
-        </div>
 
-        <AuthorizeView Roles="Default">
+        <AuthorizeView Policy="User">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="verifyauth">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Verify Auth
+                    </NavLink>
+                    <NavLink class="nav-link" href="clothes">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes Shop
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Policy="Default">
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="counter">
@@ -36,10 +38,10 @@
             </Authorized>
         </AuthorizeView>
 
-        <AuthorizeView Roles="Admin">
+        <AuthorizeView Policy="Admin">
             <Authorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="admin">
+                    <NavLink class="nav-link" href="admin" Match="NavLinkMatch.All">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Admin
                     </NavLink>
                 </div>
@@ -56,6 +58,16 @@
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="admin/clothes">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3" style=" position: fixed; bottom: 0;">
+                    <NavLink class="nav-link" href="logout">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
                     </NavLink>
                 </div>
             </Authorized>
