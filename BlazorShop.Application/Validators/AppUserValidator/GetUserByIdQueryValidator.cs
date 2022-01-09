@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.AppUserValidator
 {
-    public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
+    public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
     {
-        public DeleteUserCommandValidator()
+        public GetUserByIdQueryValidator()
         {
             RuleFor(v => v.Id).GreaterThan(0);
         }

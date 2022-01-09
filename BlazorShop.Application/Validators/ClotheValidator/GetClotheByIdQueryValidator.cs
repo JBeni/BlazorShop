@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.ClotheValidator
 {
-    public class DeleteClotheCommandValidator : AbstractValidator<DeleteClotheCommand>
+    public class GetClotheByIdQueryValidator : AbstractValidator<GetClotheByIdQuery>
     {
-        public DeleteClotheCommandValidator()
+        public GetClotheByIdQueryValidator()
         {
             RuleFor(v => v.Id).GreaterThan(0);
         }

@@ -5,6 +5,7 @@
         public CreateRoleCommandValidator()
         {
             RuleFor(v => v.Name).NotEmpty().NotNull();
+            RuleFor(v => v.NormalizedName).NotEmpty().NotNull();
         }
     }
 }

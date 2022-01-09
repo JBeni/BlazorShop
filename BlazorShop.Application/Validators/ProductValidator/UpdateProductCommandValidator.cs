@@ -4,9 +4,9 @@
     {
         public UpdateProductCommandValidator()
         {
-            RuleFor(v => v.Id).NotEmpty().NotNull().GreaterThan(0);
+            RuleFor(v => v.Id).GreaterThan(0);
             RuleFor(v => v.Description).NotEmpty().NotNull();
-            RuleFor(v => v.Price).NotEmpty().NotNull().GreaterThan(0);
+            RuleFor(v => v.Price).GreaterThan(0);
         }
     }
 }

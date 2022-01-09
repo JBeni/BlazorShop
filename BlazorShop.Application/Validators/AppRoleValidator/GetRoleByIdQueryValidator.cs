@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.AppRoleValidator
 {
-    public class DeleteRoleCommandValidator : AbstractValidator<DeleteRoleCommand>
+    public class GetRoleByIdQueryValidator : AbstractValidator<GetRoleByIdQuery>
     {
-        public DeleteRoleCommandValidator()
+        public GetRoleByIdQueryValidator()
         {
             RuleFor(v => v.Id).GreaterThan(0);
         }

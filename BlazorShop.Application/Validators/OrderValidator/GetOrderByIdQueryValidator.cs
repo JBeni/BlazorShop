@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.OrderValidator
 {
-    public class DeleteOrderCommandValidator : AbstractValidator<DeleteOrderCommand>
+    public class GetOrderByIdQueryValidator : AbstractValidator<GetOrderByIdQuery>
     {
-        public DeleteOrderCommandValidator()
+        public GetOrderByIdQueryValidator()
         {
             RuleFor(v => v.Id).GreaterThan(0);
         }
