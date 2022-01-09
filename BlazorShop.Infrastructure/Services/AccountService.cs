@@ -60,7 +60,7 @@
             {
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, userRole.RoleName),
+                new Claim(ClaimTypes.Role, userRole[0]),
                 new Claim("UserId", user.Id.ToString()),
             };
 
@@ -106,19 +106,20 @@
             {
                 var newUser = new AppUser
                 {
-                    UserName = register.Email,
+                    UserName = register.FirstName + " " + register.LastName,
                     Email = register.Email,
                     FirstName = register.FirstName,
                     LastName = register.LastName,
                 };
-
                 if (!register.Password.Equals(register.ConfirmPassword))
                 {
                     throw new Exception("Passwords do not match");
                 }
 
                 await _userManager.CreateAsync(newUser, register.Password);
-                var role = _AppRoleService.GetDefaultRole();
+                var role = await _AppRoleService.FindRoleByNameAsync(register.RoleName);
+                if (role == null) throw new Exception("The role does not exist");
+
                 await _AppRoleService.SetUserRoleAsync(newUser, role.Name);
                 return await GenerateToken(newUser);
             }

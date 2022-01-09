@@ -3,15 +3,18 @@
     public class AppUserService : IAppUserService
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IAppRoleService _AppRoleService;
         private readonly IMapper _mapper;
 
         public AppUserService(
             UserManager<AppUser> userManager,
+            RoleManager<AppRole> roleManager,
             IAppRoleService AppRoleService,
             IMapper mapper)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _AppRoleService = AppRoleService;
             _mapper = mapper;
         }
@@ -22,7 +25,7 @@
             if (existUser != null) throw new Exception("The user with the unique identifier already exists");
             var newUser = new AppUser
             {
-                UserName = command.Email,
+                UserName = command.FirstName + " " + command.LastName,
                 Email = command.Email,
                 FirstName = command.FirstName,
                 LastName = command.LastName,
@@ -76,14 +79,16 @@
             return user;
         }
 
-        public async Task<AppUserResponse> GetUserRoleAsync(AppUser user)
+        public async Task<List<string>> GetUserRoleAsync(AppUser user)
         {
-            var userWithRole = await _userManager.Users
-                .Include(u => u.Roles)//.ThenInclude(ur => ur.Role)
-                .Where(x => x.Email == user.Email && x.Id == user.Id)
-                .ProjectTo<AppUserResponse>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-            return userWithRole[0];
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            //var userWithRole = await _userManager.Users
+            //    .Include(u => u.Roles)
+            //    .Where(x => x.Email == user.Email && x.Id == user.Id)
+            //    .ProjectTo<AppUserResponse>(_mapper.ConfigurationProvider)
+            //    .ToListAsync();
+            return userRoles.ToList();
         }
 
         public async Task<RequestResponse> UpdateUserAsync(UpdateUserCommand command)
@@ -94,7 +99,7 @@
             var userWithNewEmail = await _userManager.FindByEmailAsync(command.NewEmail);
             if (userWithNewEmail != null) throw new Exception("The user with the new email value has found in the database");
 
-            existUser.UserName = command.NewEmail;
+            existUser.UserName = command.FirstName + " " + command.LastName;
             existUser.Email = command.NewEmail;
             existUser.FirstName = command.FirstName;
             existUser.LastName = command.LastName;
