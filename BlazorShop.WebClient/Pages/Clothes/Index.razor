@@ -35,7 +35,7 @@ else
     }
     else
     {
-        <div class="album py-5 bg-light">
+        <div class="album py-5">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     @foreach (var clothe in clothesList)
@@ -49,7 +49,7 @@ else
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
-                                            <span></span>
+                                            <span style="margin-left: 15px;"></span>
                                             <a href='clothes/view/@clothe.Id' class="btn btn-outline-dark" role="button">View Product</a>
                                         </div>
                                     <small class="text-muted">$ @clothe.Price</small>
