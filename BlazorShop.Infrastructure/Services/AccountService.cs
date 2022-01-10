@@ -3,14 +3,14 @@
     public class AccountService : IAccountService
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IAppUserService _AppUserService;
-        private readonly IAppRoleService _AppRoleService;
+        private readonly IUserService _AppUserService;
+        private readonly IRoleService _AppRoleService;
         private readonly IConfiguration _configuration;
 
         public AccountService(
             UserManager<AppUser> userManager,
-            IAppUserService AppUserService,
-            IAppRoleService AppRoleService,
+            IUserService AppUserService,
+            IRoleService AppRoleService,
             IConfiguration configuration)
         {
             _userManager = userManager;
@@ -21,7 +21,7 @@
 
         public async Task<RequestResponse> ChangePasswordUserAsync(ChangePasswordCommand changePassword)
         {
-            var user = await _userManager.FindByIdAsync(changePassword.UserId);
+            var user = await _userManager.FindByIdAsync(changePassword.UserId.ToString());
             if (user == null)
             {
                 throw new Exception("The user does not exist");
@@ -30,7 +30,7 @@
             {
                 throw new Exception("The credential is not valid");
             }
-            if (!changePassword.NewPassword.Equals(changePassword.NewConfirmPassword))
+            if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
             {
                 throw new Exception("Passwords do not match");
             }
