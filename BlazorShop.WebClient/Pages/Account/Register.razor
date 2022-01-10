@@ -2,6 +2,7 @@
 
 @inject NavigationManager NavManager
 @inject IAuthenticationService AuthenticationService
+@inject IRoleService RoleService
 @inject AuthenticationStateProvider AuthStateProvider
 
 @if (showAuthenticationError)
@@ -62,14 +63,14 @@ else
 
 @code {
     private RegisterCommand _registerCommand = new();
-    protected List<AppRoleResponse> roles = new();
+    protected List<RoleResponse> roles = new();
 
     private bool showAuthenticationError = false;
     private string authenticationErrorText = "";
 
     protected override async Task OnInitializedAsync()
     {
-        roles = await AuthenticationService.GetRoles();
+        roles = await RoleService.GetRoles();
 
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
