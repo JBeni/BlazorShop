@@ -4,13 +4,13 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:34877/api/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44351/api/") });
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore(config =>
 {
-    config.AddPolicy("AdminAdvanced", builder => builder.RequireAuthenticatedUser());
+    config.AddPolicy("DefaultRole", builder => builder.RequireAuthenticatedUser());
 
     config.AddPolicy("Admin", policy => policy.Requirements.Add(new AdminRoleRequirement("Admin")));
     config.AddPolicy("User", policy => policy.Requirements.Add(new UserRoleRequirement("User")));
@@ -26,7 +26,8 @@ builder.Services.AddSingleton<IAuthorizationHandler, DefaultRoleHandler>();
 
 // Inject Services
 builder.Services.AddScoped<IClotheService, ClotheService>();
-//builder.Services.AddScoped<CartService>();
-
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 await builder.Build().RunAsync();
