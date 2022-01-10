@@ -1,9 +1,202 @@
 ﻿@page "/profile"
 
+@*@attribute [Authorize(Policy = "User")]*@
 @attribute [Authorize]
 
-<h3>Profile</h3>
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IUserService UserService
+@inject IAccountService AccountService
+
+<h1>User Profile</h1>
+
+<div class="container rounded bg-white">
+    <div class="row">
+        <div class="col-md-2 border-right ml-2 mt-3">
+            <div class="d-flex flex-column align-items-center text-center p-3 p-5">
+                <img class="rounded-circle" width="150px" src="images/user-profile.png">
+                <span class="font-weight-bold" style="margin-top: 10px;">@userData.Username</span>
+            </div>
+        </div>
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column p-3 py-5" style="margin-top: 55px; margin-left: 50px;">
+                <p class="font-weight-bold">FirstName : @userData.FirstName</p>
+                <p class="font-weight-bold">LastName : @userData.LastName</p>
+                <p class="font-weight-bold">Email : @userData.Email</p>
+                <span></span>
+            </div>
+        </div>
+        <div class="col-md-3 border-right" style="margin-left: 50px; border: 5px dashed red;">
+             <h4 class="text-right text-danger">DANGER ZONE</h4>
+            <div class="d-flex flex-column p-3 py-5" style="margin-top: 55px; margin-left: 50px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-danger" @onclick="(() => { ModalShow(); })">
+                        Change Email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <EditForm Model="@userData" OnValidSubmit="UpdateUser">
+                    <DataAnnotationsValidator />
+                    <div class="row mt-3">
+                        <div class="mb-3">
+                            <label for="FirstName" class="form-label">FirstName</label>
+                            <div class="col-md-12">
+                                <InputText class="form-control" @bind-Value="userData.FirstName" />
+                            </div>
+                            <ValidationMessage For="@(() => userData.FirstName)" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="LastName" class="form-label">LastName</label>
+                            <div class="col-md-12">
+                                <InputText class="form-control" @bind-Value="userData.LastName" />
+                            </div>
+                            <ValidationMessage For="@(() => userData.LastName)" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email</label>
+                            <div class="col-md-12">
+                                <InputText class="form-control" Disabled="true" @bind-Value="userData.Email" />
+                            </div>
+                            <ValidationMessage For="@(() => userData.Email)" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Save Changes</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+
+        <div class="col-md-4" style="margin-left: 35px;">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="text-right">Change Password</h4>
+                </div>
+                <br/>
+                <EditForm Model="@password" OnValidSubmit="ChangePassword">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="OldPassword" class="form-label">Old Password</label>
+                        <div class="col-md-12">
+                            <InputText class="form-control" @bind-Value="password.OldPassword" />
+                        </div>
+                        <ValidationMessage For="@(() => password.OldPassword)" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="NewPassword" class="form-label">New Password</label>
+                        <div class="col-md-12">
+                            <InputText class="form-control" @bind-Value="password.NewPassword" />
+                        </div>
+                        <ValidationMessage For="@(() => password.NewPassword)" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="ConfirmNewPassword" class="form-label">Confirm New Password</label>
+                        <div class="col-md-12">
+                            <InputText class="form-control" @bind-Value="password.ConfirmNewPassword" />
+                        </div>
+                        <ValidationMessage For="@(() => password.ConfirmNewPassword)" />
+                    </div>
+                    <button class="btn btn-primary profile-button" type="submit">Change Password</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (showModal)
+{
+    <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Update Email</h3>
+                </div>
+                <EditForm Model="@updateEmail" OnValidSubmit="UpdateUserEmail">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3" style="margin-left: 15px;">
+                        <label for="Email" class="form-label">Old Email</label>
+                        <div class="col-md-10">
+                            <InputText class="form-control" @bind-Value="updateEmail.Email" />
+                        </div>
+                        <ValidationMessage For="@(() => updateEmail.Email)" />
+                    </div>
+                    <div class="mb-3" style="margin-left: 15px;">
+                        <label for="NewEmail" class="form-label">New Email</label>
+                        <div class="col-md-10">
+                            <InputText class="form-control" @bind-Value="updateEmail.NewEmail" />
+                        </div>
+                        <ValidationMessage For="@(() => updateEmail.NewEmail)" />
+                    </div>
+                </EditForm>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"
+                        @onclick="(async () => { await UpdateUserEmail(); ModalOk(); })">
+                        Change Password
+                    </button>
+                    <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @code {
+    bool showModal = false;
+    private int UserId = 0;
 
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected UserResponse userData = new();
+    protected ChangePasswordCommand password = new();
+    protected UpdateUserEmailCommand updateEmail = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+
+        userData = await UserService.GetUser(UserId);
+    }
+
+    private async Task UpdateUserEmail()
+    {
+        updateEmail.UserId = UserId;
+        await UserService.UpdateUserEmail(updateEmail);
+        updateEmail = new();
+    }
+
+    private async Task UpdateUser()
+    {
+        if (userData.Id != 0)
+        {
+            await UserService.UpdateUser(userData);
+        }
+    }
+
+    private async Task ChangePassword()
+    {
+        if (
+            password.OldPassword.Length > 6 &&
+            password.NewPassword.Length > 6 &&
+            password.NewPassword.Equals(password.ConfirmNewPassword)
+           )
+        {
+            password.UserId = UserId;
+            await AccountService.ChangePassword(password);
+            password = new();
+        }
+    }
 }
