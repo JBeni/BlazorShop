@@ -2,6 +2,7 @@
 @attribute [Authorize]
 
 @inject IClotheService ClotheService
+@inject ICartService CartService
 
 <h3>Clothes Shop</h3>
 
@@ -42,17 +43,21 @@ else
                     {
                         <div class="col">
                             <div class="card shadow-sm">
-                                <img src="images/clothes/@clothe.ImagePath" class="img-fluid" alt="@clothe.ImageName" />
+                                <img src="images/clothes/@clothe.ImagePath" style="height: 350px;" class="img-fluid" alt="@clothe.ImageName" />
                                 <div class="card-body">
-                                    <p class="card-text">@clothe.Name</p>
-                                    <p class="card-text">@clothe.Description</p>
+                                    <p class="card-text name">@clothe.Name</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                @onclick="(async () => { await AddToCart(clothe); })">
+                                                Add To Cart
+                                            </button>
                                             <span style="margin-left: 15px;"></span>
-                                            <a href='clothes/view/@clothe.Id' class="btn btn-outline-dark" role="button">View Product</a>
+                                            <a href='clothes/view/@clothe.Id' class="btn btn-outline-dark" role="button">
+                                                View Product
+                                            </a>
                                         </div>
-                                    <small class="text-muted">$ @clothe.Price</small>
+                                    <small class="text-muted price">$ @clothe.Price</small>
                                     </div>
                                 </div>
                             </div>
@@ -80,6 +85,18 @@ else
         searchClothesData = clothesList;
     }
 
+    private async Task AddToCart(ClotheResponse clothe)
+    {
+        CartResponse cartItem = new();
+
+        cartItem.Name = clothe.Name;
+        cartItem.Price = clothe.Price;
+        cartItem.Amount = 1;
+        cartItem.ClotheId = clothe.Id;
+
+        await CartService.AddCart(cartItem);
+    }
+
     protected void FilterClothes()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -98,3 +115,40 @@ else
         clothesList = searchClothesData;
     }
 }
+
+<style>
+    .container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        font-family: "roboto", sans-serif;
+    }
+
+    .name {
+        font-family: "dosis";
+        font-size: 30px;
+        text-transform: capitalize;
+    }
+
+    .price {
+        font-size: 20px;
+        font-weight: 100;
+        margin-bottom: 1px;
+    }
+
+    .btn {
+        background: #eae3d2;
+        color: #292929;
+        border: none;
+        text-transform: capitalize;
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #eedbaf;
+    }
+</style>
