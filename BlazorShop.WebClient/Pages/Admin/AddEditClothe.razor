@@ -20,21 +20,21 @@
     <div class="mb-3">
         <label for="Description" class="form-label">Description</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="clothe.Description" />
+            <InputTextArea class="form-control" @bind-Value="clothe.Description" />
         </div>
         <ValidationMessage For="@(() => clothe.Description)" />
     </div>
     <div class="mb-3">
         <label for="Price" class="form-label">Price</label>
         <div class="col-md-4">
-            <InputNumber class="form-control" @bind-Value="clothe.Price" />
+            <InputNumber class="form-control" Min="1" @bind-Value="clothe.Price" />
         </div>
         <ValidationMessage For="@(() => clothe.Price)" />
     </div>
     <div class="mb-3">
         <label for="Amount" class="form-label">Amount</label>
         <div class="col-md-4">
-            <InputNumber class="form-control" @bind-Value="clothe.Amount" />
+            <InputNumber Min="1" class="form-control" @bind-Value="clothe.Amount" />
         </div>
         <ValidationMessage For="@(() => clothe.Amount)" />
     </div>
