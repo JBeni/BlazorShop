@@ -1,8 +1,4 @@
 
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using System.Net;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -101,24 +97,24 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseDeveloperExceptionPage();
-//    app.UseMigrationsEndPoint();
-//}
-//else
-//{
-//    app.UseExceptionHandler("/Error");
-//    app.UseHsts();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
 
 app.UseCors("EnableCORS");
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
 // Error about PII appears when this is enabled
 //app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
