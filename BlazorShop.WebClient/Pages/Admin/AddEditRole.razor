@@ -1,0 +1,61 @@
+﻿@page "/admin/roles/add"
+@page "/admin/roles/edit/{Id:int}"
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IRoleService RoleService
+@inject NavigationManager NavManager
+
+<h1>@Title Role</h1>
+<hr />
+
+<EditForm Model="@Role" OnValidSubmit="SaveRole">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="Role.Name" />
+        </div>
+        <ValidationMessage For="@(() => Role.Name)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected string Title = "Add";
+
+    public RoleResponse Role = new();
+
+    protected override void OnInitialized() { }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            Title = "Edit";
+            Role = await RoleService.GetRole(Id);
+        }
+    }
+
+    protected async Task SaveRole()
+    {
+        if (Role.Id != 0)
+        {
+            await RoleService.UpdateRole(Role);
+        }
+        else
+        {
+            await RoleService.AddRole(Role);
+        }
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavManager.NavigateTo("/admin/roles");
+    }
+}
