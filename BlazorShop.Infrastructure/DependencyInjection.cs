@@ -16,8 +16,8 @@
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IAppUserService, AppUserService>();
-            services.AddTransient<IAppRoleService, AppRoleService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
 
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEmailService, EmailService>();
