@@ -75,23 +75,6 @@ public class AuthenticationService : IAuthenticationService
         return new JwtAccessToken { Access_Token = result.Access_Token };
     }
 
-    public async Task<List<AppRoleResponse>> GetRoles()
-    {
-        var authResult = await _httpClient.GetAsync("AppRoles/roles");
-        var authContent = await authResult.Content.ReadAsStringAsync();
-
-        if (authResult.IsSuccessStatusCode == false)
-        {
-            return null;
-        }
-        var result = JsonSerializer.Deserialize<List<AppRoleResponse>>(
-                authContent,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
-
-        return result;
-    }
-
     public async Task Logout()
     {
         await _localStorage.RemoveItemAsync("authToken");

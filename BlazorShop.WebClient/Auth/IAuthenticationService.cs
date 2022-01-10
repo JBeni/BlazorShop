@@ -4,7 +4,6 @@
     {
         Task<JwtAccessToken> Login(LoginCommand userForAuthenticatrion);
         Task<JwtAccessToken> Register(RegisterCommand userForAuthenticatrion);
-        Task<List<AppRoleResponse>> GetRoles();
         Task Logout();
     }
 }
