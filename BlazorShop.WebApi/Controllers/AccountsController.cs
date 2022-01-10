@@ -66,10 +66,10 @@
         {
             var changeCommand = new ChangePasswordCommand
             {
-                UserId = _currentUserService.UserId,
+                UserId = int.Parse(_currentUserService.UserId),
                 OldPassword = _encryptionService.DecryptData(changePassword.OldPassword),
                 NewPassword = _encryptionService.DecryptData(changePassword.NewPassword),
-                NewConfirmPassword = _encryptionService.DecryptData(changePassword.NewConfirmPassword)
+                ConfirmNewPassword = _encryptionService.DecryptData(changePassword.ConfirmNewPassword)
             };
 
             var result = await Mediator.Send(changeCommand);
@@ -78,7 +78,7 @@
 
         [AllowAnonymous]
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPasswordUser([FromBody] ResetPasswordCommand resetPassword)
+        public async Task<IActionResult> ResetPasswordUser([FromForm] ResetPasswordCommand resetPassword)
         {
             var resetCommand = new ResetPasswordCommand
             {

@@ -9,7 +9,7 @@
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [HttpGet("home-page")]
+        [HttpGet("home")]
         public IActionResult Home()
         {
             return Ok("Index pahe working");
@@ -17,7 +17,7 @@
             //    new MediaTypeHeaderValue("text/html").ToString());
         }
 
-        [HttpGet("error-page")]
+        [HttpGet("error")]
         public IActionResult Error()
         {
             return Ok("Index pahe working");
