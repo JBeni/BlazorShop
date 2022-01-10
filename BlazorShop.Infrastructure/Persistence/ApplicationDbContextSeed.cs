@@ -41,7 +41,13 @@
             RoleManager<AppRole> roleManager,
             AdminSeedModel seedData)
         {
-            var admin = new AppUser { UserName = seedData.Email, Email = seedData.Email, FirstName = seedData.FirstName, LastName = seedData.LastName };
+            var admin = new AppUser
+            {
+                UserName = seedData.FirstName + " " + seedData.LastName,
+                Email = seedData.Email,
+                FirstName = seedData.FirstName,
+                LastName = seedData.LastName
+            };
             var adminRole = roleManager.Roles.Where(x => x.Name == seedData.RoleName).FirstOrDefault();
             if (adminRole == null) throw new Exception("The selected role does not exists.");
 
