@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthStateProvider
+@inject ICartService CartService
 
 <PageTitle>Blazor Shop</PageTitle>
 
@@ -19,9 +20,13 @@
                         <span class="oi oi-share-boxed" aria-hidden="true"></span> Register
                     </NavLink>
                 </NotAuthorized>
+
                 <Authorized>
                     Welcome @username
-                    <NavLink href="/cart" class="nav-link">Cart (0)</NavLink>
+                    <NavLink href="cart" class="nav-link">
+                        <i class="oi oi-cart"></i>
+                        Cart (<span>@counts</span>)
+                    </NavLink>
                 </Authorized>
             </AuthorizeView>
         </div>
@@ -34,6 +39,7 @@
 
 @code {
     private string username { get; set; }
+    protected int counts { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -42,5 +48,13 @@
 
         if (!user.Identity.IsAuthenticated) return;
         username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value;
+
+        counts = await GetCartCount();
+    }
+
+    private async Task<int> GetCartCount()
+    {
+        var cart = await CartService.GetCartCounts();
+        return cart > 0 ? cart : 0;
     }
 }
