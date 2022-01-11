@@ -2,6 +2,7 @@
 @attribute [Authorize]
 
 @inject IClotheService ClotheService
+@inject ICartService CartService
 
 <h3>View Clothe Details</h3>
 
@@ -21,7 +22,10 @@
                 <div class="btn-and-rating-box">
                     <a href="clothes" class="btn btn-outline-dark" role="button"> &#8592; Back to Product</a>
                     <span style="margin-left: 15px;"></span>
-                    <button class="btn">Add To Cart &#8594; </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                        @onclick="(async () => { await AddToCart(clothe); })">
+                        Add To Cart &#8594;
+                    </button>
                 </div>
             </div>
         </div>
@@ -41,6 +45,18 @@
         {
             clothe = await ClotheService.GetClothe(Id);
         }
+    }
+
+    private async Task AddToCart(ClotheResponse clothe)
+    {
+        CartResponse cartItem = new();
+
+        cartItem.Name = clothe.Name;
+        cartItem.Price = clothe.Price;
+        cartItem.Amount = 1;
+        cartItem.ClotheId = clothe.Id;
+
+        await CartService.AddCart(cartItem);
     }
 }
 
