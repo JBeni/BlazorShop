@@ -17,7 +17,6 @@ builder.Services.AddInfrastructureLayer(builder.Configuration);
 
 // Inject services
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-builder.Services.AddTransient<IEncryptionService, EncryptionService>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -52,6 +51,8 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
+// Stripe Configuration - Secret Key
+StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
 
 var app = builder.Build();
 

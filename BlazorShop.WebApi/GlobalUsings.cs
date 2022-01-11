@@ -16,6 +16,7 @@ global using Microsoft.AspNetCore.Mvc.Filters;
 global using BlazorShop.Application.Commands.UserCommand;
 global using BlazorShop.Application.Queries.UserQuery;
 global using MediatR;
+global using Stripe;
 global using Microsoft.AspNetCore.Authorization;
 global using BlazorShop.Application.Commands.OrderCommand;
 global using BlazorShop.Application.Queries.OrderQuery;
