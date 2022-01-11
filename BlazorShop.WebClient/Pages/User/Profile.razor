@@ -174,8 +174,11 @@
     private async Task UpdateUserEmail()
     {
         updateEmail.UserId = UserId;
-        await UserService.UpdateUserEmail(updateEmail);
-        updateEmail = new();
+        var result = await UserService.UpdateUserEmail(updateEmail);
+        if (result.Successful)
+        {
+            updateEmail = new();
+        }
     }
 
     private async Task UpdateUser()
