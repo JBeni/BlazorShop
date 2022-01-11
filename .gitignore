@@ -368,4 +368,4 @@ FodyWeavers.xsd
 .env.development
 
 # Remove Migrations
-/BlazorShop.Infrastructure/Migrations
+#BlazorShop.Infrastructure/Migrations
