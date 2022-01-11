@@ -13,7 +13,6 @@ global using System.Text;
 global using System.Security.Claims;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
-global using System.Security.Cryptography;
 global using BlazorShop.Application.Commands.UserCommand;
 global using BlazorShop.Application.Queries.UserQuery;
 global using MediatR;
