@@ -2,6 +2,7 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
+@implements IDisposable
 
 <PageTitle>Blazor Shop</PageTitle>
 
@@ -37,6 +38,7 @@
         </article>
     </main>
 </div>
+<BlazoredToasts />
 
 @code {
     private string username { get; set; }
@@ -44,6 +46,8 @@
 
     protected async override Task OnInitializedAsync()
     {
+        CartService.OnChange += StateHasChanged;
+
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -51,6 +55,11 @@
         username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value;
 
         counts = await GetCartCount();
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
     }
 
     private async Task<int> GetCartCount()
