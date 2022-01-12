@@ -2,8 +2,8 @@
 {
     public interface IAuthenticationService
     {
-        Task<JwtAccessToken> Login(LoginCommand userForAuthenticatrion);
-        Task<JwtAccessToken> Register(RegisterCommand userForAuthenticatrion);
+        Task<JwtTokenResponse> Login(LoginCommand userForAuthenticatrion);
+        Task<JwtTokenResponse> Register(RegisterCommand userForAuthenticatrion);
         Task Logout();
     }
 }

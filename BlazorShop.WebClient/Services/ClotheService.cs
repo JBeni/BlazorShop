@@ -3,10 +3,12 @@
     public class ClotheService : IClotheService
     {
         private readonly HttpClient _httpClient;
+        private readonly IToastService _toastService;
 
-        public ClotheService(HttpClient httpClient)
+        public ClotheService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
+            _toastService = toastService;
         }
 
         public async Task<List<ClotheResponse>> GetClothes()
@@ -18,6 +20,7 @@
                 authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+            if (!authResult.IsSuccessStatusCode) _toastService.ShowError("Something went wrong.");
 
             return result;
         }
@@ -30,23 +33,33 @@
                 authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+            if (!authResult.IsSuccessStatusCode) _toastService.ShowError("Something went wrong.");
 
             return result;
         }
 
         public async Task AddClothe(ClotheResponse clothe)
         {
-            await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
+            var response = await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
+
+            if (!response.IsSuccessStatusCode) _toastService.ShowError("Something went wrong.");
+            _toastService.ShowSuccess("The clothe was added.");
         }
 
         public async Task UpdateClothe(ClotheResponse clothe)
         {
-            await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
+            var response = await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
+
+            if (!response.IsSuccessStatusCode) _toastService.ShowError("Something went wrong.");
+            _toastService.ShowSuccess("The clothe was updated.");
         }
 
         public async Task DeleteClothe(int id)
         {
-            await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
+            var response = await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
+
+            if (!response.IsSuccessStatusCode) _toastService.ShowError("Something went wrong.");
+            _toastService.ShowSuccess("The clothe was deleted.");
         }
     }
 }

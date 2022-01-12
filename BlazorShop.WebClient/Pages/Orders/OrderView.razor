@@ -1,0 +1,89 @@
+﻿@page "/orders/view/{Id:int}"
+
+<h3>Order View</h3>
+
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+                    <div class="card-body p-5">
+                        <p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <p class="small text-muted mb-1">Date</p>
+                                <p>10 April 2021</p>
+                            </div>
+                            <div class="col mb-3">
+                                <p class="small text-muted mb-1">Order No.</p>
+                                <p>012j1gvs356c</p>
+                            </div>
+                        </div>
+
+                        <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                            <div class="row">
+                                <div class="col-md-8 col-lg-9">
+                                    <p>BEATS Solo 3 Wireless Headphones</p>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <p>£299.99</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-lg-9">
+                                    <p class="mb-0">Shipping</p>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <p class="mb-0">£33.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                                <p class="lead fw-bold mb-0" style="color: #f37a27;">£262.99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+}
+
+<style>
+    @@media (min-width: 1025px) {
+      .h-custom {
+        height: 100vh !important;
+      }
+    }
+
+    .horizontal-timeline .items {
+      border-top: 2px solid #ddd;
+    }
+
+    .horizontal-timeline .items .items-list {
+      position: relative;
+      margin-right: 0;
+    }
+
+    .horizontal-timeline .items .items-list:before {
+      content: "";
+      position: absolute;
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      background-color: #ddd;
+      top: 0;
+      margin-top: -5px;
+    }
+
+    .horizontal-timeline .items .items-list {
+      padding-top: 15px;
+    }
+</style>

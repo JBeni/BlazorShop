@@ -12,66 +12,55 @@
     </div>
 }
 
-@if (roles.Count == 0)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="auth-page">
-        <div class="container page">
-            <div class="row">
-                <div class="col-md-6 offset-md-3 col-xs-12">
-                    <h1 class="text-xs-center">Sign up</h1>
-                    <p class="text-xs-center">
-                        <a href="/login">Have an account?</a>
-                    </p>
-                    <form>
-                        <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="First Name" @bind="_registerCommand.FirstName" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="Last Name" @bind="_registerCommand.LastName" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="email" placeholder="Email" @bind="_registerCommand.Email" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <select class="form-control form-control-lg" @bind="_registerCommand.RoleName">
-                                <option value="">-- Select Role Name --</option>
-                                @foreach (var role in roles)
-                                {
-                                    <option value="@role.Name">@role.Name</option>
-                                }
-                            </select>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="password" placeholder="Password" @bind="@_registerCommand.Password" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input class="form-control form-control-lg" type="password" placeholder="Confirm Password" @bind="@_registerCommand.ConfirmPassword" />
-                        </fieldset>
-                        <button class="btn btn-lg btn-primary pull-xs-right" type="button" @onclick="@ExecuteRegister">
-                            Register
-                        </button>
-                    </form>
-                </div>
+<div class="auth-page">
+    <div class="container page">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-xs-12">
+                <h1 class="mb-3 text-xs-center">Sign up</h1>
+                <form>
+                    <fieldset class="mt-3 form-group">
+                        <input class="form-control form-control-lg" type="text" placeholder="First Name" @bind="_registerCommand.FirstName" />
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <input class="form-control form-control-lg" type="text" placeholder="Last Name" @bind="_registerCommand.LastName" />
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <input class="form-control form-control-lg" type="email" placeholder="Email" @bind="_registerCommand.Email" />
+                    </fieldset>
+@*
+                    <fieldset class="mt-3 form-group">
+                        <select class="form-control form-control-lg" @bind="_registerCommand.RoleName">
+                            <option value="">-- Select Role Name --</option>
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Name">@role.Name</option>
+                            }
+                        </select>
+                    </fieldset>
+*@
+                    <fieldset class="mt-3 form-group">
+                        <input class="form-control form-control-lg" type="password" placeholder="Password" @bind="@_registerCommand.Password" />
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <input class="form-control form-control-lg" type="password" placeholder="Confirm Password" @bind="@_registerCommand.ConfirmPassword" />
+                    </fieldset>
+                    <button class="mt-3 btn btn-lg btn-primary pull-xs-right" type="button" @onclick="@ExecuteRegister">
+                        Register
+                    </button>
+                </form>
             </div>
         </div>
     </div>
-}
+</div>
 
 @code {
     private RegisterCommand _registerCommand = new();
-    protected List<RoleResponse> roles = new();
 
     private bool showAuthenticationError = false;
     private string authenticationErrorText = "";
 
     protected override async Task OnInitializedAsync()
     {
-        roles = await RoleService.GetRoles();
-
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
         if (user.Identity.IsAuthenticated)

@@ -1,5 +1,6 @@
 ﻿@page "/verifyauth"
-@attribute [Authorize]
+
+@attribute [Authorize(Policy = "Admin")]
 
 <h3>Verify Auth</h3>
 

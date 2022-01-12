@@ -15,15 +15,24 @@
             </NavLink>
         </div>
 
-@*        <AuthorizeView Policy="User">*@
-        <AuthorizeView>
+        <AuthorizeView Policy="Customer">
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="profile">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> User Profile
                     </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Policy="Customer">
+            <Authorized>
+                <div class="nav-item px-3">
                     <NavLink class="nav-link" href="clothes">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes Shop
+                    </NavLink>
+                    <NavLink class="nav-link" href="orders">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Orders
                     </NavLink>
                 </div>
             </Authorized>
@@ -41,11 +50,6 @@
 
         <AuthorizeView Policy="Admin">
             <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="admin" Match="NavLinkMatch.All">
-                        <span class="oi oi-list-rich" aria-hidden="true"></span> Admin
-                    </NavLink>
-                </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="admin/users">
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Users
@@ -66,7 +70,7 @@
 
         <AuthorizeView>
             <Authorized>
-                <div class="nav-item px-3" style=" position: fixed; bottom: 0;">
+                <div class="col-md-8 nav-item px-3" style=" position: fixed; bottom: 0;">
                     <NavLink class="nav-link" href="logout">
                         <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
                     </NavLink>
