@@ -26,30 +26,30 @@ builder.Services.AddControllers(options =>
 
 // Add JWT TOKEN Settings
 builder.Services.AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["JwtToken:Issuer"];
-    options.Audience = builder.Configuration["JwtToken:Audience"];
-    options.RequireHttpsMetadata = true;
-    options.SaveToken = true;
-
-    options.TokenValidationParameters = new TokenValidationParameters
     {
-        ClockSkew = TimeSpan.FromMinutes(5),
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
-        RequireSignedTokens = true,
-        RequireExpirationTime = true,
-        ValidateLifetime = true,
-        ValidateAudience = true,
-        ValidateIssuer = true,
-        ValidAudience = builder.Configuration["JwtToken:Audience"],
-        ValidIssuer = builder.Configuration["JwtToken:Issuer"]
-    };
-});
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.Audience = builder.Configuration["JwtToken:Audience"];
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ClockSkew = TimeSpan.FromMinutes(5),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
+            RequireSignedTokens = true,
+            RequireExpirationTime = true,
+            ValidateLifetime = true,
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidAudience = builder.Configuration["JwtToken:Audience"],
+            ValidIssuer = builder.Configuration["JwtToken:Issuer"]
+        };
+    });
+
 
 // Stripe Configuration - Secret Key
 StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
@@ -89,6 +89,7 @@ using (var scope = app.Services.CreateScope())
 
         await ApplicationDbContextSeed.SeedRolesAsync(roleManager, rolesSeed);
         await ApplicationDbContextSeed.SeedAdminUserAsync(userManager, roleManager, adminSeed);
+        await ApplicationDbContextSeed.SeedClothesDataAsync(context);
     }
     catch (Exception ex)
     {
@@ -111,11 +112,12 @@ else
 
 app.UseCors("EnableCORS");
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
-// Error about PII appears when this is enabled
-//app.UseAuthentication();
+//app.UseMiddleware<JwtTokenMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
@@ -126,4 +128,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.Run();
+await app.RunAsync();
