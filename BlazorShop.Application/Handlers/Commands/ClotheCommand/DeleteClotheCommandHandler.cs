@@ -13,7 +13,7 @@
         {
             try
             {
-                var entity = _dbContext.Clothes.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Clothes.SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
                 entity.IsActive = false;
 
                 _dbContext.Clothes.Update(entity);
