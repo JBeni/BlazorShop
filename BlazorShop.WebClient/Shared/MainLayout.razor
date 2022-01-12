@@ -2,6 +2,7 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
+@inject HttpClient httpClient
 @implements IDisposable
 
 <PageTitle>Blazor Shop</PageTitle>
@@ -22,13 +23,21 @@
                         <span class="oi oi-share-boxed" aria-hidden="true"></span> Register
                     </NavLink>
                 </NotAuthorized>
+            </AuthorizeView>
 
+            <AuthorizeView Policy="Customer">
                 <Authorized>
                     Welcome @username
                     <NavLink href="cart" class="nav-link">
                         <i class="oi oi-cart"></i>
                         Cart (<span>@counts</span>)
                     </NavLink>
+                </Authorized>
+            </AuthorizeView>
+
+            <AuthorizeView Policy="Admin">
+                <Authorized>
+                    Welcome @username
                 </Authorized>
             </AuthorizeView>
         </div>
@@ -38,7 +47,16 @@
         </article>
     </main>
 </div>
-<BlazoredToasts />
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="10"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorClass="error-toast-override"
+                ErrorIcon="fa fa-bug"
+                />
+
 
 @code {
     private string username { get; set; }
@@ -46,15 +64,20 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await httpClient.GetAsync("Home/test");
         CartService.OnChange += StateHasChanged;
 
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value;
+        username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value.Replace("@", " ");
 
-        counts = await GetCartCount();
+        var isAdmin = user.Claims.FirstOrDefault(x => x.Type == "role").Value;
+        if (!isAdmin.Equals("Admin"))
+        {
+            counts = await GetCartCount();            
+        }
     }
 
     public void Dispose()
