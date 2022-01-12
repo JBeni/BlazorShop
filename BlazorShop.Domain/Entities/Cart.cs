@@ -7,5 +7,6 @@
         public int Amount { get; set; }
 
         public Clothe? Clothe { get; set; }
+        public AppUser? User { get; set; }
     }
 }
