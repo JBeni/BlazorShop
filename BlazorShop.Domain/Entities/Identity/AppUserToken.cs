@@ -2,6 +2,6 @@
 {
     public class AppUserToken : IdentityUserToken<int>
     {
-        public int Id { get; set; }
+        public virtual AppUser User { get; set; }
     }
 }

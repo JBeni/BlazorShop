@@ -6,6 +6,9 @@
         public string? LastName { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual ICollection<AppRole>? Roles { get; set; }
+        public virtual ICollection<AppUserToken> UserTokens { get; set; }
+        public virtual ICollection<AppUserRole> Roles { get; set; }
+        public virtual ICollection<AppUserLogin> Logins { get; set; }
+        public virtual ICollection<AppUserClaim> Claims { get; set; }
     }
 }
