@@ -16,7 +16,7 @@
             try
             {
                 var result = _dbContext.Clothes
-                    .Where(x => x.Id == request.Id)
+                    .Where(x => x.Id == request.Id && x.IsActive == true)
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
                 return Task.FromResult(result);
@@ -25,7 +25,7 @@
             {
                 return Task.FromResult(new ClotheResponse
                 {
-                    Error = "There was an error while getting the orders... " + ex.Message ?? ex.InnerException.Message
+                    Error = "There was an error while getting the clothe by id... " + ex.Message ?? ex.InnerException.Message
                 });
             }
         }

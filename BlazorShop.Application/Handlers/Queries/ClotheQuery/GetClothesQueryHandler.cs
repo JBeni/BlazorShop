@@ -16,6 +16,7 @@
             try
             {
                 var result = _dbContext.Clothes
+                    .Where(x => x.IsActive == true)
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .ToList();
                 return Task.FromResult(result);
@@ -25,7 +26,7 @@
                 List<ClotheResponse> ordersView = new();
                 ordersView.Add(new ClotheResponse
                 {
-                    Error = "There was an error while getting the orders... " + ex.Message ?? ex.InnerException.Message
+                    Error = "There was an error while getting the clothes... " + ex.Message ?? ex.InnerException.Message
                 });
                 return Task.FromResult(ordersView);
             }
