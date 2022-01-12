@@ -57,14 +57,14 @@
         {
             var emailSettings = new EmailSettings
             {
-                Host = _configuration["EmailSettings:Host"],
-                Port = int.Parse(_configuration["EmailSettings:Port"]),
-                Subject = _configuration["EmailSettings:Subject"],
-                Message = _configuration["EmailSettings:Message"],
-                Username = _configuration["EmailSettings:Username"],
-                Password = _configuration["EmailSettings:Password"]
+                Host = _configuration["BusinessEmail:Host"],
+                Port = int.Parse(_configuration["BusinessEmail:Port"]),
+                Subject = _configuration["BusinessEmail:Subject"],
+                Message = _configuration["BusinessEmail:Message"],
+                Username = _configuration["BusinessEmail:Username"],
+                Password = _configuration["BusinessEmail:Password"]
             };
-            await _emailService.SendEmail(resetPassword.Email, emailSettings);
+            //await _emailService.SendEmail(resetPassword.Email, emailSettings);
 
             var result = await Mediator.Send(resetPassword);
             return result.Successful == true

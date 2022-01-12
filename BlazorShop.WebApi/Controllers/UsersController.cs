@@ -2,6 +2,7 @@
 {
     public class UsersController : ApiControllerBase
     {
+        [Authorize(Roles = "Admin")]
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
@@ -9,6 +10,7 @@
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
@@ -16,6 +18,7 @@
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpPut("userEmail")]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
         {
@@ -23,6 +26,7 @@
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("user/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -30,13 +34,7 @@
             return Ok(result);
         }
 
-        [HttpPost("user")]
-        public async Task<IActionResult> AssignUserToRole([FromQuery] AssignUserToRoleCommand command)
-        {
-            var result = await Mediator.Send(command);
-            return Ok(result);
-        }
-
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -44,6 +42,7 @@
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {

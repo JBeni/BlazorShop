@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : ApiControllerBase
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -9,18 +10,24 @@
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [HttpGet("test")]
+        public IActionResult Index()
+        {
+            return Ok();
+        }
+
         [HttpGet("home")]
         public IActionResult Home()
         {
-            return Ok("Index pahe working");
-            //return new PhysicalFileResult(Path.Combine(_webHostEnvironment.ContentRootPath, "Views/Home.html"),
-            //    new MediaTypeHeaderValue("text/html").ToString());
+            return new PhysicalFileResult(Path.Combine(_webHostEnvironment.ContentRootPath, "Views/Home.html"),
+                new MediaTypeHeaderValue("text/html").ToString());
         }
 
         [HttpGet("error")]
         public IActionResult Error()
         {
-            return Ok("Index pahe working");
+            return new PhysicalFileResult(Path.Combine(_webHostEnvironment.ContentRootPath, "Views/Error.html"),
+                new MediaTypeHeaderValue("text/html").ToString());
         }
     }
 }

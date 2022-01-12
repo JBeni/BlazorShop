@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : ApiControllerBase
     {
         [HttpPost("role")]

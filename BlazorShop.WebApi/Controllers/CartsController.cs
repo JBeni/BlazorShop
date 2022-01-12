@@ -1,5 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
+    [Authorize(Roles = "User, Default")]
     public class CartsController : ApiControllerBase
     {
         [HttpPost("cart")]
@@ -23,6 +24,13 @@
             return Ok(result);
         }
 
+        [HttpDelete("carts")]
+        public async Task<IActionResult> DeleteAllCarts()
+        {
+            var result = await Mediator.Send(new DeleteAllCartsCommand { });
+            return Ok(result);
+        }
+
         [HttpGet("cart/{id}")]
         public async Task<IActionResult> GetCart(int id)
         {
@@ -37,6 +45,7 @@
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("count")]
         public async Task<IActionResult> GetCartsCount()
         {
