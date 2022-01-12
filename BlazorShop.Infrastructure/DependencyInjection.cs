@@ -36,8 +36,12 @@
             builder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
             builder.AddRoles<AppRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-            //services.AddAuthentication();
-            //services.AddAuthorization(options => options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
+            services.AddAuthorizationCore(config =>
+            {
+                config.AddPolicy("Admin", policy => policy.RequireRole(ClaimTypes.Role, "Admin"));
+                config.AddPolicy("User", policy => policy.RequireRole(ClaimTypes.Role, "User"));
+                config.AddPolicy("Default", policy => policy.RequireRole(ClaimTypes.Role, "Default"));
+            });
 
             return services;
         }
