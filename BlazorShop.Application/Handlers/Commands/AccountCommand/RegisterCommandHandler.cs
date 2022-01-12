@@ -17,7 +17,7 @@
             }
             catch (Exception ex)
             {
-                return JwtTokenResponse.Error(new Exception("There was an error register the user", ex));
+                return JwtTokenResponse.Error(new Exception("There was an error when the user tried to register", ex));
             }
         }
     }

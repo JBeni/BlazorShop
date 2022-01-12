@@ -17,7 +17,7 @@
             }
             catch (Exception ex)
             {
-                return JwtTokenResponse.Error(new Exception("There was an error login the user", ex));
+                return JwtTokenResponse.Error(new Exception("There was an error when the user tried to log in", ex));
             }
         }
     }
