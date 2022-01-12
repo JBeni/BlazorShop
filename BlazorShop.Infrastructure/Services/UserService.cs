@@ -25,7 +25,7 @@
             if (existUser != null) throw new Exception("The user with the unique identifier already exists");
             var newUser = new AppUser
             {
-                UserName = command.FirstName + " " + command.LastName,
+                UserName = command.FirstName + "@" + command.LastName,
                 Email = command.Email,
                 FirstName = command.FirstName,
                 LastName = command.LastName,
@@ -99,7 +99,7 @@
             var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.Id && u.IsActive == true);
             if (existUser == null) throw new Exception("The user does not exists");
 
-            existUser.UserName = command.FirstName + " " + command.LastName;
+            existUser.UserName = command.FirstName + "@" + command.LastName;
             existUser.FirstName = command.FirstName;
             existUser.LastName = command.LastName;
 

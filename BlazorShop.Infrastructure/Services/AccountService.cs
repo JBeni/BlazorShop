@@ -28,7 +28,7 @@
             }
             if (!await _userManager.CheckPasswordAsync(user, changePassword.OldPassword))
             {
-                throw new Exception("The credential is not valid");
+                throw new Exception("The credentials are not valid");
             }
             if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
             {
@@ -58,7 +58,7 @@
             var userRole = await _AppUserService.GetUserRoleAsync(user);
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, userRole[0]),
                 new Claim("UserId", user.Id.ToString()),
@@ -106,7 +106,7 @@
             {
                 var newUser = new AppUser
                 {
-                    UserName = register.FirstName + " " + register.LastName,
+                    UserName = register.FirstName + "@" + register.LastName,
                     Email = register.Email,
                     FirstName = register.FirstName,
                     LastName = register.LastName,
@@ -117,7 +117,8 @@
                 }
 
                 await _userManager.CreateAsync(newUser, register.Password);
-                var role = await _AppRoleService.FindRoleByNameAsync(register.RoleName);
+
+                var role = await _AppRoleService.FindRoleByNameAsync("Default");
                 if (role == null) throw new Exception("The role does not exist");
 
                 await _AppRoleService.SetUserRoleAsync(newUser, role.Name);
@@ -141,7 +142,8 @@
                 throw new Exception("Passwords do not match");
             }
 
-            await _userManager.ResetPasswordAsync(user, resetPassword.TokenReset, resetPassword.NewPassword);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
             return RequestResponse.Success();
         }
     }
