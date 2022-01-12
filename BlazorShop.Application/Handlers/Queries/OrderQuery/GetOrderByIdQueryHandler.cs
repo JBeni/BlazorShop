@@ -25,7 +25,7 @@
             {
                 return Task.FromResult(new OrderResponse
                 {
-                    Error = "There was an error while getting the order... " + ex.Message ?? ex.InnerException.Message
+                    Error = "There was an error while getting the order by id... " + ex.Message ?? ex.InnerException.Message
                 });
             }
         }
