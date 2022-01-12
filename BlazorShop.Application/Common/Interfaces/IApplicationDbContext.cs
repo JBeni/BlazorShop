@@ -4,7 +4,7 @@
     {
         DbSet<Clothe> Clothes { get; set; }
         DbSet<Order> Orders { get; set; }
-        DbSet<Product> Products { get; set; }
+        DbSet<Cart> Carts { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
