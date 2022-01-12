@@ -10,12 +10,14 @@
     <div class="input-group col">
         <input type="text" class="form-control" placeholder="Search clothe by name"
             @bind="SearchString" @bind:event="oninput" @onkeyup="FilterClothes" />
-        <div class="input-group-append" style="margin-left: 15px;">
-            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
-                <i class="fas fa-times"></i>
-                Reset Filter
-            </button>
-        </div>
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-info" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
     </div>
 </div>
 <br />

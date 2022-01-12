@@ -1,5 +1,6 @@
 ﻿@page "/profile"
 
+@*@attribute [Authorize(Policy = "User")]*@
 @attribute [Authorize]
 
 @inject AuthenticationStateProvider AuthStateProvider

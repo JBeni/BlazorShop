@@ -1,124 +1,13 @@
 ﻿@page "/"
 
-@inject IToastService toastService
+<h1>Welcome to your new app.</h1>
 
 <AuthorizeView>
     <Authorized>
-        <section class="work">
-            <div class="title reveal">
-                <a href="clothes" style="text-decoration:none;">
-                    <h2 class="section-title">Shop Items</h2>
-                </a>
-            </div>
-            <div class="content">
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/category-2.jpg" alt="image">
-                    </div>
-                </div>
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/product-12.jpg" alt="image">
-                    </div>
-                </div>
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/category-1.jpg" alt="image">
-                    </div>
-                </div>
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/product-7.jpg" alt="image">
-                    </div>
-                </div>
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/product-4.jpg" alt="image">
-                    </div>
-                </div>
-                <div class="card reveal">
-                    <div class="card-img">
-                        <img src="images/clothes/product-6.jpg" alt="image">
-                    </div>
-                </div>
-            </div>
-        </section>
+        <h3>You are logged in</h3>
+        <h1>The user @context.User.Claims.FirstOrDefault(x => x.Type == "email").Value is authorized</h1>
     </Authorized>
-
     <NotAuthorized>
         <h3>The user is not authorized</h3>
-        <br/>
-
-        <h2>Toast Demo</h2>
-        <p>To show a toast just click one of the buttons below.</p>
-
-        <button class="btn btn-info" @onclick="@(() => toastService.ShowInfo("I'm an INFO message"))">Info Toast</button>
-        <button class="btn btn-success" @onclick="@(() => toastService.ShowSuccess("I'm a SUCCESS message with a custom title", "Congratulations!"))">Success Toast</button>
-        <button class="btn btn-warning" @onclick="@(() => toastService.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
-        <button class="btn btn-danger" @onclick="@(() => toastService.ShowError("I'm an ERROR message"))">Error Toast</button>
     </NotAuthorized>
 </AuthorizeView>
-
-<style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    section {
-        margin-top: 35px;
-        padding: 10px 25px;
-    }
-
-    .title {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .title p {
-      font-size: 1em;
-      width: 80%;
-    }
-
-    .work .content {
-      display: flex;
-      justify-content: center;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    .work .content .card {
-      width: 340px;
-      margin: 15px;
-    }
-
-    .work .content .card .card-img {
-      position: relative;
-      width: 100%;
-      height: 260px;
-      overflow: hidden;
-      border-radius: 10px;
-    }
-
-    .work .content .card .card-img img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-      transition: 0.5s ease;
-    }
-
-    .work .content .card .card-img img:hover {
-      transform: scale(1.2);
-    }
-</style>
