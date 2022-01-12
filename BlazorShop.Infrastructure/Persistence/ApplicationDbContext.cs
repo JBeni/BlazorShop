@@ -17,7 +17,6 @@
 
         public DbSet<Clothe> Clothes { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -47,7 +46,13 @@
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            builder.ApplyConfiguration(new AppRoleClaimConfiguration());
+            builder.ApplyConfiguration(new AppUserConfiguration());
+            builder.ApplyConfiguration(new AppRoleConfiguration());
+            builder.ApplyConfiguration(new AppUserClaimConfiguration());
+            builder.ApplyConfiguration(new AppUserLoginConfiguration());
             builder.ApplyConfiguration(new AppUserRoleConfiguration());
+            builder.ApplyConfiguration(new AppUserTokenConfiguration());
         }
     }
 }

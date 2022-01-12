@@ -43,96 +43,146 @@
         {
             var admin = new AppUser
             {
-                UserName = seedData.FirstName + " " + seedData.LastName,
+                UserName = seedData.FirstName + "@" + seedData.LastName,
                 Email = seedData.Email,
                 FirstName = seedData.FirstName,
-                LastName = seedData.LastName
+                LastName = seedData.LastName,
+                IsActive = true,
             };
             var adminRole = roleManager.Roles.Where(x => x.Name == seedData.RoleName).FirstOrDefault();
             if (adminRole == null) throw new Exception("The selected role does not exists.");
 
-            if (userManager.Users.All(u => u.UserName != admin.UserName))
+            if (userManager.Users.All(u => u.Email != admin.Email))
             {
                 await userManager.CreateAsync(admin, seedData.Password);
                 await userManager.AddToRoleAsync(admin, adminRole.Name);
             }
         }
 
-        public static async Task SeedProductDataAsync(ApplicationDbContext context)
+        public static async Task SeedClothesDataAsync(ApplicationDbContext context)
         {
-            if (!context.Products.Any())
+            if (!context.Clothes.Any())
             {
-                context.Products.Add(new Product {
-                    Name = "Nike Air",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(900.99),
-                });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Puma lower",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(230.99),
+                    Name = "Jeans 1",
+                    Description = "asdsad sdasd sad asd dsa",
+                    Price = new decimal(344.00), Amount = 12,
+                    ImageName = "buy-3",
+                    ImagePath = "buy-3.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Dickson Extra",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(130.99),
+                    Name = "Shoes 1",
+                    Description = "sadf adas das dasdasd",
+                    Price = new decimal(412.00),
+                    Amount = 3,
+                    ImageName = "category-1",
+                    ImagePath = "category-1.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Shoes",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(850.99),
+                    Name = "Shoes 3",
+                    Description = "as asd asd asdsa d asdas asda sdasd",
+                    Price = new decimal(702.00),
+                    Amount = 16,
+                    ImageName = "category-2",
+                    ImagePath = "category-2.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Adidas",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(150.99),
+                    Name = "Shoes 4",
+                    Description = "adsa sdas das das das dasdasd asdasdasd",
+                    Price = new decimal(353.00),
+                    Amount = 6,
+                    ImageName = "product-2",
+                    ImagePath = "product-2.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Reebok version 3",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(458.99),
+                    Name = "Jeans 2",
+                    Description = "dasd asd asdas dasdasdasdasd asdasdasdasd",
+                    Price = new decimal(1243.00),
+                    Amount = 13,
+                    ImageName = "product-3",
+                    ImagePath = "product-3.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Extra Nike",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(450.99),
+                    Name = "T-shirt 1",
+                    Description = "fdg dfgdfgdf gdf gdfgdfdfg df",
+                    Price = new decimal(223.00),
+                    Amount = 10,
+                    ImageName = "product-4",
+                    ImagePath = "product-4.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe 
                 {
-                    Name = "Double size",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(40.99),
+                    Name = "Shoes 5",
+                    Description = "as asd as  sadas sad sa sd asdas",
+                    Price = new decimal(456.00),
+                    Amount = 3,
+                    ImageName = "product-5",
+                    ImagePath = "product-5.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Third Puma",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(341),
+                    Name = "T-shirt 2",
+                    Description = "sdf sdfsd sd dsf sdf sd fsdfds",
+                    Price = new decimal(324.00),
+                    Amount = 4,
+                    ImageName = "product-6",
+                    ImagePath = "product-6.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe 
                 {
-                    Name = "Undoubtable",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(234),
+                    Name = "Socks",
+                    Description = "df fdg fdg dfg dfgdfgdfgfdgdfg",
+                    Price = new decimal(106.00),
+                    Amount = 8,
+                    ImageName = "product-7",
+                    ImagePath = "product-7.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Nike air max v11",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(250),
+                    Name = "Shoes 6",
+                    Description = "fdsf sdf sdfsdfsd sd sdf sdf sdfsd fsdf d  dfd fd d fd",
+                    Price = new decimal(353.00),
+                    Amount = 5,
+                    ImageName = "product-10",
+                    ImagePath = "product-10.jpg",
+                    IsActive = true
                 });
-                context.Products.Add(new Product
+                context.Clothes.Add(new Clothe
                 {
-                    Name = "Nike sneakers",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum optio natus quibusdam ea nam odit vitae id unde officia.",
-                    Price = new decimal(120.99),
+                    Name = "Shoes 7",
+                    Description = "asd asd asdf fg  hsd sdfs fdsg fg hsd",
+                    Price = new decimal(765.00),
+                    Amount = 8,
+                    ImageName = "product-11",
+                    ImagePath = "product-11.jpg",
+                    IsActive = true
                 });
+                context.Clothes.Add(new Clothe
+                {
+                    Name = "Jeans 3",
+                    Description = "as  asd asd fgf ds sd fds sdf sfsd sdfsdf",
+                    Price = new decimal(867.00),
+                    Amount = 17,
+                    ImageName = "product-12",
+                    ImagePath = "  product-12.jpg",
+                    IsActive = true
+                });
+
                 await context.SaveChangesAsync();
             }
         }
