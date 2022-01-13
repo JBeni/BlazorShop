@@ -1,6 +1,5 @@
 ﻿@page "/profile"
 
-@*@attribute [Authorize(Policy = "User")]*@
 @attribute [Authorize]
 
 @inject AuthenticationStateProvider AuthStateProvider
@@ -75,36 +74,56 @@
             </div>
         </div>
 
-        <div class="col-md-4" style="margin-left: 35px;">
+        <div class="col-md-4" style="margin-left: 35px; margin-top: -10px;">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="text-right">Change Password</h4>
                 </div>
                 <br/>
-                <EditForm Model="@password" OnValidSubmit="ChangePassword">
+                <EditForm Model="@changePassword" OnValidSubmit="ChangePassword">
                     <DataAnnotationsValidator />
                     <div class="mb-3">
                         <label for="OldPassword" class="form-label">Old Password</label>
                         <div class="col-md-12">
-                            <InputText class="form-control" @bind-Value="password.OldPassword" />
+                            <InputText type="password" class="form-control" @bind-Value="changePassword.OldPassword" />
                         </div>
-                        <ValidationMessage For="@(() => password.OldPassword)" />
+                        <ValidationMessage For="@(() => changePassword.OldPassword)" />
+                        @if (oldPasswordError.Length > 0)
+                        {
+                            <div role="alert">
+                                <p class="alert alert-danger">@oldPasswordError</p>
+                            </div>
+                        }
                     </div>
                     <div class="mb-3">
                         <label for="NewPassword" class="form-label">New Password</label>
                         <div class="col-md-12">
-                            <InputText class="form-control" @bind-Value="password.NewPassword" />
+                            <InputText type="password" class="form-control" @bind-Value="changePassword.NewPassword" />
                         </div>
-                        <ValidationMessage For="@(() => password.NewPassword)" />
+                        <ValidationMessage For="@(() => changePassword.NewPassword)" />
+                        @if (newPasswordError.Length > 0)
+                        {
+                            <div role="alert">
+                                <p class="alert alert-danger">@newPasswordError</p>
+                            </div>
+                        }
                     </div>
                     <div class="mb-3">
                         <label for="ConfirmNewPassword" class="form-label">Confirm New Password</label>
                         <div class="col-md-12">
-                            <InputText class="form-control" @bind-Value="password.ConfirmNewPassword" />
+                            <InputText type="password" class="form-control" @bind-Value="changePassword.ConfirmNewPassword" />
                         </div>
-                        <ValidationMessage For="@(() => password.ConfirmNewPassword)" />
+                        <ValidationMessage For="@(() => changePassword.ConfirmNewPassword)" />
+                        @if (newConfirmPasswordError.Length > 0)
+                        {
+                            <div role="alert">
+                                <p class="alert alert-danger">@newConfirmPasswordError</p>
+                            </div>
+                        }
                     </div>
-                    <button class="btn btn-primary profile-button" type="submit">Change Password</button>
+                    <div class="text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Change Password</button>
+                    </div>
                 </EditForm>
             </div>
         </div>
@@ -127,21 +146,33 @@
                             <InputText class="form-control" @bind-Value="updateEmail.Email" />
                         </div>
                         <ValidationMessage For="@(() => updateEmail.Email)" />
-                    </div>
+                        @if (emailError.Length > 0)
+                        {
+                            <div class="col-md-10" role="alert">
+                                <p class="alert alert-danger">@emailError</p>
+                            </div>
+                        }
+                   </div>
                     <div class="mb-3" style="margin-left: 15px;">
                         <label for="NewEmail" class="form-label">New Email</label>
                         <div class="col-md-10">
-                            <InputText class="form-control" @bind-Value="updateEmail.NewEmail" />
+                            <InputText type="email" class="form-control" @bind-Value="updateEmail.NewEmail" />
                         </div>
                         <ValidationMessage For="@(() => updateEmail.NewEmail)" />
+                        @if (newEmailError.Length > 0)
+                        {
+                            <div class="col-md-10" role="alert">
+                                <p class="alert alert-danger">@newEmailError</p>
+                            </div>
+                        }
                     </div>
                 </EditForm>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"
-                        @onclick="(async () => { await UpdateUserEmail(); ModalOk(); })">
-                        Change Password
+                    <button type="button" class="btn btn-primary"
+                        @onclick="(async () => { await UpdateUserEmail(); })">
+                        Update Email
                     </button>
-                    <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                    <button type="button" class="btn btn-light" @onclick="@ModalCancel">Cancel</button>
                 </div>
             </div>
         </div>
@@ -154,11 +185,17 @@
 
     void ModalShow() => showModal = true;
     void ModalCancel() => showModal = false;
-    void ModalOk() => showModal = false;
 
     protected UserResponse userData = new();
-    protected ChangePasswordCommand password = new();
+    protected ChangePasswordCommand changePassword = new();
     protected UpdateUserEmailCommand updateEmail = new();
+
+    private string emailError = "";
+    private string newEmailError = "";
+
+    private string oldPasswordError = "";
+    private string newPasswordError = "";
+    private string newConfirmPasswordError = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -173,11 +210,19 @@
 
     private async Task UpdateUserEmail()
     {
-        updateEmail.UserId = UserId;
-        var result = await UserService.UpdateUserEmail(updateEmail);
-        if (result.Successful)
+        if (CheckUpdateEmailFormValidation())
         {
-            updateEmail = new();
+            updateEmail.UserId = UserId;
+            var result = await UserService.UpdateUserEmail(updateEmail);
+            if (result.Successful)
+            {
+                updateEmail = new();
+                showModal = false;
+            }
+        }
+        else
+        {
+            showModal = true;
         }
     }
 
@@ -191,15 +236,76 @@
 
     private async Task ChangePassword()
     {
-        if (
-            password.OldPassword.Length > 6 &&
-            password.NewPassword.Length > 6 &&
-            password.NewPassword.Equals(password.ConfirmNewPassword)
-           )
+        if (CheckChangePasswordFormValidation())
         {
-            password.UserId = UserId;
-            await AccountService.ChangePassword(password);
-            password = new();
+            if (
+                changePassword.OldPassword.Length > 6 &&
+                changePassword.NewPassword.Length > 6 &&
+                changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword)
+               )
+            {
+                changePassword.UserId = UserId;
+                await AccountService.ChangePassword(changePassword);
+                changePassword = new();
+            }
         }
+    }
+
+    private bool CheckUpdateEmailFormValidation()
+    {
+        var isValid = true;
+        emailError = "";  newEmailError = "";
+
+        if (updateEmail.Email == null || updateEmail.Email?.Trim().Length < 6)
+        {
+            emailError = "The email must contain at least 6 characters.";
+            isValid = false;
+        }
+        else if (!new EmailAddressAttribute().IsValid(updateEmail.Email?.Trim()))
+        {
+            emailError = "The email must be a valid email address.";
+            isValid = false;
+        }
+        if (updateEmail.NewEmail == null || updateEmail.NewEmail?.Trim().Length < 6)
+        {
+            newEmailError = "The email must contain at least 6 characters.";
+            isValid = false;
+        }
+        else if (!new EmailAddressAttribute().IsValid(updateEmail.NewEmail?.Trim()))
+        {
+            newEmailError = "The email must be a valid email address.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private bool CheckChangePasswordFormValidation()
+    {
+        var isValid = true;
+        oldPasswordError = "";  newPasswordError = ""; newConfirmPasswordError = "";
+
+        if (changePassword.OldPassword == null || changePassword.OldPassword?.Trim().Length < 6)
+        {
+            oldPasswordError = "The password must contain at least 6 characters.";
+            isValid = false;
+        }
+        if (changePassword.NewPassword == null || changePassword.NewPassword?.Trim().Length < 6)
+        {
+            newPasswordError = "The password must contain at least 6 characters.";
+            isValid = false;
+        }
+        if (changePassword.ConfirmNewPassword == null)
+        {
+            newConfirmPasswordError = "The confirm password must not be empty.";
+            isValid = false;
+        }
+        else if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
+        {
+            newConfirmPasswordError = "The passwords do not match.";
+            isValid = false;
+        }
+
+        return isValid;
     }
 }
