@@ -7,5 +7,9 @@
 * Authentication with JwtBearer Token from Identity.Core
 * Authorization based on Roles containing Customer/Admin Areas
 
-
+* Features
+  * Stripe Checkout
+  * Admin Manager
+  * CRUD Cart
+  * View Orders
 
