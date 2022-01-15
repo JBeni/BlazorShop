@@ -1,0 +1,80 @@
+﻿@page "/orders"
+
+@attribute [Authorize(Policy = "Customer")]
+
+@inject ICartService CartService
+@inject NavigationManager NavigationManager
+
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <img class="me-3" src="images/orders.png" alt="orders" width="58" height="38">
+        <div class="lh-1">
+            <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Orders</h1>
+        </div>
+    </div>
+
+    <div class="my-3 p-3 rounded shadow-sm">
+        <div class="d-flex text-muted pt-3">
+            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/order.jpg" alt="orders" width="55">
+
+            <p class="col-md-10 pb-3 mb-0 small">
+                <strong class="d-block text-gray-dark">username</strong>
+                Some representative placeholder content, with some information about this user.
+                DateTime: 12 January 2022
+            </p>
+            <div class="border-0 d-flex flex-row-reverse">
+                <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(1))">
+                    View Order
+                </button>
+            </div>
+        </div>
+        <div class="mt-2 col-lg-12 border-bottom"></div>
+
+        <div class="d-flex text-muted pt-3">
+            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/order.jpg" alt="orders" width="55">
+
+            <p class="col-md-10 pb-3 mb-0 small">
+                <strong class="d-block text-gray-dark">username</strong>
+                Some representative placeholder content, with some information about this user.
+                DateTime: 12 January 2022
+            </p>
+            <div class="border-0 d-flex flex-row-reverse">
+                <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(1))">
+                    View Order
+                </button>
+            </div>
+        </div>
+        <div class="mt-2 col-lg-12 border-bottom"></div>
+
+        <div class="d-flex text-muted pt-3">
+            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/order.jpg" alt="orders" width="55">
+
+            <p class="col-md-10 pb-3 mb-0 small">
+                <strong class="d-block text-gray-dark">username</strong>
+                Some representative placeholder content, with some information about this user.
+                DateTime: 12 January 2022
+            </p>
+            <div class="border-0 d-flex flex-row-reverse">
+                <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(1))">
+                    View Order
+                </button>
+            </div>
+        </div>
+        <div class="mt-2 col-lg-12 border-bottom"></div>
+    </div>
+</main>
+
+@code {
+    List<CartResponse> cartItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CartService.OnChange += StateHasChanged;
+        cartItems = await CartService.GetCarts();
+    }
+
+    private void ViewOrder(int id)
+    {
+        NavigationManager.NavigateTo($"/orders/view/{id}");
+    }
+}
