@@ -2,10 +2,14 @@
 
 * <strike>Sample Blazor Web Assembly Client App</strike>
 
-* Creating a Shop Application
-* Client App is a Blazor Web Assembly - possible to add PWA on a future Upgrade
-* CQRS & Mediator to create a Clean Architecture for the WebAPI
-* SqlServer with EntityFrameworkCore
+* Creating a Clothe Shop Application with CQRS & Mediator for the WebAPI
+* The Database is SqlServer with EntityFrameworkCore
 * Authentication with JwtBearer Token from Identity.Core
-* Authorization based on Roles
-* Customer/Admin Areas
+* Authorization based on Roles containing Customer/Admin Areas
+
+* Features
+  * Stripe Checkout
+  * Admin Manager
+  * CRUD Cart
+  * View Orders
+
