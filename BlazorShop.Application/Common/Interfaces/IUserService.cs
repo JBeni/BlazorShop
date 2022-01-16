@@ -2,12 +2,12 @@
 {
     public interface IUserService
     {
-        Task<List<string>> GetUserRoleAsync(AppUser user);
+        Task<List<string>> GetUserRoleAsync(User user);
         List<UserResponse> GetUsers(GetUsersQuery query);
         UserResponse GetUserById(GetUserByIdQuery query);
         UserResponse GetUserByEmail(GetUserByEmailQuery query);
-        Task<AppUser> FindUserByIdAsync(int userId);
-        Task<AppUser> FindUserByEmailAsync(string email);
+        Task<User> FindUserByIdAsync(int userId);
+        Task<User> FindUserByEmailAsync(string email);
         Task<RequestResponse> CreateUserAsync(CreateUserCommand user);
         Task<RequestResponse> AssignUserToRoleAsync(AssignUserToRoleCommand user);
         Task<RequestResponse> UpdateUserAsync(UpdateUserCommand user);

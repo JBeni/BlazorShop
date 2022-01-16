@@ -3,20 +3,20 @@
     public static class ApplicationDbContextSeed
     {
         public static async Task SeedRolesAsync(
-            RoleManager<AppRole> roleManager,
+            RoleManager<Role> roleManager,
             RolesSeedModel seedData)
         {
-            var adminRole = new AppRole
+            var adminRole = new Role
             {
                 Name = seedData.AdminRoleName,
                 NormalizedName = seedData.AdminRoleNormalizedName
             };
-            var defaultRole = new AppRole
+            var defaultRole = new Role
             {
                 Name = seedData.DefaultRoleName,
                 NormalizedName = seedData.DefaultRoleNormalizedName
             };
-            var userRole = new AppRole
+            var userRole = new Role
             {
                 Name = seedData.UserRoleName,
                 NormalizedName = seedData.UserRoleNormalizedName
@@ -37,11 +37,11 @@
         }
 
         public static async Task SeedAdminUserAsync(
-            UserManager<AppUser> userManager,
-            RoleManager<AppRole> roleManager,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             AdminSeedModel seedData)
         {
-            var admin = new AppUser
+            var admin = new User
             {
                 UserName = seedData.FirstName + "@" + seedData.LastName,
                 Email = seedData.Email,

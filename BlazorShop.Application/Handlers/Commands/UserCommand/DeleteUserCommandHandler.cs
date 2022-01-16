@@ -2,18 +2,18 @@
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, RequestResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public DeleteUserCommandHandler(IUserService AppUserService)
+        public DeleteUserCommandHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public async Task<RequestResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppUserService.DeleteUserAsync(request.Id);
+                var result = await _userService.DeleteUserAsync(request.Id);
                 return result;
             }
             catch (Exception ex)

@@ -2,18 +2,18 @@
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, RequestResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public CreateUserCommandHandler(IUserService AppUserService)
+        public CreateUserCommandHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public async Task<RequestResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppUserService.CreateUserAsync(request);
+                var result = await _userService.CreateUserAsync(request);
                 return result;
             }
             catch (Exception ex)

@@ -2,18 +2,18 @@
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, JwtTokenResponse>
     {
-        private readonly IAccountService _AcountService;
+        private readonly IAccountService _accountService;
 
-        public RegisterCommandHandler(IAccountService AcountService)
+        public RegisterCommandHandler(IAccountService accountService)
         {
-            _AcountService = AcountService;
+            _accountService = accountService;
         }
 
         public async Task<JwtTokenResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AcountService.RegisterAsync(request);
+                return await _accountService.RegisterAsync(request);
             }
             catch (Exception ex)
             {

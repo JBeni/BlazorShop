@@ -2,18 +2,18 @@
 {
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public GetUserByIdQueryHandler(IUserService AppUserService)
+        public GetUserByIdQueryHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                return Task.FromResult(_AppUserService.GetUserById(request));
+                return Task.FromResult(_userService.GetUserById(request));
             }
             catch (Exception ex)
             {

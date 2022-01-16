@@ -2,18 +2,18 @@
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, JwtTokenResponse>
     {
-        private readonly IAccountService _AcountService;
+        private readonly IAccountService _accountService;
 
-        public LoginCommandHandler(IAccountService AcountService)
+        public LoginCommandHandler(IAccountService accountService)
         {
-            _AcountService = AcountService;
+            _accountService = accountService;
         }
 
         public async Task<JwtTokenResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AcountService.LoginAsync(request);
+                return await _accountService.LoginAsync(request);
             }
             catch (Exception ex)
             {

@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
 {
-    public class AppRoleClaimConfiguration : IEntityTypeConfiguration<AppRoleClaim>
+    public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
     {
-        public void Configure(EntityTypeBuilder<AppRoleClaim> builder)
+        public void Configure(EntityTypeBuilder<RoleClaim> builder)
         {
             builder.ToTable("AppRoleClaims");
 

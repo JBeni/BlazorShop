@@ -2,20 +2,20 @@
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IUserService _AppUserService;
-        private readonly IRoleService _AppRoleService;
+        private readonly UserManager<User> _userManager;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
         private readonly IConfiguration _configuration;
 
         public AccountService(
-            UserManager<AppUser> userManager,
-            IUserService AppUserService,
-            IRoleService AppRoleService,
+            UserManager<User> userManager,
+            IUserService userService,
+            IRoleService roleService,
             IConfiguration configuration)
         {
             _userManager = userManager;
-            _AppUserService = AppUserService;
-            _AppRoleService = AppRoleService;
+            _userService = userService;
+            _roleService = roleService;
             _configuration = configuration;
         }
 
@@ -39,13 +39,13 @@
             return RequestResponse.Success();
         }
 
-        public async Task<bool> CheckPasswordAsync(AppUser user, string password)
+        public async Task<bool> CheckPasswordAsync(User user, string password)
         {
             var result = await _userManager.CheckPasswordAsync(user, password);
             return result;
         }
 
-        public async Task<JwtTokenResponse> GenerateToken(AppUser user)
+        public async Task<JwtTokenResponse> GenerateToken(User user)
         {
             var jwtSettings = new JwtTokenConfig
             {
@@ -55,7 +55,7 @@
             };
             var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
 
-            var userRole = await _AppUserService.GetUserRoleAsync(user);
+            var userRole = await _userService.GetUserRoleAsync(user);
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -104,7 +104,7 @@
             var existUser = _userManager.Users.SingleOrDefault(u => u.Email == register.Email);
             if (existUser == null)
             {
-                var newUser = new AppUser
+                var newUser = new User
                 {
                     UserName = register.FirstName + "@" + register.LastName,
                     Email = register.Email,
@@ -118,10 +118,10 @@
 
                 await _userManager.CreateAsync(newUser, register.Password);
 
-                var role = await _AppRoleService.FindRoleByNameAsync("Default");
+                var role = await _roleService.FindRoleByNameAsync("Default");
                 if (role == null) throw new Exception("The role does not exist");
 
-                await _AppRoleService.SetUserRoleAsync(newUser, role.Name);
+                await _roleService.SetUserRoleAsync(newUser, role.Name);
                 return await GenerateToken(newUser);
             }
             else

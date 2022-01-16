@@ -9,7 +9,7 @@
         public int ClotheId { get; set; }
         public Clothe Clothe { get; set; }
         public int UserId { get; set; }
-        public AppUser User { get; set; }
+        public User User { get; set; }
 
         public void Mapping(Profile profile)
         {

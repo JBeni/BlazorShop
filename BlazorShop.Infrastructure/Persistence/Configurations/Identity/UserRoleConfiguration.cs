@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
 {
-    public class AppUserRoleConfiguration : IEntityTypeConfiguration<AppUserRole>
+    public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {
-        public void Configure(EntityTypeBuilder<AppUserRole> builder)
+        public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder.ToTable("AppUserRoles");
 

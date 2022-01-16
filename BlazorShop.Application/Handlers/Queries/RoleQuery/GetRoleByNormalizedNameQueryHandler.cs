@@ -2,18 +2,18 @@
 {
     public class GetRoleByNormalizedNameQueryHandler : IRequestHandler<GetRoleByNormalizedNameQuery, RoleResponse>
     {
-        private readonly IRoleService _AppRoleService;
+        private readonly IRoleService _roleService;
 
-        public GetRoleByNormalizedNameQueryHandler(IRoleService AppRoleService)
+        public GetRoleByNormalizedNameQueryHandler(IRoleService roleService)
         {
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
         }
 
         public async Task<RoleResponse> Handle(GetRoleByNormalizedNameQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = _AppRoleService.GetRoleByNormalizedName(request.NormalizedName);
+                var result = _roleService.GetRoleByNormalizedName(request.NormalizedName);
                 return result;
             }
             catch (Exception ex)

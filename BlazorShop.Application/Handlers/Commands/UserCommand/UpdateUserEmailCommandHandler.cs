@@ -2,18 +2,18 @@
 {
     public class UpdateUserEmailCommandHandler : IRequestHandler<UpdateUserEmailCommand, RequestResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public UpdateUserEmailCommandHandler(IUserService AppUserService)
+        public UpdateUserEmailCommandHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public async Task<RequestResponse> Handle(UpdateUserEmailCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppUserService.UpdateUserEmailAsync(request);
+                var result = await _userService.UpdateUserEmailAsync(request);
                 return result;
             }
             catch (Exception ex)

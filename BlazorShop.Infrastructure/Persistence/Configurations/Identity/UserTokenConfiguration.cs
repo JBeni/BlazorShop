@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
 {
-    public class AppUserTokenConfiguration : IEntityTypeConfiguration<AppUserToken>
+    public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
     {
-        public void Configure(EntityTypeBuilder<AppUserToken> builder)
+        public void Configure(EntityTypeBuilder<UserToken> builder)
         {
             builder.ToTable("AppUserTokens");
 

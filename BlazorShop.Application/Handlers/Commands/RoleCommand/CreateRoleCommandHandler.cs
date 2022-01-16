@@ -2,18 +2,18 @@
 {
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
-        private readonly IRoleService _AppRoleService;
+        private readonly IRoleService _roleService;
 
-        public CreateRoleCommandHandler(IRoleService AppRoleService)
+        public CreateRoleCommandHandler(IRoleService roleService)
         {
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
         }
 
         public async Task<RequestResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppRoleService.CreateRoleAsync(request);
+                var result = await _roleService.CreateRoleAsync(request);
                 return result;
             }
             catch (Exception ex)

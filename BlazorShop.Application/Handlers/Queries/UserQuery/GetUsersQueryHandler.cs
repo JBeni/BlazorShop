@@ -2,18 +2,18 @@
 {
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<UserResponse>>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public GetUsersQueryHandler(IUserService AppUserService)
+        public GetUsersQueryHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public Task<List<UserResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                return Task.FromResult(_AppUserService.GetUsers(request));
+                return Task.FromResult(_userService.GetUsers(request));
             }
             catch (Exception ex)
             {

@@ -2,13 +2,13 @@
 {
     public class RoleService : IRoleService
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
 
         public RoleService(
-            UserManager<AppUser> userManager,
-            RoleManager<AppRole> roleManager,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IMapper mapper)
         {
             _userManager = userManager;
@@ -16,7 +16,7 @@
             _mapper = mapper;
         }
 
-        public async Task<List<string>> CheckUserRolesAsync(AppUser user)
+        public async Task<List<string>> CheckUserRolesAsync(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             return roles.ToList();
@@ -49,7 +49,7 @@
             return role;
         }
 
-        public async Task<RequestResponse> SetUserRoleAsync(AppUser user, string role)
+        public async Task<RequestResponse> SetUserRoleAsync(User user, string role)
         {
             var roles = await CheckUserRolesAsync(user);
             if (roles.Count == 0)
@@ -98,7 +98,7 @@
             var role = await _roleManager.FindByNameAsync(command.Name);
             if (role != null) throw new Exception("The role was already created");
 
-            await _roleManager.CreateAsync(new AppRole
+            await _roleManager.CreateAsync(new Role
             {
                 Name = command.Name,
                 NormalizedName = command.Name.ToUpper()
@@ -131,13 +131,13 @@
             return RequestResponse.Success();
         }
 
-        public async Task<AppRole> FindRoleByIdAsync(int roleId)
+        public async Task<Role> FindRoleByIdAsync(int roleId)
         {
             var result = await _roleManager.FindByIdAsync(roleId.ToString());
             return result;
         }
 
-        public async Task<AppRole> FindRoleByNameAsync(string name)
+        public async Task<Role> FindRoleByNameAsync(string name)
         {
             var result = await _roleManager.FindByNameAsync(name);
             return result;

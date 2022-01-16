@@ -3,9 +3,9 @@
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public CreateCartCommandHandler(IApplicationDbContext dbContext, UserManager<AppUser> userManager)
+        public CreateCartCommandHandler(IApplicationDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;

@@ -2,18 +2,18 @@
 {
     public class AssignUserToRoleCommandHandler : IRequestHandler<AssignUserToRoleCommand, RequestResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public AssignUserToRoleCommandHandler(IUserService AppUserService)
+        public AssignUserToRoleCommandHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public async Task<RequestResponse> Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppUserService.AssignUserToRoleAsync(request);
+                var result = await _userService.AssignUserToRoleAsync(request);
                 return result;
             }
             catch (Exception ex)

@@ -2,18 +2,18 @@
 {
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, RequestResponse>
     {
-        private readonly IRoleService _AppRoleService;
+        private readonly IRoleService _roleService;
 
-        public DeleteRoleCommandHandler(IRoleService AppRoleService)
+        public DeleteRoleCommandHandler(IRoleService roleService)
         {
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
         }
 
         public async Task<RequestResponse> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppRoleService.DeleteRoleAsync(request.Id);
+                var result = await _roleService.DeleteRoleAsync(request.Id);
                 return result;
             }
             catch (Exception ex)

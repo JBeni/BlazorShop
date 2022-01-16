@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, int,
-        AppUserClaim, AppUserRole, AppUserLogin,
-        AppRoleClaim, AppUserToken>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int,
+        UserClaim, UserRole, UserLogin,
+        RoleClaim, UserToken>, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTimeService _dateTime;
@@ -46,13 +46,13 @@
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            builder.ApplyConfiguration(new AppRoleClaimConfiguration());
-            builder.ApplyConfiguration(new AppUserConfiguration());
-            builder.ApplyConfiguration(new AppRoleConfiguration());
-            builder.ApplyConfiguration(new AppUserClaimConfiguration());
-            builder.ApplyConfiguration(new AppUserLoginConfiguration());
-            builder.ApplyConfiguration(new AppUserRoleConfiguration());
-            builder.ApplyConfiguration(new AppUserTokenConfiguration());
+            builder.ApplyConfiguration(new RoleClaimConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserClaimConfiguration());
+            builder.ApplyConfiguration(new UserLoginConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new UserTokenConfiguration());
         }
     }
 }

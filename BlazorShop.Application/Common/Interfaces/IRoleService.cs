@@ -2,13 +2,13 @@
 {
     public interface IRoleService
     {
-        Task<List<string>> CheckUserRolesAsync(AppUser user);
+        Task<List<string>> CheckUserRolesAsync(User user);
         RoleResponse GetDefaultRole();
         RoleResponse GetUserRole();
         RoleResponse GetAdminRole();
-        Task<RequestResponse> SetUserRoleAsync(AppUser user, string role);
-        Task<AppRole> FindRoleByIdAsync(int roleId);
-        Task<AppRole> FindRoleByNameAsync(string name);
+        Task<RequestResponse> SetUserRoleAsync(User user, string role);
+        Task<Role> FindRoleByIdAsync(int roleId);
+        Task<Role> FindRoleByNameAsync(string name);
 
         Task<RequestResponse> CreateRoleAsync(CreateRoleCommand role);
         Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand role);

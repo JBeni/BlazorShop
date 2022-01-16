@@ -2,18 +2,18 @@
 {
     public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, RequestResponse>
     {
-        private readonly IRoleService _AppRoleService;
+        private readonly IRoleService _roleService;
 
-        public UpdateRoleCommandHandler(IRoleService AppRoleService)
+        public UpdateRoleCommandHandler(IRoleService roleService)
         {
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
         }
 
         public async Task<RequestResponse> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _AppRoleService.UpdateRoleAsync(request);
+                var result = await _roleService.UpdateRoleAsync(request);
                 return result;
             }
             catch (Exception ex)

@@ -2,18 +2,18 @@
 {
     public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, UserResponse>
     {
-        private readonly IUserService _AppUserService;
+        private readonly IUserService _userService;
 
-        public GetUserByEmailQueryHandler(IUserService AppUserService)
+        public GetUserByEmailQueryHandler(IUserService userService)
         {
-            _AppUserService = AppUserService;
+            _userService = userService;
         }
 
         public Task<UserResponse> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                return Task.FromResult(_AppUserService.GetUserByEmail(request));
+                return Task.FromResult(_userService.GetUserByEmail(request));
             }
             catch (Exception ex)
             {

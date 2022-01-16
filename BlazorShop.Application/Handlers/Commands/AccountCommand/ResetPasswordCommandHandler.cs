@@ -2,18 +2,18 @@
 {
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {
-        private readonly IAccountService _AcountService;
+        private readonly IAccountService _accountService;
 
-        public ResetPasswordCommandHandler(IAccountService AcountService)
+        public ResetPasswordCommandHandler(IAccountService accountService)
         {
-            _AcountService = AcountService;
+            _accountService = accountService;
         }
 
         public async Task<RequestResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await _AcountService.ResetPasswordUserAsync(request);
+                return await _accountService.ResetPasswordUserAsync(request);
             }
             catch (Exception ex)
             {

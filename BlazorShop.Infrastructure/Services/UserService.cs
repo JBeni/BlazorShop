@@ -2,20 +2,20 @@
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
-        private readonly IRoleService _AppRoleService;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
         public UserService(
-            UserManager<AppUser> userManager,
-            RoleManager<AppRole> roleManager,
-            IRoleService AppRoleService,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
+            IRoleService roleService,
             IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
             _mapper = mapper;
         }
 
@@ -23,7 +23,7 @@
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.UserName == command.Email && u.IsActive == true);
             if (existUser != null) throw new Exception("The user with the unique identifier already exists");
-            var newUser = new AppUser
+            var newUser = new User
             {
                 UserName = command.FirstName + "@" + command.LastName,
                 Email = command.Email,
@@ -52,13 +52,13 @@
             return RequestResponse.Success();
         }
 
-        public async Task<AppUser> FindUserByEmailAsync(string email)
+        public async Task<User> FindUserByEmailAsync(string email)
         {
             var result = await _userManager.FindByEmailAsync(email);
             return result;
         }
 
-        public async Task<AppUser> FindUserByIdAsync(int userId)
+        public async Task<User> FindUserByIdAsync(int userId)
         {
             var result = await _userManager.FindByIdAsync(userId.ToString());
             return result;
@@ -82,7 +82,7 @@
             return user;
         }
 
-        public async Task<List<string>> GetUserRoleAsync(AppUser user)
+        public async Task<List<string>> GetUserRoleAsync(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -136,7 +136,7 @@
             var userRole = await _userManager.GetRolesAsync(user);
             await _userManager.RemoveFromRoleAsync(user, userRole[0]);
 
-            var role = await _AppRoleService.FindRoleByIdAsync(command.RoleId);
+            var role = await _roleService.FindRoleByIdAsync(command.RoleId);
             await _userManager.AddToRoleAsync(user, role.Name);
             return RequestResponse.Success();
         }

@@ -4,9 +4,9 @@
     {
         Task<RequestResponse> ResetPasswordUserAsync(ResetPasswordCommand resetPassword);
         Task<RequestResponse> ChangePasswordUserAsync(ChangePasswordCommand changePassword);
-        Task<JwtTokenResponse> GenerateToken(AppUser user);
+        Task<JwtTokenResponse> GenerateToken(User user);
         Task<JwtTokenResponse> LoginAsync(LoginCommand login);
         Task<JwtTokenResponse> RegisterAsync(RegisterCommand register);
-        Task<bool> CheckPasswordAsync(AppUser user, string password);
+        Task<bool> CheckPasswordAsync(User user, string password);
     }
 }

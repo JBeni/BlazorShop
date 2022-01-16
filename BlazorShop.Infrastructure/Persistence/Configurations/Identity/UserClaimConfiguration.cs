@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
 {
-    public class AppUserClaimConfiguration : IEntityTypeConfiguration<AppUserClaim>
+    public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
     {
-        public void Configure(EntityTypeBuilder<AppUserClaim> builder)
+        public void Configure(EntityTypeBuilder<UserClaim> builder)
         {
             builder.ToTable("AppUserClaims");
 

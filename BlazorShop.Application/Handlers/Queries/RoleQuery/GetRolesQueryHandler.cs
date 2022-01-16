@@ -2,18 +2,18 @@
 {
     public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, List<RoleResponse>>
     {
-        private readonly IRoleService _AppRoleService;
+        private readonly IRoleService _roleService;
 
-        public GetRolesQueryHandler(IRoleService AppRoleService)
+        public GetRolesQueryHandler(IRoleService roleService)
         {
-            _AppRoleService = AppRoleService;
+            _roleService = roleService;
         }
 
         public async Task<List<RoleResponse>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var result = _AppRoleService.GetRoles();
+                var result = _roleService.GetRoles();
                 return result;
             }
             catch (Exception ex)

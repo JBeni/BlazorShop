@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Responses
 {
-    public class UserResponse : IMapFrom<AppUser>
+    public class UserResponse : IMapFrom<User>
     {
         public int Id { get; set; }
         public string? Username { get; set; }
@@ -13,7 +13,7 @@
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AppUser, UserResponse>()
+            profile.CreateMap<User, UserResponse>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Username, opt => opt.MapFrom(s => s.UserName))
                 .ForMember(d => d.Email, opt => opt.MapFrom(s => s.Email))

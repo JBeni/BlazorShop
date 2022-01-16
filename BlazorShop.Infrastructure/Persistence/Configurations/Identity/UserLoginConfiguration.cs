@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
 {
-    public class AppUserLoginConfiguration : IEntityTypeConfiguration<AppUserLogin>
+    public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
     {
-        public void Configure(EntityTypeBuilder<AppUserLogin> builder)
+        public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
             builder.ToTable("AppUserLogins");
 

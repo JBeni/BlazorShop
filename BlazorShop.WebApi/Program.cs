@@ -66,8 +66,8 @@ using (var scope = app.Services.CreateScope())
         {
             context.Database.Migrate();
         }
-        var userManager = services.GetRequiredService<UserManager<AppUser>>();
-        var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<Role>>();
 
         var rolesSeed = new RolesSeedModel
         {

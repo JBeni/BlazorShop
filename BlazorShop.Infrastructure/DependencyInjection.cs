@@ -22,7 +22,7 @@
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEmailService, EmailService>();
 
-            var builder = services.AddIdentityCore<AppUser>(opt =>
+            var builder = services.AddIdentityCore<User>(opt =>
             {
                 // configure password options & others
                 opt.Password.RequireDigit = true;
@@ -34,7 +34,7 @@
                 opt.User.RequireUniqueEmail = true;
             });
             builder = new IdentityBuilder(builder.UserType, builder.RoleType, builder.Services);
-            builder.AddRoles<AppRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            builder.AddRoles<Role>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             services.AddAuthorizationCore(config =>
             {
