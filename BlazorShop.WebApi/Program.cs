@@ -14,6 +14,7 @@ builder.Services.AddCors(options =>
 // Inject Architecture Layers
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
+builder.Services.AddUnitOfWorkLayer();
 
 // Inject services
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
