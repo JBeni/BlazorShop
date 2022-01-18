@@ -1,0 +1,13 @@
+﻿@page "/musics/view/{Id:int}"
+
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IClotheService ClotheService
+@inject ICartService CartService
+
+<h3>View Music Details</h3>
+
+@code {
+
+}
