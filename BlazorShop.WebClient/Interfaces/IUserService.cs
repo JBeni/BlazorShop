@@ -4,8 +4,9 @@
     {
         Task<List<UserResponse>> GetUsers();
         Task<UserResponse> GetUser(int id);
-        Task AddUser(UserResponse User);
-        Task UpdateUser(UserResponse User);
-        Task DeleteUser(int id);
+        Task<RequestResponse> AddUser(UserResponse user);
+        Task<RequestResponse> UpdateUser(UserResponse user);
+        Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user);
+        Task<RequestResponse> DeleteUser(int id);
     }
 }

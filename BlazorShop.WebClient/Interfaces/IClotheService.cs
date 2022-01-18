@@ -4,8 +4,8 @@
     {
         Task<List<ClotheResponse>> GetClothes();
         Task<ClotheResponse> GetClothe(int id);
-        Task AddClothe(ClotheResponse clothe);
-        Task UpdateClothe(ClotheResponse clothe);
-        Task DeleteClothe(int id);
+        Task<RequestResponse> AddClothe(ClotheResponse clothe);
+        Task<RequestResponse> UpdateClothe(ClotheResponse clothe);
+        Task<RequestResponse> DeleteClothe(int id);
     }
 }
