@@ -34,3 +34,5 @@ global using BlazorShop.Application.Queries.CartQuery;
 global using BlazorShop.Application.Responses;
 global using Stripe.Checkout;
 global using System.Net.Http.Headers;
+global using BlazorShop.UnitOfWork;
+global using BlazorShop.UnitOfWork.Services;
