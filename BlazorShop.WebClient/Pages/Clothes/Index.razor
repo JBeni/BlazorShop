@@ -1,6 +1,8 @@
 ﻿@page "/clothes"
-@attribute [Authorize]
 
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
 @inject ICartService CartService
 
@@ -10,14 +12,12 @@
     <div class="input-group col">
         <input type="text" class="form-control" placeholder="Search clothe by name"
             @bind="SearchString" @bind:event="oninput" @onkeyup="FilterClothes" />
-        @if (SearchString.Length > 0)
-        {
-            <div class="input-group-append">
-                <button class="btn btn-info" @onclick="ResetSearch">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        }
+        <div class="input-group-append" style="margin-left: 15px;">
+            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
+                <i class="fas fa-times"></i>
+                Reset Filter
+            </button>
+        </div>
     </div>
 </div>
 <br />
@@ -72,10 +72,18 @@ else
 @code {
     protected List<ClotheResponse> clothesList = new();
     protected List<ClotheResponse> searchClothesData = new();
+
     protected string SearchString { get; set; } = string.Empty;
+    private int UserId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+
         await GetClothes();
     }
 
@@ -93,6 +101,7 @@ else
         cartItem.Price = clothe.Price;
         cartItem.Amount = 1;
         cartItem.ClotheId = clothe.Id;
+        cartItem.UserId = UserId;
 
         await CartService.AddCart(cartItem);
     }
