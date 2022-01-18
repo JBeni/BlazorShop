@@ -1,12 +1,12 @@
 ﻿@page "/clothes/view/{Id:int}"
-@attribute [Authorize]
 
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
 @inject ICartService CartService
 
 <h3>View Clothe Details</h3>
-
-<br/>
 
 <div class="container">
     <div class="product">
@@ -35,9 +35,17 @@
 @code {
     [Parameter]
     public int Id { get; set; }
+    public int UserId { get; set; }
     public ClotheResponse clothe = new();
 
-    protected override void OnInitialized() { }
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -55,6 +63,7 @@
         cartItem.Price = clothe.Price;
         cartItem.Amount = 1;
         cartItem.ClotheId = clothe.Id;
+        cartItem.UserId = UserId;
 
         await CartService.AddCart(cartItem);
     }
