@@ -1,19 +1,19 @@
 ﻿namespace BlazorShop.WebClient.Services
 {
-    public class ClotheService : IClotheService
+    public class MusicService : IMusicService
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
 
-        public ClotheService(HttpClient httpClient, IToastService toastService)
+        public MusicService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
             _toastService = toastService;
         }
 
-        public async Task<List<ClotheResponse>> GetClothes()
+        public async Task<List<MusicResponse>> GetMusics()
         {
-            var authResult = await _httpClient.GetAsync("Clothes/clothes");
+            var authResult = await _httpClient.GetAsync("Musics/musics");
             if (authResult.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -21,7 +21,7 @@
             }
 
             var authContent = await authResult.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<List<ClotheResponse>>(
+            var result = JsonSerializer.Deserialize<List<MusicResponse>>(
                 authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
@@ -29,9 +29,9 @@
             return result;
         }
 
-        public async Task<ClotheResponse> GetClothe(int id)
+        public async Task<MusicResponse> GetMusic(int id)
         {
-            var authResult = await _httpClient.GetAsync($"Clothes/clothe/{id}");
+            var authResult = await _httpClient.GetAsync($"Musics/music/{id}");
             if (authResult.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -39,7 +39,7 @@
             }
 
             var authContent = await authResult.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<ClotheResponse>(
+            var result = JsonSerializer.Deserialize<MusicResponse>(
                 authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
@@ -47,42 +47,42 @@
             return result;
         }
 
-        public async Task<RequestResponse> AddClothe(ClotheResponse clothe)
+        public async Task<RequestResponse> AddMusic(MusicResponse music)
         {
-            var response = await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
+            var response = await _httpClient.PostAsJsonAsync("Musics/music", music);
             if (response.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
                 return null;
             }
 
-            _toastService.ShowSuccess("The clothe was added.");
+            _toastService.ShowSuccess("The Music was added.");
             return RequestResponse.Success();
         }
 
-        public async Task<RequestResponse> UpdateClothe(ClotheResponse clothe)
+        public async Task<RequestResponse> UpdateMusic(MusicResponse music)
         {
-            var response = await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
+            var response = await _httpClient.PutAsJsonAsync("Musics/music", music);
             if (response.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
                 return null;
             }
 
-            _toastService.ShowSuccess("The clothe was updated.");
+            _toastService.ShowSuccess("The Music was updated.");
             return RequestResponse.Success();
         }
 
-        public async Task<RequestResponse> DeleteClothe(int id)
+        public async Task<RequestResponse> DeleteMusic(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
+            var response = await _httpClient.DeleteAsync($"Musics/music/{id}");
             if (response.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
                 return null;
             }
 
-            _toastService.ShowSuccess("The clothe was deleted.");
+            _toastService.ShowSuccess("The Music was deleted.");
             return RequestResponse.Success();
         }
     }
