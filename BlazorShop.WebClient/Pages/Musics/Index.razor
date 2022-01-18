@@ -1,0 +1,13 @@
+﻿@page "/musics"
+
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IClotheService ClotheService
+@inject ICartService CartService
+
+<h3>Rent Music</h3>
+
+@code {
+
+}
