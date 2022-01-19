@@ -1,0 +1,13 @@
+﻿@page "/admin/musics/add"
+@page "/admin/musics/edit/{Id:int}"
+
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IMusicService MusicService
+@inject NavigationManager NavManager
+
+<h3>AddEditMusic</h3>
+
+@code {
+
+}

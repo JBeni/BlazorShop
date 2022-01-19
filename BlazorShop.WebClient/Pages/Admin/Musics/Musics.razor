@@ -1,0 +1,165 @@
+﻿@page "/admin/musics"
+
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IMusicService MusicService
+@inject NavigationManager NavManager
+
+<h3>Musics List</h3>
+
+<MatTable Items="@musicsList" LoadInitialData="true" Striped="true" AllowSelection="true"
+    RowClass="tester" FilterByColumnName="Title" DebounceMilliseconds="150" class="mat-elevation-z5">
+    <MatTableHeader>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+    </MatTableHeader>
+    <MatTableRow>
+        <td>@String.Format("{0:d}", @context.Id)</td>
+        <td>@context.Title</td>
+        <td>@context.Description</td>
+    </MatTableRow>
+</MatTable>
+
+
+<br/><br/>
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col">
+            <RadzenCard>
+                <RadzenDataList WrapItems="true" AllowPaging="true" Data="@musicsList" TItem="MusicResponse" PageSize="5">
+                    <Template Context="music">
+                        <RadzenCard Style="width: 100%; padding: 0; overflow: hidden;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 p-3 music-title">
+                                            @(music.Title)
+                                    </div>
+                                    <div class="col-lg-7 p-3">
+                                        <div class="row d-flex">
+                                            <div class="col-md-6 col-lg-2">
+                                                <h5 class="mb-0">Description</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(music.Description)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-2">
+                                                <h5 class="mb-0">Author</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(music.Author)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5">
+                                                <h5 class="mb-0">Date Release</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(music.DateRelease)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5">
+                                                <h5 class="mb-0">Image Name</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(music.ImageName)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5">
+                                                <h5 class="mb-0">Image Path</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(music.ImagePath)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 p-3">
+                                        <RadzenButton Text="Order now" Class="w-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>
+            </RadzenCard>
+
+            <RadzenPager ShowPagingSummary="true" PagingSummaryFormat="@pagingSummaryFormat" Count="count" PageSize="@pageSize" PageNumbersCount="10" PageChanged="@PageChanged" />
+        </div>
+    </div>
+</div>
+
+@code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected MusicResponse music = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected List<MusicResponse> musicsList = new();
+    protected List<MusicResponse> searchMusicsData = new();
+
+
+    string pagingSummaryFormat = "Displaying page {0} of {1} (total {2} records)";
+    int pageSize = 6;
+    int count;
+
+    void PageChanged(PagerEventArgs args)
+    {
+        //orders = GetOrders(args.Skip, args.Top);
+    }
+
+    //IEnumerable<Order> GetOrders(int skip, int take)
+    //{
+    //    return dbContext.Orders.Include("Customer").Include("Employee").Skip(skip).Take(take).ToList();
+    //}
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetMusics();
+
+        //count = dbContext.Orders.Count();
+        //orders = GetOrders(0, pageSize);
+    }
+
+    protected async Task GetMusics()
+    {
+        musicsList = await MusicService.GetMusics();
+        searchMusicsData = musicsList;
+    }
+
+    protected void FilterClothes()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            musicsList = searchMusicsData.Where(x => x.Title.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            musicsList = searchMusicsData;
+        }
+    }
+
+    protected void DeleteConfirm(int Id)
+    {
+        music = musicsList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected async Task DeleteClothe(int Id)
+    {
+        //await ClotheService.DeleteClothe(Id);
+        await GetMusics();
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        musicsList = searchMusicsData;
+    }
+}
+
+<style>
+    .music-title {
+        min-height: 72px;
+        color: #da0074;
+        background-color: rgba(255, 41, 155, .1);
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 20px;
+        letter-spacing: -0.02em;
+    }
+
+    label {
+        width: 70%;
+    }
+</style>
