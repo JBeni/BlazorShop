@@ -1,4 +1,4 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿ <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Blazor Shop</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -20,6 +20,13 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Payments
             </NavLink>
         </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="musics">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Musics
+            </NavLink>
+        </div>
+
 
         <AuthorizeView>
             <Authorized>
@@ -71,12 +78,27 @@
                         <span class="oi oi-list-rich" aria-hidden="true"></span> Clothes
                     </NavLink>
                 </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/musics">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Musics
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/subscribers">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Subscribers
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/subscriptions">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Subscriptions
+                    </NavLink>
+                </div>
             </Authorized>
         </AuthorizeView>
 
         <AuthorizeView>
             <Authorized>
-                <div class="col-md-8 nav-item px-3" style=" position: fixed; bottom: 0;">
+                <div class="col-md-2 nav-item px-3" style=" position: fixed; bottom: 0;">
                     <NavLink class="nav-link" href="logout">
                         <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
                     </NavLink>
