@@ -1,0 +1,158 @@
+﻿@page "/admin/clothes"
+
+@attribute [Authorize(Policy = "Admin")]
+
+@inject IClotheService ClotheService
+@inject NavigationManager NavManager
+
+<h1>Clothes List</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href='admin/clothes/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Clothe
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search clothe by name"
+            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterClothes" />
+        <div class="input-group-append" style="margin-left: 15px;">
+            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
+                <i class="fas fa-times"></i>
+                Reset Filter
+            </button>
+        </div>
+    </div>
+</div>
+<br />
+
+@if (clotheList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (clotheList.Count > 0)
+    {
+        <table class="table table-striped align-middle table-bordered">
+            <thead class="table-success">
+                <tr class="text-center">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Image Name</th>
+                    <th>Image Path</th>
+                    <th>IsActive</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var clothe in clotheList)
+                {
+                    <tr class="text-center">
+                        <td>@clothe.Id</td>
+                        <td>@clothe.Name</td>
+                        <td>@clothe.Description</td>
+                        <td>$ @clothe.Price</td>
+                        <td>@clothe.Amount</td>
+                        <td>@clothe.ImageName</td>
+                        <td>@clothe.ImagePath</td>
+                        <td>@clothe.IsActive</td>
+                        <td>
+                            <a href='admin/clothes/edit/@clothe.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                            <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(clothe.Id); ModalShow(); })">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (showModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Delete clothe</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Do you want to delete this clothe?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                await DeleteClothe(clothe.Id); ModalOk();
+                            })">Delete</button>
+                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <h4>No record found</h4>
+        </div>
+    }
+}
+
+@code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected ClotheResponse clothe = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected List<ClotheResponse> clotheList = new();
+    protected List<ClotheResponse> searchClotheData = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetClothes();
+    }
+
+    protected async Task GetClothes()
+    {
+        clotheList = await ClotheService.GetClothes();
+        searchClotheData = clotheList;
+    }
+
+    protected void FilterClothes()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            clotheList = searchClotheData.Where(x => x.Name.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            clotheList = searchClotheData;
+        }
+    }
+
+    protected void DeleteConfirm(int Id)
+    {
+        clothe = clotheList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected async Task DeleteClothe(int Id)
+    {
+        await ClotheService.DeleteClothe(Id);
+        await GetClothes();
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        clotheList = searchClotheData;
+    }
+}
