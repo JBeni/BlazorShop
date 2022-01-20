@@ -17,17 +17,17 @@
             return Ok(result);
         }
 
-        [HttpDelete("cart/{id}")]
-        public async Task<IActionResult> DeleteCart(int id)
+        [HttpDelete("cart/{id}/{userId}")]
+        public async Task<IActionResult> DeleteCart(int id, int userId)
         {
-            var result = await Mediator.Send(new DeleteCartCommand { Id = id });
+            var result = await Mediator.Send(new DeleteCartCommand { Id = id, UserId = userId });
             return Ok(result);
         }
 
-        [HttpDelete("carts")]
-        public async Task<IActionResult> DeleteAllCarts()
+        [HttpDelete("carts/{userId}")]
+        public async Task<IActionResult> DeleteAllCarts(int userId)
         {
-            var result = await Mediator.Send(new DeleteAllCartsCommand { });
+            var result = await Mediator.Send(new DeleteAllCartsCommand { UserId = userId });
             return Ok(result);
         }
 
@@ -38,18 +38,17 @@
             return Ok(result);
         }
 
-        [HttpGet("carts")]
-        public async Task<IActionResult> GetCarts()
+        [HttpGet("carts/{userId}")]
+        public async Task<IActionResult> GetCarts(int userId)
         {
-            var result = await Mediator.Send(new GetCartsQuery { });
+            var result = await Mediator.Send(new GetCartsQuery { UserId = userId });
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
-        [HttpGet("count")]
-        public async Task<IActionResult> GetCartsCount()
+        [HttpGet("count/{userId}")]
+        public async Task<IActionResult> GetCartsCount(int userId)
         {
-            var result = await Mediator.Send(new GetCartsCountQuery { });
+            var result = await Mediator.Send(new GetCartsCountQuery { UserId = userId });
             return Ok(result);
         }
     }
