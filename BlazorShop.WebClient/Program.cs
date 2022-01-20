@@ -9,6 +9,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredToast();
 builder.Services.AddOptions();
+builder.Services.AddMatBlazor();
 builder.Services.AddAuthorizationCore(config =>
 {
     config.AddPolicy("DefaultRole", policy => policy.RequireAuthenticatedUser());
@@ -35,5 +36,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IMusicService, MusicService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
 await builder.Build().RunAsync();
