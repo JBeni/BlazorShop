@@ -2,50 +2,43 @@
 {
     public class MusicsController : ApiControllerBase
     {
-        private readonly MusicService _musicService;
-
-        public MusicsController(MusicService musicService)
-        {
-            _musicService = musicService;
-        }
-
         [Authorize(Roles = "Admin")]
         [HttpPost("music")]
-        public IActionResult CreateMusic([FromBody] MusicResponse music)
+        public async Task<IActionResult> CreateMusic([FromBody] CreateMusicCommand command)
         {
-            var result = _musicService.AddMusic(music);
+            var result = await Mediator.Send(command);
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("music")]
-        public IActionResult UpdateMusic([FromBody] MusicResponse music)
+        public async Task<IActionResult> UpdateMusic([FromBody] UpdateMusicCommand command)
         {
-            var result = _musicService.UpdateMusic(music);
+            var result = await Mediator.Send(command);
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("music/{id}")]
-        public IActionResult DeleteMusic(int id)
+        public async Task<IActionResult> DeleteMusic(int id)
         {
-            var result = _musicService.DeleteMusic(id);
+            var result = await Mediator.Send(new DeleteMusicCommand { Id = id });
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("music/{id}")]
-        public IActionResult GetMusic(int id)
+        public async Task<IActionResult> GetMusic(int id)
         {
-            var result = _musicService.Get(id);
+            var result = await Mediator.Send(new GetMusicByIdQuery { Id = id });
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("musics")]
-        public IActionResult GetMusics()
+        public async Task<IActionResult> GetMusics()
         {
-            var result = _musicService.GetAll();
+            var result = await Mediator.Send(new GetMusicsQuery { });
             return Ok(result);
         }
     }
