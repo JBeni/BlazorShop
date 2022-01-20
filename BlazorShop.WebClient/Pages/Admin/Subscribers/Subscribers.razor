@@ -1,0 +1,112 @@
+﻿@page "/admin/subscribers"
+
+@attribute [Authorize(Policy = "Admin")]
+
+@inject ISubscriberService SubscriberService
+@inject NavigationManager NavManager
+
+<h3>Subscribers</h3>
+
+@if (subscribersList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (subscribersList.Count > 0)
+    {
+        <MatTable Items="@subscribersList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Customer" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th>Status</th>
+                <th>DateStart</th>
+                <th>CurrentPeriodEnd</th>
+                <th>Customer</th>
+                <th>Subscription</th>
+                <th>Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td class="col-md-1">@String.Format("{0:d}", @context.Id)</td>
+                <td class="col-md-3">@context.Status</td>
+                <td class="col-md-3">@context.DateStart</td>
+                <td class="col-md-3">@context.CurrentPeriodEnd</td>
+                <td class="col-md-3">@(context.Customer.FirstName + " " + context.Customer.FirstName)</td>
+                <td class="col-md-3">@context.Subscription.Name</td>
+                <td class="col-md-4">
+                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
+
+        @if (showModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Delete Subscriber</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Do you want to delete this subscriber?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                await DeleteClothe(subscriber.Id); ModalOk();
+                            })">Delete</button>
+                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="d-flex justify-content-center" style="margin-top: 150px;">
+            <h4 style="font-size: 45px;">No record found</h4>
+        </div>
+    }
+}
+
+@code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected SubscriberResponse subscriber = new();
+    protected List<SubscriberResponse> subscribersList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSubscribers();
+    }
+
+    protected async Task GetSubscribers()
+    {
+        subscribersList = await SubscriberService.GetSubscribers();
+    }
+
+    protected void DeleteConfirm(int Id)
+    {
+        subscriber = subscribersList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected async Task DeleteClothe(int Id)
+    {
+        await SubscriberService.DeleteSubscriber(Id);
+        await GetSubscribers();
+    }
+}
+
+<style>
+    label {
+        width: 70%;
+    }
+</style>
