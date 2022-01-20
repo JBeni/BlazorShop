@@ -5,6 +5,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IMusicService MusicService
 @inject ISubscriptionService SubscriptionService
+@inject NavigationManager NavManager
 
 <h3 class="mb-3">Musics Section</h3>
 
@@ -60,7 +61,7 @@ else
                                     <li class="d-flex align-items-center">
                                         <small>
                                             <button type="button" class="btn btn-sm btn-outline-success" style="border: none;"
-                                                @onclick="(async () => { await ViewMusic(); })">
+                                                @onclick="(() => { ViewMusic(item.Id); })">
                                                 View Music
                                             </button>
                                         </small>
@@ -161,8 +162,9 @@ else
         CartResponse cartItem = new();
     }
 
-    private async Task ViewMusic()
+    private void ViewMusic(int id)
     {
+        NavManager.NavigateTo($"musics/view/{id}");
     }
 
     protected async Task GetMusics()
