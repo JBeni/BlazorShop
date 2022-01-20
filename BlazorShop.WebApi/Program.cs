@@ -16,9 +16,6 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddUnitOfWorkLayer();
 
-// Inject services
-builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers(options =>
@@ -91,6 +88,8 @@ using (var scope = app.Services.CreateScope())
         await ApplicationDbContextSeed.SeedRolesAsync(roleManager, rolesSeed);
         await ApplicationDbContextSeed.SeedAdminUserAsync(userManager, roleManager, adminSeed);
         await ApplicationDbContextSeed.SeedClothesDataAsync(context);
+        await ApplicationDbContextSeed.SeedMusicsDataAsync(context);
+        await ApplicationDbContextSeed.SeedSubscriptionsDataAsync(context);
     }
     catch (Exception ex)
     {
