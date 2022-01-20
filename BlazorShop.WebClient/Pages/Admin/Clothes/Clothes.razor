@@ -78,11 +78,14 @@ else
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Delete clothe</h3>
+                            <h3 class="modal-title">Remove clothe</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h4>Do you want to delete this clothe?</h4>
+                            <h4>Do you want to remove this clothe from the shop?</h4>
+                            <small>
+                                <p>This represents a soft delete, the item will remain in the database but won't be shown in the client interface.</p>
+                            </small>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" @onclick="(async () => {
