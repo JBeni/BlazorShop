@@ -49,7 +49,7 @@
 </div>
 
 <BlazoredToasts Position="ToastPosition.TopRight"
-                Timeout="10"
+                Timeout="5"
                 IconType="IconType.FontAwesome"
                 SuccessClass="success-toast-override"
                 SuccessIcon="fa fa-thumbs-up"
@@ -58,7 +58,8 @@
 
 @code {
     private string username { get; set; }
-    protected int counts { get; set; }
+    private int counts { get; set; }
+    private int userId { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -70,11 +71,13 @@
 
         if (!user.Identity.IsAuthenticated) return;
         username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value.Replace("@", " ");
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
 
         var isAdmin = user.Claims.FirstOrDefault(x => x.Type == "role").Value;
+        
         if (!isAdmin.Equals("Admin"))
         {
-            counts = await GetCartCount();            
+            counts = await GetCartCount(userId);            
         }
     }
 
@@ -83,9 +86,9 @@
         CartService.OnChange -= StateHasChanged;
     }
 
-    private async Task<int> GetCartCount()
+    private async Task<int> GetCartCount(int userId)
     {
-        var cart = await CartService.GetCartCounts();
+        var cart = await CartService.GetCartCounts(userId);
         return cart > 0 ? cart : 0;
     }
 }
