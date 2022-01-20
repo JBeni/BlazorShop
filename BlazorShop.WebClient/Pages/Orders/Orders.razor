@@ -2,6 +2,7 @@
 
 @attribute [Authorize(Policy = "Customer")]
 
+@inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject NavigationManager NavigationManager
 
@@ -65,12 +66,19 @@
 </main>
 
 @code {
+    private int userId { get; set; }
     List<CartResponse> cartItems = new();
 
     protected override async Task OnInitializedAsync()
     {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+
         CartService.OnChange += StateHasChanged;
-        cartItems = await CartService.GetCarts();
+        cartItems = await CartService.GetCarts(userId);
     }
 
     private void ViewOrder(int id)
