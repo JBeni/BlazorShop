@@ -4,8 +4,8 @@
     {
         Task<List<SubscriptionResponse>> GetSubscriptions();
         Task<SubscriptionResponse> GetSubscription(int id);
-        Task<RequestResponse> AddSubscription(SubscriptionResponse Subscription);
-        Task<RequestResponse> UpdateSubscription(SubscriptionResponse Subscription);
+        Task<RequestResponse> AddSubscription(SubscriptionResponse subscription);
+        Task<RequestResponse> UpdateSubscription(SubscriptionResponse subscription);
         Task<RequestResponse> DeleteSubscription(int id);
     }
 }

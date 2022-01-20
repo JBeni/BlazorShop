@@ -4,8 +4,8 @@
     {
         Task<List<RoleResponse>> GetRoles();
         Task<RoleResponse> GetRole(int id);
-        Task<RequestResponse> AddRole(RoleResponse Role);
-        Task<RequestResponse> UpdateRole(RoleResponse Role);
+        Task<RequestResponse> AddRole(RoleResponse role);
+        Task<RequestResponse> UpdateRole(RoleResponse role);
         Task<RequestResponse> DeleteRole(int id);
     }
 }
