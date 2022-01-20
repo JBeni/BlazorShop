@@ -110,6 +110,7 @@
                     Email = register.Email,
                     FirstName = register.FirstName,
                     LastName = register.LastName,
+                    IsActive = true,
                 };
                 if (!register.Password.Equals(register.ConfirmPassword))
                 {

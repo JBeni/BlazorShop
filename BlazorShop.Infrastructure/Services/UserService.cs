@@ -104,6 +104,12 @@
             existUser.LastName = command.LastName;
 
             await _userManager.UpdateAsync(existUser);
+
+            if (command.Role != null)
+            {
+                var role = await _roleService.FindRoleByNameAsync(command.Role);
+                await AssignUserToRoleAsync(new AssignUserToRoleCommand { UserId = existUser.Id, RoleId = role.Id });
+            }
             return RequestResponse.Success();
         }
 

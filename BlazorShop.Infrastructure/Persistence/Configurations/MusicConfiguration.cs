@@ -1,29 +1,27 @@
 ﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
-    public class ClotheConfiguration : IEntityTypeConfiguration<Clothe>
+    public class MusicConfiguration : IEntityTypeConfiguration<Music>
     {
-        public void Configure(EntityTypeBuilder<Clothe> builder)
+        public void Configure(EntityTypeBuilder<Music> builder)
         {
-            builder.ToTable("Clothes");
+            builder.ToTable("Musics");
 
-            builder.Property(t => t.Name)
+            builder.Property(t => t.Title)
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(t => t.Description)
                 .HasMaxLength(1000)
                 .IsRequired();
-            builder.Property(p => p.Price)
-                .HasColumnType("decimal(18, 2)")
+            builder.Property(t => t.Author)
+                .HasMaxLength(200)
                 .IsRequired();
-            builder.Property(p => p.Amount)
+            builder.Property(t => t.DateRelease)
                 .IsRequired();
             builder.Property(t => t.ImageName)
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(t => t.ImagePath)
                 .HasMaxLength(200)
-                .IsRequired();
-            builder.Property(t => t.IsActive)
                 .IsRequired();
         }
     }

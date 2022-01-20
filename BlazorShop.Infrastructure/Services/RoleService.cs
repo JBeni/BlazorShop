@@ -110,7 +110,7 @@
         public async Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand command)
         {
             var existsRole = await _roleManager.FindByNameAsync(command.Name);
-            if (existsRole == null) throw new Exception("The new role already exists");
+            if (existsRole != null) throw new Exception("The new role already exists");
 
             var role = await _roleManager.FindByIdAsync(command.Id.ToString());
             if (role == null) throw new Exception("The role was not created");
@@ -118,7 +118,7 @@
             role.Name = command.Name;
             role.NormalizedName = command.Name.ToUpper();
 
-            await _roleManager.CreateAsync(role);
+            await _roleManager.UpdateAsync(role);
             return RequestResponse.Success();
         }
 

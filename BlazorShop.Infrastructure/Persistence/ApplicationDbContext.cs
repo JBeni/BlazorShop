@@ -4,20 +4,21 @@
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>, IApplicationDbContext
     {
-        private readonly ICurrentUserService _currentUserService;
         private readonly IDateTimeService _dateTime;
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
-        public ApplicationDbContext(DbContextOptions options, ICurrentUserService currentUserService, IDateTimeService dateTime) : base(options)
+        public ApplicationDbContext(DbContextOptions options, IDateTimeService dateTime) : base(options)
         {
-            _currentUserService = currentUserService;
             _dateTime = dateTime;
         }
 
-        public DbSet<Clothe> Clothes { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Clothe> Clothes { get; set; }
+        public DbSet<Music> Musics { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -26,12 +27,10 @@
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        //entry.Entity.CreatedBy = _currentUserService.Username;
                         entry.Entity.Created = _dateTime.Now;
                         break;
 
                     case EntityState.Modified:
-                        //entry.Entity.LastModifiedBy = _currentUserService.Username;
                         entry.Entity.LastModified = _dateTime.Now;
                         break;
                 }
@@ -53,6 +52,13 @@
             builder.ApplyConfiguration(new UserLoginConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
             builder.ApplyConfiguration(new UserTokenConfiguration());
+
+            builder.ApplyConfiguration(new CartConfiguration());
+            builder.ApplyConfiguration(new ClotheConfiguration());
+            builder.ApplyConfiguration(new MusicConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new SubscriberConfiguration());
+            builder.ApplyConfiguration(new SubscriptionConfiguration());
         }
     }
 }
