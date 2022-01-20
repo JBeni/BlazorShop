@@ -2,6 +2,7 @@
 
 @attribute [Authorize(Policy = "Customer")]
 
+@inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject NavigationManager NavigationManager
 @implements IDisposable
@@ -46,11 +47,11 @@
                                         <tr>
                                             <th scope="row" class="border-0">
                                                 <div class="p-2">
-                                                    <img src="images/clothes/@item.Clothe.ImagePath" alt="@item.Clothe.ImageName" width="70" class="img-fluid rounded shadow-sm" />
+                                                    <img src="images/clothes/@item.ClotheImagePath" alt="@item.ClotheImageName" width="70" class="img-fluid rounded shadow-sm" />
                                                     <div class="ml-3 d-inline-block align-middle">
                                                         <h5 class="mb-0">
                                                             <a href="clothes/view/@item.ClotheId" class="text-dark d-inline-block align-middle">
-                                                                @item.Clothe.Name
+                                                                @item.ClotheName
                                                             </a>
                                                         </h5>
                                                     </div>
@@ -91,12 +92,19 @@
 </div>
 
 @code {
+    private int userId { get; set; }
     List<CartResponse> cartItems = new();
 
     protected override async Task OnInitializedAsync()
     {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+
         CartService.OnChange += StateHasChanged;
-        cartItems = await CartService.GetCarts();
+        cartItems = await CartService.GetCarts(userId);
     }
 
     public void Dispose()
@@ -106,15 +114,14 @@
 
     private async Task DeleteItem(int id)
     {
-        await CartService.DeleteCart(id);
-        cartItems = await CartService.GetCarts();
+        await CartService.DeleteCart(id, userId);
+        cartItems = await CartService.GetCarts(userId);
     }
 
     private async Task PlaceOrder()
     {
-        string checkoutUrl = await CartService.Checkout();
+        string checkoutUrl = await CartService.Checkout(userId);
         NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
-        await CartService.EmptyCart();
+        await CartService.EmptyCart(userId);
     }
 }
-
