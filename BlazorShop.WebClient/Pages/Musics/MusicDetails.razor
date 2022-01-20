@@ -1,6 +1,6 @@
 ﻿@page "/musics/view/{Id:int}"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = "Customer")]
 
 @inject IMusicService MusicService
 
