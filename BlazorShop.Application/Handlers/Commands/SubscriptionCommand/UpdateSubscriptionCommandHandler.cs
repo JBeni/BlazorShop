@@ -18,9 +18,6 @@
 
                 entity.Name = request.Name;
                 entity.Price = request.Price;
-                entity.Currency = request.Currency;
-                entity.CurrencySymbol = request.CurrencySymbol;
-                entity.ChargeType = request.ChargeType;
                 entity.Options = request.Options;
 
                 _dbContext.Subscriptions.Update(entity);

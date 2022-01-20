@@ -7,9 +7,10 @@
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public int ClotheId { get; set; }
-        public Clothe Clothe { get; set; }
+        public string ClotheName { get; set; }
+        public string ClotheImageName { get; set; }
+        public string ClotheImagePath { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -19,9 +20,10 @@
                 .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
                 .ForMember(d => d.Amount, opt => opt.MapFrom(s => s.Amount))
                 .ForMember(d => d.ClotheId, opt => opt.MapFrom(s => s.Clothe.Id))
-                .ForMember(d => d.Clothe, opt => opt.MapFrom(s => s.Clothe))
-                .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.User.Id))
-                .ForMember(d => d.User, opt => opt.MapFrom(s => s.User));
+                .ForMember(d => d.ClotheName, opt => opt.MapFrom(s => s.Clothe.Name))
+                .ForMember(d => d.ClotheImageName, opt => opt.MapFrom(s => s.Clothe.ImageName))
+                .ForMember(d => d.ClotheImagePath, opt => opt.MapFrom(s => s.Clothe.ImagePath))
+                .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.User.Id));
         }
 
         public string? Error { get; set; }

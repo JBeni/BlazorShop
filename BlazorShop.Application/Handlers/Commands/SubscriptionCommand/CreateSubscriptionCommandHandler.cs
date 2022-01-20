@@ -20,9 +20,9 @@
                 {
                     Name = request.Name,
                     Price = request.Price,
-                    Currency = request.Currency,
-                    CurrencySymbol = request.CurrencySymbol,
-                    ChargeType = request.ChargeType,
+                    Currency = "usd",
+                    CurrencySymbol = "$",
+                    ChargeType = "month",
                     Options = request.Options,
                 };
 

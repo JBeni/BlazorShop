@@ -4,7 +4,7 @@
     {
         public CreateSubscriberCommandValidator()
         {
-            RuleFor(x => x.Id).Empty().Null();
+            RuleFor(x => x.Id).Equal(0);
             RuleFor(x => x.Status).NotEmpty().NotNull();
             RuleFor(x => x.DateStart).NotEmpty().NotNull();
             RuleFor(x => x.CurrentPeriodEnd).NotEmpty().NotNull();

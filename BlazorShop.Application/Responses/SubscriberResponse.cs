@@ -7,9 +7,9 @@
         public DateTime DateStart { get; set; }
         public DateTime CurrentPeriodEnd { get; set; }
         public int CustomerId { get; set; }
-        public User Customer { get; set; }
+        public string CustomerName { get; set; }
         public int SubscriptionId { get; set; }
-        public Subscription Subscription { get; set; }
+        public string SubscriptionName { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -19,9 +19,9 @@
                 .ForMember(x => x.DateStart, opt => opt.MapFrom(s => s.DateStart))
                 .ForMember(x => x.CurrentPeriodEnd, opt => opt.MapFrom(s => s.CurrentPeriodEnd))
                 .ForMember(x => x.CustomerId, opt => opt.MapFrom(s => s.Customer.Id))
-                .ForMember(x => x.Customer, opt => opt.MapFrom(s => s.Customer))
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(s => s.Customer.FirstName + " " + s.Customer.LastName))
                 .ForMember(x => x.SubscriptionId, opt => opt.MapFrom(s => s.Subscription.Id))
-                .ForMember(x => x.Subscription, opt => opt.MapFrom(s => s.Subscription));
+                .ForMember(x => x.SubscriptionName, opt => opt.MapFrom(s => s.Subscription.Name));
         }
 
         public string Error { get; set; }

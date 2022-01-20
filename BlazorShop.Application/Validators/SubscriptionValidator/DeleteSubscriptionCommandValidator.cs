@@ -4,7 +4,7 @@
     {
         public DeleteSubscriptionCommandValidator()
         {
-
+            RuleFor(x => x.Id).GreaterThan(0);
         }
     }
 }

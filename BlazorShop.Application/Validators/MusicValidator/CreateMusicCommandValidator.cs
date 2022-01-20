@@ -4,7 +4,7 @@
     {
         public CreateMusicCommandValidator()
         {
-            RuleFor(x => x.Id).Empty().Null();
+            RuleFor(x => x.Id).Equal(0);
             RuleFor(x => x.Title).NotEmpty().NotNull();
             RuleFor(x => x.Description).NotEmpty().NotNull();
             RuleFor(x => x.Author).NotEmpty().NotNull();
