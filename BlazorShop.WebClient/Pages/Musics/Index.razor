@@ -1,6 +1,6 @@
 ﻿@page "/musics"
 
-@*@attribute [Authorize(Policy = "Customer")]*@
+@attribute [Authorize(Policy = "Customer")]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IMusicService MusicService
