@@ -32,8 +32,8 @@ else
                 <td class="col-md-3">@context.Status</td>
                 <td class="col-md-3">@context.DateStart</td>
                 <td class="col-md-3">@context.CurrentPeriodEnd</td>
-                <td class="col-md-3">@(context.Customer.FirstName + " " + context.Customer.FirstName)</td>
-                <td class="col-md-3">@context.Subscription.Name</td>
+                <td class="col-md-3">@context.CustomerName</td>
+                <td class="col-md-3">@context.SubscriptionName</td>
                 <td class="col-md-4">
                     <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
                         Delete
