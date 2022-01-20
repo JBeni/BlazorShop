@@ -18,3 +18,4 @@ global using BlazorShop.Application.Commands.UserCommand;
 global using Blazored.Toast;
 global using Blazored.Toast.Services;
 global using BlazorShop.Application.Commands.RoleCommand;
+global using MatBlazor;
