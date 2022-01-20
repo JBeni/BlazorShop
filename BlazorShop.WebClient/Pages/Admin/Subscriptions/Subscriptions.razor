@@ -1,0 +1,122 @@
+﻿@page "/admin/subscriptions"
+
+@attribute [Authorize(Policy = "Admin")]
+
+@inject ISubscriptionService SubscriptionService
+@inject NavigationManager NavManager
+
+<h3>Subscriptions</h3>
+
+<div class="row mb-4">
+    <div class="col">
+        <MatButtonLink Href="admin/subscriptions/add" Raised="true">Add Subscription</MatButtonLink>
+    </div>
+</div>
+
+@if (subscriptionsList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (subscriptionsList.Count > 0)
+    {
+        <MatTable Items="@subscriptionsList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Title" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Currency</th>
+                <th>CurrencySymbol</th>
+                <th>ChargeType</th>
+                <th>Options</th>
+                <th>Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td>@String.Format("{0:d}", @context.Id)</td>
+                <td class="col-md-2">@context.Name</td>
+                <td class="col-md-2">@context.Price</td>
+                <td>@context.Currency</td>
+                <td>@context.CurrencySymbol</td>
+                <td>@context.ChargeType</td>
+                <td class="col-md-6">@context.Options</td>
+                <td class="col-md-4">
+                    <a href='admin/subscriptions/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                    <span class="ml-5"></span>
+                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
+
+        @if (showModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Delete Subscription</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Do you want to delete this subscription?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                await DeleteClothe(subscription.Id); ModalOk();
+                            })">Delete</button>
+                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="d-flex justify-content-center" style="margin-top: 150px;">
+            <h4 style="font-size: 45px;">No record found</h4>
+        </div>
+    }
+}
+
+@code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    protected SubscriptionResponse subscription = new();
+    protected List<SubscriptionResponse> subscriptionsList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSubscriptions();
+    }
+
+    protected async Task GetSubscriptions()
+    {
+        subscriptionsList = await SubscriptionService.GetSubscriptions();
+    }
+
+    protected void DeleteConfirm(int Id)
+    {
+        subscription = subscriptionsList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected async Task DeleteClothe(int Id)
+    {
+        await SubscriptionService.DeleteSubscription(Id);
+        await GetSubscriptions();
+    }
+}
+
+<style>
+    label {
+        width: 70%;
+    }
+</style>
