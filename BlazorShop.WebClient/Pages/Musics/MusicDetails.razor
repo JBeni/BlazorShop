@@ -1,13 +1,145 @@
 ﻿@page "/musics/view/{Id:int}"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = "Admin")]
 
-@inject AuthenticationStateProvider AuthStateProvider
-@inject IClotheService ClotheService
-@inject ICartService CartService
+@inject IMusicService MusicService
 
-<h3>View Music Details</h3>
+<h3 class="text-center">View Music Details</h3>
+
+<div class="container">
+    <div class="product">
+        <div class="product-img">
+            <img src="images/musics/@music.ImagePath" alt="@music.ImageName" />
+        </div>
+        <div class="product-listing">
+            <div class="content">
+                <h1>@music.Title</h1>
+                <p>@music.Description</p>
+                <p>Author: @music.Author</p>
+                <p>Date of Release: @music.DateRelease.ToString("dd/MM/yyyy")</p>
+
+                <div class="btn-and-rating-box d-flex justify-content-center">
+                    <a href="musics" class="btn btn-outline-dark" role="button"> &#8592; Go Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+    public MusicResponse music = new();
 
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            music = await MusicService.GetMusic(Id);
+        }
+    }
 }
+
+<style>
+    .container {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 100px;
+        font-family: "roboto", sans-serif;
+    }
+
+    .product {
+        position: relative;
+        width: 1000px;
+        min-width: 350px;
+        min-height: 500px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-img {
+        width: 40%;
+        height: 500px;
+        background: #fff;
+        position: relative;
+        opacity: 0;
+        transform: translateY(-50px);
+        animation: fade-in 1s forwards 1;
+
+        background: rgba( 174, 157, 157, 0.1 );
+        box-shadow: 0 8px 20px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 3.5px );
+        -webkit-backdrop-filter: blur( 3.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+    }
+
+    .product-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        user-select: none;
+    }
+
+    .product-listing {
+        width: 60%;
+        min-height: 500px;
+        height: auto;
+        background: #292929;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        color: #eae3d2;
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fade-in 1s forwards 1;
+    }
+
+    @@keyframes fade-in {
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .btn-and-rating-box {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        background: #eae3d2;
+        color: #292929;
+        border: none;
+        text-transform: capitalize;
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #eedbaf;
+    }
+
+    @@media (max-width: 1100px) {
+        .product {
+            flex-direction: column;
+            width: 90%;
+            margin: 5vh 0;
+        }
+        .product-img {
+            width: 100%;
+            height: 300px;
+        }
+        .product-listing {
+            width: 100%;
+            min-height: auto;
+        }
+    }
+</style>
