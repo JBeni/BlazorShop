@@ -27,9 +27,9 @@
             return RequestResponse.Success();
         }
 
-        public async Task<RequestResponse> DeleteCart(int id)
+        public async Task<RequestResponse> DeleteCart(int id, int userId)
         {
-            var response = await _httpClient.DeleteAsync($"Carts/cart/{id}");
+            var response = await _httpClient.DeleteAsync($"Carts/cart/{id}/{userId}");
             if (!response.IsSuccessStatusCode)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -40,9 +40,9 @@
             return RequestResponse.Success();
         }
 
-        public async Task<RequestResponse> EmptyCart()
+        public async Task<RequestResponse> EmptyCart(int userId)
         {
-            var response = await _httpClient.DeleteAsync($"Carts/carts");
+            var response = await _httpClient.DeleteAsync($"Carts/carts/{userId}");
             if (!response.IsSuccessStatusCode)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -72,9 +72,9 @@
             return result;
         }
 
-        public async Task<int> GetCartCounts()
+        public async Task<int> GetCartCounts(int userId)
         {
-            var authResult = await _httpClient.GetAsync("Carts/count");
+            var authResult = await _httpClient.GetAsync($"Carts/count/{userId}");
             if (!authResult.IsSuccessStatusCode)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -90,9 +90,9 @@
             return result;
         }
 
-        public async Task<List<CartResponse>> GetCarts()
+        public async Task<List<CartResponse>> GetCarts(int userId)
         {
-            var authResult = await _httpClient.GetAsync("Carts/carts");
+            var authResult = await _httpClient.GetAsync($"Carts/carts/{userId}");
             if (!authResult.IsSuccessStatusCode)
             {
                 _toastService.ShowError("Something went wrong.");
@@ -122,16 +122,16 @@
             return RequestResponse.Success();
         }
 
-        public async Task<string> Checkout()
+        public async Task<string> Checkout(int userId)
         {
-            var response = await _httpClient.PostAsJsonAsync("Payments/checkout", await GetCarts());
-            var url = await response.Content.ReadAsStringAsync();
-
+            var carts = await GetCarts(userId);
+            var response = await _httpClient.PostAsJsonAsync("Payments/checkout", carts.ToList());
             if (!response.IsSuccessStatusCode)
             {
                 _toastService.ShowError("Something went wrong.");
                 return null;
             }
+            var url = await response.Content.ReadAsStringAsync();
 
             _toastService.ShowSuccess("The checkout operation was successfully made.");
             return url;
