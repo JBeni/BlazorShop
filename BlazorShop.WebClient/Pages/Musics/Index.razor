@@ -1,13 +1,196 @@
 ﻿@page "/musics"
 
-@attribute [Authorize(Policy = "Customer")]
+@*@attribute [Authorize(Policy = "Customer")]*@
 
 @inject AuthenticationStateProvider AuthStateProvider
-@inject IClotheService ClotheService
-@inject ICartService CartService
+@inject IMusicService MusicService
+@inject ISubscriptionService SubscriptionService
 
-<h3>Rent Music</h3>
+<h3 class="mb-3">Musics Section</h3>
+
+<div class="row">
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search music by title"
+            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterMusics" />
+        <div class="input-group-append" style="margin-left: 15px;">
+            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
+                <i class="fas fa-times"></i>
+                Reset Filter
+            </button>
+        </div>
+    </div>
+</div>
+<br />
+
+@if (musicsList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (musicsList.Count == 0)
+    {
+        <div class="d-flex justify-content-center">
+            <h4>No record found</h4>
+        </div>
+    }
+    else
+    {
+        <div class="container px-4 py-5" id="custom-cards">
+            <div class="row border-bottom">
+                <h2 class="">Rent Music</h2>
+                <h2 class="d-flex flex-row-reverse" style="margin-top: -45px; border: none;">
+                    <button type="button" class="btn btn-sm btn-outline-primary" @onclick="(() => ModalShow())">
+                        Activate Membership
+                    </button>
+                </h2>
+            </div>
+
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                @foreach (var item in musicsList)
+                {
+                    <div class="col">
+                        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('images/musics/@item.ImagePath');">
+                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">@item.Title</h2>
+                                <ul class="d-flex list-unstyled mt-auto">
+                                    <li class="me-auto">
+                                        <img src="https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/06/music-logo-design.jpg" alt="Bootstrap" width="60" height="60" class="rounded-circle border border-white">
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <small>
+                                            <button type="button" class="btn btn-sm btn-outline-success" style="border: none;"
+                                                @onclick="(async () => { await ViewMusic(); })">
+                                                View Music
+                                            </button>
+                                        </small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (showModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 125px; margin-left: -100px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width: 900px;">
+                        <div class="modal-header d-flex justify-content-center">
+                            <h3 class="modal-title">Activate Music Membership</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h4 class="text-center align-items-center">What type of membership do you want to choose?</h4>
+
+                            <div class="container py-3">
+                                <main>
+                                    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                                        @foreach (var subscription in subscriptions)
+                                        {
+                                            <div class="col">
+                                                <div class="card mb-4 rounded-3 shadow-sm">
+                                                    <div class="card-header py-3">
+                                                        <h4 class="my-0 fw-normal">@subscription.Name</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h1 class="card-title pricing-card-title">
+                                                            <small class="text-muted fw-light">@subscription.CurrencySymbol @subscription.Price/@subscription.ChargeType</small>
+                                                        </h1>
+                                                        <ul class="list-unstyled mt-3 mb-4">
+                                                            @foreach (var item in subscription.Options.Split(","))
+                                                            {
+                                                                <li>@item</li>                                                                
+                                                            }
+                                                        </ul>
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <label class="form-check-label">
+                                                            Choose Type
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </main>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                await ActivateMembership(); ModalOk();
+                            })">Activate</button>
+                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
 
 @code {
+    bool showModal = false;
 
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    private List<SubscriptionResponse> subscriptions = new();
+    private List<MusicResponse> musicsList = new();
+    protected List<MusicResponse> searchMusicsData = new();
+
+    protected string SearchString { get; set; } = string.Empty;
+    private int UserId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+
+        await GetMusics();
+        await GetSubscriptions();
+    }
+
+    private async Task ActivateMembership()
+    {
+        CartResponse cartItem = new();
+    }
+
+    private async Task ViewMusic()
+    {
+    }
+
+    protected async Task GetMusics()
+    {
+        musicsList = await MusicService.GetMusics();
+        searchMusicsData = musicsList;
+    }
+
+    protected async Task GetSubscriptions()
+    {
+        subscriptions = await SubscriptionService.GetSubscriptions();
+    }
+
+    protected void FilterMusics()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            musicsList = searchMusicsData.Where(x => x.Title.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            musicsList = searchMusicsData;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        musicsList = searchMusicsData;
+    }
 }
