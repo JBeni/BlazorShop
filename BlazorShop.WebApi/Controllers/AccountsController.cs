@@ -4,21 +4,12 @@
     {
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
-        private readonly ICurrentUserService _currentUserService;
 
         public AccountsController(IConfiguration configuration,
-                                  IEmailService emailService,
-                                  ICurrentUserService currentUserService)
+                                  IEmailService emailService)
         {
             _configuration = configuration;
             _emailService = emailService;
-            _currentUserService = currentUserService;
-        }
-
-        [HttpGet("user")]
-        public IActionResult GetIdentityClaims()
-        {
-            return Ok(value: new[] { _currentUserService.UserId });
         }
 
         [AllowAnonymous]
