@@ -5,13 +5,19 @@
         private readonly ApplicationDbContext _context;
 
         public IMusicRepository MusicRepository { get; }
+        public ISubscriberRepository SubscriberRepository { get; }
+        public ISubscriptionRepository SubscriptionRepository { get; }
 
         public UnitOfWorkPattern(ApplicationDbContext context,
-                          IMusicRepository musicRepository)
+                          IMusicRepository musicRepository,
+                          ISubscriberRepository subscriberRepository,
+                          ISubscriptionRepository subscriptionRepository)
         {
             _context = context;
 
             MusicRepository = musicRepository;
+            SubscriberRepository = subscriberRepository;
+            SubscriptionRepository = subscriptionRepository;
         }
 
         public int Commit()

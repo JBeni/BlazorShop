@@ -6,8 +6,12 @@
         {
             services.AddTransient<IUnitOfWork, UnitOfWorkPattern>();
             services.AddTransient<IMusicRepository, MusicRepository>();
+            services.AddTransient<ISubscriberRepository, SubscriberRepository>();
+            services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
 
-            services.AddScoped<MusicService>();
+            services.AddTransient<IMusicService, MusicService >();
+            services.AddTransient<ISubscriberService, SubscriberService>();
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
 
             return services;
         }

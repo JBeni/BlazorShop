@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.UnitOfWork.Services
 {
-    public class MusicService
+    public class MusicService : IMusicService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
