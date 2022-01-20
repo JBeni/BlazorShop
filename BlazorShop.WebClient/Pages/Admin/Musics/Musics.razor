@@ -35,13 +35,13 @@ else
             </MatTableHeader>
 
             <MatTableRow>
-                <td class="col-md-1">@String.Format("{0:d}", @context.Id)</td>
+                <td>@String.Format("{0:d}", @context.Id)</td>
                 <td class="col-md-2">@context.Title</td>
-                <td class="col-md-8">@context.Description</td>
-                <td class="col-md-2">@context.Author</td>
+                <td class="col-md-6">@context.Description</td>
+                <td>@context.Author</td>
                 <td class="col-md-2">@context.DateRelease.ToString("dd/MM/yyyy")</td>
-                <td class="col-md-2">@context.ImageName</td>
-                <td class="col-md-2">@context.ImagePath</td>
+                <td>@context.ImageName</td>
+                <td>@context.ImagePath</td>
                 <td class="col-md-4">
                     <a href='admin/musics/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
                     <span class="ml-5"></span>
