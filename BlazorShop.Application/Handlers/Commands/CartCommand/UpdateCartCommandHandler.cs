@@ -13,7 +13,7 @@
         {
             try
             {
-                var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.CartId && x.User.Id == request.UserId);
+                var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
 
                 entity.Name = request.Name;
                 entity.Price = request.Price;

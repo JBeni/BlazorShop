@@ -16,10 +16,9 @@
                 var entity = new Order
                 {
                     UserEmail = request.UserEmail,
-                    Name = request.Name,
-                    AmountSubTotal = request.AmountSubTotal,
+                    OrderDate = request.OrderDate,
+                    LineItems = request.LineItems,
                     AmountTotal = request.AmountTotal,
-                    Quantity = request.Quantity,
                 };
 
                 _dbContext.Orders.Add(entity);

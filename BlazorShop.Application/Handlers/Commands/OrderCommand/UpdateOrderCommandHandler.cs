@@ -17,10 +17,9 @@
                 if (entity == null) throw new Exception("The entity does not exists");
 
                 entity.UserEmail = request.UserEmail;
-                entity.Name = request.Name;
-                entity.AmountSubTotal = request.AmountSubTotal;
+                entity.OrderDate = request.OrderDate;
+                entity.LineItems = request.LineItems;
                 entity.AmountTotal = request.AmountTotal;
-                entity.Quantity = request.Quantity;
 
                 _dbContext.Orders.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
