@@ -1,0 +1,8 @@
+Using ngrok
+
+ngrok authtoken <token>
+
+Then take the url with ssl from web api, run the below command
+ngrok http https://localhost:44351 -host-header="localhost:44351"
+
+Go to stripe dashboard, webhook section and set the endpoint with the value provided at the above step adding /api/Payments/webhook

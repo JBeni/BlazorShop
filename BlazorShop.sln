@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
+		Stripe_WebHook.txt = Stripe_WebHook.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Application", "BlazorShop.Application\BlazorShop.Application.csproj", "{43B8C0A7-4E67-497F-AA33-3F67723D4A0B}"
