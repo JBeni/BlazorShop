@@ -167,83 +167,33 @@ namespace BlazorShop.WebApi.Controllers
 			try
 			{
 				var stripeEvent = EventUtility.ConstructEvent(
-				 json,
-				 Request.Headers["Stripe-Signature"],
-				 _configuration["StripeSettings:WebHookKey"]
-			   );
+					json,
+					Request.Headers["Stripe-Signature"],
+					_configuration["StripeSettings:WebHookKey"]
+				);
 
 				// Handle the event
-				if (stripeEvent.Type == Events.CheckoutSessionCompleted)
+				switch (stripeEvent.Type)
                 {
-					var data = stripeEvent.Data.Object as Session;
-					var service = new PaymentIntentService();
-					var result = service.Get(data.PaymentIntentId);
+					case Events.CheckoutSessionCompleted:
+						await CompleteAcceptCheckout(stripeEvent);
+						break;
+					case Events.CustomerSubscriptionCreated:
+						var subscription = stripeEvent.Data.Object as Subscription;
+						await addSubscriptionToDb(subscription);
+						break;
+					case Events.CustomerSubscriptionUpdated:
+						var session = stripeEvent.Data.Object as Subscription;
+						await updateSubscription(session);
+						break;
+					case Events.CustomerCreated:
+						var customer = stripeEvent.Data.Object as Customer;
+						await addCustomerIdToUser(customer);
+						break;
 
-					var sessionService = new SessionService();
-					StripeList<LineItem> lineItems = sessionService.ListLineItems(data.Id);
-
-					List<InvoiceResponse> items = new();
-                    foreach (var item in lineItems.Data)
-                    {
-						var invoice = new InvoiceResponse
-						{
-							Name = item.Description,
-							AmountSubTotal = Convert.ToInt32(item.AmountSubtotal) / 100,
-							AmountTotal = Convert.ToInt32(item.AmountTotal) / 100,
-							Quantity = Convert.ToInt32(item.Quantity)
-						};
-						items.Add(invoice);
-                    }
-
-					var order = new OrderResponse
-					{
-						UserEmail = data.CustomerDetails.Email,
-						OrderDate = DateTime.Now,
-						LineItems = JsonSerializer.Serialize(items),
-						AmountTotal = Convert.ToInt32(data.AmountTotal) / 100
-					};
-
-					//var invoicesList = JsonSerializer.Serialize(items);
-					//var deseItems = JsonSerializer.Deserialize<List<InvoiceResponse>>(
-					//		invoicesList,
-					//		new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-					//	);
-
-
-
-					// save order with line items in DB
-
-					// save receipt in DB
-
-					//await Mediator.Send();
-					//await Mediator.Send();
-
-					var next = "";
-				}
-				else if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
-				{
-					var subscription = stripeEvent.Data.Object as Subscription;
-					//Do stuff
-					await addSubscriptionToDb(subscription);
-				}
-				else if (stripeEvent.Type == Events.CustomerSubscriptionUpdated)
-				{
-					var session = stripeEvent.Data.Object as Subscription;
-
-					// Update Subsription
-					await updateSubscription(session);
-				}
-				else if (stripeEvent.Type == Events.CustomerCreated)
-				{
-					var customer = stripeEvent.Data.Object as Customer;
-					//Do Stuff
-					await addCustomerIdToUser(customer);
-				}
-				// ... handle other event types
-				else
-				{
-					// Unexpected event type
-					Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+					default:
+						Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+						break;
 				}
 				return Ok();
 			}
@@ -252,6 +202,44 @@ namespace BlazorShop.WebApi.Controllers
 				Console.WriteLine(e.StripeError.Message);
 				return BadRequest();
 			}
+		}
+
+		private async Task CompleteAcceptCheckout(Event stripeEvent)
+        {
+			var sessionData = stripeEvent.Data.Object as Session;
+			var service = new PaymentIntentService();
+			var result = service.Get(sessionData.PaymentIntentId);
+
+			var sessionService = new SessionService();
+			StripeList<LineItem> lineItems = sessionService.ListLineItems(sessionData.Id);
+
+			List<InvoiceResponse> items = new();
+			foreach (var item in lineItems.Data)
+			{
+				var invoice = new InvoiceResponse
+				{
+					Name = item.Description,
+					AmountSubTotal = Convert.ToInt32(item.AmountSubtotal) / 100,
+					AmountTotal = Convert.ToInt32(item.AmountTotal) / 100,
+					Quantity = Convert.ToInt32(item.Quantity)
+				};
+				items.Add(invoice);
+			}
+			var orderCommand = new CreateOrderCommand
+			{
+				UserEmail = sessionData.CustomerDetails.Email,
+				OrderDate = DateTime.Now,
+				LineItems = JsonSerializer.Serialize(items),
+				AmountTotal = Convert.ToInt32(sessionData.AmountTotal) / 100
+			};
+
+			await Mediator.Send(orderCommand);
+			await Mediator.Send(new CreateReceiptCommand
+			{
+				ReceiptDate = DateTime.Now,
+				ReceiptName = "Receipt_" + DateTime.Now,
+				ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl
+			});
 		}
 
 		private async Task updateSubscription(Subscription subscription)
