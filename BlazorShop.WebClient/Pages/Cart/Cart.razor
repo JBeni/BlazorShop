@@ -62,7 +62,7 @@
                                             </td>
                                             <td class="border-0 align-middle">
                                                 <EditForm Model="item">
-                                                    <InputNumber Min="1" @bind-Value="item.Amount" class="form-control" style="width: 70px" />
+                                                    <InputNumber Min="1" @onclick="@(async () => await UpdateClotheQuantity(item, item.Amount))" @bind-Value="item.Amount" class="form-control" style="width: 70px" />
                                                 </EditForm>
                                             </td>
                                             <td class="border-0 align-middle">
@@ -116,6 +116,12 @@
     {
         await CartService.DeleteCart(id, userId);
         cartItems = await CartService.GetCarts(userId);
+    }
+
+    private async Task UpdateClotheQuantity(CartResponse cart, int newAmount)
+    {
+        cart.Amount = newAmount;
+        await CartService.UpdateCart(cart);
     }
 
     private async Task PlaceOrder()
