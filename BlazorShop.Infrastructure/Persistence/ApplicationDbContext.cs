@@ -15,10 +15,12 @@
 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Clothe> Clothes { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Music> Musics { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -55,8 +57,10 @@
 
             builder.ApplyConfiguration(new CartConfiguration());
             builder.ApplyConfiguration(new ClotheConfiguration());
+            builder.ApplyConfiguration(new InvoiceConfiguration());
             builder.ApplyConfiguration(new MusicConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new ReceiptConfiguration());
             builder.ApplyConfiguration(new SubscriberConfiguration());
             builder.ApplyConfiguration(new SubscriptionConfiguration());
         }

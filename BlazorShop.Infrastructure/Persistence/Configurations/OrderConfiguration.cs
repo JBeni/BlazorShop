@@ -6,7 +6,15 @@
         {
             builder.ToTable("Orders");
 
-            builder.Property(t => t.Name)
+            builder.Property(t => t.UserEmail)
+                .HasMaxLength(200)
+                .IsRequired();
+            builder.Property(t => t.OrderDate)
+                .IsRequired();
+            builder.Property(t => t.LineItems)
+                .HasMaxLength(10000)
+                .IsRequired();
+            builder.Property(t => t.AmountTotal)
                 .HasMaxLength(200)
                 .IsRequired();
         }
