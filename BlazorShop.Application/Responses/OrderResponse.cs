@@ -4,20 +4,18 @@
     {
         public int Id { get; set; }
         public string UserEmail { get; set; }
-        public string Name { get; set; }
-        public int AmountSubTotal { get; set; }
+        public DateTime OrderDate { get; set; }
+        public string LineItems { get; set; }
         public int AmountTotal { get; set; }
-        public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Order, OrderResponse>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.UserEmail, opt => opt.MapFrom(s => s.UserEmail))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
-                .ForMember(d => d.AmountSubTotal, opt => opt.MapFrom(s => s.AmountSubTotal))
-                .ForMember(d => d.AmountTotal, opt => opt.MapFrom(s => s.AmountTotal))
-                .ForMember(d => d.Quantity, opt => opt.MapFrom(s => s.Quantity));
+                .ForMember(d => d.OrderDate, opt => opt.MapFrom(s => s.OrderDate))
+                .ForMember(d => d.LineItems, opt => opt.MapFrom(s => s.LineItems))
+                .ForMember(d => d.AmountTotal, opt => opt.MapFrom(s => s.AmountTotal));
         }
 
         public string? Error { get; set; }
