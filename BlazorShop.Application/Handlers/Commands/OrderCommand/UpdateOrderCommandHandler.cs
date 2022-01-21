@@ -14,6 +14,12 @@
             try
             {
                 var entity = _dbContext.Orders.SingleOrDefault(d => d.Id == request.Id);
+                if (entity == null) throw new Exception("The entity does not exists");
+
+                entity.UserEmail = request.UserEmail;
+                entity.Name = request.Name;
+                entity.AmountSubTotal = request.AmountSubTotal;
+                entity.AmountTotal = request.AmountTotal;
                 entity.Quantity = request.Quantity;
 
                 _dbContext.Orders.Update(entity);

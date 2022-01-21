@@ -2,11 +2,10 @@
 {
     public class CreateOrderCommand : IRequest<RequestResponse>
     {
-        public string? Name { get; set; }
-        public double Price { get; set; }
-        public string? ShippingAddress { get; set; }
-        public string? SupplierName { get; set; }
-        public string? BuyerName { get; set; }
+        public string UserEmail { get; set; }
+        public string Name { get; set; }
+        public int AmountSubTotal { get; set; }
+        public int AmountTotal { get; set; }
         public int Quantity { get; set; }
     }
 }

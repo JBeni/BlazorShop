@@ -2,12 +2,10 @@
 {
     public class Order : EntityBase
     {
-        public string? Description { get; set; }
-        public string? ListPrice { get; set; }
-        public string? Discount { get; set; }
-        public string? SalePrice { get; set; }
+        public string UserEmail { get; set; }
+        public string Name { get; set; }
+        public int AmountSubTotal { get; set; }
+        public int AmountTotal { get; set; }
         public int Quantity { get; set; }
-        public string? Tax { get; set; }
-        public string? Total { get; set; }
     }
 }

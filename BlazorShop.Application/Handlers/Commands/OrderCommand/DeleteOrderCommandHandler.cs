@@ -14,6 +14,7 @@
             try
             {
                 var entity = _dbContext.Orders.SingleOrDefault(d => d.Id == request.Id);
+                if (entity == null) throw new Exception("The entity does not exists");
 
                 _dbContext.Orders.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

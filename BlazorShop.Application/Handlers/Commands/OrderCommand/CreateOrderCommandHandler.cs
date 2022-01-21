@@ -15,6 +15,10 @@
             {
                 var entity = new Order
                 {
+                    UserEmail = request.UserEmail,
+                    Name = request.Name,
+                    AmountSubTotal = request.AmountSubTotal,
+                    AmountTotal = request.AmountTotal,
                     Quantity = request.Quantity,
                 };
 

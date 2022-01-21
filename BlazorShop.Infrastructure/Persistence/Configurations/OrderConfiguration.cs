@@ -6,7 +6,7 @@
         {
             builder.ToTable("Orders");
 
-            builder.Property(t => t.Description)
+            builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }
