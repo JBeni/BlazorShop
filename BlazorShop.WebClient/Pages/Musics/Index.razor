@@ -5,6 +5,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IMusicService MusicService
 @inject ISubscriptionService SubscriptionService
+@inject ISubscriberService SubscriberService
 @inject NavigationManager NavManager
 
 <h3 class="mb-3">Musics Section</h3>
@@ -90,7 +91,7 @@ else
                                     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                                         @foreach (var subscription in subscriptions)
                                         {
-                                            <div class="col">
+                                            <div class="col" style="height:">
                                                 <div class="card mb-4 rounded-3 shadow-sm">
                                                     <div class="card-header py-3">
                                                         <h4 class="my-0 fw-normal">@subscription.Name</h4>
@@ -105,10 +106,9 @@ else
                                                                 <li>@item</li>                                                                
                                                             }
                                                         </ul>
-                                                        <input class="form-check-input" type="checkbox">
-                                                        <label class="form-check-label">
-                                                            Choose Type
-                                                        </label>
+                                                        <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                                            await ActivateMembership(subscription.Id); ModalOk();
+                                                        })">Activate @subscription.Name Plan</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,9 +119,6 @@ else
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                await ActivateMembership(); ModalOk();
-                            })">Activate</button>
                             <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
                         </div>
                     </div>
@@ -157,9 +154,17 @@ else
         await GetSubscriptions();
     }
 
-    private async Task ActivateMembership()
+    private async Task ActivateMembership(int subscriptionId)
     {
-        CartResponse cartItem = new();
+        var subscriber = new SubscriberResponse
+        {
+            Status = SubscriptionStatus.Active,
+            DateStart = DateTime.Now,
+            CurrentPeriodEnd = DateTime.Now.AddDays(30),
+            CustomerId = UserId,
+            SubscriptionId = subscriptionId
+        };
+        await SubscriberService.AddSubscriber(subscriber);
     }
 
     private void ViewMusic(int id)
