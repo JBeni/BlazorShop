@@ -2,7 +2,7 @@
 {
     public class SubscribersController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpPost("subscriber")]
         public async Task<IActionResult> CreateSubscriber([FromBody] CreateSubscriberCommand command)
         {
@@ -10,7 +10,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpPut("subscriber")]
         public async Task<IActionResult> UpdateSubscriber([FromBody] UpdateSubscriberCommand command)
         {
@@ -18,7 +18,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User, Default")]
         [HttpDelete("subscriber/{id}")]
         public async Task<IActionResult> DeleteSubscriber(int id)
         {

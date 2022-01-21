@@ -1,49 +1,106 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿using System.Text.Json;
+
+namespace BlazorShop.WebApi.Controllers
 {
     [Authorize(Roles = "User, Default")]
     public class PaymentsController : ApiControllerBase
     {
-        public PaymentsController()
-        {
-        }
+		private readonly IConfiguration _configuration;
 
-        [HttpPost("process")]
-        public IActionResult Processing(string stripeToken, string stripeEmail)
-        {
-            var optionsCust = new CustomerCreateOptions
-            {
-                Email = stripeEmail,
-                Name = "Robert",
-                Phone = "04-234567"
+		public PaymentsController(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
 
-            };
-            var serviceCust = new CustomerService();
-            Customer customer = serviceCust.Create(optionsCust);
-            var optionsCharge = new ChargeCreateOptions
-            {
-                //Amount = HttpContext.Session.GetLong("Amount"),
-                //Amount = Convert.ToInt64(TempData["TotalAmount"]),
-                Currency = "USD",
-                Description = "Buying Flowers",
-                Source = stripeToken,
-                ReceiptEmail = stripeEmail,
+		//[HttpPost("create-checkout-session")]
+		//public async Task<IActionResult> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
+		//{
+		//	var options = new SessionCreateOptions
+		//	{
+		//		SuccessUrl = req.SuccessUrl,
+		//		CancelUrl = req.FailureUrl,
+		//		PaymentMethodTypes = new List<string>
+		//		{
+		//			"card",
+		//		},
+		//		Mode = "subscription",
+		//		LineItems = new List<SessionLineItemOptions>
+		//		{
+		//			new SessionLineItemOptions
+		//			{
+		//				Price = req.PriceId,
+		//				Quantity = 1,
+		//			},
+		//		},
+		//	};
 
-            };
-            var service = new ChargeService();
-            Charge charge = service.Create(optionsCharge);
-            if (charge.Status == "succeeded")
-            {
-                string BalanceTransactionId = charge.BalanceTransactionId;
-                //ViewBag.AmountPaid = Convert.ToDecimal(charge.Amount) % 100 / 100 + (charge.Amount) / 100;
-                //ViewBag.BalanceTxId = BalanceTransactionId;
-                //ViewBag.Customer = customer.Name;
-                //return View();
-            }
+		//	var service = new SessionService();
+		//	service.Create(options);
+		//	try
+		//	{
+		//		var session = await service.CreateAsync(options);
+		//		return Ok(new CreateCheckoutSessionResponse
+		//		{
+		//			SessionId = session.Id,
+		//			PublicKey = _stripeSettings.PublicKey
+		//		});
+		//	}
+		//	catch (StripeException e)
+		//	{
+		//		Console.WriteLine(e.StripeError.Message);
+		//		return BadRequest(new ErrorResponse
+		//		{
+		//			ErrorMessage = new ErrorMessage
+		//			{
+		//				Message = e.StripeError.Message,
+		//			}
+		//		});
+		//	}
+		//}
 
-            return Ok();
-        }
+		//[Authorize]
+		//[HttpPost("customer-portal")]
+		//public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
+		//{
 
-        [HttpGet("checkout-response")]
+		//	try
+		//	{
+		//		ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+		//		var claim = principal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
+		//		var userFromDb = await _userManager.FindByNameAsync(claim.Value);
+
+		//		if (userFromDb == null)
+		//		{
+		//			return BadRequest();
+		//		}
+		//		var options = new Stripe.BillingPortal.SessionCreateOptions
+		//		{
+		//			Customer = userFromDb.CustomerId,
+		//			ReturnUrl = req.ReturnUrl,
+		//		};
+		//		var service = new Stripe.BillingPortal.SessionService();
+		//		var session = await service.CreateAsync(options);
+
+		//		return Ok(new
+		//		{
+		//			url = session.Url
+		//		});
+		//	}
+		//	catch (StripeException e)
+		//	{
+		//		Console.WriteLine(e.StripeError.Message);
+		//		return BadRequest(new ErrorResponse
+		//		{
+		//			ErrorMessage = new ErrorMessage
+		//			{
+		//				Message = e.StripeError.Message,
+		//			}
+		//		});
+		//	}
+
+		//}
+
+		[HttpGet("checkout-response")]
         public async Task<IActionResult> GetCheckoutResponse([FromQuery] string session_id)
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
@@ -100,5 +157,161 @@
 
             return Ok(session.Url);
         }
-    }
+
+		[AllowAnonymous]
+		[HttpPost("webhook")]
+		public async Task<IActionResult> WebHook()
+		{
+			var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+			try
+			{
+				var stripeEvent = EventUtility.ConstructEvent(
+				 json,
+				 Request.Headers["Stripe-Signature"],
+				 _configuration["StripeSettings:WebHookKey"]
+			   );
+
+				// Handle the event
+				if (stripeEvent.Type == Events.CheckoutSessionCompleted)
+                {
+					var data = stripeEvent.Data.Object as Session;
+					var service = new PaymentIntentService();
+					var result = service.Get(data.PaymentIntentId);
+
+					var sessionService = new SessionService();
+					StripeList<LineItem> lineItems = sessionService.ListLineItems(data.Id);
+
+					List<InvoiceResponse> items = new();
+                    foreach (var item in lineItems.Data)
+                    {
+						var invoice = new InvoiceResponse
+						{
+							Name = item.Description,
+							AmountSubTotal = Convert.ToInt32(item.AmountSubtotal) / 100,
+							AmountTotal = Convert.ToInt32(item.AmountTotal) / 100,
+							Quantity = Convert.ToInt32(item.Quantity)
+						};
+						items.Add(invoice);
+                    }
+
+					var order = new OrderResponse
+					{
+						UserEmail = data.CustomerDetails.Email,
+						OrderDate = DateTime.Now,
+						LineItems = JsonSerializer.Serialize(items),
+						AmountTotal = Convert.ToInt32(data.AmountTotal) / 100
+					};
+
+					//var invoicesList = JsonSerializer.Serialize(items);
+					//var deseItems = JsonSerializer.Deserialize<List<InvoiceResponse>>(
+					//		invoicesList,
+					//		new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+					//	);
+
+
+
+					// save order with line items in DB
+
+					// save receipt in DB
+
+					//await Mediator.Send();
+					//await Mediator.Send();
+
+					var next = "";
+				}
+				else if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
+				{
+					var subscription = stripeEvent.Data.Object as Subscription;
+					//Do stuff
+					await addSubscriptionToDb(subscription);
+				}
+				else if (stripeEvent.Type == Events.CustomerSubscriptionUpdated)
+				{
+					var session = stripeEvent.Data.Object as Subscription;
+
+					// Update Subsription
+					await updateSubscription(session);
+				}
+				else if (stripeEvent.Type == Events.CustomerCreated)
+				{
+					var customer = stripeEvent.Data.Object as Customer;
+					//Do Stuff
+					await addCustomerIdToUser(customer);
+				}
+				// ... handle other event types
+				else
+				{
+					// Unexpected event type
+					Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+				}
+				return Ok();
+			}
+			catch (StripeException e)
+			{
+				Console.WriteLine(e.StripeError.Message);
+				return BadRequest();
+			}
+		}
+
+		private async Task updateSubscription(Subscription subscription)
+		{
+			//try
+			//{
+			//	var subscriptionFromDb = await _subscriberRepository.GetByIdAsync(subscription.Id);
+			//	if (subscriptionFromDb != null)
+			//	{
+			//		subscriptionFromDb.Status = subscription.Status;
+			//		subscriptionFromDb.CurrentPeriodEnd = subscription.CurrentPeriodEnd;
+			//		await _subscriberRepository.UpdateAsync(subscriptionFromDb);
+			//		Console.WriteLine("Subscription Updated");
+			//	}
+			//}
+			//catch (System.Exception ex)
+			//{
+			//	Console.WriteLine(ex.Message);
+			//	Console.WriteLine("Unable to update subscription");
+			//}
+		}
+
+		private async Task addCustomerIdToUser(Customer customer)
+		{
+			//try
+			//{
+			//	var userFromDb = await _userManager.FindByEmailAsync(customer.Email);
+			//	if (userFromDb != null)
+			//	{
+			//		userFromDb.CustomerId = customer.Id;
+			//		await _userManager.UpdateAsync(userFromDb);
+			//		Console.WriteLine("Customer Id added to user ");
+			//	}
+			//}
+			//catch (System.Exception ex)
+			//{
+			//	Console.WriteLine("Unable to add customer id to user");
+			//	Console.WriteLine(ex);
+			//}
+		}
+
+		private async Task addSubscriptionToDb(Subscription subscription)
+		{
+			//try
+			//{
+			//	var subscriber = new Subscriber
+			//	{
+			//		Id = subscription.Id,
+			//		CustomerId = subscription.CustomerId,
+			//		Status = "active",
+			//		CurrentPeriodEnd = subscription.CurrentPeriodEnd
+			//	};
+			//	await _subscriberRepository.CreateAsync(subscriber);
+			//	//You can send the new subscriber an email welcoming the new subscriber
+			//}
+			//catch (System.Exception ex)
+			//{
+			//	Console.WriteLine("Unable to add new subscriber to Database");
+			//	Console.WriteLine(ex.Message);
+			//}
+		}
+	}
 }
