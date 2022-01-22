@@ -31,13 +31,15 @@ builder.Services.AddSingleton<IAuthorizationHandler, DefaultRoleHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, CustomerRoleHandler>();
 
 // Inject Services
-builder.Services.AddScoped<IClotheService, ClotheService>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IMusicService, MusicService>();
-builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
-builder.Services.AddScoped<ISubscriberService, SubscriberService>();
+builder.Services.AddTransient<IClotheService, ClotheService>();
+builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IMusicService, MusicService>();
+builder.Services.AddTransient<IReceiptService, ReceiptService>();
+builder.Services.AddTransient<ISubscriptionService, SubscriptionService>();
+builder.Services.AddTransient<ISubscriberService, SubscriberService>();
 
 await builder.Build().RunAsync();
