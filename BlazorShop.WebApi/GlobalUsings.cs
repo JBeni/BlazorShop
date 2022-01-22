@@ -44,3 +44,5 @@ global using BlazorShop.Application.Commands.SubscriptionCommand;
 global using BlazorShop.Application.Queries.SubscriptionQuery;
 global using BlazorShop.Application.Queries.InvoiceQuery;
 global using BlazorShop.Application.Queries.ReceiptQuery;
+global using BlazorShop.Domain.Enums;
+global using System.Text.Json;

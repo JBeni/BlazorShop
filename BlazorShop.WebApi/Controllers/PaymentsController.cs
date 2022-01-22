@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace BlazorShop.WebApi.Controllers
+﻿namespace BlazorShop.WebApi.Controllers
 {
     [Authorize(Roles = "User, Default")]
     public class PaymentsController : ApiControllerBase
@@ -12,107 +10,55 @@ namespace BlazorShop.WebApi.Controllers
 			_configuration = configuration;
 		}
 
-		//[HttpPost("create-checkout-session")]
-		//public async Task<IActionResult> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
-		//{
-		//	var options = new SessionCreateOptions
-		//	{
-		//		SuccessUrl = req.SuccessUrl,
-		//		CancelUrl = req.FailureUrl,
-		//		PaymentMethodTypes = new List<string>
-		//		{
-		//			"card",
-		//		},
-		//		Mode = "subscription",
-		//		LineItems = new List<SessionLineItemOptions>
-		//		{
-		//			new SessionLineItemOptions
-		//			{
-		//				Price = req.PriceId,
-		//				Quantity = 1,
-		//			},
-		//		},
-		//	};
-
-		//	var service = new SessionService();
-		//	service.Create(options);
-		//	try
-		//	{
-		//		var session = await service.CreateAsync(options);
-		//		return Ok(new CreateCheckoutSessionResponse
-		//		{
-		//			SessionId = session.Id,
-		//			PublicKey = _stripeSettings.PublicKey
-		//		});
-		//	}
-		//	catch (StripeException e)
-		//	{
-		//		Console.WriteLine(e.StripeError.Message);
-		//		return BadRequest(new ErrorResponse
-		//		{
-		//			ErrorMessage = new ErrorMessage
-		//			{
-		//				Message = e.StripeError.Message,
-		//			}
-		//		});
-		//	}
-		//}
-
-		//[Authorize]
-		//[HttpPost("customer-portal")]
-		//public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
-		//{
-
-		//	try
-		//	{
-		//		ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-		//		var claim = principal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
-		//		var userFromDb = await _userManager.FindByNameAsync(claim.Value);
-
-		//		if (userFromDb == null)
-		//		{
-		//			return BadRequest();
-		//		}
-		//		var options = new Stripe.BillingPortal.SessionCreateOptions
-		//		{
-		//			Customer = userFromDb.CustomerId,
-		//			ReturnUrl = req.ReturnUrl,
-		//		};
-		//		var service = new Stripe.BillingPortal.SessionService();
-		//		var session = await service.CreateAsync(options);
-
-		//		return Ok(new
-		//		{
-		//			url = session.Url
-		//		});
-		//	}
-		//	catch (StripeException e)
-		//	{
-		//		Console.WriteLine(e.StripeError.Message);
-		//		return BadRequest(new ErrorResponse
-		//		{
-		//			ErrorMessage = new ErrorMessage
-		//			{
-		//				Message = e.StripeError.Message,
-		//			}
-		//		});
-		//	}
-
-		//}
-
-		[HttpGet("checkout-response")]
-        public async Task<IActionResult> GetCheckoutResponse([FromQuery] string session_id)
+        [HttpPost("create-subscription")]
+        public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
-            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+			var metadata = new Dictionary<string, string>
+			{
+				{ "Key", "VBeniamin" }
+			};
+			var options = new SessionCreateOptions
+			{
+				SuccessUrl = "https://localhost:7066/subscription-success/subscription-made",
+				CancelUrl = "https://localhost:7066/musics",
+				PaymentMethodTypes = new List<string>
+				{
+					"card",
+				},
+				Mode = "subscription",
+				LineItems = new List<SessionLineItemOptions>
+				{
+					new SessionLineItemOptions
+					{
+						Price = req.StripeSubscriptionId,
+						Quantity = 1,
+					},
+				}
+            };
 
-            var sessionService = new SessionService();
-            Session session = sessionService.Get(session_id);
+			try
+            {
+				var service = new SessionService();
+				var session = await service.CreateAsync(options);
 
-            var customerService = new CustomerService();
-            Customer customer = customerService.Get(session.CustomerId);
+				var optionsMetadata = new SubscriptionUpdateOptions
+				{
+					Metadata = new Dictionary<string, string>
+					{
+						{ "order_id", "Reference Beniamin 234324" },
+					},
+				};
+				var subscriptionService = new SubscriptionService();
+				subscriptionService.Update(session.SubscriptionId, optionsMetadata);
 
-            return Ok();
-        }
+				return Ok(session.Url);
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine(e.StripeError.Message);
+				return BadRequest();
+            }
+		}
 
         [HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
@@ -143,7 +89,7 @@ namespace BlazorShop.WebApi.Controllers
                 },
                 LineItems = lineItems,
                 Mode = "payment",
-                SuccessUrl = "https://localhost:7066/order-success",
+                SuccessUrl = "https://localhost:7066/order-success/success-made",
                 CancelUrl = "https://localhost:7066/carts",
             };
 
@@ -180,6 +126,16 @@ namespace BlazorShop.WebApi.Controllers
 						break;
 					case Events.CustomerSubscriptionCreated:
 						var subscription = stripeEvent.Data.Object as Subscription;
+						var service = new InvoiceService();
+						var invoiceData = service.Get(subscription.LatestInvoiceId);
+
+						//subscription.Id
+						//invoiceData.CustomerEmail;
+						//invoiceData.HostedInvoiceUrl;
+
+						//var service = new SubscriptionService();
+						//service.Cancel("sub_1KKmrbAtLEfG8Jr35bz71DFh");
+
 						await addSubscriptionToDb(subscription);
 						break;
 					case Events.CustomerSubscriptionUpdated:
@@ -236,8 +192,9 @@ namespace BlazorShop.WebApi.Controllers
 			await Mediator.Send(orderCommand);
 			await Mediator.Send(new CreateReceiptCommand
 			{
+				UserEmail= sessionData.CustomerDetails.Email,
 				ReceiptDate = DateTime.Now,
-				ReceiptName = "Receipt_" + DateTime.Now,
+				ReceiptName = "Receipt Nr. " + Guid.NewGuid(),
 				ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl
 			});
 		}
@@ -283,23 +240,70 @@ namespace BlazorShop.WebApi.Controllers
 
 		private async Task addSubscriptionToDb(Subscription subscription)
 		{
-			//try
-			//{
-			//	var subscriber = new Subscriber
-			//	{
-			//		Id = subscription.Id,
-			//		CustomerId = subscription.CustomerId,
-			//		Status = "active",
-			//		CurrentPeriodEnd = subscription.CurrentPeriodEnd
-			//	};
-			//	await _subscriberRepository.CreateAsync(subscriber);
-			//	//You can send the new subscriber an email welcoming the new subscriber
-			//}
-			//catch (System.Exception ex)
-			//{
-			//	Console.WriteLine("Unable to add new subscriber to Database");
-			//	Console.WriteLine(ex.Message);
-			//}
-		}
+
+			//var deserializerResult = JsonSerializer.Deserialize<CreateSubscriberCommand>(
+			//	subscription,
+			//	new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+			//);
+
+            try
+            {
+     //           var subscriber = new SubscriberResponse
+     //           {
+     //               CustomerId = subscription.CustomerId,
+					//SubscriptionId = subscription.SubscriptionId,
+					//Status = SubscriptionStatus.Active,
+					//DateStart = DateTime.Now,
+     //               CurrentPeriodEnd = subscription.CurrentPeriodEnd
+     //           };
+                //await _subscriberRepository.CreateAsync(subscriber);
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("Unable to add new subscriber to Database");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
+		//[Authorize]
+		//[HttpPost("customer-portal")]
+		//public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
+		//{
+		//	try
+		//	{
+		//		ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+		//		var claim = principal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
+		//		var userFromDb = await _userManager.FindByNameAsync(claim.Value);
+
+		//		if (userFromDb == null)
+		//		{
+		//			return BadRequest();
+		//		}
+		//		var options = new Stripe.BillingPortal.SessionCreateOptions
+		//		{
+		//			Customer = userFromDb.CustomerId,
+		//			ReturnUrl = req.ReturnUrl,
+		//		};
+		//		var service = new Stripe.BillingPortal.SessionService();
+		//		var session = await service.CreateAsync(options);
+
+		//		return Ok(new
+		//		{
+		//			url = session.Url
+		//		});
+		//	}
+		//	catch (StripeException e)
+		//	{
+		//		Console.WriteLine(e.StripeError.Message);
+		//		return BadRequest(new ErrorResponse
+		//		{
+		//			ErrorMessage = new ErrorMessage
+		//			{
+		//				Message = e.StripeError.Message,
+		//			}
+		//		});
+		//	}
+		//}
 	}
 }

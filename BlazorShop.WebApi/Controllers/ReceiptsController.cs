@@ -27,18 +27,18 @@
         }
 
         [Authorize(Roles = "Admin, User, Default")]
-        [HttpGet("receipt/{id}")]
-        public async Task<IActionResult> GetReceipt(int id)
+        [HttpGet("receipt/{id}/{userEmail}")]
+        public async Task<IActionResult> GetReceipt(int id, string userEmail)
         {
-            var result = await Mediator.Send(new GetReceiptByIdQuery { Id = id });
+            var result = await Mediator.Send(new GetReceiptByIdQuery { Id = id, UserEmail = userEmail });
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin, User, Default")]
-        [HttpGet("receipts")]
-        public async Task<IActionResult> GetReceipts()
+        [HttpGet("receipts/{userEmail}")]
+        public async Task<IActionResult> GetReceipts(string userEmail)
         {
-            var result = await Mediator.Send(new GetReceiptsQuery { });
+            var result = await Mediator.Send(new GetReceiptsQuery { UserEmail = userEmail });
             return Ok(result);
         }
     }
