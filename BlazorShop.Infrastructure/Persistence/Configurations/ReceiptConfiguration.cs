@@ -6,6 +6,9 @@
         {
             builder.ToTable("Receipts");
 
+            builder.Property(t => t.UserEmail)
+                .HasMaxLength(200)
+                .IsRequired();
             builder.Property(t => t.ReceiptDate)
                 .IsRequired();
             builder.Property(t => t.ReceiptName)
