@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.OrderValidator
 {
-    public class GetOrderByUserEmailQueryValidator : AbstractValidator<GetOrderByUserEmailQuery>
+    public class GetOrdersQueryValidator : AbstractValidator<GetOrdersQuery>
     {
-        public GetOrderByUserEmailQueryValidator()
+        public GetOrdersQueryValidator()
         {
             RuleFor(v => v.UserEmail).NotEmpty().NotNull();
         }

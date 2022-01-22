@@ -16,6 +16,7 @@
             try
             {
                 var result = _dbContext.Orders
+                    .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .ToList();
                 return Task.FromResult(result);

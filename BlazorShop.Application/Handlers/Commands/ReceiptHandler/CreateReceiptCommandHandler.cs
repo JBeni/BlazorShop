@@ -15,6 +15,7 @@
             {
                 var entity = new Receipt
                 {
+                    UserEmail = request.UserEmail,
                     ReceiptDate = request.ReceiptDate,
                     ReceiptName = request.ReceiptName,
                     ReceiptUrl = request.ReceiptUrl,

@@ -16,6 +16,7 @@
                 var entity = new Order
                 {
                     UserEmail = request.UserEmail,
+                    OrderName = "Order reference " + Guid.NewGuid(),
                     OrderDate = request.OrderDate,
                     LineItems = request.LineItems,
                     AmountTotal = request.AmountTotal,

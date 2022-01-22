@@ -10,11 +10,13 @@
         public string CustomerName { get; set; }
         public int SubscriptionId { get; set; }
         public string SubscriptionName { get; set; }
+        public string StripeSubscriptionId { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Subscriber, SubscriberResponse>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(x => x.StripeSubscriptionId, opt => opt.MapFrom(s => s.Subscription.StripeSubscriptionId))
                 .ForMember(x => x.Status, opt => opt.MapFrom(s => s.Status))
                 .ForMember(x => x.DateStart, opt => opt.MapFrom(s => s.DateStart))
                 .ForMember(x => x.CurrentPeriodEnd, opt => opt.MapFrom(s => s.CurrentPeriodEnd))

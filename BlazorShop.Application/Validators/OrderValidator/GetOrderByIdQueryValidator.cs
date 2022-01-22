@@ -5,6 +5,7 @@
         public GetOrderByIdQueryValidator()
         {
             RuleFor(v => v.Id).GreaterThan(0);
+            RuleFor(v => v.UserEmail).NotEmpty().NotNull();
         }
     }
 }

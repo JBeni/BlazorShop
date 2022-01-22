@@ -3,6 +3,7 @@
     public class SubscriptionResponse : IMapFrom<Subscription>
     {
         public int Id { get; set; }
+        public string StripeSubscriptionId { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
         public string Currency { get; set; }
@@ -14,6 +15,7 @@
         {
             profile.CreateMap<Subscription, SubscriptionResponse>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(x => x.StripeSubscriptionId, opt => opt.MapFrom(s => s.StripeSubscriptionId))
                 .ForMember(x => x.Name, opt => opt.MapFrom(s => s.Name))
                 .ForMember(x => x.Price, opt => opt.MapFrom(s => s.Price))
                 .ForMember(x => x.Currency, opt => opt.MapFrom(s => s.Currency))

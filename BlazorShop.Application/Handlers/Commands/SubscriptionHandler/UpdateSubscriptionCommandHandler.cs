@@ -16,6 +16,7 @@
                 var entity = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The entity does not exists");
 
+                entity.StripeSubscriptionId = request.StripeSubscriptionId;
                 entity.Name = request.Name;
                 entity.Price = request.Price;
                 entity.Options = request.Options;

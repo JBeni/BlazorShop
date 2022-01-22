@@ -10,6 +10,7 @@
             RuleFor(x => x.CurrentPeriodEnd).NotEmpty().NotNull();
             RuleFor(x => x.CustomerId).GreaterThan(0);
             RuleFor(x => x.SubscriptionId).GreaterThan(0);
+            RuleFor(x => x.StripeSubscriptionId).NotEmpty().NotNull();
         }
     }
 }

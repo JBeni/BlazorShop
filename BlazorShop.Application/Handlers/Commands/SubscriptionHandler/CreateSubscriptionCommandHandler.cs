@@ -18,6 +18,7 @@
 
                 entity = new Subscription
                 {
+                    StripeSubscriptionId = request.StripeSubscriptionId,
                     Name = request.Name,
                     Price = request.Price,
                     Currency = "usd",

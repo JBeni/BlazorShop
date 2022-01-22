@@ -16,7 +16,7 @@
             try
             {
                 var result = _dbContext.Receipts
-                    .Where(x => x.Id == request.Id)
+                    .Where(x => x.Id == request.Id && x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
                 return Task.FromResult(result);

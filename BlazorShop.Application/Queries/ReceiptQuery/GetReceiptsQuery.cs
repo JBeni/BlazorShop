@@ -2,5 +2,6 @@
 {
     public class GetReceiptsQuery : IRequest<List<ReceiptResponse>>
     {
+        public string UserEmail { get; set; }
     }
 }

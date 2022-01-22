@@ -17,10 +17,10 @@
         {
             try
             {
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
+                Subscriber entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
                 if (entity != null) throw new Exception("The entity already exists");
 
-                var customer = _userService.GetUserById(new GetUserByIdQuery { Id = request.CustomerId });
+                var customer = await _userService.FindUserByIdAsync(request.CustomerId);
                 var subscription = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.SubscriptionId);
 
                 entity = new Subscriber
@@ -28,7 +28,7 @@
                     Status = request.Status,
                     CurrentPeriodEnd = request.CurrentPeriodEnd,
                     DateStart = request.DateStart,
-                    Customer = _mapper.Map<User>(customer),
+                    Customer = customer,
                     Subscription = subscription,
                 };
 

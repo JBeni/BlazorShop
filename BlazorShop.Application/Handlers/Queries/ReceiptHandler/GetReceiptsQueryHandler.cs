@@ -16,6 +16,7 @@
             try
             {
                 var result = _dbContext.Receipts
+                    .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .ToList();
                 return Task.FromResult(result);

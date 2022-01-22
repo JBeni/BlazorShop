@@ -3,6 +3,7 @@
     public class UpdateReceiptCommand : IRequest<RequestResponse>
     {
         public int Id { get; set; }
+        public string UserEmail { get; set; }
         public DateTime ReceiptDate { get; set; }
         public string ReceiptName { get; set; }
         public string ReceiptUrl { get; set; }

@@ -16,7 +16,7 @@
             try
             {
                 var result = _dbContext.Orders
-                    .Where(d => d.Id == request.Id)
+                    .Where(d => d.Id == request.Id && d.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
                 return Task.FromResult(result);
