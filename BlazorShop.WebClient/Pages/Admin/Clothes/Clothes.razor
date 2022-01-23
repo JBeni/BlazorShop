@@ -29,7 +29,9 @@
 
 @if (clotheList == null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -116,8 +118,8 @@ else
     protected ClotheResponse clothe = new();
     protected string SearchString { get; set; } = string.Empty;
 
-    protected List<ClotheResponse> clotheList = new();
-    protected List<ClotheResponse> searchClotheData = new();
+    protected List<ClotheResponse> clotheList { get; set; }
+    protected List<ClotheResponse> searchClotheData { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
