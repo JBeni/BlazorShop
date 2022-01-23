@@ -190,43 +190,29 @@ else
 
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
+        var subscriberObj = new SubscriberResponse
+        {
+            DateStart = DateTime.Now,
+            CurrentPeriodEnd = DateTime.Now.AddDays(30),
+            CustomerId = UserId,
+            SubscriptionId = subscription.Id,
+            StripeSubscriptionId = subscription.StripeSubscriptionId
+        };
+        await SubscriberService.AddSubscriber(subscriberObj);
+
         if (MembershipAccess == 0)
         {
-            var subscriberObj = new SubscriberResponse
-            {
-                Status = SubscriptionStatus.Inactive,
-                DateStart = DateTime.Now,
-                CurrentPeriodEnd = DateTime.Now.AddDays(30),
-                CustomerId = UserId,
-                SubscriptionId = subscription.Id,
-                StripeSubscriptionId = subscription.StripeSubscriptionId
-            };
-            await SubscriberService.AddSubscriber(subscriberObj);
-
             var response = await HttpClient.PostAsJsonAsync("Payments/create-subscription", subscriberObj);
             var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
-
             NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
         }
         else
         {
-            // Update Membership here            
-            var subscriberObj = new SubscriberResponse
-            {
-                Id = subscriber.Id,
-                Status = SubscriptionStatus.Inactive,
-                DateStart = DateTime.Now,
-                CurrentPeriodEnd = DateTime.Now.AddDays(30),
-                CustomerId = UserId,
-                SubscriptionId = subscription.Id,
-                StripeSubscriptionId = subscription.StripeSubscriptionId,
-                StripeSubscriberSubscriptionId = subscriber.StripeSubscriberSubscriptionId
-            };
-            await SubscriberService.UpdateSubscriber(subscriberObj);
+            subscriberObj.Id = 1;
+            subscriberObj.StripeSubscriberSubscriptionId = subscriber.StripeSubscriberSubscriptionId;
 
             var response = await HttpClient.PostAsJsonAsync("Payments/update-subscription", subscriberObj);
             var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
-
             NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
         }
     }
