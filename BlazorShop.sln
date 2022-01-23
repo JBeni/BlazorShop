@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
+		README_ToImplement.txt = README_ToImplement.txt
 		Stripe_WebHook.txt = Stripe_WebHook.txt
 	EndProjectSection
 EndProject
