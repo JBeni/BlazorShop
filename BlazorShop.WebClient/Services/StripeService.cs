@@ -11,5 +11,17 @@
             _toastService = toastService;
         }
 
+        public async Task CancelMembership(string stripeSubscriptionCreationId)
+        {
+            var authResult = await _httpClient.DeleteAsync($"Payments/cancel-subscription/{stripeSubscriptionCreationId}");
+            if (authResult.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError("Something went wrong.");
+            }
+            else
+            {
+                _toastService.ShowSuccess("Subscription was cancelled.");
+            }
+        }
     }
 }
