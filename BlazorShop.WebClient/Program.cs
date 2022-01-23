@@ -41,5 +41,6 @@ builder.Services.AddTransient<IMusicService, MusicService>();
 builder.Services.AddTransient<IReceiptService, ReceiptService>();
 builder.Services.AddTransient<ISubscriptionService, SubscriptionService>();
 builder.Services.AddTransient<ISubscriberService, SubscriberService>();
+builder.Services.AddTransient<IStripeService, StripeService>();
 
 await builder.Build().RunAsync();
