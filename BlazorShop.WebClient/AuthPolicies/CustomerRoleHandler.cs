@@ -18,10 +18,21 @@
 
             if (userRole == null && defaultRole == null) return Task.CompletedTask;
 
-            if (userRole.Value.Equals("User") || defaultRole.Value.Equals("Default"))
+            if (userRole != null)
             {
-                context.Succeed(requirement);
-                return Task.CompletedTask;
+                if (userRole.Value.Equals("User"))
+                {
+                    context.Succeed(requirement);
+                    return Task.CompletedTask;
+                }
+            }
+            if (defaultRole != null)
+            {
+                if (defaultRole.Value.Equals("Default"))
+                {
+                    context.Succeed(requirement);
+                    return Task.CompletedTask;
+                }
             }
 
             return Task.CompletedTask;
