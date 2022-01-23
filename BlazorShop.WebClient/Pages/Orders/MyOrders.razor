@@ -1,0 +1,115 @@
+﻿@page "/orders"
+
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IOrderService OrderService
+@inject NavigationManager NavigationManager
+
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <img class="me-3" src="images/orders.png" alt="orders" width="58" height="38">
+        <div class="lh-1">
+            <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Orders</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-group col">
+            <input type="text" class="form-control" placeholder="Search order by name"
+                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterOrders" />
+            <div class="input-group-append" style="margin-left: 15px;">
+                <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                    Reset Filter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (ordersList is null)
+    {
+        <p style="font-size: 45px;"><em>Loading...</em></p>
+    }
+    else
+    {
+        @if (ordersList.Count == 0)
+        {
+            <div class="d-flex justify-content-center" style="margin-top: 150px;">
+                <h4 style="font-size: 45px;">No record found</h4>
+            </div>
+        }
+        else
+        {
+            <div class="my-3 p-3 rounded shadow-sm">
+                @foreach (var order in ordersList)
+                {
+                    <div class="d-flex text-muted pt-3">
+                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/order.jpg" alt="orders" width="55">
+
+                        <p class="col-md-10 pb-3 mb-0 small">
+                            <strong class="d-block text-gray-dark">@order.OrderName</strong>
+                            @order.OrderDate
+                        </p>
+                        <div class="border-0 d-flex flex-row-reverse">
+                            <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(order.Id))">
+                                View Order
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-2 col-lg-12 border-bottom"></div>
+                }
+            </div>
+        }
+    }
+</main>
+
+@code {
+    private List<OrderResponse> ordersList = new();
+    protected List<OrderResponse> searchOrdersData = new();
+
+    protected string SearchString { get; set; } = string.Empty;
+    private string userEmail { get; set; }
+    private int userId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        userEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+
+        await GetOrders(userEmail);
+    }
+
+    public async Task GetOrders(string userEmail)
+    {
+        ordersList = await OrderService.GetOrders(userEmail);
+        searchOrdersData = ordersList;
+    }
+
+    private void ViewOrder(int id)
+    {
+        NavigationManager.NavigateTo($"/orders/view/{id}");
+    }
+
+    protected void FilterOrders()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            ordersList = searchOrdersData.Where(x => x.OrderName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            ordersList = searchOrdersData;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        ordersList = searchOrdersData;
+    }
+}
