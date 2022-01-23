@@ -23,7 +23,7 @@
             }
 
             _toastService.ShowSuccess(cart.Name, "The item was added to cart:");
-            OnChange.Invoke();
+            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
@@ -50,7 +50,7 @@
             }
 
             _toastService.ShowSuccess("The items from the cart were removed.");
-            OnChange.Invoke();
+            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
@@ -118,7 +118,7 @@
             }
 
             _toastService.ShowSuccess("The cart was updated.");
-            OnChange.Invoke();
+            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
