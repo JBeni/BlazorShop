@@ -1,6 +1,8 @@
-﻿@page "/order-success"
+﻿@page "/order-success/{Message}"
 
 @attribute [Authorize(Policy = "Customer")]
+
+@inject NavigationManager NavManager
 
 <h3 class="text-center" style="margin-top: 30px;">Order Successful Made</h3>
 
@@ -15,7 +17,16 @@
 </div>
 
 @code {
+    [Parameter]
+    public string Message { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        if (!Message.Equals("success-made"))
+        {
+            NavManager.NavigateTo("orders");
+        }
+    }
 }
 
 <style>
