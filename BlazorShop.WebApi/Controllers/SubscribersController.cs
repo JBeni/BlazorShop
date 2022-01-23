@@ -27,10 +27,18 @@
         }
 
         [Authorize(Roles = "Admin, User, Default")]
-        [HttpGet("subscriber/{id}")]
-        public async Task<IActionResult> GetSubscriber(int id)
+        [HttpGet("subscriber/{userId}")]
+        public async Task<IActionResult> GetSubscriber(int userId)
         {
-            var result = await Mediator.Send(new GetSubscriberByIdQuery { Id = id });
+            var result = await Mediator.Send(new GetSubscriberByIdQuery { UserId = userId });
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin, User, Default")]
+        [HttpGet("subscribers/{userId}")]
+        public async Task<IActionResult> GetUserSubscribers(int userId)
+        {
+            var result = await Mediator.Send(new GetUserSubscribersQuery { UserId = userId });
             return Ok(result);
         }
 

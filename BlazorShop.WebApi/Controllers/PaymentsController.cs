@@ -13,10 +13,6 @@
         [HttpPost("create-subscription")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
-			var metadata = new Dictionary<string, string>
-			{
-				{ "Key", "VBeniamin" }
-			};
 			var options = new SessionCreateOptions
 			{
 				SuccessUrl = "https://localhost:7066/subscription-success/subscription-made",
@@ -41,16 +37,6 @@
 				var service = new SessionService();
 				var session = await service.CreateAsync(options);
 
-				var optionsMetadata = new SubscriptionUpdateOptions
-				{
-					Metadata = new Dictionary<string, string>
-					{
-						{ "order_id", "Reference Beniamin 234324" },
-					},
-				};
-				var subscriptionService = new SubscriptionService();
-				subscriptionService.Update(session.SubscriptionId, optionsMetadata);
-
 				return Ok(session.Url);
             }
             catch (StripeException e)
@@ -60,7 +46,39 @@
             }
 		}
 
-        [HttpPost("checkout")]
+		[HttpPost("update-subscription")]
+		public IActionResult UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
+		{
+			try
+			{
+				var service = new SubscriptionService();
+				Subscription subscription = service.Get(req.StripeSubscriberSubscriptionId);
+
+				var items = new List<SubscriptionItemOptions> {
+					new SubscriptionItemOptions {
+						Id = subscription.Items.Data[0].Id,
+						Price = req.StripeSubscriptionId,
+						Quantity = 1,
+					},
+				};
+				var options = new SubscriptionUpdateOptions
+				{
+					CancelAtPeriodEnd = false,
+					ProrationBehavior = "create_prorations",
+					Items = items,
+				};
+				subscription = service.Update(req.StripeSubscriberSubscriptionId, options);
+
+				return Ok();
+			}
+			catch (StripeException e)
+			{
+				Console.WriteLine(e.StripeError.Message);
+				return BadRequest();
+			}
+		}
+
+		[HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
             var lineItems = new List<SessionLineItemOptions>();
@@ -129,22 +147,36 @@
 						var service = new InvoiceService();
 						var invoiceData = service.Get(subscription.LatestInvoiceId);
 
-						//subscription.Id
-						//invoiceData.CustomerEmail;
-						//invoiceData.HostedInvoiceUrl;
+						await Mediator.Send(new UpdateCreatedSubscriberCommand
+                        {
+							Status = SubscriptionStatus.Active,
+							CurrentPeriodEnd = subscription.CurrentPeriodEnd,
+							CurrentPeriodStart = subscription.CurrentPeriodStart,
+							CustomerEmail = invoiceData.CustomerEmail,
+							StripeSubscriberSubscriptionId = subscription.Id,
+							HostedInvoiceUrl = invoiceData.HostedInvoiceUrl,
+                        });
 
+						// cancel a subscription - it works
 						//var service = new SubscriptionService();
 						//service.Cancel("sub_1KKmrbAtLEfG8Jr35bz71DFh");
 
-						await addSubscriptionToDb(subscription);
 						break;
 					case Events.CustomerSubscriptionUpdated:
-						var session = stripeEvent.Data.Object as Subscription;
-						await updateSubscription(session);
-						break;
-					case Events.CustomerCreated:
-						var customer = stripeEvent.Data.Object as Customer;
-						await addCustomerIdToUser(customer);
+						var subscriptionUpdate = stripeEvent.Data.Object as Subscription;
+						var serviceUpdate = new InvoiceService();
+						var invoiceDataUpdate = serviceUpdate.Get(subscriptionUpdate.LatestInvoiceId);
+
+						await Mediator.Send(new UpdateCreatedSubscriberCommand
+						{
+							Status = SubscriptionStatus.Active,
+							CurrentPeriodEnd = subscriptionUpdate.CurrentPeriodEnd,
+							CurrentPeriodStart = subscriptionUpdate.CurrentPeriodStart,
+							CustomerEmail = invoiceDataUpdate.CustomerEmail,
+							StripeSubscriberSubscriptionId = subscriptionUpdate.Id,
+							HostedInvoiceUrl = invoiceDataUpdate.HostedInvoiceUrl,
+						});
+
 						break;
 
 					default:
@@ -198,112 +230,5 @@
 				ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl
 			});
 		}
-
-		private async Task updateSubscription(Subscription subscription)
-		{
-			//try
-			//{
-			//	var subscriptionFromDb = await _subscriberRepository.GetByIdAsync(subscription.Id);
-			//	if (subscriptionFromDb != null)
-			//	{
-			//		subscriptionFromDb.Status = subscription.Status;
-			//		subscriptionFromDb.CurrentPeriodEnd = subscription.CurrentPeriodEnd;
-			//		await _subscriberRepository.UpdateAsync(subscriptionFromDb);
-			//		Console.WriteLine("Subscription Updated");
-			//	}
-			//}
-			//catch (System.Exception ex)
-			//{
-			//	Console.WriteLine(ex.Message);
-			//	Console.WriteLine("Unable to update subscription");
-			//}
-		}
-
-		private async Task addCustomerIdToUser(Customer customer)
-		{
-			//try
-			//{
-			//	var userFromDb = await _userManager.FindByEmailAsync(customer.Email);
-			//	if (userFromDb != null)
-			//	{
-			//		userFromDb.CustomerId = customer.Id;
-			//		await _userManager.UpdateAsync(userFromDb);
-			//		Console.WriteLine("Customer Id added to user ");
-			//	}
-			//}
-			//catch (System.Exception ex)
-			//{
-			//	Console.WriteLine("Unable to add customer id to user");
-			//	Console.WriteLine(ex);
-			//}
-		}
-
-		private async Task addSubscriptionToDb(Subscription subscription)
-		{
-
-			//var deserializerResult = JsonSerializer.Deserialize<CreateSubscriberCommand>(
-			//	subscription,
-			//	new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-			//);
-
-            try
-            {
-     //           var subscriber = new SubscriberResponse
-     //           {
-     //               CustomerId = subscription.CustomerId,
-					//SubscriptionId = subscription.SubscriptionId,
-					//Status = SubscriptionStatus.Active,
-					//DateStart = DateTime.Now,
-     //               CurrentPeriodEnd = subscription.CurrentPeriodEnd
-     //           };
-                //await _subscriberRepository.CreateAsync(subscriber);
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine("Unable to add new subscriber to Database");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-
-		//[Authorize]
-		//[HttpPost("customer-portal")]
-		//public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
-		//{
-		//	try
-		//	{
-		//		ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-		//		var claim = principal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
-		//		var userFromDb = await _userManager.FindByNameAsync(claim.Value);
-
-		//		if (userFromDb == null)
-		//		{
-		//			return BadRequest();
-		//		}
-		//		var options = new Stripe.BillingPortal.SessionCreateOptions
-		//		{
-		//			Customer = userFromDb.CustomerId,
-		//			ReturnUrl = req.ReturnUrl,
-		//		};
-		//		var service = new Stripe.BillingPortal.SessionService();
-		//		var session = await service.CreateAsync(options);
-
-		//		return Ok(new
-		//		{
-		//			url = session.Url
-		//		});
-		//	}
-		//	catch (StripeException e)
-		//	{
-		//		Console.WriteLine(e.StripeError.Message);
-		//		return BadRequest(new ErrorResponse
-		//		{
-		//			ErrorMessage = new ErrorMessage
-		//			{
-		//				Message = e.StripeError.Message,
-		//			}
-		//		});
-		//	}
-		//}
 	}
 }
