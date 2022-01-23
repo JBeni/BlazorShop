@@ -18,9 +18,8 @@
 
                 var subscription = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.SubscriptionId);
 
-                entity.Status = request.Status;
                 entity.CurrentPeriodEnd = request.CurrentPeriodEnd;
-                entity.DateStart = request.DateStart;
+                entity.CurrentPeriodStart = DateTime.Now;
                 entity.Subscription = subscription;
 
                 _dbContext.Subscribers.Update(entity);

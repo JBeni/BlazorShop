@@ -22,6 +22,7 @@
                 entity.DateRelease = request.DateRelease;
                 entity.ImageName = request.ImageName;
                 entity.ImagePath = request.ImagePath;
+                entity.AccessLevel = request.AccessLevel;
 
                 _dbContext.Musics.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

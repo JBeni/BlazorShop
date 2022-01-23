@@ -9,6 +9,8 @@
             RuleFor(x => x.Name).NotEmpty().NotNull();
             RuleFor(x => x.Price).GreaterThan(0);
             RuleFor(x => x.Options).NotEmpty().NotNull();
+            RuleFor(x => x.ImageName).NotEmpty().NotNull();
+            RuleFor(x => x.ImagePath).NotEmpty().NotNull();
         }
     }
 }

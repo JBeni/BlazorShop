@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.Application.Validators.SubscriberValidator
 {
-    public class GetSubscriberByIdQueryValidator : AbstractValidator<GetSubscriberByIdQuery>
+    public class GetUserSubscribersQueryValidator : AbstractValidator<GetUserSubscribersQuery>
     {
-        public GetSubscriberByIdQueryValidator()
+        public GetUserSubscribersQueryValidator()
         {
             RuleFor(x => x.UserId).GreaterThan(0);
         }

@@ -24,6 +24,7 @@
                     DateRelease = request.DateRelease,
                     ImageName = request.ImageName,
                     ImagePath = request.ImagePath,
+                    AccessLevel = request.AccessLevel,
                 };
 
                 _dbContext.Musics.Add(entity);

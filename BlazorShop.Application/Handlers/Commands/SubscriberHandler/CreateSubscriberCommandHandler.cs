@@ -27,9 +27,12 @@
                 {
                     Status = request.Status,
                     CurrentPeriodEnd = request.CurrentPeriodEnd,
+                    CurrentPeriodStart = request.DateStart,
                     DateStart = request.DateStart,
                     Customer = customer,
                     Subscription = subscription,
+                    StripeSubscriberSubscriptionId = "",
+                    HostedInvoiceUrl = "",
                 };
 
                 _dbContext.Subscribers.Add(entity);

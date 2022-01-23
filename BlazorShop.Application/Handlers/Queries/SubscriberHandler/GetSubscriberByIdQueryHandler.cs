@@ -17,14 +17,14 @@
             {
                 var result = _dbContext.Subscribers
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
-                    .FirstOrDefault(x => x.Id == request.Id);
-                return Task.FromResult(result);
+                    .FirstOrDefault(x => x.CustomerId == request.UserId && x.Status == SubscriptionStatus.Active);
+                return Task.FromResult(result ?? new SubscriberResponse());
             }
             catch (Exception ex)
             {
                 return Task.FromResult(new SubscriberResponse
                 {
-                    Error = "There was an error while getting the subscriber by id... " + ex.Message ?? ex.InnerException.Message
+                    Error = "There was an error while getting the subscriber by user id - active subscription... " + ex.Message ?? ex.InnerException.Message
                 });
             }
         }

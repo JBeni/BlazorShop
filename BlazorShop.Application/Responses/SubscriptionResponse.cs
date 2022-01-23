@@ -10,6 +10,8 @@
         public string CurrencySymbol { get; set; }
         public string ChargeType { get; set; }
         public string Options { get; set; }
+        public string ImageName { get; set; }
+        public string ImagePath { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -21,6 +23,8 @@
                 .ForMember(x => x.Currency, opt => opt.MapFrom(s => s.Currency))
                 .ForMember(x => x.CurrencySymbol, opt => opt.MapFrom(s => s.CurrencySymbol))
                 .ForMember(x => x.ChargeType, opt => opt.MapFrom(s => s.ChargeType))
+                .ForMember(x => x.ImageName, opt => opt.MapFrom(s => s.ImageName))
+                .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.ImagePath))
                 .ForMember(x => x.Options, opt => opt.MapFrom(s => s.Options));
         }
 

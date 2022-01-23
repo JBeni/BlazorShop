@@ -9,5 +9,6 @@
         public DateTime DateRelease { get; set; }
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
+        public int AccessLevel { get; set; }
     }
 }

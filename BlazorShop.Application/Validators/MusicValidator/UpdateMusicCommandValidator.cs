@@ -11,6 +11,7 @@
             RuleFor(x => x.DateRelease).NotEmpty().NotNull();
             RuleFor(x => x.ImageName).NotEmpty().NotNull();
             RuleFor(x => x.ImagePath).NotEmpty().NotNull();
+            RuleFor(x => x.AccessLevel).GreaterThan(0);
         }
     }
 }

@@ -25,6 +25,8 @@
                     CurrencySymbol = "$",
                     ChargeType = "month",
                     Options = request.Options,
+                    ImagePath = request.ImagePath,
+                    ImageName = request.ImageName,
                 };
 
                 _dbContext.Subscriptions.Add(entity);

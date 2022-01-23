@@ -9,5 +9,6 @@
 		public int CustomerId { get; set; }
 		public int SubscriptionId { get; set; }
 		public string StripeSubscriptionId { get; set; }
+		public string StripeSubscriberSubscriptionId { get; set; }
 	}
 }

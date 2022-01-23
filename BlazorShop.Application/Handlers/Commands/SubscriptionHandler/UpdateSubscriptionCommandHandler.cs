@@ -20,6 +20,8 @@
                 entity.Name = request.Name;
                 entity.Price = request.Price;
                 entity.Options = request.Options;
+                entity.ImageName = request.ImageName;
+                entity.ImagePath = request.ImagePath;
 
                 _dbContext.Subscriptions.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

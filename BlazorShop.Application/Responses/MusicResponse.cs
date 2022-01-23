@@ -9,6 +9,7 @@
         public DateTime DateRelease { get; set; }
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
+        public int AccessLevel { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -19,6 +20,7 @@
                 .ForMember(x => x.Author, opt => opt.MapFrom(s => s.Author))
                 .ForMember(x => x.DateRelease, opt => opt.MapFrom(s => s.DateRelease))
                 .ForMember(x => x.ImageName, opt => opt.MapFrom(s => s.ImageName))
+                .ForMember(x => x.AccessLevel, opt => opt.MapFrom(s => s.AccessLevel))
                 .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.ImagePath));
         }
 
