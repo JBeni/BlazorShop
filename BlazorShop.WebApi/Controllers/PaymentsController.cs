@@ -46,30 +46,64 @@
             }
 		}
 
-		[HttpPost("update-subscription")]
-		public IActionResult UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
+		[HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
+		public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
 		{
 			try
 			{
-				var service = new SubscriptionService();
-				Subscription subscription = service.Get(req.StripeSubscriberSubscriptionId);
+				var subscriptionService = new SubscriptionService();
+				subscriptionService.Cancel(stripeSubscriptionCreationId);
 
-				var items = new List<SubscriptionItemOptions> {
-					new SubscriptionItemOptions {
-						Id = subscription.Items.Data[0].Id,
+				await Mediator.Send(new UpdateSubscriberStatusCommand
+				{
+					StripeSubscriberSubscriptionId = stripeSubscriptionCreationId,
+				});
+
+				return Ok();
+			}
+			catch (StripeException e)
+			{
+				Console.WriteLine(e.StripeError.Message);
+				return BadRequest();
+			}
+		}
+
+		[HttpPost("update-subscription")]
+		public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
+		{
+            var subscriptionService = new SubscriptionService();
+			subscriptionService.Cancel(req.StripeSubscriberSubscriptionId);
+
+			await Mediator.Send(new UpdateSubscriberStatusCommand
+			{
+				StripeSubscriberSubscriptionId = req.StripeSubscriberSubscriptionId,
+			});
+
+            var options = new SessionCreateOptions
+			{
+				SuccessUrl = "https://localhost:7066/update-subscription-success/subscription-made",
+				CancelUrl = "https://localhost:7066/musics",
+				PaymentMethodTypes = new List<string>
+				{
+					"card",
+				},
+				Mode = "subscription",
+				LineItems = new List<SessionLineItemOptions>
+				{
+					new SessionLineItemOptions
+					{
 						Price = req.StripeSubscriptionId,
 						Quantity = 1,
 					},
-				};
-				var options = new SubscriptionUpdateOptions
-				{
-					CancelAtPeriodEnd = false,
-					ProrationBehavior = "create_prorations",
-					Items = items,
-				};
-				subscription = service.Update(req.StripeSubscriberSubscriptionId, options);
+				}
+			};
 
-				return Ok();
+			try
+			{
+				var service = new SessionService();
+				var session = await service.CreateAsync(options);
+
+				return Ok(session.Url);
 			}
 			catch (StripeException e)
 			{
@@ -149,19 +183,14 @@
 
 						await Mediator.Send(new UpdateCreatedSubscriberCommand
                         {
-							Status = SubscriptionStatus.Active,
 							CurrentPeriodEnd = subscription.CurrentPeriodEnd,
 							CurrentPeriodStart = subscription.CurrentPeriodStart,
 							CustomerEmail = invoiceData.CustomerEmail,
 							StripeSubscriberSubscriptionId = subscription.Id,
 							HostedInvoiceUrl = invoiceData.HostedInvoiceUrl,
                         });
-
-						// cancel a subscription - it works
-						//var service = new SubscriptionService();
-						//service.Cancel("sub_1KKmrbAtLEfG8Jr35bz71DFh");
-
 						break;
+/*
 					case Events.CustomerSubscriptionUpdated:
 						var subscriptionUpdate = stripeEvent.Data.Object as Subscription;
 						var serviceUpdate = new InvoiceService();
@@ -169,18 +198,15 @@
 
 						await Mediator.Send(new UpdateCreatedSubscriberCommand
 						{
-							Status = SubscriptionStatus.Active,
 							CurrentPeriodEnd = subscriptionUpdate.CurrentPeriodEnd,
 							CurrentPeriodStart = subscriptionUpdate.CurrentPeriodStart,
 							CustomerEmail = invoiceDataUpdate.CustomerEmail,
 							StripeSubscriberSubscriptionId = subscriptionUpdate.Id,
 							HostedInvoiceUrl = invoiceDataUpdate.HostedInvoiceUrl,
 						});
-
 						break;
-
+*/
 					default:
-						Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
 						break;
 				}
 				return Ok();
