@@ -29,9 +29,27 @@
             return result;
         }
 
-        public async Task<SubscriberResponse> GetSubscriber(int id)
+        public async Task<List<SubscriberResponse>> GetUserAllSubscribers(int userId)
         {
-            var authResult = await _httpClient.GetAsync($"Subscribers/subscriber/{id}");
+            var authResult = await _httpClient.GetAsync($"Subscribers/subscribers/{userId}");
+            if (authResult.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError("Something went wrong.");
+                return null;
+            }
+
+            var authContent = await authResult.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<SubscriberResponse>>(
+                authContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return result;
+        }
+
+        public async Task<SubscriberResponse> GetUserSubscriber(int userId)
+        {
+            var authResult = await _httpClient.GetAsync($"Subscribers/subscriber/{userId}");
             if (authResult.IsSuccessStatusCode == false)
             {
                 _toastService.ShowError("Something went wrong.");
