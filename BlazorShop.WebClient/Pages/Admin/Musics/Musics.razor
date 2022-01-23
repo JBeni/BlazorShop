@@ -15,7 +15,9 @@
 
 @if (musicsList == null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -91,7 +93,7 @@ else
     void ModalOk() => showModal = false;
 
     protected MusicResponse music = new();
-    protected List<MusicResponse> musicsList = new();
+    protected List<MusicResponse> musicsList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

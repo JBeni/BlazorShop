@@ -29,7 +29,9 @@
 
 @if (usersList is null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -107,8 +109,8 @@ else
     protected UserResponse user = new();
     protected string SearchString { get; set; } = string.Empty;
 
-    protected List<UserResponse> usersList = new();
-    protected List<UserResponse> searchUsersData = new();
+    protected List<UserResponse> usersList { get; set; }
+    protected List<UserResponse> searchUsersData { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

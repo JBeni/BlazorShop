@@ -29,7 +29,9 @@
 
 @if (rolesList is null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -101,8 +103,8 @@ else
     protected RoleResponse role = new();
     protected string SearchString { get; set; } = string.Empty;
 
-    protected List<RoleResponse> rolesList = new();
-    protected List<RoleResponse> searchRolesData = new();
+    protected List<RoleResponse> rolesList { get; set; }
+    protected List<RoleResponse> searchRolesData { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

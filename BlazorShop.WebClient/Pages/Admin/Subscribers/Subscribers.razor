@@ -7,24 +7,26 @@
 
 <h3>Subscribers</h3>
 
-@if (subscribersList == null)
+@if (subscribersList is null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
     @if (subscribersList.Count > 0)
     {
         <MatTable Items="@subscribersList" LoadInitialData="true" Striped="true" AllowSelection="true"
-            RowClass="tester" FilterByColumnName="Customer" DebounceMilliseconds="150" class="mat-elevation-z5">
+            RowClass="tester" FilterByColumnName="CustomerName" DebounceMilliseconds="150" class="mat-elevation-z5">
             <MatTableHeader>
-                <th>Id</th>
-                <th>Status</th>
-                <th>DateStart</th>
-                <th>CurrentPeriodEnd</th>
-                <th>Customer</th>
-                <th>Subscription</th>
-                <th>Actions</th>
+                <th class="col-md-1">Id</th>
+                <th class="col-md-3">Status</th>
+                <th class="col-md-3">DateStart</th>
+                <th class="col-md-3">CurrentPeriodEnd</th>
+                <th class="col-md-3">Customer</th>
+                <th class="col-md-3">Subscription</th>
+                <th class="col-md-4">Actions</th>
             </MatTableHeader>
 
             <MatTableRow>
@@ -35,7 +37,7 @@ else
                 <td class="col-md-3">@context.CustomerName</td>
                 <td class="col-md-3">@context.SubscriptionName</td>
                 <td class="col-md-4">
-                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                    <button disabled class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
                         Delete
                     </button>
                 </td>
@@ -81,7 +83,7 @@ else
     void ModalOk() => showModal = false;
 
     protected SubscriberResponse subscriber = new();
-    protected List<SubscriberResponse> subscribersList = new();
+    protected List<SubscriberResponse> subscribersList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
