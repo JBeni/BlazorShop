@@ -28,7 +28,9 @@
 
     @if (receiptsList is null)
     {
-        <p style="font-size: 45px;"><em>Loading...</em></p>
+        <div class="d-flex justify-content-center" style="margin-top: 100px;">
+            <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+        </div>
     }
     else
     {
@@ -50,7 +52,7 @@
                             <strong class="d-block text-gray-dark">@receipt.ReceiptName</strong>
                             <span class="mt-3">Date: @receipt.ReceiptDate</span>
                         </p>
-                        <div class="border-0 d-flex flex-row-reverse">
+                        <div class="border-0 d-flex flex-row-reverse mt-3">
                             <a href="@receipt.ReceiptUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
                                 View Receipt
                             </a>
@@ -63,8 +65,8 @@
 </main>
 
 @code {
-    private List<ReceiptResponse> receiptsList = new();
-    protected List<ReceiptResponse> searchReceiptsData = new();
+    private List<ReceiptResponse> receiptsList { get; set; }
+    protected List<ReceiptResponse> searchReceiptsData { get; set; }
 
     protected string SearchString { get; set; } = string.Empty;
     private string userEmail { get; set; }

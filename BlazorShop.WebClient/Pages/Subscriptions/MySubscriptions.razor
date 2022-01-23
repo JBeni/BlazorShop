@@ -4,16 +4,94 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ISubscriberService SubscriberService
+@inject ISubscriptionService SubscriptionService
 @inject IStripeService StripeService
+@inject HttpClient HttpClient
 @inject NavigationManager NavManager
 
 <main class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm mb-5">
-        <img class="me-3" src="images/subscriptions.png" alt="Receipts" width="58" height="38">
-        <div class="lh-1">
-            <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Subscriptions</h1>
+    <div class="col-xxl-12 d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm mb-5">
+        <img class="me-3" src="images/subscriptions.png" alt="Subscriptions" width="58" height="38">
+        <div class="col-xxl-12 lh-1">
+            <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 10px;">My Subscriptions</h1>
+
+            <h2 class="col-xxl-12 d-flex flex-row-reverse" style="margin-left: -75px; margin-top: -45px; border: none;">
+                <button type="button" class="btn btn-sm btn-outline-primary" @onclick="(() => ModalShow())">
+                    @Title Membership
+                </button>
+            </h2>
         </div>
     </div>
+
+    @if (showModal)
+    {
+        <div class="modal fade show" id="myModal" style="display:block; margin-top: 125px; margin-left: -100px;" aria-modal="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 900px;">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h3 class="modal-title">@Title Music Membership</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <h4 class="text-center align-items-center">What type of membership do you want to choose?</h4>
+
+                        <div class="container py-3">
+                            <main>
+                                <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                                    @if (subscriptions.Count == 0)
+                                    {
+                                        <div class="col" style="height:">
+                                            <div class="card mb-4 rounded-3 shadow-sm">
+                                                <div class="card-body">
+                                                    <h4 class="card-title pricing-card-title">
+                                                        No subscription found...
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @foreach (var subscription in subscriptions)
+                                    {
+                                        <div class="col" style="height:">
+                                            <div class="card mb-4 rounded-3 shadow-sm">
+                                                <div class="card-header py-3">
+                                                    <h4 class="my-0 fw-normal">@subscription.Name</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h1 class="card-title pricing-card-title">
+                                                        <small class="text-muted fw-light">@subscription.CurrencySymbol @subscription.Price/@subscription.ChargeType</small>
+                                                    </h1>
+                                                    <ul class="list-unstyled mt-3 mb-4">
+                                                        @foreach (var item in subscription.Options.Split(","))
+                                                        {
+                                                            <li>@item</li>                                                                
+                                                        }
+                                                    </ul>
+                                                    <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                                        await ActivateMembership(subscription); ModalOk();
+                                                    })">@Title @subscription.Name Plan</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (MembershipAccess > 0)
+                                    {
+                                        <div class="col-md-12">
+                                            <h4>Your current pricing plan is: @subscriptionActive.SubscriptionName Subscription</h4>
+                                        </div>
+                                    }
+                                </div>
+                            </main>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <h4 class="display-6 fw-bold lh-1 mb-3 d-flex justify-content-start">Current Active Subscription</h4>
     @if (subscriptionActive.Id > 0)
@@ -72,46 +150,63 @@
     </div>
 
     <h4 class="display-6 fw-bold lh-1 mb-3 d-flex justify-content-start">Inactive Subscriptions</h4>
-    @foreach (var subscription in subscriptionsInactive)
+    @if (subscriptionsInactive.Count > 0)
+    {
+        @foreach (var subscription in subscriptionsInactive)
+        {
+            <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+                <div class="row flex-lg-row align-items-center">
+                    <div class="col-md-3">
+                        <img src="images/@subscription.ImagePath" class="d-block img-fluid" alt="@subscription.ImageName" width="150" height="150" loading="lazy">
+                    </div>
+
+                    <div class="col-md-6" style="margin-left: -90px;">
+                        <h4 class="display-6 fw-bold lh-1 mb-3">@subscription.SubscriptionName Subscription</h4>
+                        <div class="col-md-10">
+                            <p class="lead">Subscription Started: @subscription.DateStart.ToString("dd/MM/yyyy HH:mm tt")</p>
+                        </div>
+                        <div class="col-md-10">
+                            <p class="lead">Subscription Period End: @subscription.CurrentPeriodEnd.ToString("dd/MM/yyyy HH:mm tt")</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="border-0 d-flex flex-row-reverse">
+                            <a href="@subscription.HostedInvoiceUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
+                                View Receipt
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
     {
         <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
             <div class="row flex-lg-row align-items-center">
-                <div class="col-md-3">
-                    <img src="images/@subscription.ImagePath" class="d-block img-fluid" alt="@subscription.ImageName" width="150" height="150" loading="lazy">
-                </div>
-
-                <div class="col-md-6" style="margin-left: -90px;">
-                    <h4 class="display-6 fw-bold lh-1 mb-3">@subscription.SubscriptionName Subscription</h4>
-                    <div class="col-md-10">
-                        <p class="lead">Subscription Started: @subscription.DateStart.ToString("dd/MM/yyyy HH:mm tt")</p>
-                    </div>
-                    <div class="col-md-10">
-                        <p class="lead">Subscription Period End: @subscription.CurrentPeriodEnd.ToString("dd/MM/yyyy HH:mm tt")</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="border-0 d-flex flex-row-reverse">
-                        <a href="@subscription.HostedInvoiceUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
-                            View Receipt
-                        </a>
-                    </div>
+                <div class="text-center">
+                    <h4 class="display-6 fw-bold lh-1 mb-3">The user does not have any past subscription.</h4>
                 </div>
             </div>
         </div>
     }
 </main>
 
-
-@*<img src="images/basic_subscription.png" alt="" @ />
-<img src="images/pro_subscription.png" alt="" @ />
-<img src="images/enterprise_subscription.jpg" alt="" @ />
-*@
-
-
 @code {
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk() => showModal = false;
+
+    private int MembershipAccess = 0;
+    private string Title = "Activate";
+
     private int UserId { get; set; }
     private string UserEmail { get; set; }
+
+    private List<SubscriptionResponse> subscriptions = new();
 
     protected string SearchString { get; set; } = string.Empty;
     private SubscriberResponse subscriptionActive = new();
@@ -130,11 +225,22 @@
 
         await GetUserSubscriptions(UserId);
         await GetActveSubscription(UserId);
+        await GetSubscriptions();
+    }
+
+    protected async Task GetSubscriptions()
+    {
+        subscriptions = await SubscriptionService.GetSubscriptions();
     }
 
     public async Task GetActveSubscription(int userId)
     {
         subscriptionActive = await SubscriberService.GetUserSubscriber(userId);
+        if (DateTime.Now <= subscriptionActive.CurrentPeriodEnd && subscriptionActive.Id > 0)
+        {
+            MembershipAccess = subscriptionActive.SubscriptionId;
+            Title = "Update";
+        }
     }
 
     public async Task CancelMembership(string stripeSubscriptionCreationId)
@@ -142,12 +248,43 @@
         await StripeService.CancelMembership(stripeSubscriptionCreationId);
         await GetUserSubscriptions(UserId);
         await GetActveSubscription(UserId);
+        MembershipAccess = 0;
+        Title = "Activate";
     }
 
     public async Task GetUserSubscriptions(int userId)
     {
         subscriptionsInactive = await SubscriberService.GetUserAllSubscribers(userId);
         searchSubscriptionsInactive = subscriptionsInactive;
+    }
+
+    private async Task ActivateMembership(SubscriptionResponse subscription)
+    {
+        var subscriberObj = new SubscriberResponse
+        {
+            DateStart = DateTime.Now,
+            CurrentPeriodEnd = DateTime.Now.AddDays(30),
+            CustomerId = UserId,
+            SubscriptionId = subscription.Id,
+            StripeSubscriptionId = subscription.StripeSubscriptionId
+        };
+        await SubscriberService.AddSubscriber(subscriberObj);
+
+        if (MembershipAccess == 0)
+        {
+            var response = await HttpClient.PostAsJsonAsync("Payments/create-subscription", subscriberObj);
+            var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
+            NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
+        }
+        else
+        {
+            subscriberObj.Id = 1;
+            subscriberObj.StripeSubscriberSubscriptionId = subscriptionActive.StripeSubscriberSubscriptionId;
+
+            var response = await HttpClient.PostAsJsonAsync("Payments/update-subscription", subscriberObj);
+            var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
+            NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
+        }
     }
 
     protected void FilterSubscriptions()

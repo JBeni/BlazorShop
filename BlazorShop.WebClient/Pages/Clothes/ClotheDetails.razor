@@ -8,29 +8,38 @@
 
 <h3>View Clothe Details</h3>
 
-<div class="container">
-    <div class="product">
-        <div class="product-img">
-            <img src="images/clothes/@clothe.ImagePath" alt="@clothe.ImageName" />
-        </div>
-        <div class="product-listing">
-            <div class="content">
-                <h1 class="name">@clothe.Name</h1>
-                <p class="description">@clothe.Description</p>
-                <p class="price">$ @clothe.Price</p>
+@if (clothe.Id > 0)
+{
+    <div class="container">
+        <div class="product">
+            <div class="product-img">
+                <img src="images/clothes/@clothe.ImagePath" alt="@clothe.ImageName" />
+            </div>
+            <div class="product-listing">
+                <div class="content">
+                    <h1 class="name">@clothe.Name</h1>
+                    <p class="description">@clothe.Description</p>
+                    <p class="price">$ @clothe.Price</p>
 
-                <div class="btn-and-rating-box">
-                    <a href="clothes" class="btn btn-outline-dark" role="button"> &#8592; Back to Product</a>
-                    <span style="margin-left: 15px;"></span>
-                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                    <div class="btn-and-rating-box">
+                        <a href="clothes" class="btn btn-outline-dark" role="button"> &#8592; Back to Product</a>
+                        <span style="margin-left: 15px;"></span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
                         @onclick="(async () => { await AddToCart(clothe); })">
-                        Add To Cart &#8594;
-                    </button>
+                            Add To Cart &#8594;
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="d-flex justify-content-center" style="margin-top: 150px;">
+        <h4 style="font-size: 45px;">No record found</h4>
+    </div>
+}
 
 @code {
     [Parameter]

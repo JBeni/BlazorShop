@@ -2,13 +2,13 @@
 
 @inject IToastService toastService
 
-<AuthorizeView>
+<AuthorizeView Policy="Customer">
     <Authorized>
         <section class="work">
             <div class="title reveal">
-                <a href="clothes" style="text-decoration:none;">
+                <a href="clothes" style="text-decoration: none;">
                     <h2 class="section-title">Shop Items</h2>
-                </a>
+                </a>                    
             </div>
             <div class="content">
                 <div class="card reveal">
@@ -46,16 +46,45 @@
     </Authorized>
 
     <NotAuthorized>
-        <h3>The user is not authorized</h3>
-        <br/>
-
-        <h2>Toast Demo</h2>
-        <p>To show a toast just click one of the buttons below.</p>
-
-        <button class="btn btn-info" @onclick="@(() => toastService.ShowInfo("I'm an INFO message"))">Info Toast</button>
-        <button class="btn btn-success" @onclick="@(() => toastService.ShowSuccess("I'm a SUCCESS message with a custom title", "Congratulations!"))">Success Toast</button>
-        <button class="btn btn-warning" @onclick="@(() => toastService.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
-        <button class="btn btn-danger" @onclick="@(() => toastService.ShowError("I'm an ERROR message"))">Error Toast</button>
+        <section class="work">
+            <div class="title reveal">
+                <a href="" style="text-decoration: none;">
+                    <h2 class="section-title">Shop Items</h2>
+                </a>                    
+            </div>
+            <div class="content">
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/category-2.jpg" alt="image">
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/product-12.jpg" alt="image">
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/category-1.jpg" alt="image">
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/product-7.jpg" alt="image">
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/product-4.jpg" alt="image">
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img">
+                        <img src="images/clothes/product-6.jpg" alt="image">
+                    </div>
+                </div>
+            </div>
+        </section>
     </NotAuthorized>
 </AuthorizeView>
 

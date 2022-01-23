@@ -6,25 +6,34 @@
 
 <h3 class="text-center">View Music Details</h3>
 
-<div class="container">
-    <div class="product">
-        <div class="product-img">
-            <img src="images/musics/@music.ImagePath" alt="@music.ImageName" />
-        </div>
-        <div class="product-listing">
-            <div class="content">
-                <h1>@music.Title</h1>
-                <p>@music.Description</p>
-                <p>Author: @music.Author</p>
-                <p>Date of Release: @music.DateRelease.ToString("dd/MM/yyyy")</p>
+@if (music.Id > 0)
+{
+    <div class="container">
+        <div class="product">
+            <div class="product-img">
+                <img src="images/musics/@music.ImagePath" alt="@music.ImageName" />
+            </div>
+            <div class="product-listing">
+                <div class="content">
+                    <h1>@music.Title</h1>
+                    <p>@music.Description</p>
+                    <p>Author: @music.Author</p>
+                    <p>Date of Release: @music.DateRelease.ToString("dd/MM/yyyy")</p>
 
-                <div class="btn-and-rating-box d-flex justify-content-center">
-                    <a href="musics" class="btn btn-outline-dark" role="button"> &#8592; Go Back</a>
+                    <div class="btn-and-rating-box d-flex justify-content-center">
+                        <a href="musics" class="btn btn-outline-dark" role="button"> &#8592; Go Back</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="d-flex justify-content-center" style="margin-top: 150px;">
+        <h4 style="font-size: 45px;">No record found</h4>
+    </div>
+}
 
 @code {
     [Parameter]

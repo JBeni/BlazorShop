@@ -24,7 +24,9 @@
 
 @if (clothesList is null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -70,8 +72,8 @@ else
 }
 
 @code {
-    protected List<ClotheResponse> clothesList = new();
-    protected List<ClotheResponse> searchClothesData = new();
+    protected List<ClotheResponse> clothesList { get; set; }
+    protected List<ClotheResponse> searchClothesData  { get; set; }
 
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }

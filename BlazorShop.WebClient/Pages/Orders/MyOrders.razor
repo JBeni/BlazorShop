@@ -29,7 +29,9 @@
 
     @if (ordersList is null)
     {
-        <p style="font-size: 45px;"><em>Loading...</em></p>
+        <div class="d-flex justify-content-center" style="margin-top: 100px;">
+            <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+        </div>
     }
     else
     {
@@ -51,7 +53,7 @@
                             <strong class="d-block text-gray-dark">@order.OrderName</strong>
                             @order.OrderDate
                         </p>
-                        <div class="border-0 d-flex flex-row-reverse">
+                        <div class="border-0 d-flex flex-row-reverse mt-3">
                             <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(order.Id))">
                                 View Order
                             </button>
@@ -65,8 +67,8 @@
 </main>
 
 @code {
-    private List<OrderResponse> ordersList = new();
-    protected List<OrderResponse> searchOrdersData = new();
+    private List<OrderResponse> ordersList { get; set; }
+    protected List<OrderResponse> searchOrdersData { get; set; }
 
     protected string SearchString { get; set; } = string.Empty;
     private string userEmail { get; set; }

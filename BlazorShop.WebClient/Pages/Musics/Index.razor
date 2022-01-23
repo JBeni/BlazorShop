@@ -27,7 +27,9 @@
 
 @if (musicsList is null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center" style="margin-top: 100px;">
+        <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
+    </div>
 }
 else
 {
@@ -159,8 +161,8 @@ else
     private SubscriberResponse subscriber = new();
     private List<SubscriptionResponse> subscriptions = new();
 
-    private List<MusicResponse> musicsList = new();
-    protected List<MusicResponse> searchMusicsData = new();
+    private List<MusicResponse> musicsList { get; set; }
+    protected List<MusicResponse> searchMusicsData { get; set; }
 
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }
