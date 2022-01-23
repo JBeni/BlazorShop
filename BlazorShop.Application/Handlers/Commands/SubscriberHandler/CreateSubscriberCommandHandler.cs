@@ -25,7 +25,7 @@
 
                 entity = new Subscriber
                 {
-                    Status = request.Status,
+                    Status = SubscriptionStatus.Inactive,
                     CurrentPeriodEnd = request.CurrentPeriodEnd,
                     CurrentPeriodStart = request.DateStart,
                     DateStart = request.DateStart,
