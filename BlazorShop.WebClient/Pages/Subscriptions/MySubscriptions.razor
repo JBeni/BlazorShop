@@ -4,20 +4,62 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ISubscriberService SubscriberService
+@inject IStripeService StripeService
 @inject NavigationManager NavManager
 
-<h3>My Subscriptions</h3>
-
 <main class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm mb-5">
         <img class="me-3" src="images/subscriptions.png" alt="Receipts" width="58" height="38">
         <div class="lh-1">
             <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Subscriptions</h1>
         </div>
     </div>
 
-    <div class="row">
-        <div class="input-group col">
+    <h4 class="display-6 fw-bold lh-1 mb-3 d-flex justify-content-start">Current Active Subscription</h4>
+    @if (subscriptionActive.Id > 0)
+    {
+        <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+            <div class="row flex-lg-row align-items-center">
+                <div class="col-md-3">
+                    <img src="images/@subscriptionActive.ImagePath" class="d-block img-fluid" alt="@subscriptionActive.ImageName" width="150" height="150" loading="lazy">
+                </div>
+
+                <div class="col-md-6" style="margin-left: -90px;">
+                    <h4 class="display-6 fw-bold lh-1 mb-3">@subscriptionActive.SubscriptionName Subscription</h4>
+                    <div class="col-md-10">
+                        <p class="lead">Subscription Started: @subscriptionActive.DateStart.ToString("dd/MM/yyyy HH:mm tt")</p>
+                    </div>
+                    <div class="col-md-10">
+                        <p class="lead">Subscription Period End: @subscriptionActive.CurrentPeriodEnd.ToString("dd/MM/yyyy HH:mm tt")</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="margin-left: 50px;">
+                    <div class="border-0">
+                        <button class="btn btn-danger btn-lg" @onclick="(async () => { await CancelMembership(subscriptionActive.StripeSubscriberSubscriptionId); })">
+                            Cancel
+                        </button>
+                        <a href="@subscriptionActive.HostedInvoiceUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
+                            View Receipt
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+            <div class="row flex-lg-row align-items-center">
+                <div class="text-center">
+                    <h4 class="display-6 fw-bold lh-1 mb-3">Currently, No Subscription is Activated</h4>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-4 mb-5">
+        <div class="input-group col shadow-lg p-3 bg-white rounded">
             <input type="text" class="form-control" placeholder="Search subscription by name"
                 @bind="SearchString" @bind:event="oninput" @onkeyup="FilterSubscriptions" />
             <div class="input-group-append" style="margin-left: 15px;">
@@ -29,27 +71,42 @@
         </div>
     </div>
 
-    <div class="container col-xxl-12 shadow-lg p-3 mb-5 bg-white rounded mt-5">
-        <div class="row flex-lg-row align-items-center">
-            <div class="col-md-3">
-                <img src="images/basic_subscription.png" class="d-block img-fluid" alt="Bootstrap Themes" width="100" height="100" loading="lazy">
-            </div>
+    <h4 class="display-6 fw-bold lh-1 mb-3 d-flex justify-content-start">Inactive Subscriptions</h4>
+    @foreach (var subscription in subscriptionsInactive)
+    {
+        <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+            <div class="row flex-lg-row align-items-center">
+                <div class="col-md-3">
+                    <img src="images/@subscription.ImagePath" class="d-block img-fluid" alt="@subscription.ImageName" width="150" height="150" loading="lazy">
+                </div>
 
-            <div class="col-md-9" style="margin-left: -100px;">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
-                <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                <div class="col-md-6" style="margin-left: -90px;">
+                    <h4 class="display-6 fw-bold lh-1 mb-3">@subscription.SubscriptionName Subscription</h4>
+                    <div class="col-md-10">
+                        <p class="lead">Subscription Started: @subscription.DateStart.ToString("dd/MM/yyyy HH:mm tt")</p>
+                    </div>
+                    <div class="col-md-10">
+                        <p class="lead">Subscription Period End: @subscription.CurrentPeriodEnd.ToString("dd/MM/yyyy HH:mm tt")</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border-0 d-flex flex-row-reverse">
+                        <a href="@subscription.HostedInvoiceUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
+                            View Receipt
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </main>
 
-<img src="images/basic_subscription.png" alt="" @ />
+
+@*<img src="images/basic_subscription.png" alt="" @ />
 <img src="images/pro_subscription.png" alt="" @ />
 <img src="images/enterprise_subscription.jpg" alt="" @ />
+*@
 
 
 @code {
@@ -71,7 +128,7 @@
         UserEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
         UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
 
-        await GetUserSubscriptions(UserId, UserEmail);
+        await GetUserSubscriptions(UserId);
         await GetActveSubscription(UserId);
     }
 
@@ -80,7 +137,14 @@
         subscriptionActive = await SubscriberService.GetUserSubscriber(userId);
     }
 
-    public async Task GetUserSubscriptions(int userId, string userEmail)
+    public async Task CancelMembership(string stripeSubscriptionCreationId)
+    {
+        await StripeService.CancelMembership(stripeSubscriptionCreationId);
+        await GetUserSubscriptions(UserId);
+        await GetActveSubscription(UserId);
+    }
+
+    public async Task GetUserSubscriptions(int userId)
     {
         subscriptionsInactive = await SubscriberService.GetUserAllSubscribers(userId);
         searchSubscriptionsInactive = subscriptionsInactive;
