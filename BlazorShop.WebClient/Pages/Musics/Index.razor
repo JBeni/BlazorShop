@@ -7,6 +7,7 @@
 @inject ISubscriptionService SubscriptionService
 @inject ISubscriberService SubscriberService
 @inject NavigationManager NavManager
+@inject HttpClient HttpClient
 
 <h3 class="mb-3">Musics Section</h3>
 
@@ -32,8 +33,8 @@ else
 {
     @if (musicsList.Count == 0)
     {
-        <div class="d-flex justify-content-center">
-            <h4>No record found</h4>
+        <div class="d-flex justify-content-center" style="margin-top: 150px;">
+            <h4 style="font-size: 45px;">No record found</h4>
         </div>
     }
     else
@@ -43,7 +44,7 @@ else
                 <h2 class="">Rent Music</h2>
                 <h2 class="d-flex flex-row-reverse" style="margin-top: -45px; border: none;">
                     <button type="button" class="btn btn-sm btn-outline-primary" @onclick="(() => ModalShow())">
-                        Activate Membership
+                        @Title Membership
                     </button>
                 </h2>
             </div>
@@ -61,7 +62,7 @@ else
                                     </li>
                                     <li class="d-flex align-items-center">
                                         <small>
-                                            <button type="button" class="btn btn-sm btn-outline-success" style="border: none;"
+                                            <button type="button" class="btn btn-sm btn-outline-success" style="border: none; font-size: 25px;"
                                                 @onclick="(() => { ViewMusic(item.Id); })">
                                                 View Music
                                             </button>
@@ -69,6 +70,16 @@ else
                                     </li>
                                 </ul>
                             </div>
+                            @if (MembershipAccess !=0 && MembershipAccess >= item.AccessLevel)
+                            {
+                                <div class="text-center mb-3">
+                                    <audio controls>
+                                        <source src="audio/music_audio.mp3" type="audio/ogg" />
+                                        <source src="audio/music_audio.mp3" type="audio/mpeg" />
+                                        <a href="audio/music_audio.mp3">music</a>
+                                    </audio>
+                                </div>
+                            }
                         </div>
                     </div>
                 }
@@ -81,8 +92,9 @@ else
                 <div class="modal-dialog">
                     <div class="modal-content" style="width: 900px;">
                         <div class="modal-header d-flex justify-content-center">
-                            <h3 class="modal-title">Activate Music Membership</h3>
+                            <h3 class="modal-title">@Title Music Membership</h3>
                         </div>
+
                         <div class="modal-body">
                             <h4 class="text-center align-items-center">What type of membership do you want to choose?</h4>
 
@@ -107,10 +119,16 @@ else
                                                             }
                                                         </ul>
                                                         <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                                            await ActivateMembership(subscription.Id); ModalOk();
-                                                        })">Activate @subscription.Name Plan</button>
+                                                            await ActivateMembership(subscription); ModalOk();
+                                                        })">@Title @subscription.Name Plan</button>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        }
+                                        @if (MembershipAccess > 0)
+                                        {
+                                            <div class="col-md-12">
+                                                <h4>Your current pricing plan is: @subscriber.SubscriptionName Subscription</h4>
                                             </div>
                                         }
                                     </div>
@@ -135,7 +153,12 @@ else
     void ModalCancel() => showModal = false;
     void ModalOk() => showModal = false;
 
+    private int MembershipAccess = 0;
+    private string Title = "Activate";
+
+    private SubscriberResponse subscriber = new();
     private List<SubscriptionResponse> subscriptions = new();
+
     private List<MusicResponse> musicsList = new();
     protected List<MusicResponse> searchMusicsData = new();
 
@@ -152,19 +175,60 @@ else
 
         await GetMusics();
         await GetSubscriptions();
+        await GetUserSubscriber(UserId);
     }
 
-    private async Task ActivateMembership(int subscriptionId)
+    private async Task GetUserSubscriber(int userId)
     {
-        var subscriber = new SubscriberResponse
+        subscriber = await SubscriberService.GetUserSubscriber(userId);
+        if (DateTime.Now <= subscriber.CurrentPeriodEnd && subscriber.Id > 0)
         {
-            Status = SubscriptionStatus.Active,
-            DateStart = DateTime.Now,
-            CurrentPeriodEnd = DateTime.Now.AddDays(30),
-            CustomerId = UserId,
-            SubscriptionId = subscriptionId
-        };
-        await SubscriberService.AddSubscriber(subscriber);
+            MembershipAccess = subscriber.SubscriptionId;
+            Title = "Update";
+        }
+    }
+
+    private async Task ActivateMembership(SubscriptionResponse subscription)
+    {
+        if (MembershipAccess == 0)
+        {
+            var subscriberObj = new SubscriberResponse
+            {
+                Status = SubscriptionStatus.Inactive,
+                DateStart = DateTime.Now,
+                CurrentPeriodEnd = DateTime.Now.AddDays(30),
+                CustomerId = UserId,
+                SubscriptionId = subscription.Id,
+                StripeSubscriptionId = subscription.StripeSubscriptionId
+            };
+            await SubscriberService.AddSubscriber(subscriberObj);
+
+            var response = await HttpClient.PostAsJsonAsync("Payments/create-subscription", subscriberObj);
+            var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
+
+            NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
+        }
+        else
+        {
+            // Update Membership here            
+            var subscriberObj = new SubscriberResponse
+            {
+                Id = subscriber.Id,
+                Status = SubscriptionStatus.Inactive,
+                DateStart = DateTime.Now,
+                CurrentPeriodEnd = DateTime.Now.AddDays(30),
+                CustomerId = UserId,
+                SubscriptionId = subscription.Id,
+                StripeSubscriptionId = subscription.StripeSubscriptionId,
+                StripeSubscriberSubscriptionId = subscriber.StripeSubscriberSubscriptionId
+            };
+            await SubscriberService.UpdateSubscriber(subscriberObj);
+
+            var response = await HttpClient.PostAsJsonAsync("Payments/update-subscription", subscriberObj);
+            var subscriptionCheckoutUrl = await response.Content.ReadAsStringAsync();
+
+            NavManager.NavigateTo(subscriptionCheckoutUrl, forceLoad: true);
+        }
     }
 
     private void ViewMusic(int id)
