@@ -199,6 +199,7 @@
                     DateRelease = new DateTime(2020, 12, 25),
                     ImageName = "music-1",
                     ImagePath = "music-1.jpg",
+                    AccessLevel = 1,
                 });
                 context.Musics.Add(new Music
                 {
@@ -208,6 +209,7 @@
                     DateRelease = new DateTime(2022, 1, 15),
                     ImageName = "music-2",
                     ImagePath = "music-2.jpg",
+                    AccessLevel = 1,
                 });
                 context.Musics.Add(new Music
                 {
@@ -217,6 +219,7 @@
                     DateRelease = new DateTime(2019, 8, 30),
                     ImageName = "music-3",
                     ImagePath = "music-3.jpg",
+                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -226,6 +229,7 @@
                     DateRelease = new DateTime(2011, 11, 11),
                     ImageName = "music-4",
                     ImagePath = "music-4.jpg",
+                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -235,6 +239,7 @@
                     DateRelease = new DateTime(2022, 1, 19),
                     ImageName = "music-5",
                     ImagePath = "music-5.jpg",
+                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -244,6 +249,7 @@
                     DateRelease = new DateTime(2015, 5, 15),
                     ImageName = "music-6",
                     ImagePath = "music-6.jpg",
+                    AccessLevel = 3,
                 });
                 context.Musics.Add(new Music
                 {
@@ -253,6 +259,7 @@
                     DateRelease = new DateTime(2013, 9, 15),
                     ImageName = "music-2",
                     ImagePath = "music-2.jpg",
+                    AccessLevel = 3,
                 });
                 context.Musics.Add(new Music
                 {
@@ -262,6 +269,7 @@
                     DateRelease = new DateTime(2019, 5, 15),
                     ImageName = "music-6",
                     ImagePath = "music-6.jpg",
+                    AccessLevel = 3,
                 });
 
                 await context.SaveChangesAsync();
@@ -279,7 +287,10 @@
                     Currency = "usd",
                     CurrencySymbol = "$",
                     ChargeType = "month",
-                    Options = "3 music songs included, Email support, 25% discount"
+                    Options = "3 music songs included, Email support, 25% discount",
+                    StripeSubscriptionId = "price_1KKjybAtLEfG8Jr34XNaPOQ7",
+                    ImageName = "Basic Subscription",
+                    ImagePath = "basic_subscription.png"
                 });
                 context.Subscriptions.Add(new Subscription
                 {
@@ -288,7 +299,10 @@
                     Currency = "usd",
                     CurrencySymbol = "$",
                     ChargeType = "month",
-                    Options = "5 music songs included, Priority Email support, 40% discount"
+                    Options = "5 music songs included, Priority Email support, 40% discount",
+                    StripeSubscriptionId = "price_1KKk3pAtLEfG8Jr3bF6j5iC4",
+                    ImageName = "Pro Subscription",
+                    ImagePath = "pro_subscription.png"
                 });
                 context.Subscriptions.Add(new Subscription
                 {
@@ -297,7 +311,10 @@
                     Currency = "usd",
                     CurrencySymbol = "$",
                     ChargeType = "month",
-                    Options = "all music songs included, Phone and email support, Help center access"
+                    Options = "all music songs included, Phone and email support, Help center access",
+                    StripeSubscriptionId = "price_1KKk4AAtLEfG8Jr3HmFEpJkm",
+                    ImageName = "Enterprise Subscription",
+                    ImagePath = "enterprise_subscription.jpg"
                 });
 
                 await context.SaveChangesAsync();
