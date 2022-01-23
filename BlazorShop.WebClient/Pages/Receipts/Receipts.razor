@@ -1,0 +1,106 @@
+﻿@page "/receipts"
+
+@attribute [Authorize(Policy = "Customer")]
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IReceiptService ReceiptService
+
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <img class="me-3" src="images/receipts.png" alt="Receipts" width="58" height="38">
+        <div class="lh-1">
+            <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Receipts</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-group col">
+            <input type="text" class="form-control" placeholder="Search receipt by name"
+                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterReceipts" />
+            <div class="input-group-append" style="margin-left: 15px;">
+                <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                    Reset Filter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (receiptsList is null)
+    {
+        <p style="font-size: 45px;"><em>Loading...</em></p>
+    }
+    else
+    {
+        @if (receiptsList.Count == 0)
+        {
+            <div class="d-flex justify-content-center" style="margin-top: 150px;">
+                <h4 style="font-size: 45px;">No record found</h4>
+            </div>
+        }
+        else
+        {
+            <div class="my-3 p-3 rounded shadow-sm">
+                @foreach (var receipt in receiptsList)
+                {
+                    <div class="d-flex text-muted pt-3 shadow-lg p-3 mb-2 bg-white rounded">
+                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/receipt.png" alt="receipts" width="35">
+
+                        <p class="col-md-10 pb-3 mt-2 mb-0 small">
+                            <strong class="d-block text-gray-dark">@receipt.ReceiptName</strong>
+                            <span class="mt-3">Date: @receipt.ReceiptDate</span>
+                        </p>
+                        <div class="border-0 d-flex flex-row-reverse">
+                            <a href="@receipt.ReceiptUrl" target="_blank" class="btn btn-primary btn-lg" role="button">
+                                View Receipt
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</main>
+
+@code {
+    private List<ReceiptResponse> receiptsList = new();
+    protected List<ReceiptResponse> searchReceiptsData = new();
+
+    protected string SearchString { get; set; } = string.Empty;
+    private string userEmail { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+
+        if (!user.Identity.IsAuthenticated) return;
+        userEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+
+        await GetReceipts(userEmail);
+    }
+
+    public async Task GetReceipts(string userEmail)
+    {
+        receiptsList = await ReceiptService.GetReceipts(userEmail);
+        searchReceiptsData = receiptsList;
+    }
+
+    protected void FilterReceipts()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            receiptsList = searchReceiptsData.Where(x => x.ReceiptName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else
+        {
+            receiptsList = searchReceiptsData;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        receiptsList = searchReceiptsData;
+    }
+}
