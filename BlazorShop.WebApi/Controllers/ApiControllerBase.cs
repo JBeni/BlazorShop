@@ -3,7 +3,6 @@
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    //[AllowAnonymous]
     public abstract class ApiControllerBase : ControllerBase
     {
         private ISender _mediator = null!;
