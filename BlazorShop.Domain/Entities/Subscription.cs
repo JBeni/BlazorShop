@@ -9,5 +9,7 @@
 		public string CurrencySymbol { get; set; }
 		public string ChargeType { get; set; }
 		public string Options { get; set; }
+		public string ImageName { get; set; }
+		public string ImagePath { get; set; }
 	}
 }
