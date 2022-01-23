@@ -2,90 +2,119 @@
 
 @attribute [Authorize(Policy = "Customer")]
 
-<h3>Order View</h3>
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IOrderService OrderService
+@inject NavigationManager NavManager
 
-<section class="h-100 h-custom" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-8 col-xl-6">
-                <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
-                    <div class="card-body p-5">
-                        <p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <p class="small text-muted mb-1">Date</p>
-                                <p>10 April 2021</p>
-                            </div>
-                            <div class="col mb-3">
-                                <p class="small text-muted mb-1">Order No.</p>
-                                <p>012j1gvs356c</p>
-                            </div>
-                        </div>
-
-                        <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+@if (order.Id > 0)
+{
+    <section>
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="w-75 col-lg-8 col-xl-6">
+                    <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+                        <div class="card-body p-5">
+                            <p class="lead fw-bold mb-5" style="color: #f37a27;">View Order Details</p>
                             <div class="row">
-                                <div class="col-md-8 col-lg-9">
-                                    <p>BEATS Solo 3 Wireless Headphones</p>
+                                <div class="col mb-3">
+                                    <p class="small text-muted mb-1">@order.OrderDate</p>
                                 </div>
-                                <div class="col-md-4 col-lg-3">
-                                    <p>£299.99</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8 col-lg-9">
-                                    <p class="mb-0">Shipping</p>
-                                </div>
-                                <div class="col-md-4 col-lg-3">
-                                    <p class="mb-0">£33.00</p>
+                                <div class="col mb-3">
+                                    <p class="small text-muted mb-1">@order.OrderName</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row my-4">
-                            <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                                <p class="lead fw-bold mb-0" style="color: #f37a27;">£262.99</p>
+                            <div class="px-5" style="background-color: #f2f2f2;">
+                                <div class="row">
+                                    <div class="mt-2 text-primary col-md-4 col-lg-6">
+                                        <p>Name</p>
+                                    </div>
+                                    <div class="mt-2 text-primary col-md-4 col-lg-3">
+                                        <p>AmountTotal</p>
+                                    </div>
+                                    <div class="mt-2 text-primary col-md-4 col-lg-3">
+                                        <p>Quantity</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (orderItems.Count > 0)
+                            {
+                                @foreach (var item in orderItems)
+                                {
+                                    <div class="px-5" style="background-color: #f2f2f2;">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-6">
+                                                <p>@item.Name</p>
+                                            </div>
+                                            <div class="col-md-4 col-lg-3">
+                                                <p>@item.AmountTotal</p>
+                                            </div>
+                                            <div class="col-md-4 col-lg-3">
+                                                <p>@item.Quantity</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="px-5" style="background-color: #f2f2f2;">
+                                    <div class="row">
+                                        <div class="col-md-4 col-lg-6">
+                                            <p>No order items found</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row my-4">
+                                <div class="col-md-8 offset-lg-4">
+                                    <p class="col-md-6lead fw-bold mb-0 mr-2" style="color: #f37a27;">Total Amount Paid: $ @order.AmountTotal</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+else
+{
+    <p>No record found</p>
+}
 
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    protected string UserEmail { get; set; }
+    protected OrderResponse order = new();
+    protected List<InvoiceResponse> orderItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        if (!user.Identity.IsAuthenticated) return;
+        UserEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            order = await OrderService.GetOrder(Id, UserEmail);
+            orderItems = JsonSerializer.Deserialize<List<InvoiceResponse>>(
+                order.LineItems,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+        }
+    }
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/orders");
+    }
 }
-
-<style>
-    @@media (min-width: 1025px) {
-      .h-custom {
-        height: 100vh !important;
-      }
-    }
-
-    .horizontal-timeline .items {
-      border-top: 2px solid #ddd;
-    }
-
-    .horizontal-timeline .items .items-list {
-      position: relative;
-      margin-right: 0;
-    }
-
-    .horizontal-timeline .items .items-list:before {
-      content: "";
-      position: absolute;
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
-      background-color: #ddd;
-      top: 0;
-      margin-top: -5px;
-    }
-
-    .horizontal-timeline .items .items-list {
-      padding-top: 15px;
-    }
-</style>
