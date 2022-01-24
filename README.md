@@ -21,7 +21,9 @@ Web API
 * Setting the AutoMapper, FluentValidation and Mediat at Application Layer
 * configure stripe payment - secret key on web api
 
-* Checking Stripe payment integrity by checking stripe signature with web hook secret key, using a local test environment to make payments.. for web hook was used ngrok to create a web hook and configure it in the stripe dashboard
+* Checking Stripe payment integrity by checking stripe signature with web hook secret key, using a local test environment to make payments.. for web hook was used ngrok to create a web hook and configure it in the stripe dashboard ...... command run ngrok http https://localhost:44351 -host-header="localhost:44351" (be aware, changes to routes will apply)
+
+
 
 * Creating Commands for Entities
 * Creating Queries
