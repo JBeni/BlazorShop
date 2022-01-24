@@ -9,6 +9,9 @@
             builder.Property(t => t.UserEmail)
                 .HasMaxLength(200)
                 .IsRequired();
+            builder.Property(t => t.OrderName)
+                .HasMaxLength(200)
+                .IsRequired();
             builder.Property(t => t.OrderDate)
                 .IsRequired();
             builder.Property(t => t.LineItems)

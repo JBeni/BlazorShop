@@ -13,6 +13,12 @@
                 .IsRequired();
             builder.Property(t => t.CurrentPeriodEnd)
                 .IsRequired();
+            builder.Property(t => t.CurrentPeriodStart)
+                .IsRequired();
+            builder.Property(t => t.StripeSubscriberSubscriptionId)
+                .IsRequired();
+            builder.Property(t => t.HostedInvoiceUrl)
+                .IsRequired();
         }
     }
 }

@@ -23,6 +23,8 @@
             builder.Property(t => t.ImagePath)
                 .HasMaxLength(200)
                 .IsRequired();
+            builder.Property(t => t.AccessLevel)
+                .IsRequired();
         }
     }
 }

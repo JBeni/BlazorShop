@@ -6,6 +6,8 @@
         {
             builder.ToTable("Subscriptions");
 
+            builder.Property(t => t.StripeSubscriptionId)
+                .IsRequired();
             builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();
@@ -20,6 +22,12 @@
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(t => t.Options)
+                .HasMaxLength(500)
+                .IsRequired();
+            builder.Property(t => t.ImageName)
+                .HasMaxLength(500)
+                .IsRequired();
+            builder.Property(t => t.ImagePath)
                 .HasMaxLength(500)
                 .IsRequired();
         }
