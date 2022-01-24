@@ -19,6 +19,9 @@ Web API
 * creating services for identity core entities
 * Creating Policies based on User Role (Web Api)
 * Setting the AutoMapper, FluentValidation and Mediat at Application Layer
+* configure stripe payment - secret key on web api
+
+* Checking Stripe payment integrity by checking stripe signature with web hook secret key, using a local test environment to make payments.. for web hook was used ngrok to create a web hook and configure it in the stripe dashboard
 
 * Creating Commands for Entities
 * Creating Queries
