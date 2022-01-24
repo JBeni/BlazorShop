@@ -54,8 +54,42 @@ The client interface was made using Blazor Web Assembly
 * Injecting service
 * Using Authentication State Provider to authorize user access to application
 * Using razor components to create pages
-* 
 
+
+*** Features
+
+- stripe accepting single chechout
+- stripe creating subscription, updating, cancel
+
+Account
+	- login, logout, register, reset password
+
+Admin
+	Clothes Manager, Musics Manager, Roles Manager, Users Manager, Subscriptions Manager
+		- Add, Edit, Delete, List all
+	Subscribers
+		- List all, Deactivate user subscription
+
+Cart
+	- update cart, list cart items, delete cart item, checkout option
+
+Clothes
+	- view clothe details, list all clothes, add clothe to cart
+
+Musics
+	- list all music songs, view music details, activate subscription, update subscription
+
+Orders
+	- list all orders, view order details
+
+Receipts
+	- list all receipts, view stripe receipt for order
+
+Subscriptions
+	- lsit all subscription, view stripe receipt for subscription
+
+User
+	- view user profile, change password, update user details
 
 
 ------------------------
