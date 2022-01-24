@@ -17,6 +17,17 @@ Web API
 * Setting CORS policy
 * Using string constant resources
 * creating services for identity core entities
+* Creating Policies based on User Role (Web Api)
+* Setting the AutoMapper, FluentValidation and Mediat at Application Layer
+
+* Creating Commands for Entities
+* Creating Queries
+* Creating Handlers for Commands and Queries
+* Creating Responses Models
+* Creating Validators for Commands and Queries
+@ Creating Behaviors (unhandler and Validation exception)
+creating custom exception
+creating mapping helpers
 
 * Implemet Unit of Work & Repository Pattern (for practicing)
 * Creating and Adding Migrations to Sql Server Database
