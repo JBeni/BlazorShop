@@ -1,4 +1,4 @@
-# BlazorShop
+# Blazor Shop Store
 
 * <strike>Sample Blazor Web Assembly Client App</strike>
 
