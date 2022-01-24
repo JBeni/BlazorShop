@@ -1,4 +1,4 @@
-# Blazor Shop Store
+# Blazor Shop Store (Report Work: Still In Progress)
 
 * <strike>Sample Blazor Web Assembly Client App</strike>
 
@@ -37,7 +37,20 @@ Creating GlobalUsings - putting together all the directives statements in a sing
 Override RoleManager (Identity Core) default settings
 Stack Used: Entity Framework Core (ORM), JWT Token (Bearer), Identity Core (Authentication, Authorization Role-based), Fluent Validation, AutoMapper, Dependency Injection, Entity Configuration, Adding Custom Configuration to Identity Core Entities
 
+
+----------
 The client interface was made using Blazor Web Assembly
+
+* Creating Authorization Policies based on Role
+* Making request through Http to the web api using HttpClient
+* Using Local Sorage to save the JWT Token - settting the token to HTTP Authroization Header
+* Using Blazor ToastService
+* Using MatBlazor and Radzen Blazor libraries for design an bootstrap
+* Injecting service
+* Using Authentication State Provider to authorize user access to application
+* Using razor components to create pages
+* 
+
 
 
 ------------------------
