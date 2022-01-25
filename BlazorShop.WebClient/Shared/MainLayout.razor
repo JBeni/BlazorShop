@@ -48,7 +48,7 @@
     </main>
 </div>
 
-<BlazoredToasts Position="ToastPosition.TopRight"
+<BlazoredToasts Position="ToastPosition.BottomRight"
                 Timeout="5"
                 IconType="IconType.FontAwesome"
                 SuccessClass="success-toast-override"
@@ -70,12 +70,12 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        username = user.Claims.FirstOrDefault(x => x.Type == "unique_name").Value.Replace("@", " ");
-        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        username = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.NameClaim).Value.Replace("@", " ");
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
-        var isAdmin = user.Claims.FirstOrDefault(x => x.Type == "role").Value;
+        var isAdmin = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.RoleClaim).Value;
         
-        if (!isAdmin.Equals("Admin"))
+        if (!isAdmin.Equals(StringRoleResources.Admin))
         {
             counts = await GetCartCount(userId);            
         }

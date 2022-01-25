@@ -19,3 +19,5 @@ global using Blazored.Toast;
 global using Blazored.Toast.Services;
 global using BlazorShop.Application.Commands.RoleCommand;
 global using MatBlazor;
+global using BlazorShop.WebClient.Error;
+global using BlazorShop.Application.Utils;
