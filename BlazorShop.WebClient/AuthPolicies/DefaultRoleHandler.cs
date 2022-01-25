@@ -16,7 +16,7 @@
         {
             if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
 
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == "role" && c.Value == "Default");
+            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
             if (userRole == null) return Task.CompletedTask;
 
             if (userRole.Value.Equals(requirement.Role))

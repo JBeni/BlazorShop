@@ -13,14 +13,14 @@
         {
             if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
 
-            var defaultRole = context.User.Claims.FirstOrDefault(c => c.Type == "role" && c.Value == "Default");
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == "role" && c.Value == "User");
+            var defaultRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
+            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.User);
 
             if (userRole == null && defaultRole == null) return Task.CompletedTask;
 
             if (userRole != null)
             {
-                if (userRole.Value.Equals("User"))
+                if (userRole.Value.Equals(StringRoleResources.User))
                 {
                     context.Succeed(requirement);
                     return Task.CompletedTask;
@@ -28,7 +28,7 @@
             }
             if (defaultRole != null)
             {
-                if (defaultRole.Value.Equals("Default"))
+                if (defaultRole.Value.Equals(StringRoleResources.Default))
                 {
                     context.Succeed(requirement);
                     return Task.CompletedTask;
