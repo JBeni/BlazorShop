@@ -3,11 +3,13 @@
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, List<InvoiceResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetInvoicesQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetInvoicesQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetInvoicesQueryHandler(IApplicationDbContext dbContext, ILogger<GetInvoicesQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the invoices...");
                 return Task.FromResult(new List<InvoiceResponse>
                 {
                     new InvoiceResponse

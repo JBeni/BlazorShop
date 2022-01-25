@@ -3,11 +3,13 @@
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetOrderByIdQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetOrderByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetOrderByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetOrderByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -23,6 +25,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the order by id...");
                 return Task.FromResult(new OrderResponse
                 {
                     Error = "There was an error while getting the order by id... " + ex.Message ?? ex.InnerException.Message

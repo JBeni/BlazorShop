@@ -3,11 +3,13 @@
     public class GetCartByIdQueryHandler : IRequestHandler<GetCartByIdQuery, CartResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetCartByIdQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetCartByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetCartByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetCartByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -23,6 +25,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the cart by id...");
                 return Task.FromResult(new CartResponse
                 {
                     Error = "There was an error while getting the cart by id... " + ex.Message ?? ex.InnerException.Message

@@ -3,11 +3,13 @@
     public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<OrderResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetOrdersQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetOrdersQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetOrdersQueryHandler(IApplicationDbContext dbContext, ILogger<GetOrdersQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -23,12 +25,14 @@
             }
             catch (Exception ex)
             {
-                List<OrderResponse> ordersView = new();
-                ordersView.Add(new OrderResponse
+                _logger.LogError(ex, "There was an error while getting the orders...");
+                return Task.FromResult(new List<OrderResponse>
                 {
-                    Error = "There was an error while getting the orders... " + ex.Message ?? ex.InnerException.Message
+                    new OrderResponse
+                    {
+                        Error = "There was an error while getting the orders... " + ex.Message ?? ex.InnerException.Message
+                    }
                 });
-                return Task.FromResult(ordersView);
             }
         }
     }

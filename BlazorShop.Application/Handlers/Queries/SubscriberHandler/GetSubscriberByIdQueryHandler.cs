@@ -3,11 +3,13 @@
     public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, SubscriberResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetSubscriberByIdQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetSubscriberByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetSubscriberByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetSubscriberByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the subscriber by user id - active subscription...");
                 return Task.FromResult(new SubscriberResponse
                 {
                     Error = "There was an error while getting the subscriber by user id - active subscription... " + ex.Message ?? ex.InnerException.Message

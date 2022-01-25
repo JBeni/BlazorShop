@@ -3,11 +3,13 @@
     public class GetClotheByIdQueryHandler : IRequestHandler<GetClotheByIdQuery, ClotheResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetClotheByIdQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetClotheByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetClotheByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetClotheByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -23,6 +25,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the clothe by id...");
                 return Task.FromResult(new ClotheResponse
                 {
                     Error = "There was an error while getting the clothe by id... " + ex.Message ?? ex.InnerException.Message

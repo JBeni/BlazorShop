@@ -3,11 +3,13 @@
     public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, List<ClotheResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetClothesQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetClothesQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetClothesQueryHandler(IApplicationDbContext dbContext, ILogger<GetClothesQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -23,12 +25,14 @@
             }
             catch (Exception ex)
             {
-                List<ClotheResponse> ordersView = new();
-                ordersView.Add(new ClotheResponse
+                _logger.LogError(ex, "There was an error while getting the clothes...");
+                return Task.FromResult(new List<ClotheResponse>
                 {
-                    Error = "There was an error while getting the clothes... " + ex.Message ?? ex.InnerException.Message
+                    new ClotheResponse
+                    {
+                        Error = "There was an error while getting the clothes... " + ex.Message ?? ex.InnerException.Message
+                    }
                 });
-                return Task.FromResult(ordersView);
             }
         }
     }

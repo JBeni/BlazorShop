@@ -3,11 +3,13 @@
     public class GetMusicByIdQueryHandler : IRequestHandler<GetMusicByIdQuery, MusicResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetMusicByIdQueryHandler> _logger;
         private readonly IMapper _mapper;
 
-        public GetMusicByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetMusicByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetMusicByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper;
         }
 
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the music by id...");
                 return Task.FromResult(new MusicResponse
                 {
                     Error = "There was an error while getting the music by id... " + ex.Message ?? ex.InnerException.Message
