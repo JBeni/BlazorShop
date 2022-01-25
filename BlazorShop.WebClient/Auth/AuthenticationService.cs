@@ -10,11 +10,12 @@ public class AuthenticationService : IAuthenticationService
     public AuthenticationService(HttpClient httpClient,
                                  AuthenticationStateProvider authStateProvider,
                                  ILocalStorageService localStorage,
-                                 IToastService _toastService)
+                                 IToastService toastService)
     {
         _httpClient = httpClient;
         _authStateProvider = authStateProvider;
         _localStorage = localStorage;
+        _toastService = toastService;
     }
 
     public async Task<JwtTokenResponse> Login(LoginCommand command)
@@ -24,21 +25,28 @@ public class AuthenticationService : IAuthenticationService
             new KeyValuePair<string, string>("Email", command.Email),
             new KeyValuePair<string, string>("Password", command.Password),
         });
-        var authResult = await _httpClient.PostAsync("Accounts/login", data);
-        if (authResult.IsSuccessStatusCode == false)
+
+        var response = await _httpClient.PostAsync("Accounts/login", data);
+        var responseResult = await response.Content.ReadAsStringAsync();
+        if (response.IsSuccessStatusCode == false)
         {
-            _toastService.ShowError("Something went wrong.");
+            var resultError = JsonSerializer.Deserialize<ErrorView>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
             return null;
         }
 
-        var authContent = await authResult.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
-                authContent,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
+            responseResult,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
         if (result.Access_Token == null)
         {
-            _toastService.ShowError("Something went wrong.");
+            _toastService.ShowError("Access Token is null");
             return null;
         }
 
@@ -60,21 +68,28 @@ public class AuthenticationService : IAuthenticationService
             new KeyValuePair<string, string>("Password", command.Password),
             new KeyValuePair<string, string>("ConfirmPassword", command.ConfirmPassword),
         });
-        var authResult = await _httpClient.PostAsync("Accounts/register", data);
-        if (authResult.IsSuccessStatusCode == false)
+
+        var response = await _httpClient.PostAsync("Accounts/register", data);
+        var responseResult = await response.Content.ReadAsStringAsync();
+        if (response.IsSuccessStatusCode == false)
         {
-            _toastService.ShowError("Something went wrong.");
+            var resultError = JsonSerializer.Deserialize<ErrorView>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
             return null;
         }
 
-        var authContent = await authResult.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
-                authContent,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
+            responseResult,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
         if (result.Access_Token == null)
         {
-            _toastService.ShowError("Something went wrong.");
+            _toastService.ShowError("Access Token is null");
             return null;
         }
 
