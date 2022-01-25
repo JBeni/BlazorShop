@@ -25,7 +25,7 @@
         public RoleResponse GetDefaultRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == "Default" && x.NormalizedName == "DEFAULT")
+                .Where(x => x.Name == StringRoleResources.Default && x.NormalizedName == StringRoleResources.DefaultNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
@@ -34,7 +34,7 @@
         public RoleResponse GetUserRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == "User" && x.NormalizedName == "USER")
+                .Where(x => x.Name == StringRoleResources.User && x.NormalizedName == StringRoleResources.UserNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
@@ -43,7 +43,7 @@
         public RoleResponse GetAdminRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == "Admin" && x.NormalizedName == "ADMIN")
+                .Where(x => x.Name == StringRoleResources.Admin && x.NormalizedName == StringRoleResources.AdminNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;

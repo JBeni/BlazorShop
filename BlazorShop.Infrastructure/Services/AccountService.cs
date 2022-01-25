@@ -61,7 +61,7 @@
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, userRole[0]),
-                new Claim("UserId", user.Id.ToString()),
+                new Claim(StringRoleResources.UserIdClaim, user.Id.ToString()),
             };
 
             var expiresIn = DateTime.Now.AddDays(30);
@@ -119,7 +119,7 @@
 
                 await _userManager.CreateAsync(newUser, register.Password);
 
-                var role = await _roleService.FindRoleByNameAsync("Default");
+                var role = await _roleService.FindRoleByNameAsync(StringRoleResources.Default);
                 if (role == null) throw new Exception("The role does not exist");
 
                 await _roleService.SetUserRoleAsync(newUser, role.Name);
