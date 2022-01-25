@@ -12,7 +12,7 @@
         public async Task Invoke(HttpContext context)
         {
             var user = context.User.Identity.Name;
-            var role = context.User.IsInRole("Admin");
+            var role = context.User.IsInRole(StringRoleResources.Admin);
 
             await _next(context);
         }
