@@ -203,7 +203,7 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         userData = await UserService.GetUser(UserId);
     }
