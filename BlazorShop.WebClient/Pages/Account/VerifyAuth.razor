@@ -1,6 +1,6 @@
 ﻿@page "/verifyauth"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 <h3>Verify Auth</h3>
 
@@ -8,9 +8,9 @@
 {
     <h4>@userName is authenticated</h4>
     <ul>
-        <li>Access to Admin Role: @isAdminUser</li>
-        <li>Access to Cashier Role: @isCashier</li>
-        <li>Access to Manager Role: @isManager</li>
+        <li>Access to Admin Role: @isAdminRole</li>
+        <li>Access to Cashier Role: @isUserRole</li>
+        <li>Access to Manager Role: @isDefaultRole</li>
 
         <li></li>
         <li>Access to Admin Claim: @isAdminClaim</li>
@@ -29,9 +29,11 @@ else
 
     private bool isAuthenticated = false;
     private string userName;
-    private bool isAdminUser = false;
-    private bool isCashier = false;
-    private bool isManager = false;
+
+    private bool isAdminRole = false;
+    private bool isUserRole = false;
+    private bool isDefaultRole = false;
+
     private bool isUser = false;
 
     private bool isAdminClaim = false;
@@ -45,23 +47,20 @@ else
         if (authState.User.Identity.IsAuthenticated)
         {
             isAuthenticated = true;
-            userName = authState.User.FindFirst(x => x.Type == "unique_name").Value;
+            userName = authState.User.FindFirst(x => x.Type == StringRoleResources.NameClaim).Value;
 
-            isAdminUser = authState.User.IsInRole("Admin");
-            isCashier = authState.User.IsInRole("Cashier");
-            isManager = authState.User.IsInRole("Manager");
+            isAdminRole = authState.User.IsInRole(StringRoleResources.Admin);
+            isUserRole = authState.User.IsInRole(StringRoleResources.User);
+            isDefaultRole = authState.User.IsInRole(StringRoleResources.Default);
 
-            isUser = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Admin");
+            isUser = authState.User.HasClaim(x => x.Type == StringRoleResources.RoleClaim && x.Value == StringRoleResources.Admin);
 
-            isAdminClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Admin");
-            isUserClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "User");
-            isDefaultClaim = authState.User.HasClaim(x => x.Type == "role" && x.Value == "Default");
+            isAdminClaim = authState.User.HasClaim(x => x.Type == StringRoleResources.RoleClaim && x.Value == StringRoleResources.Admin);
+            isUserClaim = authState.User.HasClaim(x => x.Type == StringRoleResources.RoleClaim && x.Value == StringRoleResources.User);
+            isDefaultClaim = authState.User.HasClaim(x => x.Type == StringRoleResources.RoleClaim && x.Value == StringRoleResources.Default);
 
             var userClaims = authState.User.Claims;
-
             var username = authState.User.Identity.Name;
-
-            var result = 0;
         }
     }
 }
