@@ -1,6 +1,6 @@
 ﻿@page "/cart"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
@@ -101,7 +101,7 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         CartService.OnChange += StateHasChanged;
         cartItems = await CartService.GetCarts(userId);
