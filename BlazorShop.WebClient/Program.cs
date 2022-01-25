@@ -12,12 +12,11 @@ builder.Services.AddOptions();
 builder.Services.AddMatBlazor();
 builder.Services.AddAuthorizationCore(config =>
 {
-    config.AddPolicy("DefaultRole", policy => policy.RequireAuthenticatedUser());
-    config.AddPolicy("Customer", policy => policy.Requirements.Add(new CustomerRoleRequirement()));
+    config.AddPolicy(StringRoleResources.Customer, policy => policy.Requirements.Add(new CustomerRoleRequirement()));
 
-    config.AddPolicy("Admin", policy => policy.Requirements.Add(new AdminRoleRequirement("Admin")));
-    config.AddPolicy("User", policy => policy.Requirements.Add(new UserRoleRequirement("User")));
-    config.AddPolicy("Default", policy => policy.Requirements.Add(new DefaultRoleRequirement("Default")));
+    config.AddPolicy(StringRoleResources.Admin, policy => policy.Requirements.Add(new AdminRoleRequirement(StringRoleResources.Admin)));
+    config.AddPolicy(StringRoleResources.User, policy => policy.Requirements.Add(new UserRoleRequirement(StringRoleResources.User)));
+    config.AddPolicy(StringRoleResources.Default, policy => policy.Requirements.Add(new DefaultRoleRequirement(StringRoleResources.Default)));
 });
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
