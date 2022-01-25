@@ -2,7 +2,7 @@
 {
     public class UsersController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
@@ -10,7 +10,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
@@ -18,7 +18,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("userEmail")]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
         {
@@ -26,7 +26,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("user/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -34,7 +34,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -42,7 +42,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {

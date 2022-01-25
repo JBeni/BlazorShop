@@ -1,8 +1,8 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
+    [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class InvoicesController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin, User, Default")]
         [HttpPost("invoice")]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceCommand command)
         {
@@ -10,7 +10,6 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
         [HttpPut("invoice")]
         public async Task<IActionResult> UpdateInvoice([FromBody] UpdateInvoiceCommand command)
         {
@@ -18,7 +17,6 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
         [HttpDelete("invoice/{id}")]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
@@ -26,7 +24,6 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("invoice/{id}")]
         public async Task<IActionResult> GetInvoice(int id)
         {
@@ -34,7 +31,6 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("invoices")]
         public async Task<IActionResult> GetInvoices()
         {

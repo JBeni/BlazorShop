@@ -2,7 +2,7 @@
 {
     public class MusicsController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("music")]
         public async Task<IActionResult> CreateMusic([FromBody] CreateMusicCommand command)
         {
@@ -10,7 +10,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("music")]
         public async Task<IActionResult> UpdateMusic([FromBody] UpdateMusicCommand command)
         {
@@ -18,7 +18,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("music/{id}")]
         public async Task<IActionResult> DeleteMusic(int id)
         {
@@ -26,7 +26,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("music/{id}")]
         public async Task<IActionResult> GetMusic(int id)
         {
@@ -34,7 +34,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("musics")]
         public async Task<IActionResult> GetMusics()
         {

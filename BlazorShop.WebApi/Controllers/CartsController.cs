@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    [Authorize(Roles = "User, Default")]
+    [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class CartsController : ApiControllerBase
     {
         [HttpPost("cart")]

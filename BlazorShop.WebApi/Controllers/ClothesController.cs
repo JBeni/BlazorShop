@@ -2,7 +2,7 @@
 {
     public class ClothesController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("clothe")]
         public async Task<IActionResult> CreateClothe([FromBody] CreateClotheCommand command)
         {
@@ -10,7 +10,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("clothe")]
         public async Task<IActionResult> UpdateClothe([FromBody] UpdateClotheCommand command)
         {
@@ -18,7 +18,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("clothe/{id}")]
         public async Task<IActionResult> DeleteClothe(int id)
         {
@@ -26,7 +26,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothe/{id}")]
         public async Task<IActionResult> GetClothe(int id)
         {
@@ -34,7 +34,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothes")]
         public async Task<IActionResult> GetClothes()
         {

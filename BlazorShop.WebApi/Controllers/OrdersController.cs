@@ -2,7 +2,7 @@
 {
     public class OrdersController : ApiControllerBase
     {
-        [Authorize(Roles = "User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPost("order")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {
@@ -10,7 +10,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("order")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
@@ -18,7 +18,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("order")]
         public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
         {
@@ -26,7 +26,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("order/{id}/{userEmail}")]
         public async Task<IActionResult> GetOrder(int id, string userEmail)
         {
@@ -34,7 +34,7 @@
             return Ok(result);
         }
 
-        [Authorize(Roles = "User, Default")]
+        [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("orders/{userEmail}")]
         public async Task<IActionResult> GetOrders(string userEmail)
         {

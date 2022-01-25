@@ -1,11 +1,12 @@
 ﻿namespace BlazorShop.WebApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = $"{StringRoleResources.Admin}")]
     public class RolesController : ApiControllerBase
     {
         [HttpPost("role")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
+            command.Name = null;
             var result = await Mediator.Send(command);
             return Ok(result);
         }
@@ -35,7 +36,7 @@
         public async Task<IActionResult> GetRoles()
         {
             var result = await Mediator.Send(new GetRolesQuery { });
-            result = result.Where(x => x.Name != "Admin").ToList();
+            result = result.Where(x => x.Name != StringRoleResources.Admin).ToList();
             return Ok(result);
         }
     }
