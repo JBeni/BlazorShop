@@ -30,3 +30,4 @@ global using System.Security.Claims;
 global using System.Text;
 global using BlazorShop.Application.Commands.RoleCommand;
 global using BlazorShop.Infrastructure.Persistence.Configurations;
+global using BlazorShop.Application.Utils;

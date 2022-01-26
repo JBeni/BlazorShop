@@ -38,9 +38,9 @@
 
             services.AddAuthorizationCore(config =>
             {
-                config.AddPolicy("Admin", policy => policy.RequireRole(ClaimTypes.Role, "Admin"));
-                config.AddPolicy("User", policy => policy.RequireRole(ClaimTypes.Role, "User"));
-                config.AddPolicy("Default", policy => policy.RequireRole(ClaimTypes.Role, "Default"));
+                config.AddPolicy(StringRoleResources.Admin, policy => policy.RequireRole(ClaimTypes.Role, StringRoleResources.Admin));
+                config.AddPolicy(StringRoleResources.User, policy => policy.RequireRole(ClaimTypes.Role, StringRoleResources.User));
+                config.AddPolicy(StringRoleResources.Default, policy => policy.RequireRole(ClaimTypes.Role, StringRoleResources.Default));
             });
 
             return services;
