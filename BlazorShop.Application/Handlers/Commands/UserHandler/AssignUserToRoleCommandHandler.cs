@@ -3,10 +3,12 @@
     public class AssignUserToRoleCommandHandler : IRequestHandler<AssignUserToRoleCommand, RequestResponse>
     {
         private readonly IUserService _userService;
+        private readonly ILogger<AssignUserToRoleCommandHandler> _logger;
 
-        public AssignUserToRoleCommandHandler(IUserService userService)
+        public AssignUserToRoleCommandHandler(IUserService userService, ILogger<AssignUserToRoleCommandHandler> logger)
         {
             _userService = userService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
@@ -18,6 +20,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while assigning the role to user");
                 return RequestResponse.Error(new Exception("There was an error while assigning the role to user", ex));
             }
         }
