@@ -47,7 +47,7 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 Title = "Fluent Validation",
-                Detail = context.Exception.Message ?? ""
+                Detail = exception.Message ?? ""
             };
 
             context.Result = new BadRequestObjectResult(details);
@@ -77,7 +77,7 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                 Title = "The specified resource was not found",
-                Detail = context.Exception.Message ?? "",
+                Detail = exception.Message ?? "",
             };
 
             context.Result = new NotFoundObjectResult(details);
