@@ -3,10 +3,12 @@
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<CreateInvoiceCommandHandler> _logger;
 
-        public CreateInvoiceCommandHandler(IApplicationDbContext dbContext)
+        public CreateInvoiceCommandHandler(IApplicationDbContext dbContext, ILogger<CreateInvoiceCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the invoice");
                 return RequestResponse.Error(new Exception("There was an error creating the invoice", ex));
             }
         }

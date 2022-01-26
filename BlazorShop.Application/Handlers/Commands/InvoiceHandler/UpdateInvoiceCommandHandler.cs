@@ -3,10 +3,12 @@
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateInvoiceCommandHandler> _logger;
 
-        public UpdateInvoiceCommandHandler(IApplicationDbContext dbContext)
+        public UpdateInvoiceCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateInvoiceCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateInvoiceCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the invoice");
                 return RequestResponse.Error(new Exception("There was an error updating the invoice", ex));
             }
         }
