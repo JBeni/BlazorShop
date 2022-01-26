@@ -3,11 +3,13 @@
     public class UpdateCreatedSubscriberCommandHandler : IRequestHandler<UpdateCreatedSubscriberCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateCreatedSubscriberCommandHandler> _logger;
         private readonly IUserService _userService;
 
-        public UpdateCreatedSubscriberCommandHandler(IApplicationDbContext dbContext, IUserService userService)
+        public UpdateCreatedSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateCreatedSubscriberCommandHandler> logger, IUserService userService)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService;
         }
 
@@ -33,6 +35,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the subscriber subscription after creation");
                 return RequestResponse.Error(new Exception("There was an error updating the subscriber subscription after creation", ex));
             }
         }

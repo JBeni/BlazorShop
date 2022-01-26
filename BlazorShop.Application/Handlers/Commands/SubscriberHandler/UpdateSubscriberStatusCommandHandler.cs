@@ -3,10 +3,12 @@
     public class UpdateSubscriberStatusCommandHandler : IRequestHandler<UpdateSubscriberStatusCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateSubscriberStatusCommandHandler> _logger;
 
-        public UpdateSubscriberStatusCommandHandler(IApplicationDbContext dbContext)
+        public UpdateSubscriberStatusCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateSubscriberStatusCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateSubscriberStatusCommand request, CancellationToken cancellationToken)
@@ -24,6 +26,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the subscriber");
                 return RequestResponse.Error(new Exception("There was an error updating the subscriber", ex));
             }
         }

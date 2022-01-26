@@ -3,10 +3,12 @@
     public class DeleteSubscriberCommandHandler : IRequestHandler<DeleteSubscriberCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteSubscriberCommandHandler> _logger;
 
-        public DeleteSubscriberCommandHandler(IApplicationDbContext dbContext)
+        public DeleteSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteSubscriberCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteSubscriberCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the subscriber");
                 return RequestResponse.Error(new Exception("There was an error deleting the subscriber", ex));
             }
         }

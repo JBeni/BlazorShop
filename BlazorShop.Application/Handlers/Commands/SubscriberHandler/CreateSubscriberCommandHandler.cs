@@ -3,12 +3,14 @@
     public class CreateSubscriberCommandHandler : IRequestHandler<CreateSubscriberCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<CreateSubscriberCommandHandler> _logger;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public CreateSubscriberCommandHandler(IApplicationDbContext dbContext, IUserService userService, IMapper mapper)
+        public CreateSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandler> logger, IUserService userService, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService;
             _mapper = mapper;
         }
@@ -41,6 +43,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the subscriber");
                 return RequestResponse.Error(new Exception("There was an error creating the subscriber", ex));
             }
         }
