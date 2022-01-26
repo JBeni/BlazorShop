@@ -3,10 +3,12 @@
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
         private readonly IRoleService _roleService;
+        private readonly ILogger<CreateRoleCommandHandler> _logger;
 
-        public CreateRoleCommandHandler(IRoleService roleService)
+        public CreateRoleCommandHandler(IRoleService roleService, ILogger<CreateRoleCommandHandler> logger)
         {
             _roleService = roleService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
@@ -18,6 +20,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the role");
                 return RequestResponse.Error(new Exception("There was an error while creating the role", ex));
             }
         }
