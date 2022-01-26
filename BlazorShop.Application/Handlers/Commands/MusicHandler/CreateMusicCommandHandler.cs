@@ -3,10 +3,12 @@
     public class CreateMusicCommandHandler : IRequestHandler<CreateMusicCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<CreateMusicCommandHandler> _logger;
 
-        public CreateMusicCommandHandler(IApplicationDbContext dbContext)
+        public CreateMusicCommandHandler(IApplicationDbContext dbContext, ILogger<CreateMusicCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(CreateMusicCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the music");
                 return RequestResponse.Error(new Exception("There was an error creating the music", ex));
             }
         }

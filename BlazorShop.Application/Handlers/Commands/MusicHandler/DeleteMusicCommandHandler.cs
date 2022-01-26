@@ -3,10 +3,12 @@
     public class DeleteMusicCommandHandler : IRequestHandler<DeleteMusicCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteMusicCommandHandler> _logger;
 
-        public DeleteMusicCommandHandler(IApplicationDbContext dbContext)
+        public DeleteMusicCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteMusicCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteMusicCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the music");
                 return RequestResponse.Error(new Exception("There was an error deleting the music", ex));
             }
         }
