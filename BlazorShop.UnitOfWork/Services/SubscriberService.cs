@@ -6,13 +6,19 @@
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly ISubscriptionService _subscriptionService;
+        private readonly ILogger<SubscriberService> _logger;
 
-        public SubscriberService(IUnitOfWork unitOfWork, IMapper mapper, IUserService userService, ISubscriptionService subscriptionService)
+        public SubscriberService(IUnitOfWork unitOfWork,
+                                 IMapper mapper,
+                                 IUserService userService,
+                                 ISubscriptionService subscriptionService,
+                                 ILogger<SubscriberService> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userService = userService;
             _subscriptionService = subscriptionService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public List<SubscriberResponse> GetAll()
@@ -25,6 +31,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the subscribers...");
                 return new List<SubscriberResponse>
                 {
                     new SubscriberResponse
@@ -45,6 +52,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the subscriber by id...");
                 return new SubscriberResponse
                 {
                     Error = "There was an error while getting the subscriber by id... " + ex.Message ?? ex.InnerException.Message
@@ -77,6 +85,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the subscriber");
                 return RequestResponse.Error(new Exception("There was an error creating the subscriber", ex));
             }
         }
@@ -100,6 +109,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the subscriber");
                 return RequestResponse.Error(new Exception("There was an error updating the subscriber", ex));
             }
         }
@@ -117,6 +127,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the subscriber");
                 return RequestResponse.Error(new Exception("There was an error deleting the subscriber", ex));
             }
         }

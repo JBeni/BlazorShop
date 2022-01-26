@@ -9,3 +9,4 @@ global using BlazorShop.UnitOfWork.Services;
 global using BlazorShop.Application.Common.Interfaces;
 global using BlazorShop.Application.Queries.UserQuery;
 global using BlazorShop.Domain.Entities.Identity;
+global using Microsoft.Extensions.Logging;

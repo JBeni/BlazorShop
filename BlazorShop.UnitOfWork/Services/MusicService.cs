@@ -4,11 +4,13 @@
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ILogger<MusicService> _logger;
 
-        public MusicService(IUnitOfWork unitOfWork, IMapper mapper)
+        public MusicService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<MusicService> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public List<MusicResponse> GetAll()
@@ -21,6 +23,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the musics...");
                 return new List<MusicResponse>
                 {
                     new MusicResponse
@@ -41,6 +44,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the music by id...");
                 return new MusicResponse
                 {
                     Error = "There was an error while getting the music by id... " + ex.Message ?? ex.InnerException.Message
@@ -66,6 +70,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the music");
                 return RequestResponse.Error(new Exception("There was an error creating the music", ex));
             }
         }
@@ -85,6 +90,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the music");
                 return RequestResponse.Error(new Exception("There was an error updating the music", ex));
             }
         }
@@ -102,6 +108,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the music");
                 return RequestResponse.Error(new Exception("There was an error deleting the music", ex));
             }
         }

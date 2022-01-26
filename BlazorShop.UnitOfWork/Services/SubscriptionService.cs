@@ -4,11 +4,13 @@
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ILogger<SubscriptionService> _logger;
 
-        public SubscriptionService(IUnitOfWork unitOfWork, IMapper mapper)
+        public SubscriptionService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<SubscriptionService> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public List<SubscriptionResponse> GetAll()
@@ -21,6 +23,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the subscriptions...");
                 return new List<SubscriptionResponse>
                 {
                     new SubscriptionResponse
@@ -41,6 +44,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error while getting the subscription by id...");
                 return new SubscriptionResponse
                 {
                     Error = "There was an error while getting the subscription by id... " + ex.Message ?? ex.InnerException.Message
@@ -71,6 +75,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the subscription");
                 return RequestResponse.Error(new Exception("There was an error creating the subscription", ex));
             }
         }
@@ -95,6 +100,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the subscription");
                 return RequestResponse.Error(new Exception("There was an error updating the subscription", ex));
             }
         }
@@ -112,6 +118,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the subscription");
                 return RequestResponse.Error(new Exception("There was an error deleting the subscription", ex));
             }
         }
