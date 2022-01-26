@@ -3,10 +3,12 @@
     public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteOrderCommandHandler> _logger;
 
-        public DeleteOrderCommandHandler(IApplicationDbContext dbContext)
+        public DeleteOrderCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteOrderCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the order");
                 return RequestResponse.Error(new Exception("There was an error deleting the order", ex));
             }
         }

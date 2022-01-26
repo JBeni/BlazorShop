@@ -3,10 +3,12 @@
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<CreateOrderCommandHandler> _logger;
 
-        public CreateOrderCommandHandler(IApplicationDbContext dbContext)
+        public CreateOrderCommandHandler(IApplicationDbContext dbContext, ILogger<CreateOrderCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the order");
                 return RequestResponse.Error(new Exception("There was an error creating the order", ex));
             }
         }

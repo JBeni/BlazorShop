@@ -3,10 +3,12 @@
     public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateOrderCommandHandler> _logger;
 
-        public UpdateOrderCommandHandler(IApplicationDbContext dbContext)
+        public UpdateOrderCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateOrderCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
@@ -27,6 +29,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the order");
                 return RequestResponse.Error(new Exception("There was an error updating the order", ex));
             }
         }
