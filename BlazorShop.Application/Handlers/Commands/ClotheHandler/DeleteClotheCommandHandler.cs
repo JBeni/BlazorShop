@@ -3,10 +3,12 @@
     public class DeleteClotheCommandHandler : IRequestHandler<DeleteClotheCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteClotheCommandHandler> _logger;
 
-        public DeleteClotheCommandHandler(IApplicationDbContext dbContext)
+        public DeleteClotheCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteClotheCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteClotheCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the clothe");
                 return RequestResponse.Error(new Exception("There was an error deleting the clothe", ex));
             }
         }

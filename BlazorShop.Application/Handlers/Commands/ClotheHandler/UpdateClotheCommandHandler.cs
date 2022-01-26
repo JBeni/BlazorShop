@@ -3,10 +3,12 @@
     public class UpdateClotheCommandHandler : IRequestHandler<UpdateClotheCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateClotheCommandHandler> _logger;
 
-        public UpdateClotheCommandHandler(IApplicationDbContext dbContext)
+        public UpdateClotheCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateClotheCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateClotheCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the clothe");
                 return RequestResponse.Error(new Exception("There was an error updating the clothe", ex));
             }
         }
