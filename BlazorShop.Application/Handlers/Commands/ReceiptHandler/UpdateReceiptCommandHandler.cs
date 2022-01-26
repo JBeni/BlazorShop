@@ -3,10 +3,12 @@
     public class UpdateReceiptCommandHandler : IRequestHandler<UpdateReceiptCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateReceiptCommandHandler> _logger;
 
-        public UpdateReceiptCommandHandler(IApplicationDbContext dbContext)
+        public UpdateReceiptCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateReceiptCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateReceiptCommand request, CancellationToken cancellationToken)
@@ -26,6 +28,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the receipt");
                 return RequestResponse.Error(new Exception("There was an error updating the receipt", ex));
             }
         }

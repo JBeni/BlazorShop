@@ -3,10 +3,12 @@
     public class DeleteReceiptCommandHandler : IRequestHandler<DeleteReceiptCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteReceiptCommandHandler> _logger;
 
-        public DeleteReceiptCommandHandler(IApplicationDbContext dbContext)
+        public DeleteReceiptCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteReceiptCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteReceiptCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the receipt");
                 return RequestResponse.Error(new Exception("There was an error deleting the receipt", ex));
             }
         }
