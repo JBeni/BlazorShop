@@ -3,10 +3,12 @@
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, JwtTokenResponse>
     {
         private readonly IAccountService _accountService;
+        private readonly ILogger<RegisterCommandHandler> _logger;
 
-        public RegisterCommandHandler(IAccountService accountService)
+        public RegisterCommandHandler(IAccountService accountService, ILogger<RegisterCommandHandler> logger)
         {
             _accountService = accountService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<JwtTokenResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -17,6 +19,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error when the user tried to register");
                 return JwtTokenResponse.Error(new Exception("There was an error when the user tried to register", ex));
             }
         }
