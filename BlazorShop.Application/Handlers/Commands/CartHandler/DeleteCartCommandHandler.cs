@@ -3,10 +3,12 @@
     public class DeleteCartCommandHandler : IRequestHandler<DeleteCartCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<DeleteCartCommandHandler> _logger;
 
-        public DeleteCartCommandHandler(IApplicationDbContext dbContext)
+        public DeleteCartCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteCartCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(DeleteCartCommand request, CancellationToken cancellationToken)
@@ -21,6 +23,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error deleting the cart");
                 return RequestResponse.Error(new Exception("There was an error deleting the cart", ex));
             }
         }

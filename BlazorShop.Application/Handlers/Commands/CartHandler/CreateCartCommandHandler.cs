@@ -3,12 +3,14 @@
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<CreateCartCommandHandler> _logger;
         private readonly UserManager<User> _userManager;
 
-        public CreateCartCommandHandler(IApplicationDbContext dbContext, UserManager<User> userManager)
+        public CreateCartCommandHandler(IApplicationDbContext dbContext, ILogger<CreateCartCommandHandler> logger, UserManager<User> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(CreateCartCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error creating the cart");
                 return RequestResponse.Error(new Exception("There was an error creating the cart", ex));
             }
         }

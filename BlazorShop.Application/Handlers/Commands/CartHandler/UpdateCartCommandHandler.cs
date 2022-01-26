@@ -3,10 +3,12 @@
     public class UpdateCartCommandHandler : IRequestHandler<UpdateCartCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<UpdateCartCommandHandler> _logger;
 
-        public UpdateCartCommandHandler(IApplicationDbContext dbContext)
+        public UpdateCartCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateCartCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<RequestResponse> Handle(UpdateCartCommand request, CancellationToken cancellationToken)
@@ -25,6 +27,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "There was an error updating the cart");
                 return RequestResponse.Error(new Exception("There was an error updating the cart", ex));
             }
         }
