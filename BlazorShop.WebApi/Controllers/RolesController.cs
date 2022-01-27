@@ -6,7 +6,6 @@
         [HttpPost("role")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
-            command.Name = null;
             var result = await Mediator.Send(command);
             return Ok(result);
         }

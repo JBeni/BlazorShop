@@ -2,8 +2,14 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    //var adsasd = builder.Configuration["Serilog:WriteTo[2]:Args:path"];
+
+
     Log.Logger = new LoggerConfiguration()
-        .WriteTo.Console()
+        .WriteTo.File(
+            "C:\\Users\\Beni\\source\\repos\\BlazorShop\\BlazorShop.Logs\\BlazorShop.json",
+            Serilog.Events.LogEventLevel.Information
+         )
         .CreateBootstrapLogger();
 
     Log.Information("Starting up");
