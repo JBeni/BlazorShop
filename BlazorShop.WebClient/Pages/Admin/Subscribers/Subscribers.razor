@@ -1,6 +1,6 @@
 ﻿@page "/admin/subscribers"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriberService SubscriberService
 @inject NavigationManager NavManager
