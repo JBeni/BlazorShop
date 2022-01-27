@@ -1,5 +1,6 @@
-﻿global using Microsoft.Extensions.Logging;
-global using MediatR;
+﻿global using MediatR;
+global using Serilog;
+global using Microsoft.Extensions.Logging;
 global using BlazorShop.Application.Responses;
 global using FluentValidation;
 global using BlazorShop.Application.Commands.OrderCommand;

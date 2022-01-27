@@ -2,6 +2,7 @@
 {
     public class CreateCartCommand : IRequest<RequestResponse>
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public int ClotheId { get; set; }
         public string? Name { get; set; }
