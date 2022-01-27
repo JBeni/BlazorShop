@@ -1,33 +1,19 @@
 ﻿@page "/admin/clothes"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IClotheService ClotheService
 @inject NavigationManager NavManager
 
-<h1>Clothes List</h1>
+<h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Clothes List</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <a href='admin/clothes/add' class="btn btn-primary" role="button">
-            <i class="fas fa-user-plus"></i>
-            Add Clothe
-        </a>
-    </div>
-    <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search clothe by name"
-            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterClothes" />
-        <div class="input-group-append" style="margin-left: 15px;">
-            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
-                <i class="fas fa-times"></i>
-                Reset Filter
-            </button>
-        </div>
+<div class="row mb-4">
+    <div class="col">
+        <MatButtonLink Href="admin/clothes/add" Raised="true">Add Clothe</MatButtonLink>
     </div>
 </div>
-<br />
 
-@if (clotheList == null)
+@if (clotheList is null)
 {
     <div class="d-flex justify-content-center" style="margin-top: 100px;">
         <h4 style="font-size: 45px;"><em>Loading the data...</em></h4>
@@ -37,42 +23,37 @@ else
 {
     @if (clotheList.Count > 0)
     {
-        <table class="table table-striped align-middle table-bordered">
-            <thead class="table-success">
-                <tr class="text-center">
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                    <th>Image Name</th>
-                    <th>Image Path</th>
-                    <th>IsActive</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var clothe in clotheList)
-                {
-                    <tr class="text-center">
-                        <td>@clothe.Id</td>
-                        <td>@clothe.Name</td>
-                        <td>@clothe.Description</td>
-                        <td>$ @clothe.Price</td>
-                        <td>@clothe.Amount</td>
-                        <td>@clothe.ImageName</td>
-                        <td>@clothe.ImagePath</td>
-                        <td>@clothe.IsActive</td>
-                        <td>
-                            <a href='admin/clothes/edit/@clothe.Id' class="btn btn-outline-dark" role="button">Edit</a>
-                            <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(clothe.Id); ModalShow(); })">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <MatTable Items="@clotheList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Name" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-4">Description</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Image Name</th>
+                <th>Image Path</th>
+                <th>IsActive</th>
+                <th class="col-md-6">Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td>@String.Format("{0:d}", @context.Id)</td>
+                <td class="col-md-2">@context.Name</td>
+                <td class="col-md-4">@context.Description</td>
+                <td>@context.Price</td>
+                <td>@context.Amount</td>
+                <td>@context.ImageName</td>
+                <td>@context.ImagePath</td>
+                <td>@context.IsActive</td>
+                <td class="col-md-6">
+                    <a href='admin/clothes/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
 
         @if (showModal)
         {
@@ -161,3 +142,9 @@ else
         clotheList = searchClotheData;
     }
 }
+
+<style>
+    label {
+        width: 70%;
+    }
+</style>

@@ -1,7 +1,7 @@
 ﻿@page "/admin/clothes/add"
 @page "/admin/clothes/edit/{Id:int}"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IClotheService ClotheService
 @inject NavigationManager NavManager
