@@ -13,16 +13,21 @@
 
         public async Task<List<OrderResponse>> GetOrders(string userEmail)
         {
-            var authResult = await _httpClient.GetAsync($"Orders/orders/{userEmail}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Orders/orders/{userEmail}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<OrderResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -31,16 +36,21 @@
 
         public async Task<OrderResponse> GetOrder(int id, string userEmail)
         {
-            var authResult = await _httpClient.GetAsync($"Orders/order/{id}/{userEmail}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Orders/order/{id}/{userEmail}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<OrderResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -50,9 +60,15 @@
         public async Task<RequestResponse> AddOrder(OrderResponse order)
         {
             var response = await _httpClient.PostAsJsonAsync("Orders/order", order);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -63,9 +79,15 @@
         public async Task<RequestResponse> UpdateOrder(OrderResponse order)
         {
             var response = await _httpClient.PutAsJsonAsync("Orders/order", order);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -76,9 +98,15 @@
         public async Task<RequestResponse> DeleteOrder(int id)
         {
             var response = await _httpClient.DeleteAsync($"Orders/order/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 

@@ -5,6 +5,8 @@
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
 
+        public event Action OnChange;
+
         public ClotheService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
@@ -13,34 +15,45 @@
 
         public async Task<List<ClotheResponse>> GetClothes()
         {
-            var authResult = await _httpClient.GetAsync("Clothes/clothes");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync("Clothes/clothes");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<ClotheResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
+            //OnChange.Invoke();
             return result;
         }
 
         public async Task<ClotheResponse> GetClothe(int id)
         {
-            var authResult = await _httpClient.GetAsync($"Clothes/clothe/{id}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Clothes/clothe/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<ClotheResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -50,9 +63,15 @@
         public async Task<RequestResponse> AddClothe(ClotheResponse clothe)
         {
             var response = await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -63,9 +82,15 @@
         public async Task<RequestResponse> UpdateClothe(ClotheResponse clothe)
         {
             var response = await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -76,9 +101,15 @@
         public async Task<RequestResponse> DeleteClothe(int id)
         {
             var response = await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 

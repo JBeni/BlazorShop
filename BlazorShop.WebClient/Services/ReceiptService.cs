@@ -13,16 +13,21 @@
 
         public async Task<List<ReceiptResponse>> GetReceipts(string userEmail)
         {
-            var authResult = await _httpClient.GetAsync($"Receipts/receipts/{userEmail}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Receipts/receipts/{userEmail}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<ReceiptResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -31,16 +36,21 @@
 
         public async Task<ReceiptResponse> GetReceipt(int id, string userEmail)
         {
-            var authResult = await _httpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<ReceiptResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -50,9 +60,15 @@
         public async Task<RequestResponse> AddReceipt(ReceiptResponse receipt)
         {
             var response = await _httpClient.PostAsJsonAsync("Receipts/receipt", receipt);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -63,9 +79,15 @@
         public async Task<RequestResponse> UpdateReceipt(ReceiptResponse receipt)
         {
             var response = await _httpClient.PutAsJsonAsync("Receipts/receipt", receipt);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -76,9 +98,15 @@
         public async Task<RequestResponse> DeleteReceipt(int id)
         {
             var response = await _httpClient.DeleteAsync($"Receipts/receipt/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 

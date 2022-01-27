@@ -13,16 +13,21 @@
 
         public async Task<List<MusicResponse>> GetMusics()
         {
-            var authResult = await _httpClient.GetAsync("Musics/musics");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync("Musics/musics");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<MusicResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -31,16 +36,21 @@
 
         public async Task<MusicResponse> GetMusic(int id)
         {
-            var authResult = await _httpClient.GetAsync($"Musics/music/{id}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Musics/music/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<MusicResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -50,9 +60,15 @@
         public async Task<RequestResponse> AddMusic(MusicResponse music)
         {
             var response = await _httpClient.PostAsJsonAsync("Musics/music", music);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -63,9 +79,15 @@
         public async Task<RequestResponse> UpdateMusic(MusicResponse music)
         {
             var response = await _httpClient.PutAsJsonAsync("Musics/music", music);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -76,9 +98,15 @@
         public async Task<RequestResponse> DeleteMusic(int id)
         {
             var response = await _httpClient.DeleteAsync($"Musics/music/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 

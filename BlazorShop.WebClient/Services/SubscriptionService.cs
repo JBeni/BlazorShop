@@ -13,16 +13,21 @@
 
         public async Task<List<SubscriptionResponse>> GetSubscriptions()
         {
-            var authResult = await _httpClient.GetAsync("Subscriptions/subscriptions");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync("Subscriptions/subscriptions");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<SubscriptionResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -31,16 +36,21 @@
 
         public async Task<SubscriptionResponse> GetSubscription(int id)
         {
-            var authResult = await _httpClient.GetAsync($"Subscriptions/subscription/{id}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.GetAsync($"Subscriptions/subscription/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<SubscriptionResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -50,9 +60,15 @@
         public async Task<RequestResponse> AddSubscription(SubscriptionResponse Subscription)
         {
             var response = await _httpClient.PostAsJsonAsync("Subscriptions/subscription", Subscription);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -63,9 +79,15 @@
         public async Task<RequestResponse> UpdateSubscription(SubscriptionResponse Subscription)
         {
             var response = await _httpClient.PutAsJsonAsync("Subscriptions/subscription", Subscription);
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -76,9 +98,15 @@
         public async Task<RequestResponse> DeleteSubscription(int id)
         {
             var response = await _httpClient.DeleteAsync($"Subscriptions/subscription/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 

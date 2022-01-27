@@ -13,10 +13,16 @@
 
         public async Task CancelMembership(string stripeSubscriptionCreationId)
         {
-            var authResult = await _httpClient.DeleteAsync($"Payments/cancel-subscription/{stripeSubscriptionCreationId}");
-            if (authResult.IsSuccessStatusCode == false)
+            var response = await _httpClient.DeleteAsync($"Payments/cancel-subscription/{stripeSubscriptionCreationId}");
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var responseResult = await response.Content.ReadAsStringAsync();
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
             }
             else
             {

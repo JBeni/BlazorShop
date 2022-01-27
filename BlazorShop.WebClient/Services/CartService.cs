@@ -16,9 +16,15 @@
         public async Task<RequestResponse> AddCart(CartResponse cart)
         {
             var response = await _httpClient.PostAsJsonAsync($"Carts/cart", cart);
-            if (!response.IsSuccessStatusCode)
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -30,22 +36,35 @@
         public async Task<RequestResponse> DeleteCart(int id, int userId)
         {
             var response = await _httpClient.DeleteAsync($"Carts/cart/{id}/{userId}");
-            if (!response.IsSuccessStatusCode)
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
             _toastService.ShowSuccess("The item was deleted from the cart.");
+            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> EmptyCart(int userId)
         {
             var response = await _httpClient.DeleteAsync($"Carts/carts/{userId}");
-            if (!response.IsSuccessStatusCode)
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
@@ -56,16 +75,21 @@
 
         public async Task<CartResponse> GetCart(int id)
         {
-            var authResult = await _httpClient.GetAsync($"Carts/cart/{id}");
-            if (!authResult.IsSuccessStatusCode)
+            var response = await _httpClient.GetAsync($"Carts/cart/{id}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<CartResponse>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -74,16 +98,21 @@
 
         public async Task<int> GetCartCounts(int userId)
         {
-            var authResult = await _httpClient.GetAsync($"Carts/count/{userId}");
-            if (!authResult.IsSuccessStatusCode)
+            var response = await _httpClient.GetAsync($"Carts/count/{userId}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return 0;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<int>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -92,16 +121,21 @@
 
         public async Task<List<CartResponse>> GetCarts(int userId)
         {
-            var authResult = await _httpClient.GetAsync($"Carts/carts/{userId}");
-            if (!authResult.IsSuccessStatusCode)
+            var response = await _httpClient.GetAsync($"Carts/carts/{userId}");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
-            var authContent = await authResult.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<CartResponse>>(
-                authContent,
+                responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
@@ -111,14 +145,19 @@
         public async Task<RequestResponse> UpdateCart(CartResponse cart)
         {
             var response = await _httpClient.PutAsJsonAsync($"Carts/cart", cart);
-            if (!response.IsSuccessStatusCode)
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
 
             _toastService.ShowSuccess("The cart was updated.");
-            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
@@ -126,15 +165,21 @@
         {
             var carts = await GetCarts(userId);
             var response = await _httpClient.PostAsJsonAsync("Payments/checkout", carts.ToList());
-            if (!response.IsSuccessStatusCode)
+
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError("Something went wrong.");
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
                 return null;
             }
-            var url = await response.Content.ReadAsStringAsync();
 
             _toastService.ShowSuccess("The checkout operation was successfully made.");
-            return url;
+            return responseResult;
         }
     }
 }
