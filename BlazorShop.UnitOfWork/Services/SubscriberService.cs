@@ -81,12 +81,12 @@
 
                 _unitOfWork.SubscriberRepository.Add(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the subscriber");
-                return RequestResponse.Error(new Exception("There was an error creating the subscriber", ex));
+                return RequestResponse.Failure("There was an error creating the subscriber. " + ex.Message ?? ex.InnerException.Message);
             }
         }
 
@@ -105,12 +105,12 @@
 
                 _unitOfWork.SubscriberRepository.Update(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the subscriber");
-                return RequestResponse.Error(new Exception("There was an error updating the subscriber", ex));
+                return RequestResponse.Failure("There was an error updating the subscriber. " + ex.Message ?? ex.InnerException.Message);
             }
         }
 
@@ -123,12 +123,12 @@
 
                 _unitOfWork.SubscriberRepository.Delete(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the subscriber");
-                return RequestResponse.Error(new Exception("There was an error deleting the subscriber", ex));
+                return RequestResponse.Failure("There was an error deleting the subscriber. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }

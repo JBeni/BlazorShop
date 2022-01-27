@@ -66,12 +66,12 @@
 
                 _unitOfWork.MusicRepository.Add(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the music");
-                return RequestResponse.Error(new Exception("There was an error creating the music", ex));
+                return RequestResponse.Failure("There was an error creating the music. " + ex.Message ?? ex.InnerException.Message);
             }
         }
 
@@ -86,12 +86,12 @@
 
                 _unitOfWork.MusicRepository.Update(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the music");
-                return RequestResponse.Error(new Exception("There was an error updating the music", ex));
+                return RequestResponse.Failure("There was an error updating the music. " + ex.Message ?? ex.InnerException.Message);
             }
         }
 
@@ -104,12 +104,12 @@
 
                 _unitOfWork.MusicRepository.Delete(entity);
                 _unitOfWork.Commit();
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the music");
-                return RequestResponse.Error(new Exception("There was an error deleting the music", ex));
+                return RequestResponse.Failure("There was an error deleting the music. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
