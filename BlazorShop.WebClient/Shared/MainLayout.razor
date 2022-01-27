@@ -64,7 +64,6 @@
     protected async override Task OnInitializedAsync()
     {
         await httpClient.GetAsync("Home/test");
-        CartService.OnChange += StateHasChanged;
 
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
@@ -79,6 +78,7 @@
         {
             counts = await GetCartCount(userId);            
         }
+        CartService.OnChange += StateHasChanged;
     }
 
     public void Dispose()
