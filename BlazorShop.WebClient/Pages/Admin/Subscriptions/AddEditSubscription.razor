@@ -1,8 +1,7 @@
 ﻿@page "/admin/Subscriptions/add"
 @page "/admin/Subscriptions/edit/{Id:int}"
-@using System.Text.RegularExpressions
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
@@ -12,6 +11,19 @@
 
 <EditForm Model="@Subscription" OnValidSubmit="SaveSubscription">
     <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="StripeSubscriptionId" class="form-label">Stripe Subscription Id</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="Subscription.StripeSubscriptionId" />
+        </div>
+        <ValidationMessage For="@(() => Subscription.StripeSubscriptionId)" />
+        @if (stripeSubscriptionError.Length > 0)
+        {
+            <div class="col-md-4" role="alert">
+                <p class="alert alert-danger">@stripeSubscriptionError</p>
+            </div>
+        }
+    </div>
     <div class="mb-3">
         <label for="Name" class="form-label">Name</label>
         <div class="col-md-4">
@@ -51,6 +63,32 @@
             </div>
         }
     </div>
+    <div class="mb-3">
+        <label for="ImageName" class="form-label">Image Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="Subscription.ImageName" />
+        </div>
+        <ValidationMessage For="@(() => Subscription.ImageName)" />
+        @if (imageNameError.Length > 0)
+        {
+            <div class="col-md-4" role="alert">
+                <p class="alert alert-danger">@imageNameError</p>
+            </div>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="ImagePath" class="form-label">Image Path</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="Subscription.ImagePath" />
+        </div>
+        <ValidationMessage For="@(() => Subscription.ImagePath)" />
+        @if (imagePathError.Length > 0)
+        {
+            <div class="col-md-4" role="alert">
+                <p class="alert alert-danger">@imagePathError</p>
+            </div>
+        }
+    </div>
 
     <div class="form-group" style="margin-bottom: 25px;">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -64,6 +102,9 @@
     protected string Title = "Add";
     public SubscriptionResponse Subscription = new();
 
+    private string stripeSubscriptionError = "";
+    private string imageNameError = "";
+    private string imagePathError = "";
     private string nameError = "";
     private string priceError = "";
     private string optionsError = "";
@@ -104,7 +145,13 @@
     {
         var isValid = true;
         nameError = ""; priceError = ""; optionsError = "";
+        stripeSubscriptionError = ""; imageNameError = ""; imagePathError = "";
 
+        if (Subscription.StripeSubscriptionId == null || Subscription.StripeSubscriptionId?.Trim().Length < 10)
+        {
+            stripeSubscriptionError = "The stripe Subscription must not be empty (>= 10).";
+            isValid = false;
+        }
         if (Subscription.Name == null || Subscription.Name?.Trim().Length < 3)
         {
             nameError = "The name must contain at least 3 characters.";
@@ -123,6 +170,16 @@
         if (Subscription.Options == null || Subscription.Options?.Trim().Length < 10)
         {
             optionsError = "The options must contain at least 10 characters.";
+            isValid = false;
+        }
+        if (Subscription.ImageName == null || Subscription.ImageName?.Trim().Length < 5)
+        {
+            imageNameError = "The image name must contain at least 5 characters.";
+            isValid = false;
+        }
+        if (Subscription.ImagePath == null || Subscription.ImagePath?.Trim().Length < 5)
+        {
+            imagePathError = "The image path must contain at least 5 characters.";
             isValid = false;
         }
 

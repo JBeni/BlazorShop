@@ -1,11 +1,11 @@
 ﻿@page "/admin/subscriptions"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
 
-<h3>Subscriptions</h3>
+<h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Subscriptions</h1>
 
 <div class="row mb-4">
     <div class="col">
@@ -24,7 +24,7 @@ else
     @if (subscriptionsList.Count > 0)
     {
         <MatTable Items="@subscriptionsList" LoadInitialData="true" Striped="true" AllowSelection="true"
-            RowClass="tester" FilterByColumnName="Title" DebounceMilliseconds="150" class="mat-elevation-z5">
+            RowClass="tester" FilterByColumnName="Name" DebounceMilliseconds="150" class="mat-elevation-z5">
             <MatTableHeader>
                 <th>Id</th>
                 <th>Name</th>
