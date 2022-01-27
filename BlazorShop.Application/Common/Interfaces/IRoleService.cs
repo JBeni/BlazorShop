@@ -14,6 +14,7 @@
         Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand role);
         Task<RequestResponse> DeleteRoleAsync(int roleId);
         List<RoleResponse> GetRoles();
+        List<RoleResponse> GetRolesForAdmin();
         RoleResponse GetRoleById(int id);
         RoleResponse GetRoleByNormalizedName(string normalizedName);
     }
