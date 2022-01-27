@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+.vscode
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -369,3 +370,6 @@ FodyWeavers.xsd
 
 # Remove Migrations
 #BlazorShop.Infrastructure/Migrations
+
+# Remove Logs
+/BlazorShop.Logs

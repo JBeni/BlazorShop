@@ -56,6 +56,14 @@ The client interface was made using Blazor Web Assembly
 * Using razor components to create pages
 
 
+
+Other Project: Unit or Work - Demonstrating the concept
+
+
+Worker Service Project - to invalidate a user subscription
+
+
+
 *** Features
 
 - stripe accepting single chechout
