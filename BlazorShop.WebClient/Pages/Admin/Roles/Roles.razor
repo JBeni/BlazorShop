@@ -1,31 +1,17 @@
 ﻿@page "/admin/roles"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IRoleService RoleService
 @inject NavigationManager NavManager
 
-<h1>Roles List</h1>
+<h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Roles List</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <a href='admin/roles/add' class="btn btn-primary" role="button">
-            <i class="fas fa-user-plus"></i>
-            Add Role
-        </a>
-    </div>
-    <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search role by name"
-            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterRoles" />
-        <div class="input-group-append" style="margin-left: 15px;">
-            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
-                <i class="fas fa-times"></i>
-                Reset Filter
-            </button>
-        </div>
+<div class="row mb-4">
+    <div class="col">
+        <MatButtonLink Href="admin/roles/add" Raised="true">Add Role</MatButtonLink>
     </div>
 </div>
-<br />
 
 @if (rolesList is null)
 {
@@ -37,30 +23,27 @@ else
 {
     @if (rolesList.Count > 0)
     {
-        <table class="table table-striped align-middle table-bordered">
-            <thead class="table-success">
-                <tr class="text-center">
-                    <th>Name</th>
-                    <th>NormalizedName</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var role in rolesList)
-                {
-                    <tr class="text-center">
-                        <td>@role.Name</td>
-                        <td>@role.NormalizedName</td>
-                        <td>
-                            <a href='admin/roles/edit/@role.Id' class="btn btn-outline-dark" role="button">Edit</a>
-                            <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(role.Id); ModalShow(); })">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <MatTable Items="@rolesList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Name" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">NormalizedName</th>
+                <th class="col-md-6">Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td>@String.Format("{0:d}", @context.Id)</td>
+                <td class="col-md-3">@context.Name</td>
+                <td class="col-md-3">@context.NormalizedName</td>
+                <td class="col-md-6">
+                    <a href='admin/roles/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
 
         @if (showModal)
         {
@@ -146,3 +129,9 @@ else
         rolesList = searchRolesData;
     }
 }
+
+<style>
+    label {
+        width: 70%;
+    }
+</style>

@@ -1,7 +1,7 @@
 ﻿@page "/admin/roles/add"
 @page "/admin/roles/edit/{Id:int}"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IRoleService RoleService
 @inject NavigationManager NavManager
