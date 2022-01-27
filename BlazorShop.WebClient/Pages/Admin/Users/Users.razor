@@ -1,31 +1,17 @@
 ﻿@page "/admin/users"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IUserService UserService
 @inject NavigationManager NavManager
 
-<h1>Users List</h1>
+<h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Users List</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <a href='admin/users/add' class="btn btn-primary" role="button">
-            <i class="fas fa-user-plus"></i>
-            Add User
-        </a>
-    </div>
-    <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search user by email"
-            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUsers" />
-        <div class="input-group-append" style="margin-left: 15px;">
-            <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
-                <i class="fas fa-times"></i>
-                Reset Filter
-            </button>
-        </div>
+<div class="row mb-4">
+    <div class="col">
+        <MatButtonLink Href="admin/users/add" Raised="true">Add User</MatButtonLink>
     </div>
 </div>
-<br />
 
 @if (usersList is null)
 {
@@ -37,36 +23,33 @@ else
 {
     @if (usersList.Count > 0)
     {
-        <table class="table table-striped align-middle table-bordered">
-            <thead class="table-success">
-                <tr class="text-center">
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>IsActive</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in usersList)
-                {
-                    <tr class="text-center">
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Username</td>
-                        <td>@user.Email</td>
-                        <td>@user.IsActive</td>
-                        <td>
-                            <a href='admin/users/edit/@user.Id' class="btn btn-outline-dark" role="button">Edit</a>
-                            <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(user.Id); ModalShow(); })">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <MatTable Items="@usersList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Email" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th class="col-md-3">UserName</th>
+                <th class="col-md-3">Email</th>
+                <th>IsActive</th>
+                <th class="col-md-6">Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td>@String.Format("{0:d}", @context.Id)</td>
+                <td>@context.FirstName</td>
+                <td>@context.LastName</td>
+                <td class="col-md-3">@context.Username</td>
+                <td class="col-md-3">@context.Email</td>
+                <td>@context.IsActive</td>
+                <td class="col-md-6">
+                    <a href='admin/users/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
+                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
 
         @if (showModal)
         {
@@ -152,3 +135,9 @@ else
         usersList = searchUsersData;
     }
 }
+
+<style>
+    label {
+        width: 70%;
+    }
+</style>
