@@ -1,13 +1,13 @@
 ﻿@page "/orders"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrderService OrderService
 @inject NavigationManager NavigationManager
 
 <main class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded">
         <img class="me-3" src="images/orders.png" alt="orders" width="58" height="38">
         <div class="lh-1">
             <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 30px;">My Orders</h1>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="row">
-        <div class="input-group col">
+        <div class="input-group col shadow-lg p-3 bg-white rounded mb-5">
             <input type="text" class="form-control" placeholder="Search order by name"
                 @bind="SearchString" @bind:event="oninput" @onkeyup="FilterOrders" />
             <div class="input-group-append" style="margin-left: 15px;">
@@ -35,32 +35,42 @@
     }
     else
     {
-        @if (ordersList.Count == 0)
+        @if (ordersList.Count > 0)
         {
-            <div class="d-flex justify-content-center" style="margin-top: 150px;">
-                <h4 style="font-size: 45px;">No record found</h4>
-            </div>
+            @foreach (var order in ordersList)
+            {
+                <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+                    <div class="row flex-lg-row align-items-center">
+                        <div class="col-md-3">
+                            <img src="images/order.jpg" class="d-block img-fluid" alt="Order Image" width="150" height="150" loading="lazy">
+                        </div>
+
+                        <div class="col-md-6" style="margin-left: -90px;">
+                            <h5 class="display-8 fw-bold lh-1 mb-3">@order.OrderName</h5>
+                            <div class="col-md-10">
+                                <p class="lead">@order.OrderDate.ToString("dd/MM/yyyy HH:mm tt")</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="border-0 d-flex flex-row-reverse">
+                                <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(order.Id))">
+                                    View Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
         else
         {
-            <div class="my-3 p-3 rounded shadow-sm">
-                @foreach (var order in ordersList)
-                {
-                    <div class="d-flex text-muted pt-3">
-                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" src="images/order.jpg" alt="orders" width="55">
-
-                        <p class="col-md-10 pb-3 mb-0 small">
-                            <strong class="d-block text-gray-dark">@order.OrderName</strong>
-                            @order.OrderDate
-                        </p>
-                        <div class="border-0 d-flex flex-row-reverse mt-3">
-                            <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(order.Id))">
-                                View Order
-                            </button>
-                        </div>
+            <div class="container col-xxl-12 shadow-lg p-3 bg-white rounded mb-3">
+                <div class="row flex-lg-row align-items-center">
+                    <div class="text-center">
+                        <h4 class="display-6 fw-bold lh-1 mb-3">No record found...</h4>
                     </div>
-                    <div class="mt-2 col-lg-12 border-bottom"></div>
-                }
+                </div>
             </div>
         }
     }
@@ -80,8 +90,8 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
-        userEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+        userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
+        userEmail = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
 
         await GetOrders(userEmail);
     }

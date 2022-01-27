@@ -1,6 +1,6 @@
 ﻿@page "/orders/view/{Id:int}"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrderService OrderService
@@ -100,7 +100,7 @@ else
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
         if (!user.Identity.IsAuthenticated) return;
-        UserEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
+        UserEmail = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
     }
 
     protected override async Task OnParametersSetAsync()
