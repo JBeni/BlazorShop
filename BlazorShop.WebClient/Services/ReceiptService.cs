@@ -73,7 +73,7 @@
             }
 
             _toastService.ShowSuccess("The Receipt was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> UpdateReceipt(ReceiptResponse receipt)
@@ -92,7 +92,7 @@
             }
 
             _toastService.ShowSuccess("The Receipt was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteReceipt(int id)
@@ -111,7 +111,7 @@
             }
 
             _toastService.ShowSuccess("The Receipt was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }

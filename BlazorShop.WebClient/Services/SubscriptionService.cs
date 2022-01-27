@@ -73,7 +73,7 @@
             }
 
             _toastService.ShowSuccess("The Subscription was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> UpdateSubscription(SubscriptionResponse Subscription)
@@ -92,7 +92,7 @@
             }
 
             _toastService.ShowSuccess("The Subscription was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteSubscription(int id)
@@ -111,7 +111,7 @@
             }
 
             _toastService.ShowSuccess("The Subscription was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }

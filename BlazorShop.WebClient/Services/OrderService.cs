@@ -73,7 +73,7 @@
             }
 
             _toastService.ShowSuccess("The Order was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> UpdateOrder(OrderResponse order)
@@ -92,7 +92,7 @@
             }
 
             _toastService.ShowSuccess("The Order was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteOrder(int id)
@@ -111,7 +111,7 @@
             }
 
             _toastService.ShowSuccess("The Order was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }

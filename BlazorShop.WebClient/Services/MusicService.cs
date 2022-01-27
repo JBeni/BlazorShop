@@ -73,7 +73,7 @@
             }
 
             _toastService.ShowSuccess("The Music was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> UpdateMusic(MusicResponse music)
@@ -92,7 +92,7 @@
             }
 
             _toastService.ShowSuccess("The Music was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteMusic(int id)
@@ -111,7 +111,7 @@
             }
 
             _toastService.ShowSuccess("The Music was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }

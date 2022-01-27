@@ -76,7 +76,7 @@
             }
 
             _toastService.ShowSuccess("The clothe was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> UpdateClothe(ClotheResponse clothe)
@@ -95,7 +95,7 @@
             }
 
             _toastService.ShowSuccess("The clothe was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteClothe(int id)
@@ -114,7 +114,7 @@
             }
 
             _toastService.ShowSuccess("The clothe was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }

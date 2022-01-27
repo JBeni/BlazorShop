@@ -35,7 +35,7 @@
             }
 
             _toastService.ShowSuccess("The user was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteUser(int id)
@@ -54,7 +54,7 @@
             }
 
             _toastService.ShowSuccess("The user was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<UserResponse> GetUser(int id)

@@ -30,7 +30,7 @@
 
             _toastService.ShowSuccess(cart.Name, "The item was added to cart:");
             //OnChange.Invoke();
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteCart(int id, int userId)
@@ -50,7 +50,7 @@
 
             _toastService.ShowSuccess("The item was deleted from the cart.");
             //OnChange.Invoke();
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> EmptyCart(int userId)
@@ -70,12 +70,12 @@
 
             _toastService.ShowSuccess("The items from the cart were removed.");
             //OnChange.Invoke();
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
-        public async Task<CartResponse> GetCart(int id)
+        public async Task<CartResponse> GetCart(int id, int userId)
         {
-            var response = await _httpClient.GetAsync($"Carts/cart/{id}");
+            var response = await _httpClient.GetAsync($"Carts/cart/{id}/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
@@ -158,7 +158,7 @@
             }
 
             _toastService.ShowSuccess("The cart was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<string> Checkout(int userId)

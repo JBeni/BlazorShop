@@ -27,7 +27,7 @@
             }
 
             _toastService.ShowSuccess("The role was added.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RequestResponse> DeleteRole(int id)
@@ -46,7 +46,7 @@
             }
 
             _toastService.ShowSuccess("The role was deleted.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
 
         public async Task<RoleResponse> GetRole(int id)
@@ -95,6 +95,29 @@
             return result;
         }
 
+        public async Task<List<RoleResponse>> GetRolesForAdmin()
+        {
+            var response = await _httpClient.GetAsync("Roles/rolesAdmin");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
+            {
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                return null;
+            }
+
+            var result = JsonSerializer.Deserialize<List<RoleResponse>>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return result;
+        }
+
         public async Task<RequestResponse> UpdateRole(RoleResponse role)
         {
             var data = new UpdateRoleCommand
@@ -116,7 +139,7 @@
             }
 
             _toastService.ShowSuccess("The role was updated.");
-            return RequestResponse.Success();
+            return RequestResponse.Success(0);
         }
     }
 }
