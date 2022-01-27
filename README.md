@@ -62,53 +62,23 @@ Other Project: Unit or Work - Demonstrating the concept
 
 Worker Service Project - to invalidate a user subscription
 
+Unit Test Project (Under Development)
 
-
-*** Features
-
-- stripe accepting single chechout
-- stripe creating subscription, updating, cancel
-
-Account
-	- login, logout, register, reset password
-
-Admin
-	Clothes Manager, Musics Manager, Roles Manager, Users Manager, Subscriptions Manager
-		- Add, Edit, Delete, List all
-	Subscribers
-		- List all, Deactivate user subscription
-
-Cart
-	- update cart, list cart items, delete cart item, checkout option
-
-Clothes
-	- view clothe details, list all clothes, add clothe to cart
-
-Musics
-	- list all music songs, view music details, activate subscription, update subscription
-
-Orders
-	- list all orders, view order details
-
-Receipts
-	- list all receipts, view stripe receipt for order
-
-Subscriptions
-	- lsit all subscription, view stripe receipt for subscription
-
-User
-	- view user profile, change password, update user details
-
-
-------------------------
-* Creating a Clothe Shop Application with CQRS & Mediator for the WebAPI
-* The Database is SqlServer with EntityFrameworkCore
-* Authentication with JwtBearer Token from Identity.Core
-* Authorization based on Roles containing Customer/Admin Areas
 
 * Features
-  * Stripe Checkout
-  * Admin Manager
-  * CRUD Cart
-  * View Orders
+	* Stripe Checkout
+	* Stripe Subscription Manager
 
+	* Account Feature
+		* Login, Register, Logout, Reset Password
+	* Admin
+		* Managing Clothes, Musics, Subscriptions
+		* Managing Roles and Users
+		* Managing Subscribers
+	* Shopping Cart Feature
+	* Clothes Feature
+	* Musics Feature
+	* Orders Feature
+	* Receipts Feature
+	* Subscriptions Feature
+	* User Profile
