@@ -20,13 +20,13 @@
 
             var services = new ServiceCollection();
 
-            var startup = new BlazorShop.WebApi.Program(_configuration);
+            //var startup = Program(_configuration);
 
             services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
                 w.EnvironmentName == "Development" &&
                 w.ApplicationName == "BlazorShop.WebApi"));
 
-            startup.ConfigureServices(services);
+            //startup.ConfigureServices(services);
 
             _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
 
