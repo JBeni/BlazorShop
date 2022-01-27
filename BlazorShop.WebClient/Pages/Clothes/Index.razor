@@ -1,10 +1,11 @@
 ﻿@page "/clothes"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
 @inject ICartService CartService
+@implements IDisposable
 
 <h3>Clothes Shop</h3>
 
@@ -80,13 +81,20 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        clothesList = new List<ClotheResponse>();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         await GetClothes();
+        ClotheService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ClotheService.OnChange -= StateHasChanged;
     }
 
     protected async Task GetClothes()

@@ -92,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        roles = await RoleService.GetRoles();
+        roles = await RoleService.GetRolesForAdmin();
     }
 
     protected override async Task OnParametersSetAsync()

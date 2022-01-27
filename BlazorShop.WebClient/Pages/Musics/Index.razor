@@ -1,6 +1,6 @@
 ﻿@page "/musics"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IMusicService MusicService
@@ -173,7 +173,7 @@ else
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         await GetMusics();
         await GetSubscriptions();

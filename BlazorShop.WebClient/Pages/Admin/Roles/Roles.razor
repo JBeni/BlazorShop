@@ -91,12 +91,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetRoles();
+        await GetRolesForAdmin();
     }
 
-    protected async Task GetRoles()
+    protected async Task GetRolesForAdmin()
     {
-        rolesList = await RoleService.GetRoles();
+        rolesList = await RoleService.GetRolesForAdmin();
         searchRolesData = rolesList;
     }
 
@@ -120,7 +120,7 @@ else
     protected async Task DeleteRole(int Id)
     {
         await RoleService.DeleteRole(Id);
-        await GetRoles();
+        await GetRolesForAdmin();
     }
 
     public void ResetSearch()

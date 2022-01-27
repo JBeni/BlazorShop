@@ -1,6 +1,6 @@
 ﻿@page "/clothes/view/{Id:int}"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
@@ -53,7 +53,7 @@ else
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
     }
 
     protected override async Task OnParametersSetAsync()

@@ -5,7 +5,6 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject NavigationManager NavigationManager
-@implements IDisposable
 
 <div class="body-container px-4 px-lg-0">
     <div class="container text-white py-5 text-center">
@@ -103,13 +102,7 @@
         if (!user.Identity.IsAuthenticated) return;
         userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
-        CartService.OnChange += StateHasChanged;
         cartItems = await CartService.GetCarts(userId);
-    }
-
-    public void Dispose()
-    {
-        CartService.OnChange -= StateHasChanged;
     }
 
     private async Task DeleteItem(int id)
