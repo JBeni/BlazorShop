@@ -1,7 +1,7 @@
 ﻿@page "/admin/musics/add"
 @page "/admin/musics/edit/{Id:int}"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IMusicService MusicService
 @inject NavigationManager NavManager
@@ -89,6 +89,20 @@
             </div>
         }
     </div>
+    <div class="mb-3">
+        <label for="AccessLevel" class="form-label">Access Level</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" Min="1" @bind-Value="music.AccessLevel" />
+        </div>
+        <ValidationMessage For="@(() => music.AccessLevel)" />
+        @if (accessLevelError.Length > 0)
+        {
+            <div class="col-md-4" role="alert">
+                <p class="alert alert-danger">@accessLevelError</p>
+            </div>
+        }
+    </div>
+
     <div class="form-group" style="margin-bottom: 25px;">
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
@@ -101,6 +115,7 @@
     protected string Title = "Add";
     public MusicResponse music = new();
 
+    private string accessLevelError = "";
     private string titleError = "";
     private string descriptionError = "";
     private string authorError = "";
@@ -143,7 +158,7 @@
     private bool CheckFormValidation()
     {
         var isValid = true;
-        titleError = ""; descriptionError = ""; authorError = "";
+        titleError = ""; descriptionError = ""; authorError = ""; accessLevelError = "";
         dateReleaseError =  ""; imageNameError = ""; imagePathError = "";
 
         if (music.Title == null || music.Title?.Trim().Length < 3)
@@ -174,6 +189,11 @@
         if (music.ImagePath == null || music.ImagePath?.Trim().Length < 4)
         {
             imagePathError = "The image path must contain at least 4 characters.";
+            isValid = false;
+        }
+        if (music.AccessLevel <= 0)
+        {
+            accessLevelError = "The field must not be empty.";
             isValid = false;
         }
 

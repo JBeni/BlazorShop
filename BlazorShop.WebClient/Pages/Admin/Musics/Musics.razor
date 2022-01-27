@@ -1,11 +1,11 @@
 ﻿@page "/admin/musics"
 
-@attribute [Authorize(Policy = "Admin")]
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IMusicService MusicService
 @inject NavigationManager NavManager
 
-<h3>Music Songs List</h3>
+<h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Music Songs List</h1>
 
 <div class="row mb-4">
     <div class="col">
