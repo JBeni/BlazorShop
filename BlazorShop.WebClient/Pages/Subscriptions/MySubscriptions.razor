@@ -1,6 +1,6 @@
 ﻿@page "/subscriptions"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ISubscriberService SubscriberService
@@ -10,13 +10,13 @@
 @inject NavigationManager NavManager
 
 <main class="container">
-    <div class="col-xxl-12 d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm mb-5">
+    <div class="col-xxl-12 d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded mb-5">
         <img class="me-3" src="images/subscriptions.png" alt="Subscriptions" width="58" height="38">
         <div class="col-xxl-12 lh-1">
             <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 10px;">My Subscriptions</h1>
 
-            <h2 class="col-xxl-12 d-flex flex-row-reverse" style="margin-left: -75px; margin-top: -45px; border: none;">
-                <button type="button" class="btn btn-sm btn-outline-primary" @onclick="(() => ModalShow())">
+            <h2 class="col-xxl-12 d-flex flex-row-reverse" style="margin-left: -75px; margin-top: -60px; border: none;">
+                <button type="button" class="btn btn-lg btn-outline-primary" @onclick="(() => ModalShow())">
                     @Title Membership
                 </button>
             </h2>
@@ -220,8 +220,8 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserEmail = user.Claims.FirstOrDefault(x => x.Type == "email").Value;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+        UserEmail = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
+        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         await GetUserSubscriptions(UserId);
         await GetActveSubscription(UserId);

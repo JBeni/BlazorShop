@@ -1,6 +1,6 @@
 ﻿@page "/subscription-success/{Message}"
 
-@attribute [Authorize(Policy = "Customer")]
+@attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject NavigationManager NavManager
 
