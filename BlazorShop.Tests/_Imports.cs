@@ -1,9 +1,19 @@
-﻿
-
-
-
-
-
-
-
-
+﻿global using NUnit.Framework;
+global using System.Threading.Tasks;
+global using BlazorShop.Domain.Entities.Identity;
+global using BlazorShop.Infrastructure.Persistence;
+global using MediatR;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Moq;
+global using Respawn;
+global using Respawn.Graph;
+global using System.IO;
+global using BlazorShop.Application.Commands.RoleCommand;
+global using BlazorShop.Application.Queries.RoleQuery;
+global using BlazorShop.Application.Responses;
+global using FluentAssertions;
+global using System.ComponentModel.DataAnnotations;

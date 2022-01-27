@@ -1,22 +1,4 @@
-﻿using BlazorShop.Application.Common.Interfaces;
-using BlazorShop.Domain.Entities.Identity;
-using BlazorShop.Infrastructure.Persistence;
-using BlazorShop.WebApi;
-using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using NUnit.Framework;
-using Respawn;
-using Respawn.Graph;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BlazorShop.Tests
+﻿namespace BlazorShop.Tests
 {
     [SetUpFixture]
     public class Testing
@@ -38,13 +20,13 @@ namespace BlazorShop.Tests
 
             var services = new ServiceCollection();
 
-            //var startup = new Startup(_configuration);
+            var startup = new BlazorShop.WebApi.Program(_configuration);
 
             services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
                 w.EnvironmentName == "Development" &&
                 w.ApplicationName == "BlazorShop.WebApi"));
 
-            //startup.ConfigureServices(services);
+            startup.ConfigureServices(services);
 
             _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
 
@@ -67,7 +49,7 @@ namespace BlazorShop.Tests
 
         public static async Task ResetState()
         {
-            await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
+            await _checkpoint.Reset(_configuration.GetConnectionString("WebApiConnection"));
 
             _currentUserId = null;
         }

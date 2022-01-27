@@ -1,11 +1,4 @@
-﻿using BlazorShop.Application.Queries.RoleQuery;
-using BlazorShop.Domain.Entities.Identity;
-using FluentAssertions;
-using NUnit.Framework;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BlazorShop.Tests.RoleTests.Queries
+﻿namespace BlazorShop.Tests.RoleTests.Queries
 {
     using static Testing;
 
