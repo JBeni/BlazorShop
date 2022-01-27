@@ -24,17 +24,18 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<List<ClotheResponse>>(
+            var result = JsonSerializer.Deserialize<Result<ClotheResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
             //OnChange.Invoke();
-            return result;
+            return result.Items;
         }
 
         public async Task<ClotheResponse> GetClothe(int id)
@@ -48,16 +49,17 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<ClotheResponse>(
+            var result = JsonSerializer.Deserialize<Result<ClotheResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            return result;
+            return result.Item;
         }
 
         public async Task<RequestResponse> AddClothe(ClotheResponse clothe)
@@ -71,7 +73,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -90,7 +93,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -109,7 +113,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 

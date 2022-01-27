@@ -24,7 +24,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -44,7 +45,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -64,7 +66,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -84,16 +87,17 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<CartResponse>(
+            var result = JsonSerializer.Deserialize<Result<CartResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            return result;
+            return result.Item;
         }
 
         public async Task<int> GetCartCounts(int userId)
@@ -107,7 +111,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return 0;
             }
 
@@ -130,16 +135,17 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<List<CartResponse>>(
+            var result = JsonSerializer.Deserialize<Result<CartResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            return result;
+            return result.Items;
         }
 
         public async Task<RequestResponse> UpdateCart(CartResponse cart)
@@ -153,7 +159,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -174,7 +181,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 

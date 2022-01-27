@@ -22,16 +22,17 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<List<SubscriptionResponse>>(
+            var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            return result;
+            return result.Items;
         }
 
         public async Task<SubscriptionResponse> GetSubscription(int id)
@@ -45,16 +46,17 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
-            var result = JsonSerializer.Deserialize<SubscriptionResponse>(
+            var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            return result;
+            return result.Item;
         }
 
         public async Task<RequestResponse> AddSubscription(SubscriptionResponse Subscription)
@@ -68,7 +70,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -87,7 +90,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
@@ -106,7 +110,8 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
                 return null;
             }
 
