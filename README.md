@@ -2,6 +2,7 @@
 
 * This repository contains the code of an online shop, both the front-end and the back-end, the database was built using the Code-First approach (the migrations are also present, just migrate them to your local SQL Server Database). The interface is built using pages but using the razor component functionalities. The server is based on Net 6 with C# 10 capabilities. The server is a Web API implemented using the guidelines of CQRS and Mediator architectural pattern.
 
+* Video Demo Link: (In the Future)
 
 # Web API functionalities:
 	* Unit of Work Project to demonstrate the Unit of Work with Repository Pattern design pattern
