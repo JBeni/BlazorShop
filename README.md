@@ -65,7 +65,7 @@ Worker Service Project - to invalidate a user subscription
 Unit Test Project (Under Development)
 
 
-* Features
+* Application Features
 	* Stripe Checkout
 	* Stripe Subscription Manager
 
