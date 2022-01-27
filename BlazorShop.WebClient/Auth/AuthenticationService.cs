@@ -35,7 +35,8 @@ public class AuthenticationService : IAuthenticationService
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+            var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+            _toastService.ShowError(errorMessage);
             return null;
         }
 
@@ -78,7 +79,8 @@ public class AuthenticationService : IAuthenticationService
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            _toastService.ShowError(resultError.Title + ": " + resultError.Detail);
+            var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+            _toastService.ShowError(errorMessage);
             return null;
         }
 
