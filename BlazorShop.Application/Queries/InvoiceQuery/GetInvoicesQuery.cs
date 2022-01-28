@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Queries.InvoiceQuery
 {
-    public class GetInvoicesQuery : IRequest<List<InvoiceResponse>>
+    public class GetInvoicesQuery : IRequest<Result<InvoiceResponse>>
     {
     }
 }
