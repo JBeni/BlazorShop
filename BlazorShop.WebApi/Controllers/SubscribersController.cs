@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateSubscriber([FromBody] CreateSubscriberCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateSubscriber([FromBody] UpdateSubscriberCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
             var result = await Mediator.Send(new DeleteSubscriberCommand { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> GetSubscriber(int userId)
         {
             var result = await Mediator.Send(new GetSubscriberByIdQuery { UserId = userId });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetUserSubscribers(int userId)
         {
             var result = await Mediator.Send(new GetUserSubscribersQuery { UserId = userId });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = "Admin, User, Default")]
@@ -47,7 +57,9 @@
         public async Task<IActionResult> GetSubscribers()
         {
             var result = await Mediator.Send(new GetSubscribersQuery { });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }

@@ -24,7 +24,6 @@
         {
             _logger.LogInformation("Hello, world!");
             _diagnosticContext.Set("IndexCallCount", Interlocked.Increment(ref _callCount));
-
             return Ok();
         }
 

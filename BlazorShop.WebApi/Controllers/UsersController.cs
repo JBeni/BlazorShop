@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> DeleteUser(int id)
         {
             var result = await Mediator.Send(new DeleteUserCommand { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetUserById(int id)
         {
             var result = await Mediator.Send(new GetUserByIdQuery { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -47,7 +57,9 @@
         public async Task<IActionResult> GetUsers()
         {
             var result = await Mediator.Send(new GetUsersQuery { });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }

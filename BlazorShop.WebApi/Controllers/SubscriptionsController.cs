@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateSubscription([FromBody] CreateSubscriptionCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateSubscription([FromBody] UpdateSubscriptionCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> DeleteSubscription(int id)
         {
             var result = await Mediator.Send(new DeleteSubscriptionCommand { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> GetSubscription(int id)
         {
             var result = await Mediator.Send(new GetSubscriptionByIdQuery { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetSubscriptions()
         {
             var result = await Mediator.Send(new GetSubscriptionsQuery { });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }

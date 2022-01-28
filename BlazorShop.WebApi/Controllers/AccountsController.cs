@@ -20,7 +20,7 @@
 
             return result.Successful == true
                 ? Ok(result)
-                : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
+                : BadRequest(result);
         }
 
         [AllowAnonymous]
@@ -30,7 +30,7 @@
             var result = await Mediator.Send(register);
             return result.Successful == true
                 ? Ok(result)
-                : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
+                : BadRequest(result);
         }
 
         [HttpPut("change-password")]
@@ -39,7 +39,7 @@
             var result = await Mediator.Send(changePassword);
             return result.Successful == true
                 ? Ok(result)
-                : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
+                : BadRequest(result);
         }
 
         [AllowAnonymous]
@@ -60,7 +60,7 @@
             var result = await Mediator.Send(resetPassword);
             return result.Successful == true
                 ? Ok(result)
-                : BadRequest(result.Exception.InnerException.Message ?? result.Exception.Message);
+                : BadRequest(result);
         }
     }
 }

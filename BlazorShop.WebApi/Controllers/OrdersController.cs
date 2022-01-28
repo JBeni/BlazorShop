@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> GetOrder(int id, string userEmail)
         {
             var result = await Mediator.Send(new GetOrderByIdQuery { Id = id, UserEmail = userEmail });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetOrders(string userEmail)
         {
             var result = await Mediator.Send(new GetOrdersQuery { UserEmail = userEmail });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }

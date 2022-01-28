@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateMusic([FromBody] CreateMusicCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateMusic([FromBody] UpdateMusicCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> DeleteMusic(int id)
         {
             var result = await Mediator.Send(new DeleteMusicCommand { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> GetMusic(int id)
         {
             var result = await Mediator.Send(new GetMusicByIdQuery { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetMusics()
         {
             var result = await Mediator.Send(new GetMusicsQuery { });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }

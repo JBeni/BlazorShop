@@ -7,7 +7,9 @@
         public async Task<IActionResult> CreateClothe([FromBody] CreateClotheCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -15,7 +17,9 @@
         public async Task<IActionResult> UpdateClothe([FromBody] UpdateClotheCommand command)
         {
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
@@ -23,7 +27,9 @@
         public async Task<IActionResult> DeleteClothe(int id)
         {
             var result = await Mediator.Send(new DeleteClotheCommand { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -31,7 +37,9 @@
         public async Task<IActionResult> GetClothe(int id)
         {
             var result = await Mediator.Send(new GetClotheByIdQuery { Id = id });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
@@ -39,7 +47,9 @@
         public async Task<IActionResult> GetClothes()
         {
             var result = await Mediator.Send(new GetClothesQuery { });
-            return Ok(result);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
         }
     }
 }
