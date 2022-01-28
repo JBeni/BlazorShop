@@ -107,17 +107,21 @@
 
     protected async Task SaveClothe()
     {
+        RequestResponse result = new RequestResponse();
         if (CheckFormValidation())
         {
             if (clothe.Id != 0)
             {
-                await ClotheService.UpdateClothe(clothe);
+                result = await ClotheService.UpdateClothe(clothe);
             }
             else
             {
-                await ClotheService.AddClothe(clothe);
+                result = await ClotheService.AddClothe(clothe);
             }
-            Cancel();
+            if (result.Successful)
+            {
+                Cancel();
+            }
         }
     }
 

@@ -106,17 +106,21 @@
 
     protected async Task SaveUser()
     {
+        RequestResponse result = new();
         if (CheckFormValidation())
         {
             if (User.Id != 0)
             {
-                await UserService.UpdateUser(User);
+                result = await UserService.UpdateUser(User);
             }
             else
             {
-                await UserService.AddUser(User);
+                result = await UserService.AddUser(User);
             }
-            Cancel();
+            if (result.Successful)
+            {
+                Cancel();
+            }
         }
     }
 

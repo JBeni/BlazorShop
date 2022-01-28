@@ -122,17 +122,21 @@
 
     protected async Task SaveSubscription()
     {
+        RequestResponse result = new();
         if (CheckFormValidation())
         {
             if (Subscription.Id != 0)
             {
-                await SubscriptionService.UpdateSubscription(Subscription);
+                result = await SubscriptionService.UpdateSubscription(Subscription);
             }
             else
             {
-                await SubscriptionService.AddSubscription(Subscription);
+                result = await SubscriptionService.AddSubscription(Subscription);
             }
-            Cancel();
+            if (result.Successful)
+            {
+                Cancel();
+            }
         }
     }
 

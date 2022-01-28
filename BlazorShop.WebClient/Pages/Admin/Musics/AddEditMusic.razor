@@ -136,17 +136,21 @@
 
     protected async Task SaveMusic()
     {
+        RequestResponse result = new RequestResponse();
         if (CheckFormValidation())
         {
             if (music.Id != 0)
             {
-                await MusicService.UpdateMusic(music);
+                result = await MusicService.UpdateMusic(music);
             }
             else
             {
-                await MusicService.AddMusic(music);
+                result = await MusicService.AddMusic(music);
             }
-            Cancel();
+            if (result.Successful)
+            {
+                Cancel();
+            }
         }
     }
 

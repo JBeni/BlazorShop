@@ -51,17 +51,21 @@
 
     protected async Task SaveRole()
     {
+        RequestResponse result = new();
         if (CheckFormValidation())
         {
             if (Role.Id != 0)
             {
-                await RoleService.UpdateRole(Role);
+                result = await RoleService.UpdateRole(Role);
             }
             else
             {
-                await RoleService.AddRole(Role);
+                result = await RoleService.AddRole(Role);
             }
-            Cancel();
+            if (result.Successful)
+            {
+                Cancel();
+            }
         }
     }
 
