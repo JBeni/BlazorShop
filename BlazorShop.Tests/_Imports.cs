@@ -17,3 +17,5 @@ global using BlazorShop.Application.Queries.RoleQuery;
 global using BlazorShop.Application.Responses;
 global using FluentAssertions;
 global using System.ComponentModel.DataAnnotations;
+global using BlazorShop.Application.Commands.MusicCommand;
+global using System;

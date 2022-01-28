@@ -2,7 +2,7 @@
 {
     using static Testing;
 
-    public class CreateMusicTests : TestBase
+    public class UpdateMusicTests : TestBase
     {
         [Test]
         public void ShouldRequireMinimumFields()

@@ -1,8 +1,8 @@
-﻿namespace BlazorShop.Tests.MusicTests.Commands
+﻿namespace BlazorShop.Tests.InvoiceTests.Commands
 {
     using static Testing;
 
-    public class CreateMusicTests : TestBase
+    public class DeleteInvoiceTests : TestBase
     {
         [Test]
         public void ShouldRequireMinimumFields()
@@ -22,7 +22,7 @@
                 Title = "Eu vara nu dorm",
                 Description = "The description of a music player song",
                 Author = "Connect-R",
-                DateRelease = new DateTime(2015, 11,12),
+                DateRelease = new DateTime(2015, 11, 12),
                 ImageName = "music-song",
                 ImagePath = "music-song.png",
                 AccessLevel = 1

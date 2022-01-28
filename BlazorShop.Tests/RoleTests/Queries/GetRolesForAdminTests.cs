@@ -2,7 +2,7 @@
 {
     using static Testing;
 
-    public class GetRolesTests : TestBase
+    public class GetRolesForAdminTests : TestBase
     {
         [Test]
         public async Task ShouldReturnRoleNames()

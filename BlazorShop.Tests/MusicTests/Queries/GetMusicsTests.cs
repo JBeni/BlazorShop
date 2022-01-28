@@ -2,7 +2,7 @@
 {
     using static Testing;
 
-    public class GetRolesTests : TestBase
+    public class GetMusicsTests : TestBase
     {
         [Test]
         public async Task ShouldReturnRoleNames()

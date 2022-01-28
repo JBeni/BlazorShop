@@ -1,8 +1,8 @@
-﻿namespace BlazorShop.Tests.RoleTests.Queries
+﻿namespace BlazorShop.Tests.UserTests.Queries
 {
     using static Testing;
 
-    public class GetRolesTests : TestBase
+    public class GetUsersTests : TestBase
     {
         [Test]
         public async Task ShouldReturnRoleNames()
