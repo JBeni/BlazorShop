@@ -36,7 +36,7 @@
             }
 
             await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<bool> CheckPasswordAsync(User user, string password)
@@ -145,7 +145,7 @@
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
     }
 }

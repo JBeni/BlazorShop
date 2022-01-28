@@ -55,19 +55,29 @@
             if (roles.Count == 0)
             {
                 await _userManager.AddToRoleAsync(user, role);
-                return RequestResponse.Success();
+                var roleData = await _roleManager.FindByNameAsync(role);
+                return RequestResponse.Success(roleData.Id);
             }
             else if (roles.Count > 0)
             {
                 await _userManager.RemoveFromRoleAsync(user, roles[0]);
                 await _userManager.AddToRoleAsync(user, role);
-                return RequestResponse.Success();
+                var roleData = await _roleManager.FindByNameAsync(role);
+                return RequestResponse.Success(roleData.Id);
             }
 
             throw new Exception("The user has already a role");
         }
 
         public List<RoleResponse> GetRoles()
+        {
+            var result = _roleManager.Roles
+                .Where(x => x.Name != StringRoleResources.Admin && x.NormalizedName != StringRoleResources.AdminNormalized)
+                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+                .ToList();
+            return result;
+        }
+        public List<RoleResponse> GetRolesForAdmin()
         {
             var result = _roleManager.Roles
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
@@ -104,7 +114,8 @@
                 NormalizedName = command.Name.ToUpper()
             });
 
-            return RequestResponse.Success();
+            var roleData = await _roleManager.FindByNameAsync(command.Name);
+            return RequestResponse.Success(roleData.Id);
         }
 
         public async Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand command)
@@ -119,7 +130,7 @@
             role.NormalizedName = command.Name.ToUpper();
 
             await _roleManager.UpdateAsync(role);
-            return RequestResponse.Success();
+            return RequestResponse.Success(existsRole.Id);
         }
 
         public async Task<RequestResponse> DeleteRoleAsync(int roleId)
@@ -128,7 +139,7 @@
             if (role == null) throw new Exception("The role was not found");
 
             await _roleManager.DeleteAsync(role);
-            return RequestResponse.Success();
+            return RequestResponse.Success(role.Id);
         }
 
         public async Task<Role> FindRoleByIdAsync(int roleId)

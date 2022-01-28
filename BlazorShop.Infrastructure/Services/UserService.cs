@@ -38,7 +38,8 @@
                 await _userManager.AddToRoleAsync(newUser, command.Role);
             }
 
-            return RequestResponse.Success();
+            var user = await _userManager.FindByEmailAsync(command.Email);
+            return RequestResponse.Success(user.Id);
         }
 
         public async Task<RequestResponse> DeleteUserAsync(int userId)
@@ -49,7 +50,7 @@
             user.IsActive = false;
 
             await _userManager.UpdateAsync(user);
-            return RequestResponse.Success();
+            return RequestResponse.Success(user.Id);
         }
 
         public async Task<User> FindUserByEmailAsync(string email)
@@ -110,7 +111,7 @@
                 var role = await _roleService.FindRoleByNameAsync(command.Role);
                 await AssignUserToRoleAsync(new AssignUserToRoleCommand { UserId = existUser.Id, RoleId = role.Id });
             }
-            return RequestResponse.Success();
+            return RequestResponse.Success(existUser.Id);
         }
 
         public async Task<RequestResponse> UpdateUserEmailAsync(UpdateUserEmailCommand command)
@@ -124,7 +125,7 @@
             existUser.Email = command.NewEmail;
 
             await _userManager.UpdateAsync(existUser);
-            return RequestResponse.Success();
+            return RequestResponse.Success(existUser.Id);
         }
 
         public List<UserResponse> GetUsers(GetUsersQuery query)
@@ -144,7 +145,8 @@
 
             var role = await _roleService.FindRoleByIdAsync(command.RoleId);
             await _userManager.AddToRoleAsync(user, role.Name);
-            return RequestResponse.Success();
+
+            return RequestResponse.Success(user.Id);
         }
     }
 }
