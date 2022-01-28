@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Queries.MusicQuery
 {
-    public class GetMusicsQuery : IRequest<List<MusicResponse>>
+    public class GetMusicsQuery : IRequest<Result<MusicResponse>>
     {
     }
 }
