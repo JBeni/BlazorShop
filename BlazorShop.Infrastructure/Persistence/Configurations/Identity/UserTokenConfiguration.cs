@@ -9,6 +9,16 @@
             builder.HasOne(userToken => userToken.User)
                 .WithMany(user => user.UserTokens)
                 .HasForeignKey(userToken => userToken.UserId);
+
+            builder.Property(x => x.LoginProvider)
+                .HasMaxLength(150)
+                .IsRequired();
+            builder.Property(x => x.Name)
+                .HasMaxLength(250)
+                .IsRequired();
+            builder.Property(x => x.Value)
+                .HasMaxLength(1000)
+                .IsRequired();
         }
     }
 }
