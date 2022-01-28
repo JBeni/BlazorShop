@@ -5,6 +5,7 @@
         public void Configure(EntityTypeBuilder<Clothe> builder)
         {
             builder.ToTable("Clothes");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.Name)
                 .HasMaxLength(200)

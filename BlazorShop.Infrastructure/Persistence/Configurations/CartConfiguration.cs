@@ -5,6 +5,7 @@
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
             builder.ToTable("Carts");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.Name)
                 .HasMaxLength(200)

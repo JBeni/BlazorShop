@@ -5,6 +5,7 @@
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
             builder.ToTable("Invoices");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.UserEmail)
                 .HasMaxLength(100)

@@ -5,9 +5,10 @@
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable("Orders");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.UserEmail)
-                .HasMaxLength(200)
+                .HasMaxLength(100)
                 .IsRequired();
             builder.Property(t => t.OrderName)
                 .HasMaxLength(200)
@@ -18,7 +19,7 @@
                 .HasMaxLength(10000)
                 .IsRequired();
             builder.Property(t => t.AmountTotal)
-                .HasMaxLength(200)
+                .HasMaxLength(50)
                 .IsRequired();
         }
     }

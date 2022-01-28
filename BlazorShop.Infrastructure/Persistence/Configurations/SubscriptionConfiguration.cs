@@ -5,6 +5,7 @@
         public void Configure(EntityTypeBuilder<Subscription> builder)
         {
             builder.ToTable("Subscriptions");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.StripeSubscriptionId)
                 .IsRequired();
@@ -12,23 +13,24 @@
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(t => t.Price)
-                .HasColumnType("decimal(18, 2)")
                 .IsRequired();
             builder.Property(t => t.Currency)
+                .HasMaxLength(25)
                 .IsRequired();
             builder.Property(t => t.CurrencySymbol)
+                .HasMaxLength(5)
                 .IsRequired();
             builder.Property(t => t.ChargeType)
-                .HasMaxLength(100)
+                .HasMaxLength(25)
                 .IsRequired();
             builder.Property(t => t.Options)
-                .HasMaxLength(500)
+                .HasMaxLength(1000)
                 .IsRequired();
             builder.Property(t => t.ImageName)
-                .HasMaxLength(500)
+                .HasMaxLength(200)
                 .IsRequired();
             builder.Property(t => t.ImagePath)
-                .HasMaxLength(500)
+                .HasMaxLength(200)
                 .IsRequired();
         }
     }

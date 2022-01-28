@@ -5,6 +5,7 @@
         public void Configure(EntityTypeBuilder<Music> builder)
         {
             builder.ToTable("Musics");
+            builder.HasKey(x => x.Id);
 
             builder.Property(t => t.Title)
                 .HasMaxLength(200)
