@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Queries.SubscriberQuery
 {
-    public class GetSubscribersQuery : IRequest<List<SubscriberResponse>>
+    public class GetSubscribersQuery : IRequest<Result<SubscriberResponse>>
     {
     }
 }
