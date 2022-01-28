@@ -2,9 +2,9 @@
 {
     public class RequestResponse
     {
-        public bool Successful { get; set; }
-        public string? Error { get; set; }
-        public int EntityId { get; set; }
+        public bool Successful { get; set; } = false;
+        public string? Error { get; set; } = null;
+        public int EntityId { get; set; } = 0;
 
         public static RequestResponse Success(int id = 0)
         {
