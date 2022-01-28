@@ -24,16 +24,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
-            var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
-
             _toastService.ShowSuccess("The password was changed.");
-            return result;
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> ResetPassword(ResetPasswordCommand command)
@@ -56,16 +51,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
-            var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
-
             _toastService.ShowSuccess("The password was reset.");
-            return result;
+            return RequestResponse.Success();
         }
     }
 }

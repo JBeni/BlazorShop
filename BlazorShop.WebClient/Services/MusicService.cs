@@ -72,11 +72,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Music was added.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> UpdateMusic(MusicResponse music)
@@ -92,11 +92,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Music was updated.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> DeleteMusic(int id)
@@ -112,11 +112,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Music was deleted.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
     }
 }

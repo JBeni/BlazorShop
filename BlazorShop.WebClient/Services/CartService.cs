@@ -26,12 +26,12 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess(cart.Name, "The item was added to cart:");
             //OnChange.Invoke();
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> DeleteCart(int id, int userId)
@@ -47,12 +47,12 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The item was deleted from the cart.");
             //OnChange.Invoke();
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> EmptyCart(int userId)
@@ -68,12 +68,12 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The items from the cart were removed.");
             //OnChange.Invoke();
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<CartResponse> GetCart(int id, int userId)
@@ -161,11 +161,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The cart was updated.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<string> Checkout(int userId)

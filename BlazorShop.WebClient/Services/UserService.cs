@@ -32,11 +32,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The user was added.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> DeleteUser(int id)
@@ -52,11 +52,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The user was deleted.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<UserResponse> GetUser(int id)
@@ -128,7 +128,7 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             var result = JsonSerializer.Deserialize<RequestResponse>(
@@ -137,7 +137,7 @@
                 );
 
             _toastService.ShowSuccess("The user was updated.");
-            return result;
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user)
@@ -153,16 +153,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
-            var result = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
             _toastService.ShowSuccess("The user email address was updated.");
-            return result;
+            return RequestResponse.Success();
         }
     }
 }

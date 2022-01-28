@@ -24,11 +24,11 @@
 
                 var errorMessage = result.Successful == false ? result.Error : result.Title + ": " + result.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The role was added.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> DeleteRole(int id)
@@ -42,12 +42,13 @@
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(result.Title + ": " + result.Detail);
-                return null;
+                var errorMessage = result.Successful == false ? result.Error : result.Title + ": " + result.Detail;
+                _toastService.ShowError(errorMessage);
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The role was deleted.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RoleResponse> GetRole(int id)
@@ -140,11 +141,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The role was updated.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
     }
 }

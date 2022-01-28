@@ -96,11 +96,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Subscriber was added.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse Subscriber)
@@ -116,11 +116,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Subscriber was updated.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
 
         public async Task<RequestResponse> DeleteSubscriber(int id)
@@ -136,11 +136,11 @@
 
                 var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
-                return null;
+                return RequestResponse.Failure(errorMessage);
             }
 
             _toastService.ShowSuccess("The Subscriber was deleted.");
-            return RequestResponse.Success(0);
+            return RequestResponse.Success();
         }
     }
 }
