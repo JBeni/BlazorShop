@@ -8,12 +8,12 @@
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
             RuleFor(x => x.DateStart)
-                .GreaterThanOrEqualTo(DateTime.Now).WithMessage("Date must be greater or equal than Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal than Current Date")
                 .NotEmpty().WithMessage("DateStart must not be empty")
                 .NotNull().WithMessage("DateStart must not be null");
 
             RuleFor(x => x.CurrentPeriodEnd)
-                .GreaterThanOrEqualTo(DateTime.Now).WithMessage("Date must be greater or equal than Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal than Current Date")
                 .NotEmpty().WithMessage("CurrentPeriodEnd must not be empty")
                 .NotNull().WithMessage("CurrentPeriodEnd must not be null");
 

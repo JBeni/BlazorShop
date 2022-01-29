@@ -10,7 +10,7 @@
                 .NotNull().WithMessage("UserEmail must not be null");
 
             RuleFor(v => v.OrderDate)
-                .GreaterThanOrEqualTo(DateTime.Now).WithMessage("Date must be greater or equal with Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal with Current Date")
                 .NotEmpty().WithMessage("OrderDate must not be empty")
                 .NotNull().WithMessage("OrderDate must not be null");
 

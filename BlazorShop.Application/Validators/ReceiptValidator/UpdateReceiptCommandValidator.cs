@@ -13,7 +13,7 @@
                 .NotNull().WithMessage("UserEmail must not be null");
 
             RuleFor(v => v.ReceiptDate)
-                .GreaterThanOrEqualTo(DateTime.Now).WithMessage("Date must be greater or equal than Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal than Current Date")
                 .NotEmpty().WithMessage("ReceiptDate must not be empty")
                 .NotNull().WithMessage("ReceiptDate must not be null");
 
