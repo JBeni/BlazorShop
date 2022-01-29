@@ -4,7 +4,8 @@
     {
         public DeleteUserCommandValidator()
         {
-            RuleFor(v => v.Id).GreaterThan(0);
+            RuleFor(v => v.Id)
+                .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }
 }

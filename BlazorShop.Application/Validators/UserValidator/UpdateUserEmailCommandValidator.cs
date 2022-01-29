@@ -4,9 +4,19 @@
     {
         public UpdateUserEmailCommandValidator()
         {
-            RuleFor(v => v.UserId).GreaterThan(0);
-            RuleFor(v => v.Email).NotEmpty().NotNull().NotEqual(v => v.NewEmail);
-            RuleFor(v => v.NewEmail).NotEmpty().NotNull();
+            RuleFor(v => v.UserId)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
+
+            RuleFor(v => v.Email)
+                .MaximumLength(150).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Name must not be empty")
+                .NotNull().WithMessage("Name must not be null")
+                .NotEqual(v => v.NewEmail).WithMessage("Email must not be equal with NewEmail");
+
+            RuleFor(v => v.NewEmail)
+                .MaximumLength(150).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("NewEmail must not be empty")
+                .NotNull().WithMessage("NewEmail must not be null");
         }
     }
 }

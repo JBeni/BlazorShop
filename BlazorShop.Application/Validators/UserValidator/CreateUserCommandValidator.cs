@@ -4,10 +4,25 @@
     {
         public CreateUserCommandValidator()
         {
-            RuleFor(v => v.Email).NotEmpty().NotNull();
-            RuleFor(v => v.FirstName).NotEmpty().NotNull();
-            RuleFor(v => v.LastName).NotEmpty().NotNull();
-            RuleFor(v => v.Role).NotEmpty().NotNull();
+            RuleFor(v => v.Email)
+                .MaximumLength(150).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Email must not be empty")
+                .NotNull().WithMessage("Email must not be null");
+
+            RuleFor(v => v.FirstName)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("FirstName must not be empty")
+                .NotNull().WithMessage("FirstName must not be null");
+
+            RuleFor(v => v.LastName)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("LastName must not be empty")
+                .NotNull().WithMessage("LastName must not be null");
+
+            RuleFor(v => v.Role)
+                .MaximumLength(25).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Role must not be empty")
+                .NotNull().WithMessage("Role must not be null");
         }
     }
 }
