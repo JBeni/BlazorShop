@@ -10,9 +10,6 @@
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
                 { typeof(ValidationException), HandleValidationException },
-                { typeof(NotFoundException), HandleNotFoundException },
-                { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
-                { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
         }
 
@@ -47,8 +44,15 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 Title = "Fluent Validation",
-                Detail = exception.Message ?? ""
+                Detail = exception.Message ?? exception.InnerException.Message
             };
+            foreach (var item in exception.Errors)
+            {
+                foreach (var value in item.Value)
+                {
+                    details.Detail += ". " + value;
+                }
+            }
 
             context.Result = new BadRequestObjectResult(details);
 
@@ -61,60 +65,10 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 Title = "Invalid Model State",
-                Detail = context.Exception.Message ?? ""
+                Detail = context.Exception.Message ?? context.Exception.InnerException.Message
             };
 
             context.Result = new BadRequestObjectResult(details);
-
-            context.ExceptionHandled = true;
-        }
-
-        private void HandleNotFoundException(ExceptionContext context)
-        {
-            var exception = (NotFoundException)context.Exception;
-
-            var details = new ProblemDetails()
-            {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = "The specified resource was not found",
-                Detail = exception.Message ?? "",
-            };
-
-            context.Result = new NotFoundObjectResult(details);
-
-            context.ExceptionHandled = true;
-        }
-
-        private void HandleUnauthorizedAccessException(ExceptionContext context)
-        {
-            var details = new ProblemDetails
-            {
-                Status = StatusCodes.Status401Unauthorized,
-                Title = "Unauthorized",
-                Detail = context.Exception.Message ?? "",
-                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
-            };
-            context.Result = new ObjectResult(details)
-            {
-                StatusCode = StatusCodes.Status401Unauthorized
-            };
-
-            context.ExceptionHandled = true;
-        }
-
-        private void HandleForbiddenAccessException(ExceptionContext context)
-        {
-            var details = new ProblemDetails
-            {
-                Status = StatusCodes.Status403Forbidden,
-                Title = "Forbidden",
-                Detail = context.Exception.Message ?? "",
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
-            };
-            context.Result = new ObjectResult(details)
-            {
-                StatusCode = StatusCodes.Status403Forbidden
-            };
 
             context.ExceptionHandled = true;
         }
@@ -125,7 +79,7 @@
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request",
-                Detail = context.Exception.Message ?? "",
+                Detail = context.Exception.Message ?? context.Exception.InnerException.Message,
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1"
             };
             context.Result = new ObjectResult(details)
