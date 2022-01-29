@@ -20,12 +20,12 @@
 
                 _dbContext.Musics.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the music");
-                return RequestResponse.Error(new Exception("There was an error deleting the music", ex));
+                return RequestResponse.Failure("There was an error deleting the music. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
