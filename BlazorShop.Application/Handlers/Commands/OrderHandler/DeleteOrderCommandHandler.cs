@@ -20,12 +20,12 @@
 
                 _dbContext.Orders.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the order");
-                return RequestResponse.Error(new Exception("There was an error deleting the order", ex));
+                return RequestResponse.Failure("There was an error deleting the order. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
