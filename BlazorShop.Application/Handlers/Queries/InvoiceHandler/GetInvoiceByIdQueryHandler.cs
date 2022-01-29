@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
-    public class GetInvoiceByIdQueryHandler : IRequestHandler<GetInvoiceByIdQuery, InvoiceResponse>
+    public class GetInvoiceByIdQueryHandler : IRequestHandler<GetInvoiceByIdQuery, Result<InvoiceResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetInvoiceByIdQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<InvoiceResponse> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
+        public Task<Result<InvoiceResponse>> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,14 +21,19 @@
                     .Where(x => x.Id == request.Id)
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<InvoiceResponse>
+                {
+                    Successful = true,
+                    Item = result ?? new InvoiceResponse()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the invoice by id...");
-                return Task.FromResult(new InvoiceResponse
+                _logger.LogError(ex, "There was an error while getting the invoice by id");
+                return Task.FromResult(new Result<InvoiceResponse>
                 {
-                    Error = "There was an error while getting the invoice by id... " + ex.Message ?? ex.InnerException.Message
+                    Error = $"There was an error while getting the invoice by id. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

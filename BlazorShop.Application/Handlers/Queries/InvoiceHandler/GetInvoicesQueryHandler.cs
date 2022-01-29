@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
-    public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, List<InvoiceResponse>>
+    public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, Result<InvoiceResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetInvoicesQueryHandler> _logger;
@@ -13,24 +13,26 @@
             _mapper = mapper;
         }
 
-        public Task<List<InvoiceResponse>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
+        public Task<Result<InvoiceResponse>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var result = _dbContext.Invoices
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<InvoiceResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<InvoiceResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the invoices...");
-                return Task.FromResult(new List<InvoiceResponse>
+                _logger.LogError(ex, "There was an error while getting the invoices");
+                return Task.FromResult(new Result<InvoiceResponse>
                 {
-                    new InvoiceResponse
-                    {
-                        Error = "There was an error while getting the invoices... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting the invoices. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
