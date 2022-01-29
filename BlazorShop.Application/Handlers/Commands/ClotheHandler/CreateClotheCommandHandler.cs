@@ -33,7 +33,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the clothe");
-                return RequestResponse.Failure("There was an error creating the clothe. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error creating the clothe. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
