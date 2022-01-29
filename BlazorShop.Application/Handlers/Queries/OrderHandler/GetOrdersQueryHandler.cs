@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
-    public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<OrderResponse>>
+    public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, Result<OrderResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetOrdersQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<List<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+        public Task<Result<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,17 +21,19 @@
                     .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<OrderResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<OrderResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the orders...");
-                return Task.FromResult(new List<OrderResponse>
+                _logger.LogError(ex, "There was an error while getting the orders");
+                return Task.FromResult(new Result<OrderResponse>
                 {
-                    new OrderResponse
-                    {
-                        Error = "There was an error while getting the orders... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting the orders. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
