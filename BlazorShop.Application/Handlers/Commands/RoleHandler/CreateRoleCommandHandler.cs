@@ -21,7 +21,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the role");
-                return RequestResponse.Error(new Exception("There was an error while creating the role", ex));
+                return RequestResponse.Failure("There was an error while creating the role. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
