@@ -27,13 +27,6 @@
             builder.Property(x => x.NormalizedEmail)
                 .HasMaxLength(150)
                 .IsRequired();
-
-            builder.Property(x => x.PasswordHash)
-                .IsRequired();
-            builder.Property(x => x.SecurityStamp)
-                .IsRequired();
-            builder.Property(x => x.ConcurrencyStamp)
-                .IsRequired();
         }
     }
 }

@@ -32,7 +32,7 @@
                 IsActive = true
             };
 
-            await _userManager.CreateAsync(newUser);
+            var result = await _userManager.CreateAsync(newUser);
             if (command.Role.Length > 0)
             {
                 await _userManager.AddToRoleAsync(newUser, command.Role);
@@ -49,7 +49,7 @@
 
             user.IsActive = false;
 
-            await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
             return RequestResponse.Success(user.Id);
         }
 
@@ -104,7 +104,7 @@
             existUser.FirstName = command.FirstName;
             existUser.LastName = command.LastName;
 
-            await _userManager.UpdateAsync(existUser);
+            var result = await _userManager.UpdateAsync(existUser);
 
             if (command.Role != null)
             {
@@ -124,7 +124,7 @@
 
             existUser.Email = command.NewEmail;
 
-            await _userManager.UpdateAsync(existUser);
+            var result = await _userManager.UpdateAsync(existUser);
             return RequestResponse.Success(existUser.Id);
         }
 
@@ -141,10 +141,10 @@
         {
             var user = await _userManager.FindByIdAsync(command.UserId.ToString());
             var userRole = await _userManager.GetRolesAsync(user);
-            await _userManager.RemoveFromRoleAsync(user, userRole[0]);
+            var resultDelete = await _userManager.RemoveFromRoleAsync(user, userRole[0]);
 
             var role = await _roleService.FindRoleByIdAsync(command.RoleId);
-            await _userManager.AddToRoleAsync(user, role.Name);
+            var resultAdd = await _userManager.AddToRoleAsync(user, role.Name);
 
             return RequestResponse.Success(user.Id);
         }
