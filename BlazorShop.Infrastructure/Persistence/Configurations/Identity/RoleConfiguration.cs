@@ -1,11 +1,10 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.ToTable("AppRoles");
-            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(100)

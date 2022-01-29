@@ -1,11 +1,10 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("AppUsers");
-            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.FirstName)
                 .HasMaxLength(100)

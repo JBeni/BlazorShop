@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
     {
@@ -9,7 +9,7 @@
             builder.HasOne(userLogin => userLogin.User)
                 .WithMany(user => user.Logins)
                 .HasForeignKey(userLogin => userLogin.UserId);
-
+/*
             builder.Property(x => x.LoginProvider)
                 .HasMaxLength(150)
                 .IsRequired();
@@ -19,6 +19,7 @@
             builder.Property(x => x.ProviderDisplayName)
                 .HasMaxLength(150)
                 .IsRequired();
+*/
         }
     }
 }

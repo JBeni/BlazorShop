@@ -1,11 +1,10 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder)
         {
             builder.ToTable("AppUserClaims");
-            builder.HasKey(x => x.Id);
 
             builder.HasOne(userClaim => userClaim.User)
                 .WithMany(user => user.Claims)

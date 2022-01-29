@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {

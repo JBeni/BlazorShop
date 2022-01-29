@@ -1,4 +1,4 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Id
+﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
     {
@@ -9,7 +9,7 @@
             builder.HasOne(userToken => userToken.User)
                 .WithMany(user => user.UserTokens)
                 .HasForeignKey(userToken => userToken.UserId);
-
+/*
             builder.Property(x => x.LoginProvider)
                 .HasMaxLength(150)
                 .IsRequired();
@@ -19,6 +19,7 @@
             builder.Property(x => x.Value)
                 .HasMaxLength(1000)
                 .IsRequired();
+*/
         }
     }
 }
