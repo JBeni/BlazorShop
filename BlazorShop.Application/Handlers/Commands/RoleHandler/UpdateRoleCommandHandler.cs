@@ -21,7 +21,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the role");
-                return RequestResponse.Failure("There was an error while updating the role. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error while updating the role. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
