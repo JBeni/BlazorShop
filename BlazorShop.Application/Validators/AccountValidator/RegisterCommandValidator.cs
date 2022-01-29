@@ -4,12 +4,31 @@
     {
         public RegisterCommandValidator()
         {
-            RuleFor(v => v.Email).NotEmpty().NotNull();
-            RuleFor(v => v.FirstName).NotEmpty().NotNull();
-            RuleFor(v => v.LastName).NotEmpty().NotNull();
-            //RuleFor(v => v.RoleName).NotEmpty().NotNull();
-            RuleFor(v => v.Password).NotEmpty().NotNull().Equal(v => v.ConfirmPassword);
-            RuleFor(v => v.ConfirmPassword).NotEmpty().NotNull();
+            RuleFor(v => v.Email)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Email must not be empty")
+                .NotNull().WithMessage("Email must not be null");
+
+            RuleFor(v => v.FirstName)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("FirstName must not be empty")
+                .NotNull().WithMessage("FirstName must not be null");
+            
+            RuleFor(v => v.LastName)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("LastName must not be empty")
+                .NotNull().WithMessage("LastName must not be null");
+
+            RuleFor(v => v.Password)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Password must not be empty")
+                .NotNull().WithMessage("Password must not be null")
+                .Equal(v => v.ConfirmPassword).WithMessage("Password must be equal with ConfirmPassword");
+
+            RuleFor(v => v.ConfirmPassword)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("ConfirmPassword must not be empty")
+                .NotNull().WithMessage("ConfirmPassword must not be null");
         }
     }
 }

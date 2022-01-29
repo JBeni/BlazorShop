@@ -4,10 +4,22 @@
     {
         public ChangePasswordCommandValidator()
         {
-            RuleFor(v => v.UserId).GreaterThan(0);
-            RuleFor(v => v.OldPassword).NotEmpty().NotNull().NotEqual(v => v.NewPassword);
-            RuleFor(v => v.NewPassword).NotEmpty().NotNull().Equal(v => v.ConfirmNewPassword);
-            RuleFor(v => v.ConfirmNewPassword).NotEmpty().NotNull();
+            _ = RuleFor(v => v.UserId)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
+
+            _ = RuleFor(v => v.OldPassword)
+                .NotEmpty().WithMessage("OldPassword must not be empty")
+                .NotNull().WithMessage("OldPassword must not be null")
+                .NotEqual(v => v.NewPassword).WithMessage("OldPassword must not be equal with NewPassword");
+
+            _ = RuleFor(v => v.NewPassword)
+                .NotEmpty().WithMessage("NewPassword must not be empty")
+                .NotNull().WithMessage("NewPassword must not be null")
+                .Equal(v => v.ConfirmNewPassword).WithMessage("NewPassword must be equal with ConfirmNewPassword");
+
+            _ = RuleFor(v => v.ConfirmNewPassword)
+                .NotEmpty().WithMessage("ConfirmNewPassword must not be empty")
+                .NotNull().WithMessage("ConfirmNewPassword must not be null");
         }
     }
 }
