@@ -4,13 +4,6 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavManager
 
-@if (showAuthenticationError)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@authenticationErrorText</p>
-    </div>
-}
-
 <div class="auth-page">
     <div class="container page">
         <div class="row">
@@ -53,8 +46,6 @@
 @code {
     private LoginCommand _loginCommand = new();
 
-    private bool showAuthenticationError = false;
-    private string authenticationErrorText = "";
     public string TxtType = "password";
 
     private string emailError = "";
@@ -84,19 +75,12 @@
 
     private async Task ExecuteLogin()
     {
-        showAuthenticationError = false;
-
         if (CheckFormValidation())
         {
             var result = await AuthService.Login(_loginCommand);
             if (result is not null)
             {
                 NavManager.NavigateTo("/");
-            }
-            else
-            {
-                authenticationErrorText = "There was an error when trying to log in.";
-                showAuthenticationError = true;
             }
         }
     }

@@ -5,13 +5,6 @@
 @inject IRoleService RoleService
 @inject AuthenticationStateProvider AuthStateProvider
 
-@if (showAuthenticationError)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@authenticationErrorText</p>
-    </div>
-}
-
 <div class="auth-page">
     <div class="container page">
         <div class="row">
@@ -87,9 +80,6 @@
 @code {
     private RegisterCommand _registerCommand = new();
 
-    private bool showAuthenticationError = false;
-    private string authenticationErrorText = "";
-
     private string firstNameError = "";
     private string lastNameError = "";
     private string emailError = "";
@@ -108,19 +98,12 @@
 
     private async Task ExecuteRegister()
     {
-        showAuthenticationError = false;
-
         if (CheckFormValidation())
         {
             var result = await AuthenticationService.Register(_registerCommand);
             if (result is not null)
             {
                 NavManager.NavigateTo("/");
-            }
-            else
-            {
-                authenticationErrorText = "There was an error when trying to log in.";
-                showAuthenticationError = true;
             }
         }
     }
