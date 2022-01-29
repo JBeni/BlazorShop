@@ -31,7 +31,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the invoice");
-                return RequestResponse.Failure("There was an error updating the invoice. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the invoice. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
