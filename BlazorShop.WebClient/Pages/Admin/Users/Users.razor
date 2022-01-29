@@ -82,45 +82,111 @@ else
     }
 }
 
+@if (inactiveUsersList is not null)
+{
+    <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Inactive Users List</h1>
+
+    @if (inactiveUsersList.Count > 0)
+    {
+        <MatTable Items="@inactiveUsersList" LoadInitialData="true" Striped="true" AllowSelection="true"
+            RowClass="tester" FilterByColumnName="Email" DebounceMilliseconds="150" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th class="col-md-3">UserName</th>
+                <th class="col-md-3">Email</th>
+                <th>IsActive</th>
+                <th class="col-md-6">Actions</th>
+            </MatTableHeader>
+
+            <MatTableRow>
+                <td>@String.Format("{0:d}", @context.Id)</td>
+                <td>@context.FirstName</td>
+                <td>@context.LastName</td>
+                <td class="col-md-3">@context.Username</td>
+                <td class="col-md-3">@context.Email</td>
+                <td>@context.IsActive</td>
+                <td class="col-md-6">
+                    <button class="btn btn-danger" @onclick="(() => { ActivateUserConfirm(context.Id); ModalActivateUserShow(); })">
+                        Activate User
+                    </button>
+                </td>
+            </MatTableRow>
+        </MatTable>
+
+        @if (showActivateUserModal)
+        {
+            <div class="modal fade show" id="myModal" style="display:block; margin-top: 150px;" aria-modal="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Activate User</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Do you want to activate this user account?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" @onclick="(async () => {
+                                await ActivateUser(userInactive.Id); ModalActivateUserOk();
+                            })">Activate User</button>
+                            <button type="button" class="btn" @onclick="@ModalActivateUserCancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="d-flex justify-content-center" style="margin-top: 150px;">
+            <h4 style="font-size: 45px;">No record found</h4>
+        </div>
+    }
+}
+
 @code {
     bool showModal = false;
-
     void ModalShow() => showModal = true;
     void ModalCancel() => showModal = false;
     void ModalOk() => showModal = false;
 
+    bool showActivateUserModal = false;
+    void ModalActivateUserShow() => showActivateUserModal = true;
+    void ModalActivateUserCancel() => showActivateUserModal = false;
+    void ModalActivateUserOk() => showActivateUserModal = false;
+
     protected UserResponse user = new();
-    protected string SearchString { get; set; } = string.Empty;
+    protected UserResponse userInactive = new();
 
     protected List<UserResponse> usersList { get; set; }
-    protected List<UserResponse> searchUsersData { get; set; }
+    protected List<UserResponse> inactiveUsersList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await GetUsers();
+        await GetUsersInactive();
     }
 
     protected async Task GetUsers()
     {
         usersList = await UserService.GetUsers();
-        searchUsersData = usersList;
     }
 
-    protected void FilterUsers()
+    protected async Task GetUsersInactive()
     {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            usersList = searchUsersData.Where(x => x.Email.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
-        }
-        else
-        {
-            usersList = searchUsersData;
-        }
+        //inactiveUsersList = await UserService.GetUsersInactive();
     }
 
     protected void DeleteConfirm(int Id)
     {
         user = usersList.FirstOrDefault(x => x.Id == Id);
+    }
+
+    protected void ActivateUserConfirm(int Id)
+    {
+        userInactive = inactiveUsersList.FirstOrDefault(x => x.Id == Id);
     }
 
     protected async Task DeleteUser(int Id)
@@ -129,10 +195,10 @@ else
         await GetUsers();
     }
 
-    public void ResetSearch()
+    protected async Task ActivateUser(int Id)
     {
-        SearchString = string.Empty;
-        usersList = searchUsersData;
+        await UserService.ActivateUser(Id);
+        await GetUsersInactive();
     }
 }
 
