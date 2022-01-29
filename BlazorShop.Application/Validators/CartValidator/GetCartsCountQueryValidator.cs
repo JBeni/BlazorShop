@@ -4,7 +4,8 @@
     {
         public GetCartsQueryValidator()
         {
-            RuleFor(v => v.UserId).GreaterThan(0);
+            _ = RuleFor(v => v.UserId)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }
 }
