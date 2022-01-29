@@ -22,7 +22,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting all the carts");
-                return RequestResponse.Failure("There was an error deleting all the carts. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error deleting all the carts. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
