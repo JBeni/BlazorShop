@@ -33,12 +33,12 @@
 
                 _dbContext.Subscriptions.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the subscription");
-                return RequestResponse.Error(new Exception("There was an error creating the subscription", ex));
+                return RequestResponse.Failure("There was an error creating the subscription. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }

@@ -27,12 +27,12 @@
 
                 _dbContext.Subscriptions.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                return RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the subscription");
-                return RequestResponse.Error(new Exception("There was an error updating the subscription", ex));
+                return RequestResponse.Failure("There was an error updating the subscription. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
