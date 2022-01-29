@@ -33,7 +33,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the music");
-                return RequestResponse.Failure("There was an error updating the music. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the music. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
