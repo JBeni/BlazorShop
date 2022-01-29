@@ -25,7 +25,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the order");
-                return RequestResponse.Failure("There was an error deleting the order. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error deleting the order. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
