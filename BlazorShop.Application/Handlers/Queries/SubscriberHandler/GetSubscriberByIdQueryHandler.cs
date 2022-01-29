@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
-    public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, SubscriberResponse>
+    public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, Result<SubscriberResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetSubscriberByIdQueryHandler> _logger;
@@ -13,21 +13,26 @@
             _mapper = mapper;
         }
 
-        public Task<SubscriberResponse> Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
+        public Task<Result<SubscriberResponse>> Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var result = _dbContext.Subscribers
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.CustomerId == request.UserId && x.Status == SubscriptionStatus.Active);
-                return Task.FromResult(result ?? new SubscriberResponse());
+
+                return Task.FromResult(new Result<SubscriberResponse>
+                {
+                    Successful = true,
+                    Item = result ?? new SubscriberResponse()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscriber by user id - active subscription...");
-                return Task.FromResult(new SubscriberResponse
+                _logger.LogError(ex, "There was an error while getting the subscriber by user id - active subscription");
+                return Task.FromResult(new Result<SubscriberResponse>
                 {
-                    Error = "There was an error while getting the subscriber by user id - active subscription... " + ex.Message ?? ex.InnerException.Message
+                    Error = $"There was an error while getting the subscriber by user id - active subscription. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

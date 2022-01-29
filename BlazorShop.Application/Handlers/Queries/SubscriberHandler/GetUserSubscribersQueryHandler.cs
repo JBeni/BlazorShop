@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
-    public class GetUserSubscribersQueryHandler : IRequestHandler<GetUserSubscribersQuery, List<SubscriberResponse>>
+    public class GetUserSubscribersQueryHandler : IRequestHandler<GetUserSubscribersQuery, Result<SubscriberResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetUserSubscribersQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<List<SubscriberResponse>> Handle(GetUserSubscribersQuery request, CancellationToken cancellationToken)
+        public Task<Result<SubscriberResponse>> Handle(GetUserSubscribersQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,17 +21,19 @@
                     .Where(x => x.Customer.Id == request.UserId && x.Status == SubscriptionStatus.Inactive)
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<SubscriberResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<SubscriberResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscribers by user id...");
-                return Task.FromResult(new List<SubscriberResponse>
+                _logger.LogError(ex, "There was an error while getting the subscribers by user id");
+                return Task.FromResult(new Result<SubscriberResponse>
                 {
-                    new SubscriberResponse
-                    {
-                        Error = "There was an error while getting the subscribers by user id... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting the subscribers by user id. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

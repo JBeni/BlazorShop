@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
-    public class GetSubscribersQueryHandler : IRequestHandler<GetSubscribersQuery, List<SubscriberResponse>>
+    public class GetSubscribersQueryHandler : IRequestHandler<GetSubscribersQuery, Result<SubscriberResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetSubscribersQueryHandler> _logger;
@@ -13,24 +13,26 @@
             _mapper = mapper;
         }
 
-        public Task<List<SubscriberResponse>> Handle(GetSubscribersQuery request, CancellationToken cancellationToken)
+        public Task<Result<SubscriberResponse>> Handle(GetSubscribersQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var result = _dbContext.Subscribers
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<SubscriberResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<SubscriberResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting all the subscribers...");
-                return Task.FromResult(new List<SubscriberResponse>
+                _logger.LogError(ex, "There was an error while getting all the subscribers");
+                return Task.FromResult(new Result<SubscriberResponse>
                 {
-                    new SubscriberResponse
-                    {
-                        Error = "There was an error while getting all the subscribers... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting all the subscribers. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
