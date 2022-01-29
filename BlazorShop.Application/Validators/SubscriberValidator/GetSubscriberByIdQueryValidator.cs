@@ -4,7 +4,8 @@
     {
         public GetSubscriberByIdQueryValidator()
         {
-            RuleFor(x => x.UserId).GreaterThan(0);
+            RuleFor(x => x.UserId)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }
 }
