@@ -2,14 +2,44 @@
 {
     public class CreateClotheCommandValidator : AbstractValidator<CreateClotheCommand>
     {
-        public CreateClotheCommandValidator()
+        private readonly IApplicationDbContext _context;
+
+        public CreateClotheCommandValidator(IApplicationDbContext context)
         {
-            RuleFor(v => v.Name).NotEmpty().NotNull();
-            RuleFor(v => v.Description).NotEmpty().NotNull();
-            RuleFor(v => v.Price).GreaterThan(0);
-            RuleFor(v => v.Amount).GreaterThan(0);
-            RuleFor(v => v.ImageName).NotEmpty().NotNull();
-            RuleFor(v => v.ImagePath).NotEmpty().NotNull();
+            _context = context;
+
+            _ = RuleFor(v => v.Name)
+                .NotEmpty().WithMessage("Name must not be empty")
+                .NotNull().WithMessage("Name must not be null")
+                .MaximumLength(200).WithMessage("Name must not exceed 200 characters.")
+                .MustAsync(BeUniqueTitle).WithMessage("The specified name already exists.");
+
+            _ = RuleFor(v => v.Description)
+                .MaximumLength(1000).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Description must not be empty")
+                .NotNull().WithMessage("Description must not be null");
+
+            _ = RuleFor(v => v.Price)
+                .GreaterThan(0).WithMessage("Price must be greater than 0");
+
+            _ = RuleFor(v => v.Amount)
+                .GreaterThan(0).WithMessage("Price must be greater than 0");
+
+            _ = RuleFor(v => v.ImageName)
+                .MaximumLength(200).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("ImageName must not be empty")
+                .NotNull().WithMessage("ImageName must not be null");
+
+            _ = RuleFor(v => v.ImagePath)
+                .MaximumLength(200).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("ImagePath must not be empty")
+                .NotNull().WithMessage("ImagePath must not be null");
+        }
+
+        public async Task<bool> BeUniqueTitle(string name, CancellationToken cancellationToken)
+        {
+            return await _context.Clothes
+                .AllAsync(l => l.Name != name, cancellationToken);
         }
     }
 }

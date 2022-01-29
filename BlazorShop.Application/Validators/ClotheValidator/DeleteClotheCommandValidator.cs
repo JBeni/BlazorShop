@@ -4,7 +4,8 @@
     {
         public DeleteClotheCommandValidator()
         {
-            RuleFor(v => v.Id).GreaterThan(0);
+            _ = RuleFor(v => v.Id)
+                .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }
 }

@@ -4,7 +4,8 @@
     {
         public GetClotheByIdQueryValidator()
         {
-            RuleFor(v => v.Id).GreaterThan(0);
+            _ = RuleFor(v => v.Id)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }
 }
