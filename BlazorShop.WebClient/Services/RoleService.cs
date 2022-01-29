@@ -17,12 +17,11 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var result = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
-
-                var errorMessage = result.Successful == false ? result.Error : result.Title + ": " + result.Detail;
+                var errorMessage = resultError.Error != null ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
                 return RequestResponse.Failure(errorMessage);
             }
@@ -37,12 +36,12 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var result = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = result.Successful == false ? result.Error : result.Title + ": " + result.Detail;
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
                 _toastService.ShowError(errorMessage);
                 return RequestResponse.Failure(errorMessage);
             }
