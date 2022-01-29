@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
-    public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, List<ClotheResponse>>
+    public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, Result<ClotheResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetClothesQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<List<ClotheResponse>> Handle(GetClothesQuery request, CancellationToken cancellationToken)
+        public Task<Result<ClotheResponse>> Handle(GetClothesQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,17 +21,19 @@
                     .Where(x => x.IsActive == true)
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<ClotheResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<ClotheResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the clothes...");
-                return Task.FromResult(new List<ClotheResponse>
+                _logger.LogError(ex, "There was an error while getting the clothes");
+                return Task.FromResult(new Result<ClotheResponse>
                 {
-                    new ClotheResponse
-                    {
-                        Error = "There was an error while getting the clothes... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting the clothes. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

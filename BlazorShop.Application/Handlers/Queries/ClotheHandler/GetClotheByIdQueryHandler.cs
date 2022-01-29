@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
-    public class GetClotheByIdQueryHandler : IRequestHandler<GetClotheByIdQuery, ClotheResponse>
+    public class GetClotheByIdQueryHandler : IRequestHandler<GetClotheByIdQuery, Result<ClotheResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetClotheByIdQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<ClotheResponse> Handle(GetClotheByIdQuery request, CancellationToken cancellationToken)
+        public Task<Result<ClotheResponse>> Handle(GetClotheByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,14 +21,19 @@
                     .Where(x => x.Id == request.Id && x.IsActive == true)
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<ClotheResponse>
+                {
+                    Successful = true,
+                    Item = result ?? new ClotheResponse()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the clothe by id...");
-                return Task.FromResult(new ClotheResponse
+                _logger.LogError(ex, "There was an error while getting the clothe by id");
+                return Task.FromResult(new Result<ClotheResponse>
                 {
-                    Error = "There was an error while getting the clothe by id... " + ex.Message ?? ex.InnerException.Message
+                    Error = $"There was an error while getting the clothe by id. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
