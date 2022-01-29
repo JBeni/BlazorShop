@@ -15,7 +15,7 @@ global using BlazorShop.Infrastructure.Utils;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using BlazorShop.Domain.Common;
-global using BlazorShop.Infrastructure.Persistence.Configurations.Id;
+global using BlazorShop.Infrastructure.Persistence.Configurations.Identity;
 global using System.Reflection;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using AutoMapper;
