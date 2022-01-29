@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
-    public class GetCartsQueryHandler : IRequestHandler<GetCartsQuery, List<CartResponse>>
+    public class GetCartsQueryHandler : IRequestHandler<GetCartsQuery, Result<CartResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetCartsQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<List<CartResponse>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
+        public Task<Result<CartResponse>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,14 +21,19 @@
                     .Where(x => x.User.Id == request.UserId)
                     .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<CartResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<CartResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the carts... ");
-                return Task.FromResult(new List<CartResponse>
+                _logger.LogError(ex, "There was an error while getting the carts");
+                return Task.FromResult(new Result<CartResponse>
                 {
-                    new CartResponse { Error = "There was an error while getting the carts... " + ex.Message ?? ex.InnerException.Message },
+                    Error = $"There was an error while getting the carts. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

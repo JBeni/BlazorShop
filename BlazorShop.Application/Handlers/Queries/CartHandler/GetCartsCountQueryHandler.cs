@@ -21,7 +21,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error getting the carts count.");
-                return null;
+                return Task.FromResult(0);
             }
         }
     }
