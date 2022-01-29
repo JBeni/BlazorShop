@@ -36,7 +36,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the subscriber subscription after creation");
-                return RequestResponse.Failure("There was an error updating the subscriber subscription after creation. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the subscriber subscription after creation. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
