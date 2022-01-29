@@ -23,12 +23,12 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the musics...");
+                _logger.LogError(ex, "There was an error while getting the musics.");
                 return new List<MusicResponse>
                 {
                     new MusicResponse
                     {
-                        Error = "There was an error while getting the musics... " + ex.Message ?? ex.InnerException.Message
+                        Error = $"There was an error while getting the musics. {ex.Message}. {ex.InnerException.Message}"
                     }
                 };
             }
@@ -44,10 +44,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the music by id...");
+                _logger.LogError(ex, "There was an error while getting the music by id.");
                 return new MusicResponse
                 {
-                    Error = "There was an error while getting the music by id... " + ex.Message ?? ex.InnerException.Message
+                    Error = $"There was an error while getting the music by id. {ex.Message}. {ex.InnerException.Message}"
                 };
             }
         }
@@ -71,7 +71,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the music");
-                return RequestResponse.Failure("There was an error creating the music. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error creating the music. {ex.Message}. {ex.InnerException.Message}");
             }
         }
 
@@ -91,7 +91,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the music");
-                return RequestResponse.Failure("There was an error updating the music. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the music. {ex.Message}. {ex.InnerException.Message}");
             }
         }
 
@@ -109,7 +109,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the music");
-                return RequestResponse.Failure("There was an error deleting the music. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error deleting the music. {ex.Message}. {ex.InnerException.Message}");
             }
         }
     }

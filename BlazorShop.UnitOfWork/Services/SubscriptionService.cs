@@ -23,12 +23,12 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscriptions...");
+                _logger.LogError(ex, "There was an error while getting the subscriptions.");
                 return new List<SubscriptionResponse>
                 {
                     new SubscriptionResponse
                     {
-                        Error = "There was an error while getting the subscriptions... " + ex.Message ?? ex.InnerException.Message
+                        Error = $"There was an error while getting the subscriptions. {ex.Message}. {ex.InnerException.Message}"
                     }
                 };
             }
@@ -44,10 +44,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscription by id...");
+                _logger.LogError(ex, "There was an error while getting the subscription by id.");
                 return new SubscriptionResponse
                 {
-                    Error = "There was an error while getting the subscription by id... " + ex.Message ?? ex.InnerException.Message
+                    Error = $"There was an error while getting the subscription by id. {ex.Message}. {ex.InnerException.Message}"
                 };
             }
         }
@@ -76,7 +76,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the subscription");
-                return RequestResponse.Failure("There was an error creating the subscription. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error creating the subscription. {ex.Message}. {ex.InnerException.Message}");
             }
         }
 
@@ -101,7 +101,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the subscription");
-                return RequestResponse.Failure("There was an error updating the subscription. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the subscription. {ex.Message}. {ex.InnerException.Message}");
             }
         }
 
@@ -119,7 +119,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error deleting the subscription");
-                return RequestResponse.Failure("There was an error deleting the subscription. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error deleting the subscription. {ex.Message}. {ex.InnerException.Message}");
             }
         }
     }
