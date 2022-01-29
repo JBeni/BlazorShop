@@ -84,10 +84,10 @@ else
 
 @if (inactiveUsersList is not null)
 {
-    <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Inactive Users List</h1>
-
     @if (inactiveUsersList.Count > 0)
     {
+        <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Inactive Users List</h1>
+
         <MatTable Items="@inactiveUsersList" LoadInitialData="true" Striped="true" AllowSelection="true"
             RowClass="tester" FilterByColumnName="Email" DebounceMilliseconds="150" class="mat-elevation-z5">
             <MatTableHeader>
@@ -138,12 +138,6 @@ else
             </div>
         }
     }
-    else
-    {
-        <div class="d-flex justify-content-center" style="margin-top: 150px;">
-            <h4 style="font-size: 45px;">No record found</h4>
-        </div>
-    }
 }
 
 @code {
@@ -176,7 +170,7 @@ else
 
     protected async Task GetUsersInactive()
     {
-        //inactiveUsersList = await UserService.GetUsersInactive();
+        inactiveUsersList = await UserService.GetUsersInactive();
     }
 
     protected void DeleteConfirm(int Id)
@@ -193,12 +187,14 @@ else
     {
         await UserService.DeleteUser(Id);
         await GetUsers();
+        await GetUsersInactive();
     }
 
     protected async Task ActivateUser(int Id)
     {
         await UserService.ActivateUser(Id);
         await GetUsersInactive();
+        await GetUsers();
     }
 }
 

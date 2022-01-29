@@ -44,7 +44,7 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 Title = "Fluent Validation",
-                Detail = $"{exception.Message}. {exception.InnerException.Message}"
+                Detail = $"{exception.Message}. {exception.InnerException?.Message}"
             };
             foreach (var item in exception.Errors)
             {
@@ -65,7 +65,7 @@
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                 Title = "Invalid Model State",
-                Detail = $"{context.Exception.Message}. {context.Exception.InnerException.Message}"
+                Detail = $"{context.Exception.Message}. {context.Exception?.InnerException?.Message}"
             };
 
             context.Result = new BadRequestObjectResult(details);
@@ -79,7 +79,7 @@
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request",
-                Detail = $"{context.Exception.Message}. {context.Exception.InnerException.Message}",
+                Detail = $"{context.Exception.Message}. {context.Exception?.InnerException?.Message}",
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1"
             };
             context.Result = new ObjectResult(details)
