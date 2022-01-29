@@ -32,7 +32,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the subscription");
-                return RequestResponse.Failure("There was an error updating the subscription. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the subscription. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

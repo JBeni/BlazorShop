@@ -38,7 +38,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error creating the subscription");
-                return RequestResponse.Failure("There was an error creating the subscription. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error creating the subscription. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
