@@ -57,9 +57,11 @@
                 ErrorIcon="fa fa-bug" />
 
 @code {
-    private string username { get; set; }
     private int counts { get; set; }
+
+    private string username { get; set; }
     private int userId { get; set; }
+    private string userRole { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -71,6 +73,7 @@
         if (!user.Identity.IsAuthenticated) return;
         username = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.NameClaim).Value.Replace("@", " ");
         userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
+        userRole = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.RoleClaim).Value;
 
         var isAdmin = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.RoleClaim).Value;
         
