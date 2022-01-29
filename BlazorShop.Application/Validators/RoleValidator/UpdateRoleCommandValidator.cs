@@ -4,8 +4,13 @@
     {
         public UpdateRoleCommandValidator()
         {
-            RuleFor(v => v.Id).GreaterThan(0);
-            RuleFor(v => v.Name).NotEmpty().NotNull();
+            RuleFor(v => v.Id)
+                .GreaterThan(0).WithMessage("Id must be greater than 0");
+
+            RuleFor(v => v.Name)
+                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .NotEmpty().WithMessage("Name must not be empty")
+                .NotNull().WithMessage("Name must not be null");
         }
     }
 }
