@@ -6,24 +6,15 @@
         static int _callCount;
         
         private readonly IWebHostEnvironment _webHostEnvironment;
-        readonly ILogger<HomeController> _logger;
-        readonly IDiagnosticContext _diagnosticContext;
 
-        public HomeController(IWebHostEnvironment webHostEnvironment,
-                              ILogger<HomeController> logger,
-                              IDiagnosticContext diagnosticContext)
+        public HomeController(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _diagnosticContext = diagnosticContext ?? throw new ArgumentNullException(nameof(diagnosticContext));
         }
 
         [HttpGet("test")]
         public IActionResult Index()
         {
-            _logger.LogInformation("Hello, world!");
-            _diagnosticContext.Set("IndexCallCount", Interlocked.Increment(ref _callCount));
             return Ok();
         }
 
