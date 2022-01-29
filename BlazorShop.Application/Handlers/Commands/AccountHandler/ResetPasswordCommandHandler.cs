@@ -20,7 +20,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error resetting the password");
-                return RequestResponse.Failure("There was an error resetting the password. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error resetting the password. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

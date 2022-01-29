@@ -20,7 +20,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error when the user tried to log in");
-                return JwtTokenResponse.Failure("There was an error when the user tried to log in. " + ex.Message ?? ex.InnerException.Message);
+                return JwtTokenResponse.Failure($"There was an error when the user tried to log in. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
