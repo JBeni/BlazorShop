@@ -29,7 +29,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error updating the receipt");
-                return RequestResponse.Failure("There was an error updating the receipt. " + ex.Message ?? ex.InnerException.Message);
+                return RequestResponse.Failure($"There was an error updating the receipt. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
