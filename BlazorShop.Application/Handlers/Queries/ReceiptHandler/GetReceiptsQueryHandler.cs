@@ -1,6 +1,6 @@
 ﻿namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
-    public class GetReceiptsQueryHandler : IRequestHandler<GetReceiptsQuery, List<ReceiptResponse>>
+    public class GetReceiptsQueryHandler : IRequestHandler<GetReceiptsQuery, Result<ReceiptResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<GetReceiptsQueryHandler> _logger;
@@ -13,7 +13,7 @@
             _mapper = mapper;
         }
 
-        public Task<List<ReceiptResponse>> Handle(GetReceiptsQuery request, CancellationToken cancellationToken)
+        public Task<Result<ReceiptResponse>> Handle(GetReceiptsQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,17 +21,19 @@
                     .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .ToList();
-                return Task.FromResult(result);
+
+                return Task.FromResult(new Result<ReceiptResponse>
+                {
+                    Successful = true,
+                    Items = result ?? new List<ReceiptResponse>()
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the receipt by id...");
-                return Task.FromResult(new List<ReceiptResponse>
+                _logger.LogError(ex, "There was an error while getting the receipts");
+                return Task.FromResult(new Result<ReceiptResponse>
                 {
-                    new ReceiptResponse
-                    {
-                        Error = "There was an error while getting the receipt by id... " + ex.Message ?? ex.InnerException.Message
-                    }
+                    Error = $"There was an error while getting the receipts. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
