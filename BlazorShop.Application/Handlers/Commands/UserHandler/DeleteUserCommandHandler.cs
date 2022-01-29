@@ -21,7 +21,7 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error while deleting the user");
-                return RequestResponse.Error(new Exception("There was an error while deleting the user", ex));
+                return RequestResponse.Failure("There was an error while deleting the user. " + ex.Message ?? ex.InnerException.Message);
             }
         }
     }
