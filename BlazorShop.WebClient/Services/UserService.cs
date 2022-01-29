@@ -39,6 +39,31 @@
             return RequestResponse.Success();
         }
 
+        public async Task<RequestResponse> ActivateUser(int userId)
+        {
+            var data = new ActivateUserCommand
+            {
+                Id = userId
+            };
+
+            var response = await _httpClient.PostAsJsonAsync($"Users/userActivate", data);
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
+            {
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
+                return RequestResponse.Failure(errorMessage);
+            }
+
+            _toastService.ShowSuccess("The user was activated.");
+            return RequestResponse.Success();
+        }
+
         public async Task<RequestResponse> DeleteUser(int id)
         {
             var response = await _httpClient.DeleteAsync($"Users/user/{id}");
@@ -86,6 +111,30 @@
         public async Task<List<UserResponse>> GetUsers()
         {
             var response = await _httpClient.GetAsync("Users/users");
+            var responseResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode == false)
+            {
+                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                    responseResult,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
+                _toastService.ShowError(errorMessage);
+                return null;
+            }
+
+            var result = JsonSerializer.Deserialize<Result<UserResponse>>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return result.Items;
+        }
+
+        public async Task<List<UserResponse>> GetUsersInactive()
+        {
+            var response = await _httpClient.GetAsync("Users/usersInactive");
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {

@@ -4,6 +4,7 @@
     {
         Task<List<string>> GetUserRoleAsync(User user);
         List<UserResponse> GetUsers(GetUsersQuery query);
+        List<UserResponse> GetUsersInactive(GetUsersInactiveQuery query);
         UserResponse GetUserById(GetUserByIdQuery query);
         UserResponse GetUserByEmail(GetUserByEmailQuery query);
         Task<User> FindUserByIdAsync(int userId);
@@ -11,6 +12,7 @@
         Task<RequestResponse> CreateUserAsync(CreateUserCommand user);
         Task<RequestResponse> AssignUserToRoleAsync(AssignUserToRoleCommand user);
         Task<RequestResponse> UpdateUserAsync(UpdateUserCommand user);
+        Task<RequestResponse> ActivateUserAsync(ActivateUserCommand user);
         Task<RequestResponse> UpdateUserEmailAsync(UpdateUserEmailCommand user);
         Task<RequestResponse> DeleteUserAsync(int userId);
     }

@@ -130,7 +130,7 @@
             role.NormalizedName = command.Name.ToUpper();
 
             await _roleManager.UpdateAsync(role);
-            return RequestResponse.Success(existsRole.Id);
+            return RequestResponse.Success(role.Id);
         }
 
         public async Task<RequestResponse> DeleteRoleAsync(int roleId)

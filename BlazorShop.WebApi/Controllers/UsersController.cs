@@ -13,6 +13,16 @@
         }
 
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
+        [HttpPost("userActivate")]
+        public async Task<IActionResult> ActivateUser([FromBody] ActivateUserCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
+        }
+
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
@@ -57,6 +67,16 @@
         public async Task<IActionResult> GetUsers()
         {
             var result = await Mediator.Send(new GetUsersQuery { });
+            return result.Successful == true
+                ? Ok(result)
+                : BadRequest(result);
+        }
+
+        [Authorize(Roles = $"{StringRoleResources.Admin}")]
+        [HttpGet("usersInactive")]
+        public async Task<IActionResult> GetUsersInactive()
+        {
+            var result = await Mediator.Send(new GetUsersInactiveQuery { });
             return result.Successful == true
                 ? Ok(result)
                 : BadRequest(result);

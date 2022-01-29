@@ -114,6 +114,17 @@
             return RequestResponse.Success(existUser.Id);
         }
 
+        public async Task<RequestResponse> ActivateUserAsync(ActivateUserCommand command)
+        {
+            var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.Id);
+            if (existUser == null) throw new Exception("The user does not exists");
+
+            existUser.IsActive = true;
+
+            var result = await _userManager.UpdateAsync(existUser);
+            return RequestResponse.Success(existUser.Id);
+        }
+
         public async Task<RequestResponse> UpdateUserEmailAsync(UpdateUserEmailCommand command)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.UserId && u.Email == command.Email && u.IsActive == true);
@@ -132,6 +143,15 @@
         {
             var result = _userManager.Users
                 .Where(u => u.IsActive == true)
+                .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
+                .ToList();
+            return result;
+        }
+
+        public List<UserResponse> GetUsersInactive(GetUsersInactiveQuery query)
+        {
+            var result = _userManager.Users
+                .Where(u => u.IsActive == false)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .ToList();
             return result;
