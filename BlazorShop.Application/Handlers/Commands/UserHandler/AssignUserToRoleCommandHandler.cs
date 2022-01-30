@@ -20,8 +20,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while assigning the role to user");
-                return RequestResponse.Failure($"There was an error while assigning the role to user. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.AssignUserToRoleCommand);
+                return RequestResponse.Failure($"{ErrorsManager.AssignUserToRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

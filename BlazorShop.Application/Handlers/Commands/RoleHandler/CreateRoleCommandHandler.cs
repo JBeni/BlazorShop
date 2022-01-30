@@ -20,8 +20,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the role");
-                return RequestResponse.Failure($"There was an error while creating the role. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateRoleCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

@@ -24,8 +24,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error deleting the music");
-                return RequestResponse.Failure($"There was an error deleting the music. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.DeleteMusicCommand);
+                return RequestResponse.Failure($"{ErrorsManager.DeleteMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

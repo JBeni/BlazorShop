@@ -30,8 +30,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the order");
-                return RequestResponse.Failure($"There was an error creating the order. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateOrderCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

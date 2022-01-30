@@ -19,8 +19,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error changing the password");
-                return RequestResponse.Failure($"There was an error changing the password. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.ChangePasswordCommand);
+                return RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

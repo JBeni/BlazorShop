@@ -4,15 +4,13 @@
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<CreateSubscriberCommandHandler> _logger;
-        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public CreateSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandler> logger, IUserService userService, IMapper mapper)
+        public CreateSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandler> logger, IUserService userService)
         {
             _dbContext = dbContext;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService;
-            _mapper = mapper;
         }
 
         public async Task<RequestResponse> Handle(CreateSubscriberCommand request, CancellationToken cancellationToken)
@@ -43,8 +41,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the subscriber");
-                return RequestResponse.Failure($"There was an error creating the subscriber. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateSubscriberCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

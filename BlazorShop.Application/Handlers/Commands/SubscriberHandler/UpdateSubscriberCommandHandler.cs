@@ -30,8 +30,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the subscriber");
-                return RequestResponse.Failure($"There was an error updating the subscriber. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateSubscriberCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

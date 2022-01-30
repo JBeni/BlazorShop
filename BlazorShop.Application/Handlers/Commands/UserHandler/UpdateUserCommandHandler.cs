@@ -20,8 +20,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while updating the user");
-                return RequestResponse.Failure($"There was an error while updating the user. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateUserCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

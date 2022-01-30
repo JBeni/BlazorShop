@@ -23,8 +23,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error deleting the cart");
-                return RequestResponse.Failure($"There was an error deleting the cart. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.DeleteCartCommand);
+                return RequestResponse.Failure($"{ErrorsManager.DeleteCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

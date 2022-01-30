@@ -20,8 +20,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while activating the user");
-                return RequestResponse.Failure($"There was an error while activating the user. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.ActivateUserCommand);
+                return RequestResponse.Failure($"{ErrorsManager.ActivateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

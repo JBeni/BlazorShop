@@ -21,8 +21,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error deleting all the carts");
-                return RequestResponse.Failure($"There was an error deleting all the carts. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.DeleteAllCartsCommand);
+                return RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

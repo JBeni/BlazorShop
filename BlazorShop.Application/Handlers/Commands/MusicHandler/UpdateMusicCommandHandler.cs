@@ -32,8 +32,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the music");
-                return RequestResponse.Failure($"There was an error updating the music. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateMusicCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

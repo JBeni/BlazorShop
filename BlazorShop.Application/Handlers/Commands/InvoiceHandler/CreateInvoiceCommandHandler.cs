@@ -30,8 +30,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the invoice");
-                return RequestResponse.Failure($"There was an error creating the invoice. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateInvoiceCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

@@ -27,8 +27,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the cart");
-                return RequestResponse.Failure($"There was an error updating the cart. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateCartCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

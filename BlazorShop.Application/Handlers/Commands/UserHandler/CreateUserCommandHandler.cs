@@ -20,8 +20,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while creating the user");
-                return RequestResponse.Failure($"There was an error while creating the user. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateUserCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

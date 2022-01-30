@@ -29,8 +29,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the order");
-                return RequestResponse.Failure($"There was an error updating the order. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateOrderCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

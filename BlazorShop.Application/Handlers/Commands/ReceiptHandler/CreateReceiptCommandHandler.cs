@@ -29,8 +29,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the receipt");
-                return RequestResponse.Failure($"There was an error creating the receipt. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateReceiptCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

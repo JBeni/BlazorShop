@@ -30,8 +30,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the clothe");
-                return RequestResponse.Failure($"There was an error updating the clothe. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateClotheCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

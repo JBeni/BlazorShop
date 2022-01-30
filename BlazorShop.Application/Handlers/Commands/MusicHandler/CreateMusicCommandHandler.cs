@@ -35,8 +35,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the music");
-                return RequestResponse.Failure($"There was an error creating the music. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateMusicCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

@@ -24,8 +24,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error deleting the subscriber");
-                return RequestResponse.Failure($"There was an error deleting the subscriber. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.DeleteSubscriberCommand);
+                return RequestResponse.Failure($"{ErrorsManager.DeleteSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

@@ -35,8 +35,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error creating the cart");
-                return RequestResponse.Failure($"There was an error creating the cart. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.CreateCartCommand);
+                return RequestResponse.Failure($"{ErrorsManager.CreateCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

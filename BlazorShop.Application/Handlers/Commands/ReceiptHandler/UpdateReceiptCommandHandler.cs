@@ -28,8 +28,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error updating the receipt");
-                return RequestResponse.Failure($"There was an error updating the receipt. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.UpdateReceiptCommand);
+                return RequestResponse.Failure($"{ErrorsManager.UpdateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

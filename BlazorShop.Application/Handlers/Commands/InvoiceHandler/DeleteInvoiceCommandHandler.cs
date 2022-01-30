@@ -24,8 +24,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error deleting the invoice");
-                return RequestResponse.Failure($"There was an error deleting the invoice. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.DeleteInvoiceCommand);
+                return RequestResponse.Failure($"{ErrorsManager.DeleteInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }

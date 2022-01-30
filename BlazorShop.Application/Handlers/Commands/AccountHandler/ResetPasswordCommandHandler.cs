@@ -19,8 +19,8 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error resetting the password");
-                return RequestResponse.Failure($"There was an error resetting the password. {ex.Message}. {ex.InnerException?.Message}");
+                _logger.LogError(ex, ErrorsManager.ResetPasswordCommand);
+                return RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
         }
     }
