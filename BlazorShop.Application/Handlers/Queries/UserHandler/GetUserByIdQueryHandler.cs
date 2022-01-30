@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the user by id");
+                _logger.LogError(ex, ErrorsManager.GetUserByIdQuery);
                 return Task.FromResult(new Result<UserResponse>
                 {
-                    Error = $"There was an error getting the user by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUserByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

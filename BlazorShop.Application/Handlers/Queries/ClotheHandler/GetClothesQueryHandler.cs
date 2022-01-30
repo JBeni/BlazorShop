@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the clothes");
+                _logger.LogError(ex, ErrorsManager.GetClothesQuery);
                 return Task.FromResult(new Result<ClotheResponse>
                 {
-                    Error = $"There was an error while getting the clothes. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetClothesQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

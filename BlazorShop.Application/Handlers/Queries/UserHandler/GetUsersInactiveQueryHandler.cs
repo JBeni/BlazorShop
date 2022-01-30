@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the users");
+                _logger.LogError(ex, ErrorsManager.GetUsersInactiveQuery);
                 return Task.FromResult(new Result<UserResponse>
                 {
-                    Error = $"There was an error getting the inactive users. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUsersInactiveQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

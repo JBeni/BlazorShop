@@ -20,7 +20,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the carts count.");
+                _logger.LogError(ex, ErrorsManager.GetCartsCountQuery);
                 return Task.FromResult(0);
             }
         }

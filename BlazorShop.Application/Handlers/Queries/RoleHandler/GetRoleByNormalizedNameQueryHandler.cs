@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the role by normalized name");
+                _logger.LogError(ex, ErrorsManager.GetRoleByNormalizedNameQuery);
                 return Task.FromResult(new Result<RoleResponse>
                 {
-                    Error = $"There was an error getting the role by normalized name. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetRoleByNormalizedNameQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

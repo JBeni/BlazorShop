@@ -29,10 +29,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscriber by user id - active subscription");
+                _logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
                 return Task.FromResult(new Result<SubscriberResponse>
                 {
-                    Error = $"There was an error while getting the subscriber by user id - active subscription. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

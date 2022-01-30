@@ -29,10 +29,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the subscription by id");
+                _logger.LogError(ex, ErrorsManager.GetSubscriptionByIdQuery);
                 return Task.FromResult(new Result<SubscriptionResponse>
                 {
-                    Error = $"There was an error while getting the subscription by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetSubscriptionByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the invoice by id");
+                _logger.LogError(ex, ErrorsManager.GetInvoiceByIdQuery);
                 return Task.FromResult(new Result<InvoiceResponse>
                 {
-                    Error = $"There was an error while getting the invoice by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetInvoiceByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

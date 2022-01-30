@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the carts");
+                _logger.LogError(ex, ErrorsManager.GetCartsQuery);
                 return Task.FromResult(new Result<CartResponse>
                 {
-                    Error = $"There was an error while getting the carts. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetCartsQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

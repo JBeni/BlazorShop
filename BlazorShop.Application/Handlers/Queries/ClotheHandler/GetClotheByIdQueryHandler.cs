@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the clothe by id");
+                _logger.LogError(ex, ErrorsManager.GetClotheByIdQuery);
                 return Task.FromResult(new Result<ClotheResponse>
                 {
-                    Error = $"There was an error while getting the clothe by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetClotheByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

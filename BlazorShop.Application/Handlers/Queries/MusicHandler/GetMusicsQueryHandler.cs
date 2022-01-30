@@ -29,10 +29,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the musics");
+                _logger.LogError(ex, ErrorsManager.GetMusicsQuery);
                 return Task.FromResult(new Result<MusicResponse>
                 {
-                    Error = $"There was an error while getting the musics. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetMusicsQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

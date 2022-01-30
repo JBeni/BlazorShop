@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the users");
+                _logger.LogError(ex, ErrorsManager.GetUsersQuery);
                 return Task.FromResult(new Result<UserResponse>
                 {
-                    Error = $"There was an error getting the users. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUsersQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

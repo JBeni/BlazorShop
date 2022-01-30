@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the receipt by id");
+                _logger.LogError(ex, ErrorsManager.GetReceiptByIdQuery);
                 return Task.FromResult(new Result<ReceiptResponse>
                 {
-                    Error = $"There was an error while getting the receipt by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetReceiptByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

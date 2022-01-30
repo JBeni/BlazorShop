@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the roles");
+                _logger.LogError(ex, ErrorsManager.GetRolesForAdminQuery);
                 return Task.FromResult(new Result<RoleResponse>
                 {
-                    Error = $"There was an error getting the roles. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetRolesForAdminQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

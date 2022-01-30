@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the order by id");
+                _logger.LogError(ex, ErrorsManager.GetOrderByIdQuery);
                 return Task.FromResult(new Result<OrderResponse>
                 {
-                    Error = $"There was an error while getting the order by id. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetOrderByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

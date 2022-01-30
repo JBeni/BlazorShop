@@ -25,10 +25,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error getting the user by email");
+                _logger.LogError(ex, ErrorsManager.GetUserByEmailQuery);
                 return Task.FromResult(new Result<UserResponse>
                 {
-                    Error = $"There was an error getting the user by email. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUserByEmailQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }

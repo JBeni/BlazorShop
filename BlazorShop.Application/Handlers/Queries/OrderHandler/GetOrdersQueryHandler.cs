@@ -30,10 +30,10 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "There was an error while getting the orders");
+                _logger.LogError(ex, ErrorsManager.GetOrdersQuery);
                 return Task.FromResult(new Result<OrderResponse>
                 {
-                    Error = $"There was an error while getting the orders. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetOrdersQuery}. {ex.Message}. {ex.InnerException?.Message}"
                 });
             }
         }
