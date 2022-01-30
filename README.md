@@ -2,9 +2,9 @@
 
 * This repository contains the code of an online shop, both the front-end and the back-end, the database was built using the Code-First approach (the migrations are also present, just migrate them to your local SQL Server Database). The interface is built using pages but using the razor component functionalities. The server is based on Net 6 with C# 10 capabilities. The server is a Web API implemented using the guidelines of CQRS and Mediator architectural pattern.
 
-* Video Demo Link: (In the Future)
+* <strike>Video Demo Link: (In the Future)</strike>
 
-# Web API functionalities:
+# Web API functionalities
 	* Unit of Work Project to demonstrate the Unit of Work with Repository Pattern design pattern
 	* Worker Service Project - to deactivate a user subscription
 	* Unit Test Project (Under Development)
@@ -44,16 +44,17 @@
 <br/>
 
 # Blazor Web Assembly
+	* The application design was built mainly using Bootstrap 5.
+	  The client interfaces have been built with the latest version of Blazor Web Assembly.
+	  Some of the functionalities of the Blazor Web application are:
 
-* The application design was built mainly using Bootstrap 5. The client interfaces have been built with the latest version of Blazor Web Assembly. Some of the functionalities of the Blazor Web application are:
-
-* Creating Authorization Policies based on Role
-* Making requests through HTTP to the Web API using HttpClient library
-* Using Local Storage to save the JWT Token - setting the token to HTTP Authorization Header
-* Using Blazor ToastService to show messages
-* Using MatBlazor and Radzen Blazor libraries for design and bootstrap
-* Using Authentication State Provider to authorize user access to application
-* Using razor components to create pages
+	* Creating Authorization Policies based on Role
+	* Making requests through HTTP to the Web API using HttpClient library
+	* Using Local Storage to save the JWT Token - setting the token to HTTP Authorization Header
+	* Using Blazor ToastService to show messages
+	* Using MatBlazor and Radzen Blazor libraries for design and bootstrap
+	* Using Authentication State Provider to authorize user access to application
+	* Using razor components to create pages
 <br/>
 
 # Application Features

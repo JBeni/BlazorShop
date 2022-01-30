@@ -1,9 +1,8 @@
 
--> TO DO
+# -> TO DO
 
+* -> Configure Serilog
 
--> Configure Serilog
+* -> CREATE UNIT TESTS
 
--> CREATE UNIT TESTS
-
--> Refresh Token
+* -> Refresh Token
