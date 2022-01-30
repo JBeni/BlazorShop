@@ -36,3 +36,4 @@ global using BlazorShop.Application.Queries.SubscriberQuery;
 global using BlazorShop.Application.Queries.SubscriptionQuery;
 global using BlazorShop.Application.Queries.InvoiceQuery;
 global using BlazorShop.Application.Queries.ReceiptQuery;
+global using BlazorShop.Application.Utils;
