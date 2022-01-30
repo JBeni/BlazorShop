@@ -34,7 +34,6 @@
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            //OnChange.Invoke();
             return result.Items;
         }
 

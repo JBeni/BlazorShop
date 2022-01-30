@@ -5,7 +5,7 @@
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
 
-        public event Action OnChange;
+        public event Action? OnChange;
 
         public CartService(HttpClient httpClient, IToastService toastService)
         {
@@ -30,7 +30,6 @@
             }
 
             _toastService.ShowSuccess(cart.Name, "The item was added to cart:");
-            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
@@ -51,7 +50,6 @@
             }
 
             _toastService.ShowSuccess("The item was deleted from the cart.");
-            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
@@ -72,7 +70,6 @@
             }
 
             _toastService.ShowSuccess("The items from the cart were removed.");
-            //OnChange.Invoke();
             return RequestResponse.Success();
         }
 
