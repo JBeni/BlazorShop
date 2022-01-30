@@ -3,8 +3,6 @@
     [AllowAnonymous]
     public class HomeController : ApiControllerBase
     {
-        static int _callCount;
-        
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public HomeController(IWebHostEnvironment webHostEnvironment)
