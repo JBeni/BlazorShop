@@ -3,19 +3,16 @@
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
-        private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AccountService(
             UserManager<User> userManager,
-            IUserService userService,
-            IRoleService roleService,
+            RoleManager<Role> roleManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
-            _userService = userService;
-            _roleService = roleService;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -55,7 +52,7 @@
             };
             var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
 
-            var userRole = await _userService.GetUserRoleAsync(user);
+            var userRole = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -119,10 +116,10 @@
 
                 await _userManager.CreateAsync(newUser, register.Password);
 
-                var role = await _roleService.FindRoleByNameAsync(StringRoleResources.Default);
+                var role = await _roleManager.FindByNameAsync(StringRoleResources.Default);
                 if (role == null) throw new Exception("The role does not exist");
 
-                await _roleService.SetUserRoleAsync(newUser, role.Name);
+                await _userManager.AddToRoleAsync(newUser, role.Name);
                 return await GenerateToken(newUser);
             }
             else
