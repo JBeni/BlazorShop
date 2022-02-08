@@ -22,3 +22,6 @@ global using BlazorShop.Application.Commands.RoleCommand;
 global using MatBlazor;
 global using BlazorShop.WebClient.Error;
 global using BlazorShop.Application.Utils;
+global using Toolbelt.Blazor.Extensions.DependencyInjection;
+global using Serilog;
+global using Microsoft.JSInterop;
