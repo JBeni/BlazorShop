@@ -2,8 +2,8 @@
 {
     public interface ISubscriberService
     {
-        List<SubscriberResponse> GetAll();
-        SubscriberResponse Get(int id);
+        Result<SubscriberResponse> GetAll();
+        Result<SubscriberResponse> Get(int id);
         RequestResponse AddSubscriber(SubscriberResponse subscriber);
         RequestResponse UpdateSubscriber(SubscriberResponse subscriber);
         RequestResponse DeleteSubscriber(int id);

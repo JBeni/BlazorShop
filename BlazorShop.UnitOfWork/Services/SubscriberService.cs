@@ -21,39 +21,44 @@
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public List<SubscriberResponse> GetAll()
+        public Result<SubscriberResponse> GetAll()
         {
             try
             {
                 var result = _unitOfWork.SubscriberRepository.GetAll();
                 var subscribers = _mapper.Map<List<SubscriberResponse>>(result);
-                return subscribers;
+                return new Result<SubscriberResponse>
+                {
+                    Successful = true,
+                    Items = subscribers ?? new List<SubscriberResponse>()
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error while getting the subscribers.");
-                return new List<SubscriberResponse>
+                return new Result<SubscriberResponse>
                 {
-                    new SubscriberResponse
-                    {
-                        Error = $"There was an error while getting the subscribers. {ex.Message}. {ex.InnerException?.Message}"
-                    }
+                    Error = $"There was an error while getting the subscribers. {ex.Message}. {ex.InnerException?.Message}"
                 };
             }
         }
 
-        public SubscriberResponse Get(int id)
+        public Result<SubscriberResponse> Get(int id)
         {
             try
             {
                 var result = _unitOfWork.SubscriberRepository.Get(id);
                 var subscriber = _mapper.Map<SubscriberResponse>(result);
-                return subscriber;
+                return new Result<SubscriberResponse>
+                {
+                    Successful = true,
+                    Item = subscriber ?? new SubscriberResponse()
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error while getting the subscriber by id.");
-                return new SubscriberResponse
+                return new Result<SubscriberResponse>
                 {
                     Error = $"There was an error while getting the subscriber by id. {ex.Message}. {ex.InnerException?.Message}"
                 };

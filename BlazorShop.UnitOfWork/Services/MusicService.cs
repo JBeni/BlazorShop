@@ -13,39 +13,45 @@
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public List<MusicResponse> GetAll()
+        public Result<MusicResponse> GetAll()
         {
             try
             {
                 var result = _unitOfWork.MusicRepository.GetAll();
                 var musics = _mapper.Map<List<MusicResponse>>(result);
-                return musics;
+                return new Result<MusicResponse>
+                {
+                    Successful = true,
+                    Items = musics ?? new List<MusicResponse>()
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error while getting the musics.");
-                return new List<MusicResponse>
+                return new Result<MusicResponse>
                 {
-                    new MusicResponse
-                    {
-                        Error = $"There was an error while getting the musics. {ex.Message}. {ex.InnerException?.Message}"
-                    }
+                    Error = $"There was an error while getting the musics. {ex.Message}. {ex.InnerException?.Message}"
                 };
             }
         }
 
-        public MusicResponse Get(int id)
+        public Result<MusicResponse> Get(int id)
         {
             try
             {
                 var result = _unitOfWork.MusicRepository.Get(id);
                 var music = _mapper.Map<MusicResponse>(result);
-                return music ?? throw new ArgumentNullException();
+                return new Result<MusicResponse>
+                {
+                    Successful = true,
+                    Item = music ?? new MusicResponse()
+                };
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "There was an error while getting the music by id.");
-                return new MusicResponse
+                return new Result<MusicResponse>
                 {
                     Error = $"There was an error while getting the music by id. {ex.Message}. {ex.InnerException?.Message}"
                 };
