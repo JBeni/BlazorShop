@@ -17,13 +17,13 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<RequestResponse>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
-                var errorMessage = resultError.Error != null ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
-                return RequestResponse.Failure(errorMessage);
+
+                _toastService.ShowError(resultError.Error);
+                return RequestResponse.Failure(resultError.Error);
             }
 
             _toastService.ShowSuccess("The role was added.");
@@ -36,14 +36,13 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<RequestResponse>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
-                return RequestResponse.Failure(errorMessage);
+                _toastService.ShowError(resultError.Error);
+                return RequestResponse.Failure(resultError.Error);
             }
 
             _toastService.ShowSuccess("The role was deleted.");
@@ -56,13 +55,12 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
+                _toastService.ShowError(resultError.Error);
                 return null;
             }
 
@@ -80,13 +78,12 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
+                _toastService.ShowError(resultError.Error);
                 return null;
             }
 
@@ -104,13 +101,12 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
+                _toastService.ShowError(resultError.Error);
                 return null;
             }
 
@@ -133,14 +129,13 @@
             var responseResult = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<ErrorView>(
+                var resultError = JsonSerializer.Deserialize<RequestResponse>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-                _toastService.ShowError(errorMessage);
-                return RequestResponse.Failure(errorMessage);
+                _toastService.ShowError(resultError.Error);
+                return RequestResponse.Failure(resultError.Error);
             }
 
             _toastService.ShowSuccess("The role was updated.");
