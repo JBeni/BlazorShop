@@ -10,6 +10,8 @@
         DbSet<Subscriber> Subscribers { get; set; }
         DbSet<Subscription> Subscriptions { get; set; }
         DbSet<Receipt> Receipts { get; set; }
+        DbSet<TodoItem> TodoItems { get; set; }
+        DbSet<TodoList> TodoLists { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
