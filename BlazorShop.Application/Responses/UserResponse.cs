@@ -25,7 +25,5 @@
                     s.Roles.Where(x => x.UserId == x.User.Id).Select(x => x.Role.Name).FirstOrDefault()))
                 .ForMember(d => d.IsActive, opt => opt.MapFrom(s => s.IsActive));
         }
-
-        public string? Error { get; set; }
     }
 }

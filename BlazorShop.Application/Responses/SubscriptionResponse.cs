@@ -27,7 +27,5 @@
                 .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.ImagePath))
                 .ForMember(x => x.Options, opt => opt.MapFrom(s => s.Options));
         }
-
-        public string Error { get; set; }
     }
 }

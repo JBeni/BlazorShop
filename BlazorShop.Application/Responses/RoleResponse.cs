@@ -13,7 +13,5 @@
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.NormalizedName, opt => opt.MapFrom(s => s.NormalizedName));
         }
-
-        public string? Error { get; set; }
     }
 }

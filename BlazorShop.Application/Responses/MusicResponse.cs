@@ -23,7 +23,5 @@
                 .ForMember(x => x.AccessLevel, opt => opt.MapFrom(s => s.AccessLevel))
                 .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.ImagePath));
         }
-
-        public string Error { get; set; }
     }
 }

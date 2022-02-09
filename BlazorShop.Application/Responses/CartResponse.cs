@@ -25,7 +25,5 @@
                 .ForMember(d => d.ClotheImagePath, opt => opt.MapFrom(s => s.Clothe.ImagePath))
                 .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.User.Id));
         }
-
-        public string? Error { get; set; }
     }
 }

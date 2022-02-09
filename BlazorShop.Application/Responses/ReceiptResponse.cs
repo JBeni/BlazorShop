@@ -17,7 +17,5 @@
                 .ForMember(d => d.ReceiptName, opt => opt.MapFrom(s => s.ReceiptName))
                 .ForMember(d => d.ReceiptUrl, opt => opt.MapFrom(s => s.ReceiptUrl));
         }
-
-        public string? Error { get; set; }
     }
 }

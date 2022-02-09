@@ -37,7 +37,5 @@
                 .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.Subscription.ImagePath))
                 .ForMember(x => x.SubscriptionName, opt => opt.MapFrom(s => s.Subscription.Name));
         }
-
-        public string Error { get; set; }
     }
 }

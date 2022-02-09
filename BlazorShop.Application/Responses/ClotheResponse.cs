@@ -23,7 +23,5 @@
                 .ForMember(d => d.ImagePath, opt => opt.MapFrom(s => s.ImagePath))
                 .ForMember(d => d.IsActive, opt => opt.MapFrom(s => s.IsActive));
         }
-
-        public string? Error { get; set; }
     }
 }

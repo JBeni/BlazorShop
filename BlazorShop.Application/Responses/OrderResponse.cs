@@ -19,7 +19,5 @@
                 .ForMember(d => d.LineItems, opt => opt.MapFrom(s => s.LineItems))
                 .ForMember(d => d.AmountTotal, opt => opt.MapFrom(s => s.AmountTotal));
         }
-
-        public string? Error { get; set; }
     }
 }
