@@ -57,6 +57,8 @@
                 ErrorIcon="fa fa-bug" />
 
 @code {
+    [CascadingParameter] AppState AppState { get; set; }
+
     private int counts { get; set; }
 
     private string username { get; set; }

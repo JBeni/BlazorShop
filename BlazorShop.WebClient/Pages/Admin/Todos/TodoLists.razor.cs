@@ -8,7 +8,7 @@
 
         private ElementReference _newListModal;
 
-        private TodoListResponse _newTodoList = new TodoListResponse();
+        private TodoListResponse _newTodoList = new();
 
         private CustomValidation _customValidation;
 
@@ -38,14 +38,8 @@
 
                 State.JS.InvokeVoid(JsInteropConstants.HideModal, _newListModal);
             }
-            catch (Exception ex)
+            finally
             {
-                //var problemDetails = JsonConvert.DeserializeObject<ValidationProblemDetails>(ex.Response);
-
-                //if (problemDetails != null)
-                //{
-                //    _customValidation.DisplayErrors(problemDetails.Errors);
-                //}
             }
         }
 

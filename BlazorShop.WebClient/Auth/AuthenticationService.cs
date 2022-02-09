@@ -30,13 +30,12 @@ public class AuthenticationService : IAuthenticationService
         var responseResult = await response.Content.ReadAsStringAsync();
         if (response.IsSuccessStatusCode == false)
         {
-            var resultError = JsonSerializer.Deserialize<ErrorView>(
+            var resultError = JsonSerializer.Deserialize<JwtTokenResponse>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-            _toastService.ShowError(errorMessage);
+            _toastService.ShowError(resultError.Error);
             return null;
         }
 
@@ -74,13 +73,12 @@ public class AuthenticationService : IAuthenticationService
         var responseResult = await response.Content.ReadAsStringAsync();
         if (response.IsSuccessStatusCode == false)
         {
-            var resultError = JsonSerializer.Deserialize<ErrorView>(
+            var resultError = JsonSerializer.Deserialize<JwtTokenResponse>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
 
-            var errorMessage = resultError.Successful == false ? resultError.Error : resultError.Title + ": " + resultError.Detail;
-            _toastService.ShowError(errorMessage);
+            _toastService.ShowError(resultError.Error);
             return null;
         }
 

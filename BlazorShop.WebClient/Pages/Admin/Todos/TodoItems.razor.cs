@@ -31,7 +31,7 @@
             {
                 item.Done = value;
 
-                await State.TodoItemService.PutTodoItemAsync(item.Id, item);
+                await State.TodoItemService.PutTodoItemAsync(item);
             }
         }
 
@@ -58,7 +58,7 @@
                 else
                 {
                     var item = await State.TodoItemService.PostTodoItemAsync(SelectedItem);
-                    //SelectedItem.Id = item.Id;
+                    SelectedItem.Id = item.Id;
                 }
             }
             else
@@ -70,14 +70,14 @@
                 }
                 else
                 {
-                    await State.TodoItemService.PutTodoItemAsync(SelectedItem.Id, SelectedItem);
+                    await State.TodoItemService.PutTodoItemAsync(SelectedItem);
                 }
             }
         }
 
         private async Task SaveList()
         {
-            await State.TodoListService.PutTodoListAsync(State.SelectedList.Id, State.SelectedList);
+            await State.TodoListService.PutTodoListAsync(State.SelectedList);
 
             State.JS.InvokeVoid(JsInteropConstants.HideModal, _listOptionsModal);
 
