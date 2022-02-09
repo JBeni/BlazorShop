@@ -4,14 +4,7 @@
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>, IApplicationDbContext
     {
-        private readonly IDateTimeService _dateTime;
-
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
-
-        public ApplicationDbContext(DbContextOptions options, IDateTimeService dateTime) : base(options)
-        {
-            _dateTime = dateTime;
-        }
 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Clothe> Clothes { get; set; }
@@ -21,23 +14,11 @@
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<TodoList> TodoLists { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.Created = _dateTime.Now;
-                        break;
-
-                    case EntityState.Modified:
-                        entry.Entity.LastModified = _dateTime.Now;
-                        break;
-                }
-            }
-
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
@@ -63,6 +44,8 @@
             builder.ApplyConfiguration(new ReceiptConfiguration());
             builder.ApplyConfiguration(new SubscriberConfiguration());
             builder.ApplyConfiguration(new SubscriptionConfiguration());
+            builder.ApplyConfiguration(new TodoItemConfiguration());
+            builder.ApplyConfiguration(new TodoListConfiguration());
         }
     }
 }

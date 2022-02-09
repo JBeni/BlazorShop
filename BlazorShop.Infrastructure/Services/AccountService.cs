@@ -141,7 +141,7 @@
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var result = await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
+            await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
             return RequestResponse.Success();
         }
     }
