@@ -6,7 +6,6 @@
 
         public ApiExceptionFilterAttribute()
         {
-            // Register known exception types and handlers.
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
                 { typeof(ValidationException), HandleValidationException },
@@ -39,37 +38,32 @@
         private void HandleValidationException(ExceptionContext context)
         {
             var exception = (ValidationException)context.Exception;
-
-            var details = new ValidationProblemDetails(exception.Errors)
+            var response = new RequestResponse
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                Title = "Fluent Validation",
-                Detail = $"{exception.Message}. {exception.InnerException?.Message}"
+                Successful = false,
+                Error = $"Fluent Handlers Validations. {exception.Message}. {exception.InnerException?.Message}"
             };
             foreach (var item in exception.Errors)
             {
                 foreach (var value in item.Value)
                 {
-                    details.Detail += ". " + value;
+                    response.Error += $"{value}. ";
                 }
             }
 
-            context.Result = new BadRequestObjectResult(details);
-
+            context.Result = new BadRequestObjectResult(response);
             context.ExceptionHandled = true;
         }
 
         private void HandleInvalidModelStateException(ExceptionContext context)
         {
-            var details = new ValidationProblemDetails(context.ModelState)
+            var response = new RequestResponse
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                Title = "Invalid Model State",
-                Detail = $"{context.Exception.Message}. {context.Exception?.InnerException?.Message}"
+                Successful = false,
+                Error = $"Invalid Model State. {context.Exception.Message}. {context.Exception?.InnerException?.Message}"
             };
 
-            context.Result = new BadRequestObjectResult(details);
-
+            context.Result = new BadRequestObjectResult(response);
             context.ExceptionHandled = true;
         }
 

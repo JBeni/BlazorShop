@@ -100,6 +100,7 @@ try
             await ApplicationDbContextSeed.SeedClothesDataAsync(context);
             await ApplicationDbContextSeed.SeedMusicsDataAsync(context);
             await ApplicationDbContextSeed.SeedSubscriptionsDataAsync(context);
+            await ApplicationDbContextSeed.SeedTodosDataAsync(context);
         }
         catch (Exception ex)
         {
