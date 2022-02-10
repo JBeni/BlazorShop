@@ -11,14 +11,11 @@
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(t => t.Note)
-                .HasMaxLength(1000)
-                .IsRequired();
-            builder.Property(t => t.Priority)
-                .IsRequired();
-            builder.Property(t => t.State)
-                .IsRequired();
-            builder.Property(t => t.Done)
-                .IsRequired();
+                .HasMaxLength(1000);
+            //builder.Property(t => t.Priority)
+            //    .IsRequired();
+            //builder.Property(t => t.State)
+            //    .IsRequired();
         }
     }
 }

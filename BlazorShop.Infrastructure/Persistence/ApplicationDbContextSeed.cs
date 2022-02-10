@@ -328,10 +328,10 @@
             {
                 var list = context.TodoLists.FirstOrDefault(x => x.Id == 1);
 
-                context.TodoItems.Add(new TodoItem { Id = 1, List = list, Title = "Make a todo list" });
-                context.TodoItems.Add(new TodoItem { Id = 2, List = list, Title = "Check off the first item" });
-                context.TodoItems.Add(new TodoItem { Id = 3, List = list, Title = "Realise you've already done two things on the list!" });
-                context.TodoItems.Add(new TodoItem { Id = 4, List = list, Title = "Reward yourself with a nice, long nap" });
+                context.TodoItems.Add(new TodoItem { List = list, Title = "Make a todo list" });
+                context.TodoItems.Add(new TodoItem { List = list, Title = "Check off the first item" });
+                context.TodoItems.Add(new TodoItem { List = list, Title = "Realise you've already done two things on the list!" });
+                context.TodoItems.Add(new TodoItem { List = list, Title = "Reward yourself with a nice, long nap" });
 
                 await context.SaveChangesAsync();
             }
