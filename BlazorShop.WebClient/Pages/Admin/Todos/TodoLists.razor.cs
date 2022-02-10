@@ -10,14 +10,12 @@
 
         private TodoListResponse _newTodoList = new();
 
-        private CustomValidation _customValidation;
 
         private async Task NewList()
         {
             _newTodoList = new TodoListResponse();
 
             await Task.Delay(500);
-
             if (_titleInput.Context != null)
             {
                 await _titleInput.FocusAsync();
@@ -26,21 +24,11 @@
 
         private async Task CreateNewList()
         {
-            _customValidation.ClearErrors();
+            var list = await State.TodoListService.PostTodoListAsync(_newTodoList);
+            State.TodoLists.Add(list);
 
-            try
-            {
-                var list = await State.TodoListService.PostTodoListAsync(_newTodoList);
-
-                State.TodoLists.Add(list);
-
-                await SelectList(list);
-
-                State.JS.InvokeVoid(JsInteropConstants.HideModal, _newListModal);
-            }
-            finally
-            {
-            }
+            await SelectList(list);
+            State.JS.InvokeVoid(JsInteropConstants.HideModal, _newListModal);
         }
 
         private bool IsSelected(TodoListResponse list)
@@ -51,7 +39,6 @@
         private async Task SelectList(TodoListResponse list)
         {
             if (IsSelected(list)) return;
-
             State.SelectedList = await State.TodoListService.GetTodoListAsync(list.Id);
         }
     }

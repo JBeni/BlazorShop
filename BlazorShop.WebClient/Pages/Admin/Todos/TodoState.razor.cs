@@ -29,18 +29,15 @@
             var list = TodoLists.First(l => l.Id == SelectedList.Id);
 
             list.Title = SelectedList.Title;
-
             StateHasChanged();
         }
 
         public async Task DeleteList()
         {
             var list = TodoLists.First(l => l.Id == SelectedList.Id);
-
             TodoLists.Remove(list);
 
             SelectedList = await TodoListService.GetTodoListAsync(TodoLists.First().Id);
-
             StateHasChanged();
         }
 

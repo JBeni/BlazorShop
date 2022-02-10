@@ -10,17 +10,18 @@ try
         new HttpClient
         {
             BaseAddress = new Uri("https://localhost:44351/api/")
-        }
-        .EnableIntercept(sp));
-
-    builder.Services.AddSingleton<IJSInProcessRuntime>(services =>
-        (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
+        }.EnableIntercept(sp));
 
     builder.Services.AddBlazoredLocalStorage();
     builder.Services.AddBlazoredToast();
     builder.Services.AddOptions();
     builder.Services.AddMatBlazor();
     builder.Services.AddLoadingBar();
+
+    builder.Services.AddSingleton<IJSInProcessRuntime>(services =>
+        (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
+
+    builder.Services.AddScoped<SessionStorageService>();
 
     builder.Services.AddAuthorizationCore(config =>
     {
@@ -53,6 +54,8 @@ try
     builder.Services.AddTransient<ISubscriptionService, SubscriptionService>();
     builder.Services.AddTransient<ISubscriberService, SubscriberService>();
     builder.Services.AddTransient<IStripeService, StripeService>();
+    builder.Services.AddTransient<ITodoListService, TodoListService>();
+    builder.Services.AddTransient<ITodoItemService, TodoItemService>();
 
     builder.UseLoadingBar();
     await builder.Build().RunAsync();

@@ -13,7 +13,6 @@
         public bool IsSelectedItem(TodoItemResponse item)
         {
             return SelectedItem == item;
-
         }
 
         private async Task AddItem()
@@ -21,7 +20,6 @@
             var newItem = new TodoItemResponse { ListId = State.SelectedList.Id };
 
             State.SelectedList.Items.Add(newItem);
-
             await EditItem(newItem);
         }
 
@@ -30,7 +28,6 @@
             if (args != null && args.Value is bool value)
             {
                 item.Done = value;
-
                 await State.TodoItemService.PutTodoItemAsync(item);
             }
         }
@@ -40,7 +37,6 @@
             SelectedItem = item;
 
             await Task.Delay(50);
-
             if (_titleInput.Context != null)
             {
                 await _titleInput.FocusAsync();
@@ -80,7 +76,6 @@
             await State.TodoListService.PutTodoListAsync(State.SelectedList);
 
             State.JS.InvokeVoid(JsInteropConstants.HideModal, _listOptionsModal);
-
             State.SyncList();
         }
 
@@ -89,7 +84,6 @@
             await State.TodoListService.DeleteTodoListAsync(State.SelectedList.Id);
 
             State.JS.InvokeVoid(JsInteropConstants.HideModal, _listOptionsModal);
-
             await State.DeleteList();
         }
     }
