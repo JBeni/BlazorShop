@@ -15,59 +15,54 @@
         {
             var response = await _httpClient.PostAsJsonAsync($"Roles/role", role);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The role was added.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> DeleteRole(int id)
         {
             var response = await _httpClient.DeleteAsync($"Roles/role/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The role was deleted.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RoleResponse> GetRole(int id)
         {
             var response = await _httpClient.GetAsync($"Roles/role/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Item;
         }
@@ -76,21 +71,16 @@
         {
             var response = await _httpClient.GetAsync("Roles/roles");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -99,21 +89,16 @@
         {
             var response = await _httpClient.GetAsync("Roles/rolesAdmin");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -127,19 +112,19 @@
             };
             var response = await _httpClient.PutAsJsonAsync($"Roles/role", data);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The role was updated.");
-            return RequestResponse.Success();
+            return result;
         }
     }
 }

@@ -15,19 +15,19 @@
         {
             var response = await _httpClient.PutAsJsonAsync("Accounts/change-password", command);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The password was changed.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> ResetPassword(ResetPasswordCommand command)
@@ -41,19 +41,19 @@
 
             var response = await _httpClient.PostAsync("Accounts/reset-password", data);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The password was reset.");
-            return RequestResponse.Success();
+            return result;
         }
     }
 }

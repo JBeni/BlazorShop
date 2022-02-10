@@ -17,21 +17,16 @@
         {
             var response = await _httpClient.GetAsync("Clothes/clothes");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<ClotheResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<ClotheResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -40,21 +35,16 @@
         {
             var response = await _httpClient.GetAsync($"Clothes/clothe/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<ClotheResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<ClotheResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Item;
         }
@@ -63,57 +53,57 @@
         {
             var response = await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The clothe was added.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> UpdateClothe(ClotheResponse clothe)
         {
             var response = await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The clothe was updated.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> DeleteClothe(int id)
         {
             var response = await _httpClient.DeleteAsync($"Clothes/clothe/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The clothe was deleted.");
-            return RequestResponse.Success();
+            return result;
         }
     }
 }

@@ -28,22 +28,17 @@ public class AuthenticationService : IAuthenticationService
 
         var response = await _httpClient.PostAsync("Accounts/login", data);
         var responseResult = await response.Content.ReadAsStringAsync();
-        if (response.IsSuccessStatusCode == false)
-        {
-            var resultError = JsonSerializer.Deserialize<JwtTokenResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
-
-            _toastService.ShowError(resultError.Error);
-            return null;
-        }
 
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
             responseResult,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
 
+        if (response.IsSuccessStatusCode == false)
+        {
+            _toastService.ShowError(result.Error);
+            return null;
+        }
         if (result.Access_Token == null)
         {
             _toastService.ShowError("Access Token is null");
@@ -71,21 +66,16 @@ public class AuthenticationService : IAuthenticationService
 
         var response = await _httpClient.PostAsync("Accounts/register", data);
         var responseResult = await response.Content.ReadAsStringAsync();
-        if (response.IsSuccessStatusCode == false)
-        {
-            var resultError = JsonSerializer.Deserialize<JwtTokenResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
-
-            _toastService.ShowError(resultError.Error);
-            return null;
-        }
 
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
             responseResult,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
+        if (response.IsSuccessStatusCode == false)
+        {
+            _toastService.ShowError(result.Error);
+            return null;
+        }
 
         if (result.Access_Token == null)
         {

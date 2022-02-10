@@ -15,21 +15,16 @@
         {
             var response = await _httpClient.GetAsync("Subscribers/subscribers");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -38,21 +33,16 @@
         {
             var response = await _httpClient.GetAsync($"Subscribers/subscribers/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -61,21 +51,16 @@
         {
             var response = await _httpClient.GetAsync($"Subscribers/subscriber/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Item;
         }
@@ -84,57 +69,57 @@
         {
             var response = await _httpClient.PostAsJsonAsync("Subscribers/subscriber", Subscriber);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The Subscriber was added.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse Subscriber)
         {
             var response = await _httpClient.PutAsJsonAsync("Subscribers/subscriber", Subscriber);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The Subscriber was updated.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> DeleteSubscriber(int id)
         {
             var response = await _httpClient.DeleteAsync($"Subscribers/subscriber/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The Subscriber was deleted.");
-            return RequestResponse.Success();
+            return result;
         }
     }
 }

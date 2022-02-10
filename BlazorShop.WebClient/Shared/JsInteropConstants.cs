@@ -2,7 +2,7 @@
 {
     public static class JsInteropConstants
     {
-        private const string FuncPrefix = "blazorDemo";
+        private const string FuncPrefix = "BlazorShop";
 
         public const string GetSessionStorage = $"{FuncPrefix}.getSessionStorage";
 

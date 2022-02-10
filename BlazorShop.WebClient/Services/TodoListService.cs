@@ -15,21 +15,16 @@
         {
             var response = await _httpClient.GetAsync("TodoLists/lists");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Items;
         }
@@ -38,21 +33,16 @@
         {
             var response = await _httpClient.GetAsync($"TodoLists/list/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             return result.Item;
         }
@@ -61,21 +51,16 @@
         {
             var response = await _httpClient.PostAsJsonAsync($"TodoLists/list", todoList);
             var responseResult = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
-            {
-                var resultError = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return null;
-            }
-
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _toastService.ShowError(result.Error);
+                return null;
+            }
 
             _toastService.ShowSuccess("The todo list was created.");
             return result.Item;
@@ -85,38 +70,38 @@
         {
             var response = await _httpClient.PutAsJsonAsync("TodoLists/list", todoList);
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The todo list was updated.");
-            return RequestResponse.Success();
+            return result;
         }
 
         public async Task<RequestResponse> DeleteTodoListAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"TodoLists/list/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<RequestResponse>(
+                responseResult,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
             if (response.IsSuccessStatusCode == false)
             {
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
-
-                _toastService.ShowError(resultError.Error);
-                return RequestResponse.Failure(resultError.Error);
+                _toastService.ShowError(result.Error);
+                return result;
             }
 
             _toastService.ShowSuccess("The todo list was deleted.");
-            return RequestResponse.Success();
+            return result;
         }
     }
 }

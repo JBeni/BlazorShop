@@ -17,12 +17,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 var responseResult = await response.Content.ReadAsStringAsync();
-                var resultError = JsonSerializer.Deserialize<RequestResponse>(
+                var result = JsonSerializer.Deserialize<RequestResponse>(
                     responseResult,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                _toastService.ShowError(resultError.Error);
+                _toastService.ShowError(result.Error);
             }
             else
             {
