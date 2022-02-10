@@ -48,3 +48,7 @@ global using System.Text.Json;
 global using BlazorShop.Application.Common.Exceptions;
 global using BlazorShop.WebApi.Controllers;
 global using BlazorShop.Application.Utils;
+global using BlazorShop.Application.Commands.TodoItemCommand;
+global using BlazorShop.Application.Commands.TodoListCommand;
+global using BlazorShop.Application.Queries.TodoItemQuery;
+global using BlazorShop.Application.Queries.TodoListQuery;
