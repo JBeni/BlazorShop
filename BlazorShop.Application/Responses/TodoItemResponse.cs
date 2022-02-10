@@ -15,6 +15,7 @@
         {
             profile.CreateMap<TodoItem, TodoItemResponse>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(s => s.Id))
+                .ForMember(x => x.ListId, opt => opt.MapFrom(s => s.List.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(s => s.Title))
                 .ForMember(x => x.Note, opt => opt.MapFrom(s => s.Note))
                 .ForMember(x => x.Priority, opt => opt.MapFrom(s => s.Priority))

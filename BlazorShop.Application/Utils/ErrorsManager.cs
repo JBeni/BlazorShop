@@ -55,6 +55,14 @@
         public const string? UpdateUserCommand = "There was an error while updating the user";
         public const string? UpdateUserEmailCommand = "There was an error while updating only the user email";
 
+        public const string? CreateTodoItemCommand = "There was an error while creating the todo item";
+        public const string? DeleteTodoItemCommand = "There was an error while deleting the todo item";
+        public const string? UpdateTodoItemCommand = "There was an error while updating the todo item";
+
+        public const string? CreateTodoListCommand = "There was an error while creating the todo list";
+        public const string? DeleteTodoListCommand = "There was an error while deleting the todo list";
+        public const string? UpdateTodoListCommand = "There was an error while updating the todo list";
+
 
         // Queries
 
@@ -93,5 +101,11 @@
         public const string? GetUserByIdQuery = "There was an error getting the user by id";
         public const string? GetUsersInactiveQuery = "There was an error getting the inactive users";
         public const string? GetUsersQuery = "There was an error getting the users";
+
+        public const string? GetTodoItemByIdQuery = "There was an error getting the todo item by id";
+        public const string? GetTodoItemsQuery = "There was an error getting the todo items";
+
+        public const string? GetTodoListByIdQuery = "There was an error getting the todo list by id";
+        public const string? GetTodoListsQuery = "There was an error getting the todo lists";
     }
 }
