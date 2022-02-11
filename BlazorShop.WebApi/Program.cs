@@ -2,14 +2,8 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    Log.Logger = new LoggerConfiguration()
-        .WriteTo.File(
-            builder.Configuration["Serilog:JsonPath"],
-            Serilog.Events.LogEventLevel.Information
-         )
-        .CreateBootstrapLogger();
-
-    Log.Information("Starting up");
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.File(builder.Configuration["Serilog:Json:Path"], LogEventLevel.Warning));
 
     builder.Services.AddCors(options =>
     {
@@ -127,7 +121,7 @@ try
 
     app.UseMiddleware<JwtTokenMiddleware>();
     
-    //app.UseSerilogRequestLogging();
+    app.UseSerilogRequestLogging();
 
     app.UseAuthentication();
     app.UseAuthorization();
