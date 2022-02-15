@@ -4,11 +4,13 @@
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
+        private readonly JsonSerializerOptions _options;
 
         public SubscriptionService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
             _toastService = toastService;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<List<SubscriptionResponse>> GetSubscriptions()
@@ -16,8 +18,7 @@
             var response = await _httpClient.GetAsync("Subscriptions/subscriptions");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -34,8 +35,7 @@
             var response = await _httpClient.GetAsync($"Subscriptions/subscription/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -52,8 +52,7 @@
             var response = await _httpClient.PostAsJsonAsync("Subscriptions/subscription", Subscription);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -71,8 +70,7 @@
             var response = await _httpClient.PutAsJsonAsync("Subscriptions/subscription", Subscription);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -90,8 +88,7 @@
             var response = await _httpClient.DeleteAsync($"Subscriptions/subscription/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)

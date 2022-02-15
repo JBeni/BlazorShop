@@ -4,11 +4,13 @@
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
+        private readonly JsonSerializerOptions _options;
 
         public UserService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
             _toastService = toastService;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<RequestResponse> AddUser(UserResponse user)
@@ -24,8 +26,7 @@
             var response = await _httpClient.PostAsJsonAsync($"Users/user", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -48,8 +49,7 @@
             var response = await _httpClient.PostAsJsonAsync($"Users/userActivate", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -67,8 +67,7 @@
             var response = await _httpClient.DeleteAsync($"Users/user/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -86,8 +85,7 @@
             var response = await _httpClient.GetAsync($"Users/user/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -104,8 +102,7 @@
             var response = await _httpClient.GetAsync("Users/users");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -122,8 +119,7 @@
             var response = await _httpClient.GetAsync("Users/usersInactive");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -148,8 +144,7 @@
             var response = await _httpClient.PutAsJsonAsync($"Users/user", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -167,8 +162,7 @@
             var response = await _httpClient.PutAsJsonAsync($"Users/userEmail", user);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)

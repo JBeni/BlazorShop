@@ -4,11 +4,13 @@
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
+        private readonly JsonSerializerOptions _options;
 
         public TodoListService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
             _toastService = toastService;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<List<TodoListResponse>> GetTodoListsAsync()
@@ -16,8 +18,7 @@
             var response = await _httpClient.GetAsync("TodoLists/lists");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -34,8 +35,7 @@
             var response = await _httpClient.GetAsync($"TodoLists/list/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -52,8 +52,7 @@
             var response = await _httpClient.PostAsJsonAsync($"TodoLists/list", todoList);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -71,8 +70,7 @@
             var response = await _httpClient.PutAsJsonAsync("TodoLists/list", todoList);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -90,8 +88,7 @@
             var response = await _httpClient.DeleteAsync($"TodoLists/list/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)

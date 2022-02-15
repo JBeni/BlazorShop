@@ -4,6 +4,7 @@
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
+        private readonly JsonSerializerOptions _options;
 
         public event Action? OnChange;
 
@@ -11,6 +12,7 @@
         {
             _httpClient = httpClient;
             _toastService = toastService;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<RequestResponse> AddCart(CartResponse cart)
@@ -18,8 +20,7 @@
             var response = await _httpClient.PostAsJsonAsync($"Carts/cart", cart);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -37,8 +38,7 @@
             var response = await _httpClient.DeleteAsync($"Carts/cart/{id}/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -56,8 +56,7 @@
             var response = await _httpClient.DeleteAsync($"Carts/carts/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -75,8 +74,7 @@
             var response = await _httpClient.GetAsync($"Carts/cart/{id}/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<CartResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -95,8 +93,7 @@
             if (response.IsSuccessStatusCode == false)
             {
                 var resultError = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    responseResult, _options
                 );
 
                 _toastService.ShowError(resultError.Error);
@@ -116,8 +113,7 @@
             var response = await _httpClient.GetAsync($"Carts/carts/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<CartResponse>>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -134,8 +130,7 @@
             var response = await _httpClient.PutAsJsonAsync($"Carts/cart", cart);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)
@@ -154,8 +149,7 @@
             var response = await _httpClient.PostAsJsonAsync("Payments/checkout", carts.ToList());
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                responseResult, _options
             );
 
             if (response.IsSuccessStatusCode == false)

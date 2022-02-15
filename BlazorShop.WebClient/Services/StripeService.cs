@@ -4,11 +4,13 @@
     {
         private readonly HttpClient _httpClient;
         private readonly IToastService _toastService;
+        private readonly JsonSerializerOptions _options;
 
         public StripeService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;
             _toastService = toastService;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task CancelMembership(string stripeSubscriptionCreationId)
@@ -18,8 +20,7 @@
             {
                 var responseResult = await response.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    responseResult, _options
                 );
 
                 _toastService.ShowError(result.Error);
