@@ -22,7 +22,6 @@ try
         (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
 
     builder.Services.AddScoped<SessionStorageService>();
-
     builder.Services.AddAuthorizationCore(config =>
     {
         config.AddPolicy(StringRoleResources.Customer, policy => policy.Requirements.Add(new CustomerRoleRequirement()));
