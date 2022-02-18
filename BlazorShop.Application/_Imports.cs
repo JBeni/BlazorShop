@@ -41,3 +41,4 @@ global using BlazorShop.Application.Queries.TodoItemQuery;
 global using BlazorShop.Application.Queries.TodoListQuery;
 global using BlazorShop.Application.Commands.TodoListCommand;
 global using BlazorShop.Application.Commands.TodoItemCommand;
+global using System.Net.Mail;
