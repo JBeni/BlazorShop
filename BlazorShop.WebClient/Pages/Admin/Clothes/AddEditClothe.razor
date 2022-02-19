@@ -10,7 +10,8 @@
 <hr />
 
 <EditForm Model="@clothe" OnValidSubmit="SaveClothe">
-    <DataAnnotationsValidator />
+    <FluentValidationValidator />
+
     <div class="mb-3">
         <label for="Name" class="form-label">Name</label>
         <div class="col-md-4">

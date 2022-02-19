@@ -11,7 +11,8 @@
 <hr />
 
 <EditForm Model="@User" OnValidSubmit="SaveUser">
-    <DataAnnotationsValidator />
+    <FluentValidationValidator />
+
     <div class="mb-3">
         <label for="FirstName" class="form-label">FirstName</label>
         <div class="col-md-4">

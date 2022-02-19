@@ -10,7 +10,8 @@
 <hr />
 
 <EditForm Model="@music" OnValidSubmit="SaveMusic">
-    <DataAnnotationsValidator />
+    <FluentValidationValidator />
+
     <div class="mb-3">
         <label for="Title" class="form-label">Title</label>
         <div class="col-md-4">

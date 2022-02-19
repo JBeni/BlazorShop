@@ -14,12 +14,12 @@
 
             _ = RuleFor(v => v.NewPassword)
                 .NotEmpty().WithMessage("NewPassword must not be empty")
-                .NotNull().WithMessage("NewPassword must not be null")
-                .Equal(v => v.ConfirmNewPassword).WithMessage("NewPassword must be equal with ConfirmNewPassword");
+                .NotNull().WithMessage("NewPassword must not be null");
 
             _ = RuleFor(v => v.ConfirmNewPassword)
                 .NotEmpty().WithMessage("ConfirmNewPassword must not be empty")
-                .NotNull().WithMessage("ConfirmNewPassword must not be null");
+                .NotNull().WithMessage("ConfirmNewPassword must not be null")
+                .Equal(v => v.NewPassword).WithMessage("NewPassword must be equal with ConfirmNewPassword");
         }
     }
 }

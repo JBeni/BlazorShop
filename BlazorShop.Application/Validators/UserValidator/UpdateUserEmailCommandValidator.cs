@@ -9,14 +9,29 @@
 
             RuleFor(v => v.Email)
                 .MaximumLength(150).WithMessage("Maximum length exceeded")
-                .NotEmpty().WithMessage("Name must not be empty")
-                .NotNull().WithMessage("Name must not be null")
-                .NotEqual(v => v.NewEmail).WithMessage("Email must not be equal with NewEmail");
+                .NotEmpty().WithMessage("Email must not be empty")
+                .NotNull().WithMessage("Email must not be null")
+                .Must(IsValidEmailAddress).WithMessage("The Email address is not valid");
 
             RuleFor(v => v.NewEmail)
                 .MaximumLength(150).WithMessage("Maximum length exceeded")
                 .NotEmpty().WithMessage("NewEmail must not be empty")
-                .NotNull().WithMessage("NewEmail must not be null");
+                .NotNull().WithMessage("NewEmail must not be null")
+                .NotEqual(v => v.NewEmail).WithMessage("NewEmail must not be equal with Email")
+                .Must(IsValidEmailAddress).WithMessage("The NewEmail address is not valid");
+        }
+
+        public bool IsValidEmailAddress(string emailAddress)
+        {
+            try
+            {
+                _ = new MailAddress(emailAddress);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

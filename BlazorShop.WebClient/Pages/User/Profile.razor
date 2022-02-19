@@ -43,28 +43,44 @@
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
                 <EditForm Model="@userData" OnValidSubmit="UpdateUser">
-                    <DataAnnotationsValidator />
+                    <FluentValidationValidator />
+
                     <div class="row mt-3">
                         <div class="mb-3">
                             <label for="FirstName" class="form-label">FirstName</label>
                             <div class="col-md-12">
-                                <InputText class="form-control" @bind-Value="userData.FirstName" />
+                                <InputText class="form-control form-control-lg" type="text" placeholder="First Name" @bind-Value="userData.FirstName" />
                             </div>
-                            <ValidationMessage For="@(() => userData.FirstName)" />
+                            @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("firstname")))
+                            {
+                                <div class="mt-1 alert alert-danger" role="alert">
+                                    <ValidationMessage For="@(() => userData.FirstName)" />
+                                </div>
+                            }
                         </div>
                         <div class="mb-3">
                             <label for="LastName" class="form-label">LastName</label>
                             <div class="col-md-12">
-                                <InputText class="form-control" @bind-Value="userData.LastName" />
+                                <InputText class="form-control form-control-lg" type="text" placeholder="Last Name" @bind-Value="userData.LastName" />
                             </div>
-                            <ValidationMessage For="@(() => userData.LastName)" />
+                            @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("lastname")))
+                            {
+                                <div class="mt-1 alert alert-danger" role="alert">
+                                    <ValidationMessage For="@(() => userData.LastName)" />
+                                </div>
+                            }
                         </div>
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email</label>
                             <div class="col-md-12">
-                                <InputText class="form-control" Disabled="true" @bind-Value="userData.Email" />
+                                <InputText class="form-control form-control-lg" type="email" placeholder="Email" Disabled="true" @bind-Value="userData.Email" />
                             </div>
-                            <ValidationMessage For="@(() => userData.Email)" />
+                            @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("email")))
+                            {
+                                <div class="mt-1 alert alert-danger" role="alert">
+                                    <ValidationMessage For="@(() => userData.Email)" />
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="text-center">
@@ -81,43 +97,41 @@
                 </div>
                 <br/>
                 <EditForm Model="@changePassword" OnValidSubmit="ChangePassword">
-                    <DataAnnotationsValidator />
+                    <FluentValidationValidator />
+
                     <div class="mb-3">
                         <label for="OldPassword" class="form-label">Old Password</label>
                         <div class="col-md-12">
-                            <InputText type="password" class="form-control" @bind-Value="changePassword.OldPassword" />
+                            <InputText class="form-control form-control-lg" type="password" placeholder="Password" @bind-Value="changePassword.OldPassword" />
                         </div>
-                        <ValidationMessage For="@(() => changePassword.OldPassword)" />
-                        @if (oldPasswordError.Length > 0)
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("oldpassword")))
                         {
-                            <div role="alert">
-                                <p class="alert alert-danger">@oldPasswordError</p>
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => changePassword.OldPassword)" />
                             </div>
                         }
                     </div>
                     <div class="mb-3">
                         <label for="NewPassword" class="form-label">New Password</label>
                         <div class="col-md-12">
-                            <InputText type="password" class="form-control" @bind-Value="changePassword.NewPassword" />
+                            <InputText class="form-control form-control-lg" type="password" placeholder="Password" @bind-Value="changePassword.NewPassword" />
                         </div>
-                        <ValidationMessage For="@(() => changePassword.NewPassword)" />
-                        @if (newPasswordError.Length > 0)
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("newpassword") && !x.ToLower().Contains("confirmnewpassword")))
                         {
-                            <div role="alert">
-                                <p class="alert alert-danger">@newPasswordError</p>
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => changePassword.NewPassword)" />
                             </div>
                         }
                     </div>
                     <div class="mb-3">
                         <label for="ConfirmNewPassword" class="form-label">Confirm New Password</label>
                         <div class="col-md-12">
-                            <InputText type="password" class="form-control" @bind-Value="changePassword.ConfirmNewPassword" />
+                            <InputText class="form-control form-control-lg" type="password" placeholder="Confirm Password" @bind-Value="changePassword.ConfirmNewPassword" />
                         </div>
-                        <ValidationMessage For="@(() => changePassword.ConfirmNewPassword)" />
-                        @if (newConfirmPasswordError.Length > 0)
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("confirmnewpassword")))
                         {
-                            <div role="alert">
-                                <p class="alert alert-danger">@newConfirmPasswordError</p>
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => changePassword.ConfirmNewPassword)" />
                             </div>
                         }
                     </div>
@@ -139,37 +153,35 @@
                     <h3 class="modal-title">Update Email</h3>
                 </div>
                 <EditForm Model="@updateEmail" OnValidSubmit="UpdateUserEmail">
-                    <DataAnnotationsValidator />
+                    <FluentValidationValidator />
+
                     <div class="mb-3" style="margin-left: 15px;">
                         <label for="Email" class="form-label">Old Email</label>
                         <div class="col-md-10">
-                            <InputText class="form-control" @bind-Value="updateEmail.Email" />
+                            <InputText class="form-control form-control-lg" type="email" placeholder="Email" @bind-Value="updateEmail.Email" />
                         </div>
-                        <ValidationMessage For="@(() => updateEmail.Email)" />
-                        @if (emailError.Length > 0)
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("email") && !x.ToLower().Contains("newemail")))
                         {
-                            <div class="col-md-10" role="alert">
-                                <p class="alert alert-danger">@emailError</p>
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => updateEmail.Email)" />
                             </div>
                         }
                    </div>
                     <div class="mb-3" style="margin-left: 15px;">
                         <label for="NewEmail" class="form-label">New Email</label>
                         <div class="col-md-10">
-                            <InputText type="email" class="form-control" @bind-Value="updateEmail.NewEmail" />
+                            <InputText class="form-control form-control-lg" type="email" placeholder="New Email" @bind-Value="updateEmail.NewEmail" />
                         </div>
-                        <ValidationMessage For="@(() => updateEmail.NewEmail)" />
-                        @if (newEmailError.Length > 0)
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("newemail")))
                         {
-                            <div class="col-md-10" role="alert">
-                                <p class="alert alert-danger">@newEmailError</p>
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => updateEmail.NewEmail)" />
                             </div>
                         }
                     </div>
                 </EditForm>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"
-                        @onclick="(async () => { await UpdateUserEmail(); })">
+                    <button type="submit" class="btn btn-primary">
                         Update Email
                     </button>
                     <button type="button" class="btn btn-light" @onclick="@ModalCancel">Cancel</button>
@@ -180,7 +192,7 @@
 }
 
 @code {
-    bool showModal = false;
+        bool showModal = false;
     private int UserId = 0;
 
     void ModalShow() => showModal = true;
@@ -189,13 +201,6 @@
     protected UserResponse userData = new();
     protected ChangePasswordCommand changePassword = new();
     protected UpdateUserEmailCommand updateEmail = new();
-
-    private string emailError = "";
-    private string newEmailError = "";
-
-    private string oldPasswordError = "";
-    private string newPasswordError = "";
-    private string newConfirmPasswordError = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -210,19 +215,14 @@
 
     private async Task UpdateUserEmail()
     {
-        if (CheckUpdateEmailFormValidation())
+        showModal = true;
+
+        updateEmail.UserId = UserId;
+        var result = await UserService.UpdateUserEmail(updateEmail);
+        if (result.Successful)
         {
-            updateEmail.UserId = UserId;
-            var result = await UserService.UpdateUserEmail(updateEmail);
-            if (result.Successful)
-            {
-                updateEmail = new();
-                showModal = false;
-            }
-        }
-        else
-        {
-            showModal = true;
+            updateEmail = new();
+            showModal = false;
         }
     }
 
@@ -236,76 +236,15 @@
 
     private async Task ChangePassword()
     {
-        if (CheckChangePasswordFormValidation())
+        if (
+            changePassword.OldPassword.Length > 6 &&
+            changePassword.NewPassword.Length > 6 &&
+            changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword)
+            )
         {
-            if (
-                changePassword.OldPassword.Length > 6 &&
-                changePassword.NewPassword.Length > 6 &&
-                changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword)
-               )
-            {
-                changePassword.UserId = UserId;
-                await AccountService.ChangePassword(changePassword);
-                changePassword = new();
-            }
+            changePassword.UserId = UserId;
+            await AccountService.ChangePassword(changePassword);
+            changePassword = new();
         }
-    }
-
-    private bool CheckUpdateEmailFormValidation()
-    {
-        var isValid = true;
-        emailError = "";  newEmailError = "";
-
-        if (updateEmail.Email == null || updateEmail.Email?.Trim().Length < 6)
-        {
-            emailError = "The email must contain at least 6 characters.";
-            isValid = false;
-        }
-        else if (!new EmailAddressAttribute().IsValid(updateEmail.Email?.Trim()))
-        {
-            emailError = "The email must be a valid email address.";
-            isValid = false;
-        }
-        if (updateEmail.NewEmail == null || updateEmail.NewEmail?.Trim().Length < 6)
-        {
-            newEmailError = "The email must contain at least 6 characters.";
-            isValid = false;
-        }
-        else if (!new EmailAddressAttribute().IsValid(updateEmail.NewEmail?.Trim()))
-        {
-            newEmailError = "The email must be a valid email address.";
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    private bool CheckChangePasswordFormValidation()
-    {
-        var isValid = true;
-        oldPasswordError = "";  newPasswordError = ""; newConfirmPasswordError = "";
-
-        if (changePassword.OldPassword == null || changePassword.OldPassword?.Trim().Length < 6)
-        {
-            oldPasswordError = "The password must contain at least 6 characters.";
-            isValid = false;
-        }
-        if (changePassword.NewPassword == null || changePassword.NewPassword?.Trim().Length < 6)
-        {
-            newPasswordError = "The password must contain at least 6 characters.";
-            isValid = false;
-        }
-        if (changePassword.ConfirmNewPassword == null)
-        {
-            newConfirmPasswordError = "The confirm password must not be empty.";
-            isValid = false;
-        }
-        else if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
-        {
-            newConfirmPasswordError = "The passwords do not match.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }

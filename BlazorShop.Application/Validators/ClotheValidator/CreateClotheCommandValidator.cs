@@ -12,7 +12,7 @@
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null")
                 .MaximumLength(200).WithMessage("Name must not exceed 200 characters.")
-                .MustAsync(BeUniqueTitle).WithMessage("The specified name already exists.");
+                .MustAsync(HaveUniqueName).WithMessage("The name already exists.");
 
             _ = RuleFor(v => v.Description)
                 .MaximumLength(1000).WithMessage("Maximum length exceeded")
@@ -36,7 +36,7 @@
                 .NotNull().WithMessage("ImagePath must not be null");
         }
 
-        public async Task<bool> BeUniqueTitle(string name, CancellationToken cancellationToken)
+        public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Clothes
                 .AllAsync(l => l.Name != name, cancellationToken);

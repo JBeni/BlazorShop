@@ -7,7 +7,8 @@
             RuleFor(v => v.Email)
                 .MaximumLength(100).WithMessage("Maximum length exceeded")
                 .NotEmpty().WithMessage("Email must not be empty")
-                .NotNull().WithMessage("Email must not be null");
+                .NotNull().WithMessage("Email must not be null")
+                .Must(IsValidEmailAddress).WithMessage("The value is not a valid email address");
 
             RuleFor(v => v.FirstName)
                 .MaximumLength(100).WithMessage("Maximum length exceeded")
@@ -22,13 +23,26 @@
             RuleFor(v => v.Password)
                 .MaximumLength(100).WithMessage("Maximum length exceeded")
                 .NotEmpty().WithMessage("Password must not be empty")
-                .NotNull().WithMessage("Password must not be null")
-                .Equal(v => v.ConfirmPassword).WithMessage("Password must be equal with ConfirmPassword");
+                .NotNull().WithMessage("Password must not be null");
 
             RuleFor(v => v.ConfirmPassword)
                 .MaximumLength(100).WithMessage("Maximum length exceeded")
                 .NotEmpty().WithMessage("ConfirmPassword must not be empty")
-                .NotNull().WithMessage("ConfirmPassword must not be null");
+                .NotNull().WithMessage("ConfirmPassword must not be null")
+                .Equal(v => v.Password).WithMessage("ConfirmPassword must be equal with Password");
+        }
+
+        public bool IsValidEmailAddress(string emailAddress)
+        {
+            try
+            {
+                _ = new MailAddress(emailAddress);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

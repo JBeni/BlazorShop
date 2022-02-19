@@ -10,81 +10,76 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 col-xs-12">
                 <h1 class="mb-3 text-xs-center">Sign up</h1>
-                <form>
-                    <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="First Name" @bind="_registerCommand.FirstName" />
-                    </fieldset>
-                    @if (firstNameError.Length > 0)
-                    {
-                        <div role="alert">
-                            <p class="alert alert-danger">@firstNameError</p>
-                        </div>
-                    }
-                    <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Last Name" @bind="_registerCommand.LastName" />
-                    </fieldset>
-                    @if (lastNameError.Length > 0)
-                    {
-                        <div role="alert">
-                            <p class="alert alert-danger">@lastNameError</p>
-                        </div>
-                    }
-                    <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="email" placeholder="Email" @bind="_registerCommand.Email" />
-                    </fieldset>
-                    @if (emailError.Length > 0)
-                    {
-                        <div role="alert">
-                            <p class="alert alert-danger">@emailError</p>
-                        </div>
-                    }
 
-@*
+                <EditForm Model="@registerCommand" OnValidSubmit="ExecuteRegister">
+                    <FluentValidationValidator />
+
                     <fieldset class="mt-3 form-group">
-                        <select class="form-control form-control-lg" @bind="_registerCommand.RoleName">
-                            <option value="">-- Select Role Name --</option>
-                            @foreach (var role in roles)
-                            {
-                                <option value="@role.Name">@role.Name</option>
-                            }
-                        </select>
-                    </fieldset>
-*@
-                    <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="password" placeholder="Password" @bind="@_registerCommand.Password" />
-                    </fieldset>
-                    @if (passwordError.Length > 0)
-                    {
-                        <div role="alert">
-                            <p class="alert alert-danger">@passwordError</p>
+                        <div>
+                            <InputText class="form-control form-control-lg" type="text" placeholder="First Name" @bind-Value="registerCommand.FirstName" />
                         </div>
-                    }
-                    <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="password" placeholder="Confirm Password" @bind="@_registerCommand.ConfirmPassword" />
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("firstname")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => registerCommand.FirstName)" />
+                            </div>
+                        }
                     </fieldset>
-                    @if (confirmPasswordError.Length > 0)
-                    {
-                        <div role="alert">
-                            <p class="alert alert-danger">@confirmPasswordError</p>
+                    <fieldset class="mt-3 form-group">
+                        <div>
+                            <InputText class="form-control form-control-lg" type="text" placeholder="Last Name" @bind-Value="registerCommand.LastName" />
                         </div>
-                    }
-                    <button class="mt-3 btn btn-lg btn-primary pull-xs-right" type="button" @onclick="@ExecuteRegister">
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("lastname")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => registerCommand.LastName)" />
+                            </div>
+                        }
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <div>
+                            <InputText class="form-control form-control-lg" type="email" placeholder="Email" @bind-Value="registerCommand.Email" />
+                        </div>
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("email")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => registerCommand.Email)" />
+                            </div>
+                        }
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <div>
+                            <InputText class="form-control form-control-lg" type="password" placeholder="Password" @bind-Value="registerCommand.Password" />
+                        </div>
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("password") && !x.ToLower().Contains("confirmpassword")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => registerCommand.Password)" />
+                            </div>
+                        }
+                    </fieldset>
+                    <fieldset class="mt-3 form-group">
+                        <div>
+                            <InputText class="form-control form-control-lg" type="password" placeholder="Confirm Password" @bind-Value="registerCommand.ConfirmPassword" />
+                        </div>
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("confirmpassword")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => registerCommand.ConfirmPassword)" />
+                            </div>
+                        }
+                    </fieldset>
+                    <button class="mt-3 btn btn-lg btn-primary pull-xs-right" type="submit">
                         Register
                     </button>
-                </form>
+                </EditForm>
             </div>
         </div>
     </div>
 </div>
 
 @code {
-    private RegisterCommand _registerCommand = new();
-
-    private string firstNameError = "";
-    private string lastNameError = "";
-    private string emailError = "";
-    private string passwordError = "";
-    private string confirmPasswordError = "";
+    private RegisterCommand registerCommand = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -98,57 +93,10 @@
 
     private async Task ExecuteRegister()
     {
-        if (CheckFormValidation())
+        var result = await AuthenticationService.Register(registerCommand);
+        if (result is not null)
         {
-            var result = await AuthenticationService.Register(_registerCommand);
-            if (result is not null)
-            {
-                NavManager.NavigateTo("/");
-            }
+            NavManager.NavigateTo("/");
         }
-    }
-
-    private bool CheckFormValidation()
-    {
-        var isValid = true;
-        firstNameError = ""; lastNameError = ""; emailError = ""; passwordError = ""; confirmPasswordError = "";
-
-        if (_registerCommand.FirstName == null || _registerCommand.FirstName?.Trim().Length < 3)
-        {
-            firstNameError = "The first name must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (_registerCommand.LastName == null || _registerCommand.LastName?.Trim().Length < 3)
-        {
-            lastNameError = "The last name must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (_registerCommand.Email == null || _registerCommand.Email?.Trim().Length < 6)
-        {
-            emailError = "The email must contain at least 6 characters.";
-            isValid = false;
-        }
-        else if (!new EmailAddressAttribute().IsValid(_registerCommand.Email?.Trim()))
-        {
-            emailError = "The email must be a valid email address.";
-            isValid = false;
-        }
-        if (_registerCommand.Password == null || _registerCommand.Password?.Trim().Length < 6)
-        {
-            passwordError = "The password must contain at least 6 characters.";
-            isValid = false;
-        }
-        if (_registerCommand.ConfirmPassword == null)
-        {
-            confirmPasswordError = "The confirm password must not be empty.";
-            isValid = false;
-        }
-        else if (!_registerCommand.Password.Equals(_registerCommand.ConfirmPassword))
-        {
-            confirmPasswordError = "The passwords do not match.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }

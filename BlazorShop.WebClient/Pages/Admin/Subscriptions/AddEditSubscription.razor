@@ -10,7 +10,8 @@
 <hr />
 
 <EditForm Model="@Subscription" OnValidSubmit="SaveSubscription">
-    <DataAnnotationsValidator />
+    <FluentValidationValidator />
+
     <div class="mb-3">
         <label for="StripeSubscriptionId" class="form-label">Stripe Subscription Id</label>
         <div class="col-md-4">

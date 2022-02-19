@@ -4,7 +4,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavManager
 
-<div class="auth-page">
+<div>
     <div class="container page">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-xs-12">
@@ -13,16 +13,26 @@
                     <FluentValidationValidator />
 
                     <fieldset class="mt-3 form-group">
-                        <input class="form-control form-control-lg" type="email" placeholder="Email" @bind="loginCommand.Email" />
-                        <div role="alert">
-                            <ValidationMessage For="@(() => loginCommand.Email)" />
+                        <div>
+                            <InputText class="form-control form-control-lg" type="email" placeholder="Email" @bind-Value="loginCommand.Email" />
                         </div>
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("email")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => loginCommand.Email)" />
+                            </div>
+                        }
                     </fieldset>
-                    <fieldset class="mt-4 form-group">
-                        <input class="form-control form-control-lg mb-3" type="@TxtType" placeholder="Password" @bind="loginCommand.Password" />
-                        <div role="alert">
-                            <ValidationMessage For="@(() => loginCommand.Password)" />
+                    <fieldset class="mt-2 form-group">
+                        <div>
+                            <InputText class="form-control form-control-lg" type="@TxtType" placeholder="Password" @bind-Value="loginCommand.Password" />
                         </div>
+                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("password")))
+                        {
+                            <div class="mt-1 alert alert-danger" role="alert">
+                                <ValidationMessage For="@(() => loginCommand.Password)" />
+                            </div>
+                        }
                         <span>
                             <input type="checkbox" @onclick="ShowPassword"> Show Password
                         </span>
@@ -43,9 +53,6 @@
     private LoginCommand loginCommand = new();
 
     public string TxtType = "password";
-
-    private string emailError = "";
-    private string passwordError = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,38 +78,11 @@
 
     private async Task ExecuteLogin()
     {
-        if (CheckFormValidation())
+        var result = await AuthService.Login(loginCommand);
+        if (result is not null)
         {
-            var result = await AuthService.Login(loginCommand);
-            if (result is not null)
-            {
-                NavManager.NavigateTo("/");
-            }
+            NavManager.NavigateTo("/");
         }
-    }
-
-    private bool CheckFormValidation()
-    {
-        var isValid = true;
-        emailError = ""; passwordError = "";
-
-        if (loginCommand.Email == null || loginCommand.Email?.Trim().Length < 6)
-        {
-            emailError = "The email must contain at least 6 characters.";
-            isValid = false;
-        }
-        else if (!new EmailAddressAttribute().IsValid(loginCommand.Email?.Trim()))
-        {
-            emailError = "The email must be a valid email address.";
-            isValid = false;
-        }
-        if (loginCommand.Password == null || loginCommand.Password?.Trim().Length < 6)
-        {
-            passwordError = "The password must contain at least 6 characters.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }
 
