@@ -16,7 +16,7 @@
             try
             {
                 var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The subscriber does not exists");
 
                 _dbContext.Subscribers.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

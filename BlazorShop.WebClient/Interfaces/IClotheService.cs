@@ -2,8 +2,6 @@
 {
     public interface IClotheService
     {
-        event Action OnChange;
-
         Task<List<ClotheResponse>> GetClothes();
         Task<ClotheResponse> GetClothe(int id);
         Task<RequestResponse> AddClothe(ClotheResponse clothe);

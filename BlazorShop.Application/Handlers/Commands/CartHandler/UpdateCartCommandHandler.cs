@@ -16,6 +16,7 @@
             try
             {
                 var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
+                if (entity == null) throw new Exception("The cart do not exists");
 
                 entity.Name = request.Name;
                 entity.Price = request.Price;

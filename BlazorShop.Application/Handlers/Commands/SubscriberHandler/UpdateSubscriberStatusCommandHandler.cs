@@ -16,7 +16,7 @@
             try
             {
                 var entity = _dbContext.Subscribers.FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The subscriber does not exists");
 
                 entity.Status = SubscriptionStatus.Inactive;
 

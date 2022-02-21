@@ -5,7 +5,7 @@
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<UpdateTodoItemCommandHandler> _logger;
 
-        public UpdateTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateTodoItemCommandHandler> logger, IMapper mapper)
+        public UpdateTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateTodoItemCommandHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -5,7 +5,7 @@
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<DeleteTodoListCommandHandler> _logger;
 
-        public DeleteTodoListCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteTodoListCommandHandler> logger, IMapper mapper)
+        public DeleteTodoListCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteTodoListCommandHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

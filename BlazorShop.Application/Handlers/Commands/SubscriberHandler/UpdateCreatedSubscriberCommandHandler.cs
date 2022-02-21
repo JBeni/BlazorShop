@@ -21,7 +21,7 @@
                 if (user == null) throw new Exception("The user does not exists");
 
                 var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Customer.Id == user.Id && x.StripeSubscriberSubscriptionId.Equals(""));
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The subscriber does not exists");
 
                 entity.StripeSubscriberSubscriptionId = request.StripeSubscriberSubscriptionId;
                 entity.HostedInvoiceUrl = request.HostedInvoiceUrl;

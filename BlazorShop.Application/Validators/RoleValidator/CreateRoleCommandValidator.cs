@@ -5,7 +5,7 @@
         public CreateRoleCommandValidator()
         {
             RuleFor(v => v.Name)
-                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .MaximumLength(100).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null");
         }

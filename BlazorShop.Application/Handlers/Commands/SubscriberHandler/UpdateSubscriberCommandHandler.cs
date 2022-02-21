@@ -16,9 +16,10 @@
             try
             {
                 var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The subscriber does not exists");
 
                 var subscription = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.SubscriptionId);
+                if (subscription == null) throw new Exception("The subscription does not exists");
 
                 entity.CurrentPeriodEnd = request.CurrentPeriodEnd;
                 entity.CurrentPeriodStart = DateTime.Now;

@@ -5,7 +5,7 @@
         public UpdateSubscriberStatusCommandValidator()
         {
             RuleFor(x => x.StripeSubscriberSubscriptionId)
-                .MaximumLength(500).WithMessage("Maximum length exceeded")
+                .MaximumLength(500).WithMessage("StripeSubscriberSubscriptionId maximum length exceeded")
                 .NotEmpty().WithMessage("StripeSubscriberSubscriptionId must not be empty")
                 .NotNull().WithMessage("StripeSubscriberSubscriptionId must not be null");
         }
