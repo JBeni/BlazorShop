@@ -3,9 +3,9 @@
     public class GetUsersInactiveQueryHandler : IRequestHandler<GetUsersInactiveQuery, Result<UserResponse>>
     {
         private readonly IUserService _userService;
-        private readonly ILogger<GetUsersQueryHandler> _logger;
+        private readonly ILogger<GetUsersInactiveQueryHandler> _logger;
 
-        public GetUsersInactiveQueryHandler(IUserService userService, ILogger<GetUsersQueryHandler> logger)
+        public GetUsersInactiveQueryHandler(IUserService userService, ILogger<GetUsersInactiveQueryHandler> logger)
         {
             _userService = userService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
