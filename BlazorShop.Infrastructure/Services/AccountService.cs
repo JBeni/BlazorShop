@@ -19,18 +19,13 @@
         public async Task<RequestResponse> ChangePasswordUserAsync(ChangePasswordCommand changePassword)
         {
             var user = await _userManager.FindByIdAsync(changePassword.UserId.ToString());
-            if (user == null)
-            {
-                throw new Exception("The user does not exist");
-            }
+            if (user == null) throw new Exception("The user does not exist");
+
             if (!await _userManager.CheckPasswordAsync(user, changePassword.OldPassword))
-            {
                 throw new Exception("The credentials are not valid");
-            }
+
             if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
-            {
                 throw new Exception("Passwords do not match");
-            }
 
             await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
             return RequestResponse.Success();
@@ -83,15 +78,10 @@
         public async Task<JwtTokenResponse> LoginAsync(LoginCommand login)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Email == login.Email);
-            if (user == null)
-            {
-                throw new Exception("Email / password incorrect");
-            }
+            if (user == null) throw new Exception("Email / password incorrect");
+
             var passwordValid = await CheckPasswordAsync(user, login.Password);
-            if (passwordValid == false)
-            {
-                throw new Exception("Email / password incorrect");
-            }
+            if (passwordValid == false) throw new Exception("Email / password incorrect");
 
             return await GenerateToken(user);
         }
@@ -99,46 +89,35 @@
         public async Task<JwtTokenResponse> RegisterAsync(RegisterCommand register)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Email == register.Email);
-            if (existUser == null)
+            if (existUser != null) throw new Exception("The user with the unique identifier already exists");
+
+            var newUser = new User
             {
-                var newUser = new User
-                {
-                    UserName = register.FirstName + "@" + register.LastName,
-                    Email = register.Email,
-                    FirstName = register.FirstName,
-                    LastName = register.LastName,
-                    IsActive = true,
-                };
-                if (!register.Password.Equals(register.ConfirmPassword))
-                {
-                    throw new Exception("Passwords do not match");
-                }
+                UserName = register.FirstName + "@" + register.LastName,
+                Email = register.Email,
+                FirstName = register.FirstName,
+                LastName = register.LastName,
+                IsActive = true,
+            };
+            if (!register.Password.Equals(register.ConfirmPassword))
+                throw new Exception("Passwords do not match");
 
-                await _userManager.CreateAsync(newUser, register.Password);
+            await _userManager.CreateAsync(newUser, register.Password);
 
-                var role = await _roleManager.FindByNameAsync(StringRoleResources.Default);
-                if (role == null) throw new Exception("The role does not exist");
+            var role = await _roleManager.FindByNameAsync(StringRoleResources.Default);
+            if (role == null) throw new Exception("The role does not exist");
 
-                await _userManager.AddToRoleAsync(newUser, role.Name);
-                return await GenerateToken(newUser);
-            }
-            else
-            {
-                throw new Exception("The user with the unique identifier already exists");
-            }
+            await _userManager.AddToRoleAsync(newUser, role.Name);
+            return await GenerateToken(newUser);
         }
 
         public async Task<RequestResponse> ResetPasswordUserAsync(ResetPasswordCommand resetPassword)
         {
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);
-            if (user == null)
-            {
-                throw new Exception("The user does not exist");
-            }
+            if (user == null) throw new Exception("The user does not exist");
+            
             if (!resetPassword.NewPassword.Equals(resetPassword.NewConfirmPassword))
-            {
                 throw new Exception("Passwords do not match");
-            }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
