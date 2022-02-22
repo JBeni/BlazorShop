@@ -23,6 +23,7 @@
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.UserName == command.Email && u.IsActive == true);
             if (existUser != null) throw new Exception("The user with the unique identifier already exists");
+
             var newUser = new User
             {
                 UserName = command.FirstName + "@" + command.LastName,
@@ -86,12 +87,6 @@
         public async Task<List<string>> GetUserRoleAsync(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
-
-            //var userWithRole = await _userManager.Users
-            //    .Include(u => u.Roles)
-            //    .Where(x => x.Email == user.Email && x.Id == user.Id)
-            //    .ProjectTo<AppUserResponse>(_mapper.ConfigurationProvider)
-            //    .ToListAsync();
             return userRoles.ToList();
         }
 
@@ -127,7 +122,8 @@
 
         public async Task<RequestResponse> UpdateUserEmailAsync(UpdateUserEmailCommand command)
         {
-            var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.UserId && u.Email == command.Email && u.IsActive == true);
+            var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.UserId &&
+                u.Email == command.Email && u.IsActive == true);
             if (existUser == null) throw new Exception("The user does not exists");
 
             var userWithNewEmail = await _userManager.FindByEmailAsync(command.NewEmail);
@@ -161,10 +157,10 @@
         {
             var user = await _userManager.FindByIdAsync(command.UserId.ToString());
             var userRole = await _userManager.GetRolesAsync(user);
-            var resultDelete = await _userManager.RemoveFromRoleAsync(user, userRole[0]);
+            await _userManager.RemoveFromRoleAsync(user, userRole[0]);
 
             var role = await _roleService.FindRoleByIdAsync(command.RoleId);
-            var resultAdd = await _userManager.AddToRoleAsync(user, role.Name);
+            await _userManager.AddToRoleAsync(user, role.Name);
 
             return RequestResponse.Success(user.Id);
         }

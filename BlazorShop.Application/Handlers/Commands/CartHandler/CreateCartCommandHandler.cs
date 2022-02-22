@@ -19,6 +19,7 @@
             {
                 var clothe = _dbContext.Clothes.FirstOrDefault(x => x.Id == request.ClotheId);
                 var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+                if (user == null) throw new Exception("The user does not exists");
 
                 var entity = new Cart
                 {

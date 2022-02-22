@@ -3,9 +3,9 @@
     public class GetRolesForAdminQueryHandler : IRequestHandler<GetRolesForAdminQuery, Result<RoleResponse>>
     {
         private readonly IRoleService _roleService;
-        private readonly ILogger<GetRolesQueryHandler> _logger;
+        private readonly ILogger<GetRolesForAdminQueryHandler> _logger;
 
-        public GetRolesForAdminQueryHandler(IRoleService roleService, ILogger<GetRolesQueryHandler> logger)
+        public GetRolesForAdminQueryHandler(IRoleService roleService, ILogger<GetRolesForAdminQueryHandler> logger)
         {
             _roleService = roleService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -6,8 +6,6 @@
         private readonly IToastService _toastService;
         private readonly JsonSerializerOptions _options;
 
-        public event Action OnChange;
-
         public ClotheService(HttpClient httpClient, IToastService toastService)
         {
             _httpClient = httpClient;

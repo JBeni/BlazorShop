@@ -11,8 +11,6 @@
             ));
 
             // Inject services
-
-            //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddTransient<IAccountService, AccountService>();

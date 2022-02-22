@@ -16,7 +16,7 @@
             try
             {
                 var entity = _dbContext.Receipts.SingleOrDefault(d => d.Id == request.Id);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The receipt does not exists");
 
                 entity.ReceiptDate = request.ReceiptDate;
                 entity.ReceiptName = request.ReceiptName;

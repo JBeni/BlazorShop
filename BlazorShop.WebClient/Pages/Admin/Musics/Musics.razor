@@ -92,8 +92,8 @@ else
     void ModalCancel() => showModal = false;
     void ModalOk() => showModal = false;
 
-    protected MusicResponse music = new();
-    protected List<MusicResponse> musicsList { get; set; }
+    protected MusicResponse? music = new();
+    protected List<MusicResponse>? musicsList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

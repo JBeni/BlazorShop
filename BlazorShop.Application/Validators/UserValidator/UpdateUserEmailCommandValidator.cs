@@ -8,16 +8,16 @@
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
 
             RuleFor(v => v.Email)
-                .MaximumLength(150).WithMessage("Maximum length exceeded")
+                .MaximumLength(150).WithMessage("Email maximum length exceeded")
                 .NotEmpty().WithMessage("Email must not be empty")
                 .NotNull().WithMessage("Email must not be null")
                 .Must(IsValidEmailAddress).WithMessage("The Email address is not valid");
 
             RuleFor(v => v.NewEmail)
-                .MaximumLength(150).WithMessage("Maximum length exceeded")
+                .MaximumLength(150).WithMessage("NewEmail maximum length exceeded")
                 .NotEmpty().WithMessage("NewEmail must not be empty")
                 .NotNull().WithMessage("NewEmail must not be null")
-                .NotEqual(v => v.NewEmail).WithMessage("NewEmail must not be equal with Email")
+                .NotEqual(v => v.Email).WithMessage("NewEmail must not be equal with Email")
                 .Must(IsValidEmailAddress).WithMessage("The NewEmail address is not valid");
         }
 

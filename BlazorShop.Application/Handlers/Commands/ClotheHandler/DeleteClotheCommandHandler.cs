@@ -16,6 +16,8 @@
             try
             {
                 var entity = _dbContext.Clothes.SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
+                if (entity == null) throw new Exception("The clothe does not exists");
+
                 entity.IsActive = false;
 
                 _dbContext.Clothes.Update(entity);

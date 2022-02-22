@@ -40,7 +40,7 @@
                                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                                     @if (subscriptions.Count == 0)
                                     {
-                                        <div class="col" style="height:">
+                                        <div class="col" style="">
                                             <div class="card mb-4 rounded-3 shadow-sm">
                                                 <div class="card-body">
                                                     <h4 class="card-title pricing-card-title">
@@ -52,7 +52,7 @@
                                     }
                                     @foreach (var subscription in subscriptions)
                                     {
-                                        <div class="col" style="height:">
+                                        <div class="col" style="">
                                             <div class="card mb-4 rounded-3 shadow-sm">
                                                 <div class="card-header py-3">
                                                     <h4 class="my-0 fw-normal">@subscription.Name</h4>
@@ -204,11 +204,11 @@
     private string Title = "Activate";
 
     private int UserId { get; set; }
-    private string UserEmail { get; set; }
+    private string? UserEmail { get; set; }
 
     private List<SubscriptionResponse> subscriptions = new();
 
-    protected string SearchString { get; set; } = string.Empty;
+    protected string? SearchString { get; set; } = string.Empty;
     private SubscriberResponse subscriptionActive = new();
 
     private List<SubscriberResponse> subscriptionsInactive = new();
@@ -220,8 +220,8 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        UserEmail = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
-        UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
+        UserEmail = user?.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
+        UserId = int.Parse(user?.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
 
         await GetUserSubscriptions(UserId);
         await GetActveSubscription(UserId);

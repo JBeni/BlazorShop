@@ -5,12 +5,12 @@
         public UpdateCreatedSubscriberCommandValidator()
         {
             RuleFor(x => x.CurrentPeriodStart)
-                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal than Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("CurrentPeriodStart must be greater or equal than Current Date")
                 .NotEmpty().WithMessage("CurrentPeriodStart must not be empty")
                 .NotNull().WithMessage("CurrentPeriodStart must not be null");
 
             RuleFor(x => x.CurrentPeriodEnd)
-                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal than Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("CurrentPeriodEnd must be greater or equal than Current Date")
                 .NotEmpty().WithMessage("CurrentPeriodEnd must not be empty")
                 .NotNull().WithMessage("CurrentPeriodEnd must not be null");
 
@@ -19,12 +19,12 @@
                 .NotNull().WithMessage("CustomerEmail must not be null");
 
             RuleFor(x => x.StripeSubscriberSubscriptionId)
-                .MaximumLength(500).WithMessage("Maximum length exceeded")
+                .MaximumLength(500).WithMessage("StripeSubscriberSubscriptionId maximum length exceeded")
                 .NotEmpty().WithMessage("StripeSubscriberSubscriptionId must not be empty")
                 .NotNull().WithMessage("StripeSubscriberSubscriptionId must not be null");
 
             RuleFor(x => x.HostedInvoiceUrl)
-                .MaximumLength(700).WithMessage("Maximum length exceeded")
+                .MaximumLength(700).WithMessage("HostedInvoiceUrl maximum length exceeded")
                 .NotEmpty().WithMessage("HostedInvoiceUrl must not be empty")
                 .NotNull().WithMessage("HostedInvoiceUrl must not be null");
         }

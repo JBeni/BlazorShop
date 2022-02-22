@@ -15,7 +15,7 @@
                 .MustAsync(HaveUniqueName).WithMessage("The name already exists.");
 
             _ = RuleFor(v => v.Description)
-                .MaximumLength(1000).WithMessage("Maximum length exceeded")
+                .MaximumLength(1000).WithMessage("Description maximum length exceeded")
                 .NotEmpty().WithMessage("Description must not be empty")
                 .NotNull().WithMessage("Description must not be null");
 
@@ -26,12 +26,12 @@
                 .GreaterThan(0).WithMessage("Price must be greater than 0");
 
             _ = RuleFor(v => v.ImageName)
-                .MaximumLength(200).WithMessage("Maximum length exceeded")
+                .MaximumLength(200).WithMessage("ImageName maximum length exceeded")
                 .NotEmpty().WithMessage("ImageName must not be empty")
                 .NotNull().WithMessage("ImageName must not be null");
 
             _ = RuleFor(v => v.ImagePath)
-                .MaximumLength(200).WithMessage("Maximum length exceeded")
+                .MaximumLength(200).WithMessage("ImagePath maximum length exceeded")
                 .NotEmpty().WithMessage("ImagePath must not be empty")
                 .NotNull().WithMessage("ImagePath must not be null");
         }

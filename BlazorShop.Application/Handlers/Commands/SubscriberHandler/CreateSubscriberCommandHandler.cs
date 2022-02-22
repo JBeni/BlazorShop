@@ -18,7 +18,7 @@
             try
             {
                 Subscriber entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
-                if (entity != null) throw new Exception("The entity already exists");
+                if (entity != null) throw new Exception("The subscriber already exists");
 
                 var customer = await _userService.FindUserByIdAsync(request.CustomerId);
                 var subscription = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.SubscriptionId);

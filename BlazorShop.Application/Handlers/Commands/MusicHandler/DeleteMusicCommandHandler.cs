@@ -16,7 +16,7 @@
             try
             {
                 var entity = _dbContext.Musics.FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The music does not exists");
 
                 _dbContext.Musics.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

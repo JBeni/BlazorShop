@@ -16,6 +16,7 @@
             try
             {
                 var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
+                if (entity == null) throw new Exception("The cart does not exists");
 
                 _dbContext.Carts.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

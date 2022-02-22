@@ -3,9 +3,9 @@
     public class ActivateUserCommandHandler : IRequestHandler<ActivateUserCommand, RequestResponse>
     {
         private readonly IUserService _userService;
-        private readonly ILogger<UpdateUserCommandHandler> _logger;
+        private readonly ILogger<ActivateUserCommandHandler> _logger;
 
-        public ActivateUserCommandHandler(IUserService userService, ILogger<UpdateUserCommandHandler> logger)
+        public ActivateUserCommandHandler(IUserService userService, ILogger<ActivateUserCommandHandler> logger)
         {
             _userService = userService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

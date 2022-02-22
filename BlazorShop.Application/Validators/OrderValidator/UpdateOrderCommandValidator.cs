@@ -8,17 +8,17 @@
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
             RuleFor(v => v.UserEmail)
-                .MaximumLength(100).WithMessage("Maximum length exceeded")
+                .MaximumLength(100).WithMessage("UserEmail maximum length exceeded")
                 .NotEmpty().WithMessage("UserEmail must not be empty")
                 .NotNull().WithMessage("UserEmail must not be null");
 
             RuleFor(v => v.OrderDate)
-                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("Date must be greater or equal with Current Date")
+                .GreaterThanOrEqualTo(DateTime.Now.AddDays(-1)).WithMessage("OrderDate must be greater or equal with Current Date")
                 .NotEmpty().WithMessage("OrderDate must not be empty")
                 .NotNull().WithMessage("OrderDate must not be null");
 
             RuleFor(v => v.LineItems)
-                .MaximumLength(10000).WithMessage("Maximum length exceeded")
+                .MaximumLength(10000).WithMessage("LineItems maximum length exceeded")
                 .NotEmpty().WithMessage("LineItems must not be empty")
                 .NotNull().WithMessage("LineItems must not be null");
 

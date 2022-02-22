@@ -25,7 +25,8 @@
         public RoleResponse GetDefaultRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == StringRoleResources.Default && x.NormalizedName == StringRoleResources.DefaultNormalized)
+                .Where(x => x.Name == StringRoleResources.Default &&
+                    x.NormalizedName == StringRoleResources.DefaultNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
@@ -34,7 +35,8 @@
         public RoleResponse GetUserRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == StringRoleResources.User && x.NormalizedName == StringRoleResources.UserNormalized)
+                .Where(x => x.Name == StringRoleResources.User &&
+                    x.NormalizedName == StringRoleResources.UserNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
@@ -43,7 +45,8 @@
         public RoleResponse GetAdminRole()
         {
             var role = _roleManager.Roles
-                .Where(x => x.Name == StringRoleResources.Admin && x.NormalizedName == StringRoleResources.AdminNormalized)
+                .Where(x => x.Name == StringRoleResources.Admin &&
+                    x.NormalizedName == StringRoleResources.AdminNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
@@ -72,7 +75,8 @@
         public List<RoleResponse> GetRoles()
         {
             var result = _roleManager.Roles
-                .Where(x => x.Name != StringRoleResources.Admin && x.NormalizedName != StringRoleResources.AdminNormalized)
+                .Where(x => x.Name != StringRoleResources.Admin &&
+                    x.NormalizedName != StringRoleResources.AdminNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .ToList();
             return result;

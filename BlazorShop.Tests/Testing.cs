@@ -50,8 +50,7 @@
         public static async Task ResetState()
         {
             await _checkpoint.Reset(_configuration.GetConnectionString("WebApiConnection"));
-
-            _currentUserId = null;
+            //_currentUserId = null;
         }
 
         public static async Task<TEntity> FindAsync<TEntity>(int id)

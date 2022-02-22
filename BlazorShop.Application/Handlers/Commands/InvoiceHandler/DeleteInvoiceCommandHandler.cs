@@ -16,7 +16,7 @@
             try
             {
                 var entity = _dbContext.Invoices.SingleOrDefault(d => d.Id == request.Id);
-                if (entity == null) throw new Exception("The entity does not exists");
+                if (entity == null) throw new Exception("The invoice does not exists");
 
                 _dbContext.Invoices.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);

@@ -3,7 +3,6 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject HttpClient httpClient
-@implements IDisposable
 
 <PageTitle>Blazor Shop</PageTitle>
 
@@ -83,12 +82,6 @@
         {
             counts = await GetCartCount(userId);            
         }
-        CartService.OnChange += StateHasChanged;
-    }
-
-    public void Dispose()
-    {
-        CartService.OnChange -= StateHasChanged;
     }
 
     private async Task<int> GetCartCount(int userId)

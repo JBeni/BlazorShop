@@ -5,7 +5,7 @@
         private readonly IApplicationDbContext _dbContext;
         private readonly ILogger<DeleteTodoItemCommandHandler> _logger;
 
-        public DeleteTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteTodoItemCommandHandler> logger, IMapper mapper)
+        public DeleteTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteTodoItemCommandHandler> logger)
         {
             _dbContext = dbContext;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
