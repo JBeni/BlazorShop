@@ -126,6 +126,27 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
+    /**
+     * Security Headers for Website
+     */
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+        context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+        context.Response.Headers.Add("Referrer-Policy", "same-origin");
+        context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
+        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src " +
+            "self  " +
+            "https://maxcdn.bootstrapcdn.com  " +
+            "https://login.microsoftonline.com " +
+            "https://sshmantest.azurewebsites.net " +
+            "https://code.jquery.com https://dc.services.visualstudio.com " +
+            " 'unsafe-inline' 'unsafe-eval'");
+        context.Response.Headers.Add("SameSite", "Strict");
+        context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+        await next();
+    });
+
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllerRoute(
