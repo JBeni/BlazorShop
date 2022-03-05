@@ -1,3 +1,5 @@
+using MudBlazor.Services;
+
 try
 {
     var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -17,6 +19,7 @@ try
     builder.Services.AddOptions();
     builder.Services.AddMatBlazor();
     builder.Services.AddLoadingBar();
+    builder.Services.AddMudServices();
 
     builder.Services.AddSingleton<IJSInProcessRuntime>(services =>
         (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
