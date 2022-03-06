@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="MudBlazor" Version="6.0.7" />
     <PackageReference Include="Radzen.Blazor" Version="3.14.2" />
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Toolbelt.Blazor.LoadingBar" Version="13.1.2" />
