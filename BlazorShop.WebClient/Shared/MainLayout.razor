@@ -76,7 +76,9 @@
         var user = authstate.User;
 
         if (!user.Identity.IsAuthenticated) return;
-        username = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.NameClaim).Value.Replace("@", " ");
+        username = user.Claims.FirstOrDefault(
+            x => x.Type == StringRoleResources.NameClaim || x.Type == StringRoleResources.NameClaimSecond
+        ).Value.Replace("@", " ");
         userId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
         userRole = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.RoleClaim).Value;
 

@@ -13,7 +13,10 @@
         public const string DefaultNormalized = "DEFAULT";
 
         public const string UserIdClaim = "UserId";
+        
         public const string NameClaim = "unique_name";
+        public const string NameClaimSecond = "name";
+
         public const string EmailClaim = "email";
         public const string RoleClaim = "role";
     }

@@ -47,7 +47,7 @@ else
         if (authState.User.Identity.IsAuthenticated)
         {
             isAuthenticated = true;
-            userName = authState.User.FindFirst(x => x.Type == StringRoleResources.NameClaim).Value;
+            userName = authState.User.FindFirst(x => x.Type == StringRoleResources.NameClaim || x.Type == StringRoleResources.NameClaimSecond).Value;
 
             isAdminRole = authState.User.IsInRole(StringRoleResources.Admin);
             isUserRole = authState.User.IsInRole(StringRoleResources.User);
