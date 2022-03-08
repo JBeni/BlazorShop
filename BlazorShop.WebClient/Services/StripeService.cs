@@ -1,16 +1,18 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿using MudBlazor;
+
+namespace BlazorShop.WebClient.Services
 {
     public class StripeService : IStripeService
     {
         private readonly HttpClient _httpClient;
-        private readonly IToastService _toastService;
+        private readonly ISnackbar _snackBar;
         private readonly JsonSerializerOptions _options;
 
-        public StripeService(HttpClient httpClient, IToastService toastService)
+        public StripeService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;
-            _toastService = toastService;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _snackBar = snackBar;
         }
 
         public async Task CancelMembership(string stripeSubscriptionCreationId)
@@ -23,11 +25,11 @@
                     responseResult, _options
                 );
 
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _toastService.ShowSuccess("Subscription was cancelled.");
+                _snackBar.Add("Subscription was cancelled.", Severity.Success);
             }
         }
     }

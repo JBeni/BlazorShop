@@ -1,16 +1,17 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿
+namespace BlazorShop.WebClient.Services
 {
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
-        private readonly IToastService _toastService;
+        private readonly ISnackbar _snackBar;
         private readonly JsonSerializerOptions _options;
 
-        public UserService(HttpClient httpClient, IToastService toastService)
+        public UserService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;
-            _toastService = toastService;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _snackBar = snackBar;
         }
 
         public async Task<RequestResponse> AddUser(UserResponse user)
@@ -31,11 +32,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The user was added.");
+            _snackBar.Add("The user was added.", Severity.Success);
             return result;
         }
 
@@ -54,11 +55,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The user was activated.");
+            _snackBar.Add("The user was activated.", Severity.Success);
             return result;
         }
 
@@ -72,11 +73,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The user was deleted.");
+            _snackBar.Add("The user was deleted.", Severity.Success);
             return result;
         }
 
@@ -90,7 +91,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -107,7 +108,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -124,7 +125,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -149,11 +150,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The user was updated.");
+            _snackBar.Add("The user was updated.", Severity.Success);
             return result;
         }
 
@@ -167,11 +168,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The user email address was updated.");
+            _snackBar.Add("The user email address was updated.", Severity.Success);
             return result;
         }
     }

@@ -1,16 +1,18 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿using MudBlazor;
+
+namespace BlazorShop.WebClient.Services
 {
     public class RoleService : IRoleService
     {
         private readonly HttpClient _httpClient;
-        private readonly IToastService _toastService;
+        private readonly ISnackbar _snackBar;
         private readonly JsonSerializerOptions _options;
 
-        public RoleService(HttpClient httpClient, IToastService toastService)
+        public RoleService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;
-            _toastService = toastService;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _snackBar = snackBar;
         }
 
         public async Task<RequestResponse> AddRole(RoleResponse role)
@@ -23,11 +25,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The role was added.");
+            _snackBar.Add("The role was added.", Severity.Success);
             return result;
         }
 
@@ -41,11 +43,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The role was deleted.");
+            _snackBar.Add("The role was deleted.", Severity.Success);
             return result;
         }
 
@@ -59,7 +61,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -76,7 +78,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -93,7 +95,7 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return null;
             }
 
@@ -115,11 +117,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The role was updated.");
+            _snackBar.Add("The role was updated.", Severity.Success);
             return result;
         }
     }

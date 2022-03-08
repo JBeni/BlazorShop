@@ -1,15 +1,17 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿using MudBlazor;
+
+namespace BlazorShop.WebClient.Services
 {
     public class AccountService : IAccountService
     {
         private readonly HttpClient _httpClient;
-        private readonly IToastService _toastService;
+        private readonly ISnackbar _snackBar;
         private readonly JsonSerializerOptions _options;
 
-        public AccountService(HttpClient httpClient, IToastService toastService)
+        public AccountService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;
-            _toastService = toastService;
+            _snackBar = snackBar;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
@@ -23,11 +25,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The password was changed.");
+            _snackBar.Add("The password was changed.", Severity.Success);
             return result;
         }
 
@@ -48,11 +50,11 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _toastService.ShowError(result.Error);
+                _snackBar.Add(result.Error, Severity.Error);
                 return result;
             }
 
-            _toastService.ShowSuccess("The password was reset.");
+            _snackBar.Add("The password was reset.", Severity.Success);
             return result;
         }
     }
