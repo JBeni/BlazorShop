@@ -14,35 +14,32 @@
 
                     <fieldset class="mt-3 form-group">
                         <div>
-                            <InputText class="form-control form-control-lg" type="email" placeholder="Email" @bind-Value="loginCommand.Email" />
+                            <MudTextField class="form-control form-control-lg" InputType="InputType.Email"
+                                @bind-Value="loginCommand.Email" Label="Email"
+                                For="@(() => loginCommand.Email)"
+                                Variant="Variant.Outlined"></MudTextField>
                         </div>
-                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("email")))
-                        {
-                            <div class="mt-1 alert alert-danger" role="alert">
-                                <ValidationMessage For="@(() => loginCommand.Email)" />
-                            </div>
-                        }
                     </fieldset>
                     <fieldset class="mt-2 form-group">
                         <div>
-                            <InputText class="form-control form-control-lg" type="@TxtType" placeholder="Password" @bind-Value="loginCommand.Password" />
+                            <MudTextField InputType="@TxtType" class="form-control form-control-lg"
+                                @bind-Value="loginCommand.Password" Label="Password"
+                                For="@(() => loginCommand.Password)"
+                                Variant="Variant.Outlined"></MudTextField>
                         </div>
-                        @if (context.GetValidationMessages().Any(x => x.ToLower().Contains("password")))
-                        {
-                            <div class="mt-1 alert alert-danger" role="alert">
-                                <ValidationMessage For="@(() => loginCommand.Password)" />
-                            </div>
-                        }
                         <span>
-                            <input type="checkbox" @onclick="ShowPassword"> Show Password
+                            <MudCheckBox @bind-Checked="@showPassword" Color="Color.Primary" @onclick="ShowPassword" />
+                            Show Password
                         </span>
                     </fieldset>
                     <fieldset class="mt-3 text-xs-center">
-                        <a href="reset-password"><strong>Forgot your password?</strong></a>
+                        <MudLink Href="reset-password" Underline="Underline.None"><strong>Forgot your password?</strong></MudLink>
                     </fieldset>
-                    <button class="mt-3 btn btn-lg btn-primary pull-xs-right" type="submit">
-                        Login
-                    </button>
+                    <MudButton class="mt-3 btn btn-lg btn-primary pull-xs-right"
+                        Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Login"
+                        Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+                            Login
+                    </MudButton>
                 </EditForm>
             </div>
         </div>
@@ -52,7 +49,8 @@
 @code {
     private LoginCommand loginCommand = new();
 
-    public string TxtType = "password";
+    public MudBlazor.InputType TxtType = InputType.Password;
+    public bool showPassword { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -66,13 +64,13 @@
 
     public void ShowPassword() 
     {
-        if(TxtType== "password")
+        if(showPassword == false)
         {
-            TxtType = "text";
+            TxtType = InputType.Text;
         }
         else
         {
-            TxtType = "password";
+            TxtType = InputType.Password;
         }
     }
 

@@ -6,46 +6,48 @@
 
 <PageTitle>Blazor Shop</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row" style="z-index: 100;">
-            <AuthorizeView>
-                <NotAuthorized>
-                    <NavLink class="nav-link" href="login">
-                        <span class="oi oi-account-login" aria-hidden="true"></span> Login
-                    </NavLink>
-                    <NavLink class="nav-link" href="register">
-                        <span class="oi oi-share-boxed" aria-hidden="true"></span> Register
-                    </NavLink>
-                </NotAuthorized>
-            </AuthorizeView>
-
-            <AuthorizeView Policy="Customer">
-                <Authorized>
-                    Welcome @username
-                    <NavLink href="cart" class="nav-link">
-                        <i class="oi oi-cart"></i>
-                        Cart (<span>@counts</span>)
-                    </NavLink>
-                </Authorized>
-            </AuthorizeView>
-
-            <AuthorizeView Policy="Admin">
-                <Authorized>
-                    Welcome @username
-                </Authorized>
-            </AuthorizeView>
+<MudLayout>
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu />
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        <main>
+            <div class="top-row" style="z-index: 100;">
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <NavLink class="nav-link" href="login">
+                            <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                        </NavLink>
+                        <NavLink class="nav-link" href="register">
+                            <span class="oi oi-share-boxed" aria-hidden="true"></span> Register
+                        </NavLink>
+                    </NotAuthorized>
+                </AuthorizeView>
+
+                <AuthorizeView Policy="Customer">
+                    <Authorized>
+                        Welcome @username
+                        <NavLink href="cart" class="nav-link">
+                            <i class="oi oi-cart"></i>
+                            Cart (<span>@counts</span>)
+                        </NavLink>
+                    </Authorized>
+                </AuthorizeView>
+
+                <AuthorizeView Policy="Admin">
+                    <Authorized>
+                        Welcome @username
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+</MudLayout>
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -61,7 +63,7 @@
 
 @code {
     [CascadingParameter] AppState AppState { get; set; }
-
+    private bool _drawerOpen = true;
     private int counts { get; set; }
 
     private string username { get; set; }
@@ -88,6 +90,11 @@
         {
             counts = await GetCartCount(userId);            
         }
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
     }
 
     private async Task<int> GetCartCount(int userId)

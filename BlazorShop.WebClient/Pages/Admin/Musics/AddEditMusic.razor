@@ -13,100 +13,66 @@
     <FluentValidationValidator />
 
     <div class="mb-3">
-        <label for="Title" class="form-label">Title</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="music.Title" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.Title" Label="Title"
+                For="@(() => music.Title)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.Title)" />
-        @if (titleError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@titleError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Description" class="form-label">Description</label>
         <div class="col-md-4">
-            <InputTextArea class="form-control" @bind-Value="music.Description" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.Description" Label="Description"
+                For="@(() => music.Description)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.Description)" />
-        @if (descriptionError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@descriptionError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Author" class="form-label">Author</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="music.Author" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.Author" Label="Author"
+                For="@(() => music.Author)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.Author)" />
-        @if (authorError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@authorError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="DateRelease" class="form-label">Date Release</label>
         <div class="col-md-4">
             <MatDatePicker @bind-Value="@music.DateRelease" Format="dd/MM/yyyy"></MatDatePicker>
         </div>
-        <ValidationMessage For="@(() => music.DateRelease)" />
-        @if (dateReleaseError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@dateReleaseError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="ImageName" class="form-label">ImageName</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="music.ImageName" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.ImageName" Label="ImageName"
+                For="@(() => music.ImageName)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.ImageName)" />
-        @if (imageNameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@imageNameError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="ImagePath" class="form-label">ImagePath</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="music.ImagePath" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.ImagePath" Label="ImagePath"
+                For="@(() => music.ImagePath)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.ImagePath)" />
-        @if (imagePathError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@imagePathError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="AccessLevel" class="form-label">Access Level</label>
         <div class="col-md-4">
-            <InputNumber class="form-control" Min="1" @bind-Value="music.AccessLevel" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="music.AccessLevel" Label="AccessLevel"
+                For="@(() => music.AccessLevel)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => music.AccessLevel)" />
-        @if (accessLevelError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@accessLevelError</p>
-            </div>
-        }
     </div>
 
     <div class="form-group" style="margin-bottom: 25px;">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+            Save
+        </MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+            Cancel
+        </MudButton>
     </div>
 </EditForm>
 
@@ -115,14 +81,6 @@
     public int Id { get; set; }
     protected string Title = "Add";
     public MusicResponse music = new();
-
-    private string accessLevelError = "";
-    private string titleError = "";
-    private string descriptionError = "";
-    private string authorError = "";
-    private string dateReleaseError =  "";
-    private string imageNameError = "";
-    private string imagePathError = "";
 
     protected override void OnInitialized() { }
 
@@ -138,70 +96,22 @@
     protected async Task SaveMusic()
     {
         RequestResponse result = new RequestResponse();
-        if (CheckFormValidation())
+        if (music.Id != 0)
         {
-            if (music.Id != 0)
-            {
-                result = await MusicService.UpdateMusic(music);
-            }
-            else
-            {
-                result = await MusicService.AddMusic(music);
-            }
-            if (result.Successful)
-            {
-                Cancel();
-            }
+            result = await MusicService.UpdateMusic(music);
+        }
+        else
+        {
+            result = await MusicService.AddMusic(music);
+        }
+        if (result.Successful)
+        {
+            Cancel();
         }
     }
 
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/musics");
-    }
-
-    private bool CheckFormValidation()
-    {
-        var isValid = true;
-        titleError = ""; descriptionError = ""; authorError = ""; accessLevelError = "";
-        dateReleaseError =  ""; imageNameError = ""; imagePathError = "";
-
-        if (music.Title == null || music.Title?.Trim().Length < 3)
-        {
-            titleError = "The title must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (music.Description == null || music.Description?.Trim().Length < 20)
-        {
-            descriptionError = "The description must contain at least 20 characters.";
-            isValid = false;
-        }
-        if (music.Author == null || music.Author?.Trim().Length < 5)
-        {
-            authorError = "The author must contain at least 5 characters.";
-            isValid = false;
-        }
-        if (music.DateRelease.Date.ToLocalTime() < new DateTime(1920, 1, 1))
-        {
-            dateReleaseError = "The date must be from present.";
-            isValid = false;
-        }
-        if (music.ImageName == null || music.ImageName?.Trim().Length < 4)
-        {
-            imageNameError = "The image name must contain at least 4 characters.";
-            isValid = false;
-        }
-        if (music.ImagePath == null || music.ImagePath?.Trim().Length < 4)
-        {
-            imagePathError = "The image path must contain at least 4 characters.";
-            isValid = false;
-        }
-        if (music.AccessLevel <= 0)
-        {
-            accessLevelError = "The field must not be empty.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }

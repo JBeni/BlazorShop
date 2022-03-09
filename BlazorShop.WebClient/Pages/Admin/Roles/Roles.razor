@@ -41,6 +41,14 @@ else
                     <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
                         Delete
                     </button>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit"
+                        Color="Color.Success" @onclick="() => NavigateToPage(context.Id)">
+                        Edit
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                        Color="Color.Error" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                        Delete
+                    </MudButton>
                 </td>
             </MatTableRow>
         </MatTable>
@@ -52,16 +60,24 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Delete role</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Close"
+                                Color="Color.Warning" @onclick="@ModalCancel"
+                                data-bs-dismiss="modal" aria-label="Close">
+                                Close
+                            </MudButton>
                         </div>
                         <div class="modal-body">
                             <h4>Do you want to delete this role?</h4>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                await DeleteRole(role.Id); ModalOk();
-                            })">Delete</button>
-                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                            <MudButton class="mr-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                                Color="Color.Error" @onclick="(async () => { await DeleteRole(role.Id); ModalOk(); })">
+                                Delete
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                                Color="Color.Warning" @onclick="@ModalCancel">
+                                Cancel
+                            </MudButton>
                         </div>
                     </div>
                 </div>
@@ -127,6 +143,12 @@ else
     {
         SearchString = string.Empty;
         rolesList = searchRolesData;
+    }
+
+
+    private void NavigateToPage(int id)
+    {
+        NavManager.NavigateTo($"admin/roles/edit/{id}");
     }
 }
 

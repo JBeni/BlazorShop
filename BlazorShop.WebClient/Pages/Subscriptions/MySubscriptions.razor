@@ -16,9 +16,12 @@
             <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 10px;">My Subscriptions</h1>
 
             <h2 class="col-xxl-12 d-flex flex-row-reverse" style="margin-left: -75px; margin-top: -60px; border: none;">
-                <button type="button" class="btn btn-lg btn-outline-primary" @onclick="(() => ModalShow())">
-                    @Title Membership
-                </button>
+                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save"
+                    class="btn btn-lg btn-outline-primary"
+                    @onclick="(() => ModalShow())"
+                    Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Button">
+                        @Title Membership
+                </MudButton>
             </h2>
         </div>
     </div>
@@ -67,9 +70,11 @@
                                                             <li>@item</li>                                                                
                                                         }
                                                     </ul>
-                                                    <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                                        await ActivateMembership(subscription); ModalOk();
-                                                    })">@Title @subscription.Name Plan</button>
+                                                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Subscriptions"
+                                                        Color="Color.Success"
+                                                        @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
+                                                            @Title @subscription.Name Plan
+                                                    </MudButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +91,10 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                            Color="Color.Warning" @onclick="@ModalCancel">
+                                Cancel
+                        </MudButton>
                     </div>
                 </div>
             </div>

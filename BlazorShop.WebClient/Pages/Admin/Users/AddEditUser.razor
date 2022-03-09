@@ -14,67 +14,46 @@
     <FluentValidationValidator />
 
     <div class="mb-3">
-        <label for="FirstName" class="form-label">FirstName</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="User.FirstName" />
+            <MudTextField InputType="InputType.Text" class="form-control"
+                For="@(() => User.FirstName)"
+                @bind-Value="User.FirstName" Label="FirstName" Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => User.FirstName)" />
-        @if (firstNameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@firstNameError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="LastName" class="form-label">LastName</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="User.LastName" />
+            <MudTextField InputType="InputType.Text" class="form-control"
+                For="@(() => User.LastName)"
+                @bind-Value="User.LastName" Label="LastName" Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => User.LastName)" />
-        @if (lastNameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@lastNameError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Email" class="form-label">Email</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="User.Email" />
+            <MudTextField InputType="InputType.Email" class="form-control"
+                For="@(() => User.Email)"
+                @bind-Value="User.Email" Label="LastName" Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => User.Email)" />
-        @if (emailError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@emailError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="RoleName" class="form-label">RoleName</label>
         <div class="col-md-4">
-            <InputSelect class="form-control" @bind-Value="User.RoleName">
-                <option value="">-- Select Role Name --</option>
-                @foreach (var role in roles)
-                {
-                    <option value="@role.Name">@role.Name</option>
-                }
-            </InputSelect>
+            <MudSelect T="string" InputType="InputType.Text" @bind-Value="@User.RoleName"
+                For="@(() => User.RoleName)"
+                Placeholder="Select Role Name" Label="Role Name" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var role in roles)
+                    {
+                        <MudSelectItem Value="@role.Name">@role.Name</MudSelectItem>
+                    }
+            </MudSelect>
         </div>
-        <ValidationMessage For="@(() => User.RoleName)" />
-        @if (roleNameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@roleNameError</p>
-            </div>
-        }
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+            Save
+        </MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+            Cancel
+        </MudButton>
     </div>
 </EditForm>
 
@@ -85,11 +64,6 @@
 
     public UserResponse User = new();
     protected List<RoleResponse> roles = new();
-
-    private string firstNameError = "";
-    private string lastNameError = "";
-    private string emailError = "";
-    private string roleNameError = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -108,59 +82,22 @@
     protected async Task SaveUser()
     {
         RequestResponse result = new();
-        if (CheckFormValidation())
+        if (User.Id != 0)
         {
-            if (User.Id != 0)
-            {
-                result = await UserService.UpdateUser(User);
-            }
-            else
-            {
-                result = await UserService.AddUser(User);
-            }
-            if (result.Successful)
-            {
-                Cancel();
-            }
+            result = await UserService.UpdateUser(User);
+        }
+        else
+        {
+            result = await UserService.AddUser(User);
+        }
+        if (result.Successful)
+        {
+            Cancel();
         }
     }
 
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/users");
-    }
-
-    private bool CheckFormValidation()
-    {
-        var isValid = true;
-        firstNameError = ""; lastNameError = ""; emailError = ""; roleNameError = "";
-
-        if (User.FirstName == null || User.FirstName?.Trim().Length < 3)
-        {
-            firstNameError = "The first name must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (User.LastName == null || User.LastName?.Trim().Length < 3)
-        {
-            lastNameError = "The last name must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (User.Email == null || User.Email?.Trim().Length < 6)
-        {
-            emailError = "The email must contain at least 6 characters.";
-            isValid = false;
-        }
-        else if (!new EmailAddressAttribute().IsValid(User.Email?.Trim()))
-        {
-            emailError = "The email must be a valid email address.";
-            isValid = false;
-        }
-        if (User.RoleName == null || User.RoleName?.Trim().Length < 3)
-        {
-            roleNameError = "The role name must not be empty.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }

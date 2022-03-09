@@ -13,87 +13,63 @@
     <FluentValidationValidator />
 
     <div class="mb-3">
-        <label for="StripeSubscriptionId" class="form-label">Stripe Subscription Id</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="Subscription.StripeSubscriptionId" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="Subscription.StripeSubscriptionId" Label="StripeSubscriptionId"
+                For="@(() => Subscription.StripeSubscriptionId)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.StripeSubscriptionId)" />
-        @if (stripeSubscriptionError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@stripeSubscriptionError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Name" class="form-label">Name</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="Subscription.Name" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="Subscription.Name" Label="Name"
+                For="@(() => Subscription.Name)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.Name)" />
-        @if (nameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@nameError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Price" class="form-label">Price</label>
         <div class="col-md-4">
-            <InputNumber class="form-control" Min="1" @bind-Value="Subscription.Price" />
+            <MudTextField class="form-control" InputType="InputType.Number"
+                @bind-Value="Subscription.Price" Label="Price"
+                For="@(() => Subscription.Price)"
+                Min="1"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.Price)" />
-        @if (priceError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@priceError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="Options" class="form-label">Options</label>
         <div class="col-md-4">
-            <InputTextArea class="form-control" @bind-Value="Subscription.Options" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="Subscription.Options" Label="Options"
+                For="@(() => Subscription.Options)"
+                Lines="5"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.Options)" />
-        @if (optionsError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@optionsError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="ImageName" class="form-label">Image Name</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="Subscription.ImageName" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="Subscription.ImageName" Label="ImageName"
+                For="@(() => Subscription.ImageName)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.ImageName)" />
-        @if (imageNameError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@imageNameError</p>
-            </div>
-        }
     </div>
     <div class="mb-3">
-        <label for="ImagePath" class="form-label">Image Path</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="Subscription.ImagePath" />
+            <MudTextField class="form-control" InputType="InputType.Text"
+                @bind-Value="Subscription.ImagePath" Label="ImagePath"
+                For="@(() => Subscription.ImagePath)"
+                Variant="Variant.Outlined"></MudTextField>
         </div>
-        <ValidationMessage For="@(() => Subscription.ImagePath)" />
-        @if (imagePathError.Length > 0)
-        {
-            <div class="col-md-4" role="alert">
-                <p class="alert alert-danger">@imagePathError</p>
-            </div>
-        }
     </div>
 
     <div class="form-group" style="margin-bottom: 25px;">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-light" @onclick="Cancel">Cancel</button>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+            Save
+        </MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+            Cancel
+        </MudButton>
     </div>
 </EditForm>
 
@@ -102,13 +78,6 @@
     public int Id { get; set; }
     protected string Title = "Add";
     public SubscriptionResponse Subscription = new();
-
-    private string stripeSubscriptionError = "";
-    private string imageNameError = "";
-    private string imagePathError = "";
-    private string nameError = "";
-    private string priceError = "";
-    private string optionsError = "";
 
     protected override void OnInitialized() { }
 
@@ -124,70 +93,22 @@
     protected async Task SaveSubscription()
     {
         RequestResponse result = new();
-        if (CheckFormValidation())
+        if (Subscription.Id != 0)
         {
-            if (Subscription.Id != 0)
-            {
-                result = await SubscriptionService.UpdateSubscription(Subscription);
-            }
-            else
-            {
-                result = await SubscriptionService.AddSubscription(Subscription);
-            }
-            if (result.Successful)
-            {
-                Cancel();
-            }
+            result = await SubscriptionService.UpdateSubscription(Subscription);
+        }
+        else
+        {
+            result = await SubscriptionService.AddSubscription(Subscription);
+        }
+        if (result.Successful)
+        {
+            Cancel();
         }
     }
 
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/subscriptions");
-    }
-
-    private bool CheckFormValidation()
-    {
-        var isValid = true;
-        nameError = ""; priceError = ""; optionsError = "";
-        stripeSubscriptionError = ""; imageNameError = ""; imagePathError = "";
-
-        if (Subscription.StripeSubscriptionId == null || Subscription.StripeSubscriptionId?.Trim().Length < 10)
-        {
-            stripeSubscriptionError = "The stripe Subscription must not be empty (>= 10).";
-            isValid = false;
-        }
-        if (Subscription.Name == null || Subscription.Name?.Trim().Length < 3)
-        {
-            nameError = "The name must contain at least 3 characters.";
-            isValid = false;
-        }
-        if (Subscription.Price < 1)
-        {
-            priceError = "The price must be greater than 0.";
-            isValid = false;
-        }
-        else if (!Subscription.Price.ToString().All(char.IsDigit))
-        {
-            priceError = "The price must be a valid number.";
-            isValid = false;            
-        }
-        if (Subscription.Options == null || Subscription.Options?.Trim().Length < 10)
-        {
-            optionsError = "The options must contain at least 10 characters.";
-            isValid = false;
-        }
-        if (Subscription.ImageName == null || Subscription.ImageName?.Trim().Length < 5)
-        {
-            imageNameError = "The image name must contain at least 5 characters.";
-            isValid = false;
-        }
-        if (Subscription.ImagePath == null || Subscription.ImagePath?.Trim().Length < 5)
-        {
-            imagePathError = "The image path must contain at least 5 characters.";
-            isValid = false;
-        }
-
-        return isValid;
     }
 }

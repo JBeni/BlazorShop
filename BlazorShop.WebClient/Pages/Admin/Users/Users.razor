@@ -43,10 +43,14 @@ else
                 <td class="col-md-3">@context.Email</td>
                 <td>@context.IsActive</td>
                 <td class="col-md-6">
-                    <a href='admin/users/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
-                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit"
+                        Color="Color.Success" @onclick="() => NavigateToPage(context.Id)">
+                        Edit
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                        Color="Color.Error" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
                         Delete
-                    </button>
+                    </MudButton>
                 </td>
             </MatTableRow>
         </MatTable>
@@ -58,16 +62,24 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Delete user</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Close"
+                                Color="Color.Warning" @onclick="@ModalCancel"
+                                data-bs-dismiss="modal" aria-label="Close">
+                                Close
+                            </MudButton>
                         </div>
                         <div class="modal-body">
                             <h4>Do you want to de-activate this user's account?</h4>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                await DeleteUser(user.Id); ModalOk();
-                            })">Delete</button>
-                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                            <MudButton class="mr-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                                Color="Color.Error" @onclick="(async () => { await DeleteUser(user.Id); ModalOk(); })">
+                                Delete
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                                Color="Color.Warning" @onclick="@ModalCancel">
+                                Cancel
+                            </MudButton>
                         </div>
                     </div>
                 </div>
@@ -108,9 +120,10 @@ else
                 <td class="col-md-3">@context.Email</td>
                 <td>@context.IsActive</td>
                 <td class="col-md-6">
-                    <button class="btn btn-danger" @onclick="(() => { ActivateUserConfirm(context.Id); ModalActivateUserShow(); })">
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                        Color="Color.Error" @onclick="(() => { ActivateUserConfirm(context.Id); ModalActivateUserShow(); })">
                         Activate User
-                    </button>
+                    </MudButton>
                 </td>
             </MatTableRow>
         </MatTable>
@@ -122,16 +135,24 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Activate User</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Close"
+                                Color="Color.Warning" @onclick="@ModalCancel"
+                                type="button" data-bs-dismiss="modal" aria-label="Close">
+                                Close
+                            </MudButton>
                         </div>
                         <div class="modal-body">
                             <h4>Do you want to activate this user account?</h4>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" @onclick="(async () => {
-                                await ActivateUser(userInactive.Id); ModalActivateUserOk();
-                            })">Activate User</button>
-                            <button type="button" class="btn" @onclick="@ModalActivateUserCancel">Cancel</button>
+                            <MudButton class="mr-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                                Color="Color.Error" @onclick="(async () => { await ActivateUser(userInactive.Id); ModalActivateUserOk(); })">
+                                Activate User
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                                Color="Color.Warning" @onclick="@ModalActivateUserCancel">
+                                Cancel
+                            </MudButton>
                         </div>
                     </div>
                 </div>
@@ -195,6 +216,11 @@ else
         await UserService.ActivateUser(Id);
         await GetUsersInactive();
         await GetUsers();
+    }
+
+    private void NavigateToPage(int id)
+    {
+        NavManager.NavigateTo($"admin/users/edit/{id}");
     }
 }
 
