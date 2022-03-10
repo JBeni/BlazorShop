@@ -16,13 +16,14 @@
 
     <div class="row">
         <div class="input-group col shadow-lg p-3 bg-white rounded mb-5">
-            <input type="text" class="form-control" placeholder="Search order by name"
-                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterOrders" />
+            <MudTextField InputType="InputType.Text" class="form-control"
+                Immediate="true" Variant="Variant.Outlined" Placeholder="Search order by name"
+                @bind-Value="SearchString" OnKeyUp="FilterOrders" />
             <div class="input-group-append" style="margin-left: 15px;">
-                <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
-                    <i class="fas fa-times"></i>
+                <MudButton class="btn btn-primary btn-lg mt-3" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Clear"
+                    Color="Color.Success" @onclick="ResetSearch">
                     Reset Filter
-                </button>
+                </MudButton>
             </div>
         </div>
     </div>
@@ -54,9 +55,10 @@
 
                         <div class="col-md-3">
                             <div class="border-0 d-flex flex-row-reverse">
-                                <button class="btn btn-primary btn-lg" @onclick="(() => ViewOrder(order.Id))">
+                                <MudButton class="btn btn-primary btn-lg" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.ViewHeadline"
+                                    Color="Color.Success" @onclick="(() => ViewOrder(order.Id))">
                                     View Order
-                                </button>
+                                </MudButton>
                             </div>
                         </div>
                     </div>

@@ -13,8 +13,9 @@
 
 <div class="row">
     <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search music by title"
-            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterMusics" />
+        <MudTextField InputType="InputType.Text" class="form-control"
+            Immediate="true" Variant="Variant.Outlined" Placeholder="Search music by title"
+            @bind-Value="SearchString" OnKeyUp="FilterMusics" />
         <div class="input-group-append" style="margin-left: 15px;">
             <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
                 <i class="fas fa-times"></i>

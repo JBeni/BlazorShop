@@ -146,8 +146,9 @@
 
     <div class="row mt-4 mb-5">
         <div class="input-group col shadow-lg p-3 bg-white rounded">
-            <input type="text" class="form-control" placeholder="Search subscription by name"
-                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterSubscriptions" />
+            <MudTextField InputType="InputType.Text" class="form-control"
+                Immediate="true" Variant="Variant.Outlined" Placeholder="Search subscription by name"
+                @bind-Value="SearchString" OnKeyUp="FilterSubscriptions" />
             <div class="input-group-append" style="margin-left: 15px;">
                 <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
                     <i class="fas fa-times"></i>

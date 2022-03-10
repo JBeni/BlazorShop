@@ -15,8 +15,9 @@
 
     <div class="row">
         <div class="input-group col shadow-lg p-3 bg-white rounded mb-5">
-            <input type="text" class="form-control" placeholder="Search receipt by name"
-                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterReceipts" />
+            <MudTextField InputType="InputType.Text" class="form-control"
+                Immediate="true" Variant="Variant.Outlined" Placeholder="Search receipt by name"
+                @bind-Value="SearchString" OnKeyUp="FilterReceipts" />
             <div class="input-group-append" style="margin-left: 15px;">
                 <button class="btn btn-primary btn-lg" @onclick="ResetSearch">
                     <i class="fas fa-times"></i>
