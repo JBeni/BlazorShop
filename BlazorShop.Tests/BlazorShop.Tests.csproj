@@ -37,14 +37,4 @@
     <ProjectReference Include="..\BlazorShop.WebApi\BlazorShop.WebApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CartTests\Queries\" />
-    <Folder Include="ClotheTests\Queries\" />
-    <Folder Include="InvoiceTests\Queries\" />
-    <Folder Include="OrderTests\Queries\" />
-    <Folder Include="ReceiptTests\Queries\" />
-    <Folder Include="SubscriberTests\Queries\" />
-    <Folder Include="SubscriptionTests\Queries\" />
-  </ItemGroup>
-
 </Project>
