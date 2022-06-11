@@ -18,7 +18,6 @@ try
     // Inject Architecture Layers
     builder.Services.AddApplicationLayer();
     builder.Services.AddInfrastructureLayer(builder.Configuration);
-    builder.Services.AddUnitOfWorkLayer();
 
     builder.Services.AddHttpContextAccessor();
 

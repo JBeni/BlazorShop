@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WebApi", "BlazorShop.WebApi\BlazorShop.WebApi.csproj", "{9B5C133D-4127-4F15-A598-96CA48676060}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.UnitOfWork", "BlazorShop.UnitOfWork\BlazorShop.UnitOfWork.csproj", "{6AAB3536-9590-427F-8A79-C140CFA129B7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WorkerService", "BlazorShop.WorkerService\BlazorShop.WorkerService.csproj", "{466B239B-8ECD-4C6C-86E8-1DC8660DDACA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Tests", "BlazorShop.Tests\BlazorShop.Tests.csproj", "{59F48558-9268-474E-821A-7815CC087232}"
@@ -55,10 +53,6 @@ Global
 		{9B5C133D-4127-4F15-A598-96CA48676060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B5C133D-4127-4F15-A598-96CA48676060}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B5C133D-4127-4F15-A598-96CA48676060}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AAB3536-9590-427F-8A79-C140CFA129B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AAB3536-9590-427F-8A79-C140CFA129B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AAB3536-9590-427F-8A79-C140CFA129B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AAB3536-9590-427F-8A79-C140CFA129B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{466B239B-8ECD-4C6C-86E8-1DC8660DDACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{466B239B-8ECD-4C6C-86E8-1DC8660DDACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{466B239B-8ECD-4C6C-86E8-1DC8660DDACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
