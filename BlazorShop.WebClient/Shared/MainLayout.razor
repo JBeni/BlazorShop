@@ -63,7 +63,6 @@
 
 @code {
     [CascadingParameter] AppState AppState { get; set; }
-    private bool _drawerOpen = true;
     private int counts { get; set; }
 
     private string username { get; set; }
@@ -90,11 +89,6 @@
         {
             counts = await GetCartCount(userId);            
         }
-    }
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
     }
 
     private async Task<int> GetCartCount(int userId)
