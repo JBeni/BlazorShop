@@ -2,6 +2,9 @@
 {
     public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public ChangePasswordCommandValidator()
         {
             _ = RuleFor(v => v.UserId)

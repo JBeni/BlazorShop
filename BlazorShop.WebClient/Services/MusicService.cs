@@ -15,6 +15,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<MusicResponse>> GetMusics()
         {
             var response = await _httpClient.GetAsync("Musics/musics");
@@ -32,6 +33,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<MusicResponse> GetMusic(int id)
         {
             var response = await _httpClient.GetAsync($"Musics/music/{id}");
@@ -49,6 +51,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddMusic(MusicResponse music)
         {
             var response = await _httpClient.PostAsJsonAsync("Musics/music", music);
@@ -67,6 +70,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateMusic(MusicResponse music)
         {
             var response = await _httpClient.PutAsJsonAsync("Musics/music", music);
@@ -85,6 +89,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteMusic(int id)
         {
             var response = await _httpClient.DeleteAsync($"Musics/music/{id}");

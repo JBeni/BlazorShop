@@ -2,6 +2,9 @@
 {
     public  class GetTodoItemByIdQueryValidator : AbstractValidator<GetTodoItemByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetTodoItemByIdQueryValidator()
         {
             RuleFor(x => x.Id)

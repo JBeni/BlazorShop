@@ -2,6 +2,9 @@
 {
     public class GetUserSubscribersQueryValidator : AbstractValidator<GetUserSubscribersQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetUserSubscribersQueryValidator()
         {
             RuleFor(x => x.UserId)

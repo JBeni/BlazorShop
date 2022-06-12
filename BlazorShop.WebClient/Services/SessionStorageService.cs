@@ -11,6 +11,7 @@
             _jsInProcess = (IJSInProcessRuntime)_js;
         }
 
+        /// <inheritdoc/>
         public async Task<T> GetItemAsync<T>(string key)
         {
             var json = await _js.InvokeAsync<string>(
@@ -22,6 +23,7 @@
                     : JsonSerializer.Deserialize<T>(json);
         }
 
+        /// <inheritdoc/>
         public async Task SetItemAsync<T>(string key, T item)
         {
             await _js.InvokeVoidAsync(
@@ -30,6 +32,7 @@
                 JsonSerializer.Serialize(item));
         }
 
+        /// <inheritdoc/>
         public void SetItem<T>(string key, T item)
         {
             _jsInProcess.InvokeVoid(

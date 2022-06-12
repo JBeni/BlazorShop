@@ -2,6 +2,9 @@
 {
     public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetUserByIdQueryValidator()
         {
             RuleFor(v => v.Id)

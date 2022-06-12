@@ -2,13 +2,40 @@
 {
     public class OrderResponse : IMapFrom<Order>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserEmail { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string OrderName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime OrderDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string LineItems { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int AmountTotal { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Order, OrderResponse>()

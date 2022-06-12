@@ -2,6 +2,9 @@
 {
     public class DeleteRoleCommandValidator : AbstractValidator<DeleteRoleCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteRoleCommandValidator()
         {
             RuleFor(v => v.Id)

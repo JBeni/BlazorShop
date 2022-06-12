@@ -2,6 +2,9 @@
 {
     public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public ResetPasswordCommandValidator()
         {
             RuleFor(v => v.Email)
@@ -22,6 +25,11 @@
                 .Equal(v => v.NewConfirmPassword).WithMessage("NewPassword must be equal with NewConfirmPassword");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             try

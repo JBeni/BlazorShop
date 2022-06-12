@@ -2,6 +2,9 @@
 {
     public class UpdateReceiptCommandValidator : AbstractValidator<UpdateReceiptCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateReceiptCommandValidator()
         {
             RuleFor(v => v.Id)

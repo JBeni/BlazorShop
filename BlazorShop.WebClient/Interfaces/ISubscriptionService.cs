@@ -2,10 +2,39 @@
 {
     public interface ISubscriptionService
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         Task<List<SubscriptionResponse>> GetSubscriptions();
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         Task<SubscriptionResponse> GetSubscription(int id);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         Task<RequestResponse> AddSubscription(SubscriptionResponse subscription);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         Task<RequestResponse> UpdateSubscription(SubscriptionResponse subscription);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         Task<RequestResponse> DeleteSubscription(int id);
     }
 }

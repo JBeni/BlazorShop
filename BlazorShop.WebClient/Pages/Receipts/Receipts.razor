@@ -83,6 +83,9 @@
     protected string SearchString { get; set; } = string.Empty;
     private string userEmail { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -94,12 +97,18 @@
         await GetReceipts(userEmail);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public async Task GetReceipts(string userEmail)
     {
         receiptsList = await ReceiptService.GetReceipts(userEmail);
         searchReceiptsData = receiptsList;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterReceipts()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -112,6 +121,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;

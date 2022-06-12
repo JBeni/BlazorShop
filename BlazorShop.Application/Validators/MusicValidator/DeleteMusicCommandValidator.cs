@@ -2,6 +2,9 @@
 {
     public class DeleteMusicCommandValidator : AbstractValidator<DeleteMusicCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteMusicCommandValidator()
         {
             RuleFor(x => x.Id)

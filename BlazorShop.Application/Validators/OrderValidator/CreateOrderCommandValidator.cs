@@ -2,6 +2,9 @@
 {
     public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateOrderCommandValidator()
         {
             RuleFor(v => v.UserEmail)

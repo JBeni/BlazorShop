@@ -7,6 +7,10 @@
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="assembly"></param>
         private void ApplyMappingFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()

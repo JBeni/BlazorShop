@@ -79,6 +79,9 @@ else
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         clothesList = new List<ClotheResponse>();
@@ -91,12 +94,18 @@ else
         await GetClothes();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetClothes()
     {
         clothesList = await ClotheService.GetClothes();
         searchClothesData = clothesList;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task AddToCart(ClotheResponse clothe)
     {
         CartResponse cartItem = new();
@@ -110,6 +119,9 @@ else
         await CartService.AddCart(cartItem);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterClothes()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -122,6 +134,9 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;

@@ -2,6 +2,11 @@
 {
     public class ClothesController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("clothe")]
         public async Task<IActionResult> CreateClothe([FromBody] CreateClotheCommand command)
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("clothe")]
         public async Task<IActionResult> UpdateClothe([FromBody] UpdateClotheCommand command)
@@ -22,6 +32,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("clothe/{id}")]
         public async Task<IActionResult> DeleteClothe(int id)
@@ -32,6 +47,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothe/{id}")]
         public async Task<IActionResult> GetClothe(int id)
@@ -42,6 +62,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothes")]
         public async Task<IActionResult> GetClothes()

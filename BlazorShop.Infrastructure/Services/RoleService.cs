@@ -16,12 +16,14 @@
             _mapper = mapper;
         }
 
+        /// <inheritdoc/>
         public async Task<List<string>> CheckUserRolesAsync(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             return roles.ToList();
         }
 
+        /// <inheritdoc/>
         public RoleResponse GetDefaultRole()
         {
             var role = _roleManager.Roles
@@ -32,6 +34,7 @@
             return role;
         }
 
+        /// <inheritdoc/>
         public RoleResponse GetUserRole()
         {
             var role = _roleManager.Roles
@@ -42,6 +45,7 @@
             return role;
         }
 
+        /// <inheritdoc/>
         public RoleResponse GetAdminRole()
         {
             var role = _roleManager.Roles
@@ -52,6 +56,7 @@
             return role;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> SetUserRoleAsync(User user, string role)
         {
             var roles = await CheckUserRolesAsync(user);
@@ -72,6 +77,7 @@
             throw new Exception("The user has already a role");
         }
 
+        /// <inheritdoc/>
         public List<RoleResponse> GetRoles()
         {
             var result = _roleManager.Roles
@@ -81,6 +87,8 @@
                 .ToList();
             return result;
         }
+
+        /// <inheritdoc/>
         public List<RoleResponse> GetRolesForAdmin()
         {
             var result = _roleManager.Roles
@@ -89,6 +97,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public RoleResponse GetRoleById(int id)
         {
             var result = _roleManager.Roles
@@ -98,6 +107,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public RoleResponse GetRoleByNormalizedName(string normalizedName)
         {
             var result = _roleManager.Roles
@@ -107,6 +117,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> CreateRoleAsync(CreateRoleCommand command)
         {
             var role = await _roleManager.FindByNameAsync(command.Name);
@@ -122,6 +133,7 @@
             return RequestResponse.Success(roleData.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand command)
         {
             var existsRole = await _roleManager.FindByNameAsync(command.Name);
@@ -137,6 +149,7 @@
             return RequestResponse.Success(role.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteRoleAsync(int roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId.ToString());
@@ -146,12 +159,14 @@
             return RequestResponse.Success(role.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<Role> FindRoleByIdAsync(int roleId)
         {
             var result = await _roleManager.FindByIdAsync(roleId.ToString());
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<Role> FindRoleByNameAsync(string name)
         {
             var result = await _roleManager.FindByNameAsync(name);

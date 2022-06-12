@@ -2,6 +2,9 @@
 {
     public class GetInvoiceByIdQueryValidator : AbstractValidator<GetInvoiceByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetInvoiceByIdQueryValidator()
         {
             RuleFor(v => v.Id)

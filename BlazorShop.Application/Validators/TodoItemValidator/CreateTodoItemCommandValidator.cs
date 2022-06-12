@@ -4,6 +4,9 @@
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateTodoItemCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -34,6 +37,12 @@
                 .NotNull().WithMessage("State must not be null");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.TodoItems

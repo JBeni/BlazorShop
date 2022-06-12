@@ -47,6 +47,9 @@ else
     public int UserId { get; set; }
     public ClotheResponse clothe = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -56,6 +59,9 @@ else
         UserId = int.Parse(user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.UserIdClaim).Value);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
@@ -64,6 +70,9 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task AddToCart(ClotheResponse clothe)
     {
         CartResponse cartItem = new();

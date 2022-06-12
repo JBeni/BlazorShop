@@ -40,6 +40,9 @@ else
     public int Id { get; set; }
     public MusicResponse music = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)

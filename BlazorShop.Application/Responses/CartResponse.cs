@@ -2,16 +2,55 @@
 {
     public class CartResponse : IMapFrom<Cart>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Amount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int ClotheId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ClotheName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ClotheImageName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ClotheImagePath { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int UserId { get; set; }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Cart, CartResponse>()

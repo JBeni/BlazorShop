@@ -2,6 +2,11 @@
 {
     public class SubscriptionsController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("subscription")]
         public async Task<IActionResult> CreateSubscription([FromBody] CreateSubscriptionCommand command)
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("subscription")]
         public async Task<IActionResult> UpdateSubscription([FromBody] UpdateSubscriptionCommand command)
@@ -22,6 +32,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("subscription/{id}")]
         public async Task<IActionResult> DeleteSubscription(int id)
@@ -32,6 +47,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscription/{id}")]
         public async Task<IActionResult> GetSubscription(int id)
@@ -42,6 +62,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscriptions")]
         public async Task<IActionResult> GetSubscriptions()

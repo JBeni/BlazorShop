@@ -2,6 +2,9 @@
 {
     public class UpdateUserEmailCommandValidator : AbstractValidator<UpdateUserEmailCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateUserEmailCommandValidator()
         {
             RuleFor(v => v.UserId)
@@ -21,6 +24,11 @@
                 .Must(IsValidEmailAddress).WithMessage("The NewEmail address is not valid");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             try

@@ -15,6 +15,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<OrderResponse>> GetOrders(string userEmail)
         {
             var response = await _httpClient.GetAsync($"Orders/orders/{userEmail}");
@@ -32,6 +33,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<OrderResponse> GetOrder(int id, string userEmail)
         {
             var response = await _httpClient.GetAsync($"Orders/order/{id}/{userEmail}");
@@ -49,6 +51,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddOrder(OrderResponse order)
         {
             var response = await _httpClient.PostAsJsonAsync("Orders/order", order);
@@ -67,6 +70,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateOrder(OrderResponse order)
         {
             var response = await _httpClient.PutAsJsonAsync("Orders/order", order);
@@ -85,6 +89,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteOrder(int id)
         {
             var response = await _httpClient.DeleteAsync($"Orders/order/{id}");

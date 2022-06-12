@@ -12,12 +12,20 @@
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public override void OnException(ExceptionContext context)
         {
             base.OnException(context);
             HandleException(context);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         private void HandleException(ExceptionContext context)
         {
             Type type = context.Exception.GetType();
@@ -35,6 +43,10 @@
             HandleUnknownException(context);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         private void HandleValidationException(ExceptionContext context)
         {
             var exception = (ValidationException)context.Exception;
@@ -55,6 +67,10 @@
             context.ExceptionHandled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         private void HandleInvalidModelStateException(ExceptionContext context)
         {
             var response = new RequestResponse
@@ -67,6 +83,10 @@
             context.ExceptionHandled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         private void HandleUnknownException(ExceptionContext context)
         {
             var response = new RequestResponse

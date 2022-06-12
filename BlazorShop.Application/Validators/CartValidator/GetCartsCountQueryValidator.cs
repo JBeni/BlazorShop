@@ -2,6 +2,9 @@
 {
     public class GetCartsQueryValidator : AbstractValidator<GetCartsQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetCartsQueryValidator()
         {
             _ = RuleFor(v => v.UserId)

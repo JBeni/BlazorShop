@@ -2,6 +2,9 @@
 {
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateUserCommandValidator()
         {
             RuleFor(v => v.Email)
@@ -26,6 +29,11 @@
                 .NotNull().WithMessage("Role must not be null");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             try

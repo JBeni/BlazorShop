@@ -4,6 +4,9 @@
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateClotheCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -39,6 +42,12 @@
                 .NotNull().WithMessage("ImagePath must not be null");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Clothes

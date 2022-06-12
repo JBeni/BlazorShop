@@ -1,6 +1,4 @@
-﻿using MudBlazor;
-
-namespace BlazorShop.WebClient.Services
+﻿namespace BlazorShop.WebClient.Services
 {
     public class SubscriberService : ISubscriberService
     {
@@ -15,6 +13,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetSubscribers()
         {
             var response = await _httpClient.GetAsync("Subscribers/subscribers");
@@ -32,6 +31,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetUserAllSubscribers(int userId)
         {
             var response = await _httpClient.GetAsync($"Subscribers/subscribers/{userId}");
@@ -49,6 +49,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<SubscriberResponse> GetUserSubscriber(int userId)
         {
             var response = await _httpClient.GetAsync($"Subscribers/subscriber/{userId}");
@@ -66,6 +67,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddSubscriber(SubscriberResponse Subscriber)
         {
             var response = await _httpClient.PostAsJsonAsync("Subscribers/subscriber", Subscriber);
@@ -84,6 +86,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse Subscriber)
         {
             var response = await _httpClient.PutAsJsonAsync("Subscribers/subscriber", Subscriber);
@@ -102,6 +105,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteSubscriber(int id)
         {
             var response = await _httpClient.DeleteAsync($"Subscribers/subscriber/{id}");

@@ -11,6 +11,12 @@
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             try

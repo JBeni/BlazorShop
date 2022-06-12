@@ -2,13 +2,40 @@
 {
     public class InvoiceResponse : IMapFrom<Invoice>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserEmail { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int AmountSubTotal { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int AmountTotal { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Quantity { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Invoice, InvoiceResponse>()

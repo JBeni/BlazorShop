@@ -21,6 +21,11 @@ namespace BlazorShop.WebClient.Auth
             _navMagager = navMagager;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await _localStorage.GetItemAsync<string>("authToken");
@@ -38,6 +43,11 @@ namespace BlazorShop.WebClient.Auth
                 );
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         public void NotifyUserAuthentication(string token)
         {
             var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType"));
@@ -45,12 +55,22 @@ namespace BlazorShop.WebClient.Auth
             NotifyAuthenticationStateChanged(authState);
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         public void NotifyUserLogout()
         {
             var authState = Task.FromResult(_anonymous);
             NotifyAuthenticationStateChanged(authState);
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         private bool IsCurrentTokenValid(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

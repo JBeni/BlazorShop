@@ -4,6 +4,9 @@
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateInvoiceCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -29,6 +32,12 @@
                 .GreaterThan(0).WithMessage("Quantity must be greater than 0");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Invoices

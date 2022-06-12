@@ -10,12 +10,20 @@
             _webHostEnvironment = webHostEnvironment;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("test")]
         public IActionResult Index()
         {
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("home")]
         public IActionResult Home()
         {
@@ -23,6 +31,10 @@
                 new MediaTypeHeaderValue("text/html").ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("error")]
         public IActionResult Error()
         {

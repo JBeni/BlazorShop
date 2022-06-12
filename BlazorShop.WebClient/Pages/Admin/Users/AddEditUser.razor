@@ -65,11 +65,17 @@
     public UserResponse User = new();
     protected List<RoleResponse> roles = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         roles = await RoleService.GetRolesForAdmin();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
@@ -79,6 +85,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task SaveUser()
     {
         RequestResponse result = new();
@@ -96,6 +105,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/users");

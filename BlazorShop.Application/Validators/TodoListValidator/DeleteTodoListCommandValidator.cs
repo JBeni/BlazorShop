@@ -2,6 +2,9 @@
 {
     public class DeleteTodoListCommandValidator : AbstractValidator<DeleteTodoListCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteTodoListCommandValidator()
         {
             RuleFor(x => x.Id)

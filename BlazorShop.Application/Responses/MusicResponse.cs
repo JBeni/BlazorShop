@@ -2,15 +2,50 @@
 {
     public class MusicResponse : IMapFrom<Music>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime DateRelease { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ImageName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ImagePath { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int AccessLevel { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Music, MusicResponse>()

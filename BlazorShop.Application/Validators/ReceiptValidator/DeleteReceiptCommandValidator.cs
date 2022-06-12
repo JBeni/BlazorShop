@@ -2,6 +2,9 @@
 {
     public class DeleteReceiptCommandValidator : AbstractValidator<DeleteReceiptCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteReceiptCommandValidator()
         {
             RuleFor(v => v.Id)

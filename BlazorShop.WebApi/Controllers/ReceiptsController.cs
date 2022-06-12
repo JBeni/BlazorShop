@@ -2,6 +2,11 @@
 {
     public class ReceiptsController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPost("receipt")]
         public async Task<IActionResult> CreateReceipt([FromBody] CreateReceiptCommand command)
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("receipt")]
         public async Task<IActionResult> UpdateReceipt([FromBody] UpdateReceiptCommand command)
@@ -22,6 +32,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpDelete("receipt/{id}")]
         public async Task<IActionResult> DeleteReceipt(int id)
@@ -32,6 +47,12 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("receipt/{id}/{userEmail}")]
         public async Task<IActionResult> GetReceipt(int id, string userEmail)
@@ -42,6 +63,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("receipts/{userEmail}")]
         public async Task<IActionResult> GetReceipts(string userEmail)

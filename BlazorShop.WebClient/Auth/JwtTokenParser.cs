@@ -2,6 +2,11 @@
 {
     public static class JwtTokenParser
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var claims = new List<Claim>();
@@ -15,6 +20,11 @@
             return claims;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         private static void ExtractRolesFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
@@ -37,6 +47,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="todoItem">.</param>
+        /// <returns></returns>
         private static byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)

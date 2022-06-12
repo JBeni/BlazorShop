@@ -2,6 +2,9 @@
 {
     public class GetReceiptsQueryValidator : AbstractValidator<GetReceiptsQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetReceiptsQueryValidator()
         {
             RuleFor(v => v.UserEmail)

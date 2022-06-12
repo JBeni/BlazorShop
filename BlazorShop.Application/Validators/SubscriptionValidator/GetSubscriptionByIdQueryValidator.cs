@@ -2,6 +2,9 @@
 {
     public class GetSubscriptionByIdQueryValidator : AbstractValidator<GetSubscriptionByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetSubscriptionByIdQueryValidator()
         {
             RuleFor(x => x.Id)

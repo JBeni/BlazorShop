@@ -2,10 +2,25 @@
 {
     public class RoleResponse : IMapFrom<Role>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? NormalizedName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Role, RoleResponse>()

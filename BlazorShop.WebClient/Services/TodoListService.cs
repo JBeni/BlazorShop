@@ -13,6 +13,7 @@
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<TodoListResponse>> GetTodoListsAsync()
         {
             var response = await _httpClient.GetAsync("TodoLists/lists");
@@ -30,6 +31,7 @@
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<TodoListResponse> GetTodoListAsync(int id)
         {
             var response = await _httpClient.GetAsync($"TodoLists/list/{id}");
@@ -47,6 +49,7 @@
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<TodoListResponse> PostTodoListAsync(TodoListResponse todoList)
         {
             var response = await _httpClient.PostAsJsonAsync($"TodoLists/list", todoList);
@@ -65,6 +68,7 @@
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> PutTodoListAsync(TodoListResponse todoList)
         {
             var response = await _httpClient.PutAsJsonAsync("TodoLists/list", todoList);
@@ -83,6 +87,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteTodoListAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"TodoLists/list/{id}");

@@ -52,6 +52,9 @@
     public MudBlazor.InputType TxtType = InputType.Password;
     public bool showPassword { get; set; } = false;
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -62,6 +65,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ShowPassword() 
     {
         if(showPassword == false)
@@ -74,6 +80,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task ExecuteLogin()
     {
         var result = await AuthService.Login(loginCommand);

@@ -1,5 +1,4 @@
-﻿
-namespace BlazorShop.WebClient.Services
+﻿namespace BlazorShop.WebClient.Services
 {
     public class UserService : IUserService
     {
@@ -14,6 +13,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddUser(UserResponse user)
         {
             var data = new CreateUserCommand
@@ -40,6 +40,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ActivateUser(int userId)
         {
             var data = new ActivateUserCommand
@@ -63,6 +64,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteUser(int id)
         {
             var response = await _httpClient.DeleteAsync($"Users/user/{id}");
@@ -81,6 +83,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<UserResponse> GetUser(int id)
         {
             var response = await _httpClient.GetAsync($"Users/user/{id}");
@@ -98,6 +101,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsers()
         {
             var response = await _httpClient.GetAsync("Users/users");
@@ -115,6 +119,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsersInactive()
         {
             var response = await _httpClient.GetAsync("Users/usersInactive");
@@ -132,6 +137,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUser(UserResponse user)
         {
             var data = new UpdateUserCommand
@@ -158,6 +164,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user)
         {
             var response = await _httpClient.PutAsJsonAsync($"Users/userEmail", user);

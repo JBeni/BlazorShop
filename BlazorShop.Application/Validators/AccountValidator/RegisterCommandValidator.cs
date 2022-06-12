@@ -2,6 +2,9 @@
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public RegisterCommandValidator()
         {
             RuleFor(v => v.Email)
@@ -32,6 +35,11 @@
                 .Equal(v => v.Password).WithMessage("ConfirmPassword must be equal with Password");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             try

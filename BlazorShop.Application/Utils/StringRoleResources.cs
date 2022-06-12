@@ -1,5 +1,8 @@
 ﻿namespace BlazorShop.Application.Utils
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class StringRoleResources
     {
         public const string Admin = "Admin";

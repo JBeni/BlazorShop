@@ -2,6 +2,9 @@
 {
     public class GetRoleByNormalizedNameQueryValidator : AbstractValidator<GetRoleByNormalizedNameQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetRoleByNormalizedNameQueryValidator()
         {
             RuleFor(v => v.NormalizedName)

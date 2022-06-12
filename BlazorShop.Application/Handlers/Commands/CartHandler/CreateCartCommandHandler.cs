@@ -13,6 +13,12 @@
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
             try

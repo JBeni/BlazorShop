@@ -3,6 +3,11 @@
     [Authorize(Roles = $"{StringRoleResources.Admin}")]
     public class RolesController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("role")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("role")]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
         {
@@ -21,6 +31,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("role/{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
@@ -30,6 +45,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("role/{id}")]
         public async Task<IActionResult> GetRoleById(int id)
         {
@@ -39,6 +59,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles()
         {
@@ -48,6 +72,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("rolesAdmin")]
         public async Task<IActionResult> GetRolesForAdmin()
         {

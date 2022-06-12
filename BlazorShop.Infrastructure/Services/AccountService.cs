@@ -16,6 +16,7 @@
             _configuration = configuration;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ChangePasswordUserAsync(ChangePasswordCommand changePassword)
         {
             var user = await _userManager.FindByIdAsync(changePassword.UserId.ToString());
@@ -31,12 +32,14 @@
             return RequestResponse.Success();
         }
 
+        /// <inheritdoc/>
         public async Task<bool> CheckPasswordAsync(User user, string password)
         {
             var result = await _userManager.CheckPasswordAsync(user, password);
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<JwtTokenResponse> GenerateToken(User user)
         {
             var jwtSettings = new JwtTokenConfig
@@ -75,6 +78,7 @@
             };
         }
 
+        /// <inheritdoc/>
         public async Task<JwtTokenResponse> LoginAsync(LoginCommand login)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Email == login.Email);
@@ -86,6 +90,7 @@
             return await GenerateToken(user);
         }
 
+        /// <inheritdoc/>
         public async Task<JwtTokenResponse> RegisterAsync(RegisterCommand register)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Email == register.Email);
@@ -111,6 +116,7 @@
             return await GenerateToken(newUser);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ResetPasswordUserAsync(ResetPasswordCommand resetPassword)
         {
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);

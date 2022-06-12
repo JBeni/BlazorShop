@@ -2,6 +2,9 @@
 {
     public class GetRoleByIdQueryValidator : AbstractValidator<GetRoleByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetRoleByIdQueryValidator()
         {
             RuleFor(v => v.Id)

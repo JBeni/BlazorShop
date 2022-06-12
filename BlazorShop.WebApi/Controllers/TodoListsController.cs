@@ -3,6 +3,11 @@
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
     public class TodoListsController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("list")]
         public async Task<IActionResult> CreateTodoList([FromBody] CreateTodoListCommand command)
         {
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("list")]
         public async Task<IActionResult> UpdateTodoList([FromBody] UpdateTodoListCommand command)
         {
@@ -21,6 +31,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("list/{id}")]
         public async Task<IActionResult> DeleteTodoList(int id)
         {
@@ -30,6 +45,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("list/{id}")]
         public async Task<IActionResult> GetTodoListById(int id)
         {
@@ -39,6 +59,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("lists")]
         public async Task<IActionResult> GetTodoLists()
         {

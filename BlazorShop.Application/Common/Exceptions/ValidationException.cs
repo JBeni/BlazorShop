@@ -2,6 +2,9 @@
 {
     public class ValidationException : Exception
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public IDictionary<string?, string?[]> Errors { get; }
 
         public ValidationException() : base("One or more validation failures have occurred")

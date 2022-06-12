@@ -2,6 +2,9 @@
 {
     public class GetTodoListByIdQuery : IRequest<Result<TodoListResponse>>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public int Id { get; set; }
     }
 }

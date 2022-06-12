@@ -3,6 +3,11 @@
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class InvoicesController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("invoice")]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceCommand command)
         {
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("invoice")]
         public async Task<IActionResult> UpdateInvoice([FromBody] UpdateInvoiceCommand command)
         {
@@ -21,6 +31,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("invoice/{id}")]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
@@ -30,6 +45,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("invoice/{id}")]
         public async Task<IActionResult> GetInvoice(int id)
         {
@@ -39,6 +59,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("invoices")]
         public async Task<IActionResult> GetInvoices()
         {

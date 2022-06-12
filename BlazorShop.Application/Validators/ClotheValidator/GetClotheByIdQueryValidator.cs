@@ -2,6 +2,9 @@
 {
     public class GetClotheByIdQueryValidator : AbstractValidator<GetClotheByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetClotheByIdQueryValidator()
         {
             _ = RuleFor(v => v.Id)

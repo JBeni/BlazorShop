@@ -2,6 +2,9 @@
 {
     public class GetCartsCountQuery : IRequest<int>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public int UserId { get; set; }
     }
 }

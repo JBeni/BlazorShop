@@ -1,5 +1,10 @@
 ﻿namespace BlazorShop.WebClient.AuthPolicies
 {
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="todoItem">.</param>
+    /// <returns></returns>
     public class DefaultRoleRequirement : IAuthorizationRequirement
     {
         public string Role { get; }
@@ -10,6 +15,11 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="todoItem">.</param>
+    /// <returns></returns>
     public class DefaultRoleHandler : AuthorizationHandler<DefaultRoleRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DefaultRoleRequirement requirement)

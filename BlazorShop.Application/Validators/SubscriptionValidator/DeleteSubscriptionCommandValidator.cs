@@ -2,6 +2,9 @@
 {
     public class DeleteSubscriptionCommandValidator : AbstractValidator<DeleteSubscriptionCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteSubscriptionCommandValidator()
         {
             RuleFor(x => x.Id)

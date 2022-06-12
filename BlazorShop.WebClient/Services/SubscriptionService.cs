@@ -13,6 +13,7 @@
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<SubscriptionResponse>> GetSubscriptions()
         {
             var response = await _httpClient.GetAsync("Subscriptions/subscriptions");
@@ -30,6 +31,7 @@
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<SubscriptionResponse> GetSubscription(int id)
         {
             var response = await _httpClient.GetAsync($"Subscriptions/subscription/{id}");
@@ -47,6 +49,7 @@
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddSubscription(SubscriptionResponse Subscription)
         {
             var response = await _httpClient.PostAsJsonAsync("Subscriptions/subscription", Subscription);
@@ -65,6 +68,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateSubscription(SubscriptionResponse Subscription)
         {
             var response = await _httpClient.PutAsJsonAsync("Subscriptions/subscription", Subscription);
@@ -83,6 +87,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteSubscription(int id)
         {
             var response = await _httpClient.DeleteAsync($"Subscriptions/subscription/{id}");

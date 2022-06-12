@@ -81,6 +81,9 @@
 
     protected override void OnInitialized() { }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
@@ -90,6 +93,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task SaveSubscription()
     {
         RequestResponse result = new();
@@ -107,6 +113,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/subscriptions");

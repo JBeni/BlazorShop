@@ -15,6 +15,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddCart(CartResponse cart)
         {
             var response = await _httpClient.PostAsJsonAsync($"Carts/cart", cart);
@@ -33,6 +34,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteCart(int id, int userId)
         {
             var response = await _httpClient.DeleteAsync($"Carts/cart/{id}/{userId}");
@@ -51,6 +53,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> EmptyCart(int userId)
         {
             var response = await _httpClient.DeleteAsync($"Carts/carts/{userId}");
@@ -69,6 +72,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<CartResponse> GetCart(int id, int userId)
         {
             var response = await _httpClient.GetAsync($"Carts/cart/{id}/{userId}");
@@ -86,6 +90,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<int> GetCartCounts(int userId)
         {
             var response = await _httpClient.GetAsync($"Carts/count/{userId}");
@@ -108,6 +113,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<List<CartResponse>> GetCarts(int userId)
         {
             var response = await _httpClient.GetAsync($"Carts/carts/{userId}");
@@ -125,6 +131,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateCart(CartResponse cart)
         {
             var response = await _httpClient.PutAsJsonAsync($"Carts/cart", cart);
@@ -143,6 +150,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<string> Checkout(int userId)
         {
             var carts = await GetCarts(userId);

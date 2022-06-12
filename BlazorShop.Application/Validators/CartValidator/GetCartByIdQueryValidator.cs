@@ -2,6 +2,9 @@
 {
     public class GetCartByIdQueryValidator : AbstractValidator<GetCartByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetCartByIdQueryValidator()
         {
             RuleFor(v => v.Id)

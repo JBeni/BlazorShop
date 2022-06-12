@@ -2,6 +2,9 @@
 {
     public class UpdateCreatedSubscriberCommandValidator : AbstractValidator<UpdateCreatedSubscriberCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateCreatedSubscriberCommandValidator()
         {
             RuleFor(x => x.CurrentPeriodStart)

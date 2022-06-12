@@ -2,6 +2,9 @@
 {
     public class DeleteOrderCommandValidator : AbstractValidator<DeleteOrderCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteOrderCommandValidator()
         {
             RuleFor(v => v.Id)

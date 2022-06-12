@@ -105,17 +105,26 @@ else
     protected List<RoleResponse> rolesList { get; set; }
     protected List<RoleResponse> searchRolesData { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await GetRolesForAdmin();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetRolesForAdmin()
     {
         rolesList = await RoleService.GetRolesForAdmin();
         searchRolesData = rolesList;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterRoles()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -128,24 +137,35 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void DeleteConfirm(int Id)
     {
         role = rolesList.FirstOrDefault(x => x.Id == Id);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task DeleteRole(int Id)
     {
         await RoleService.DeleteRole(Id);
         await GetRolesForAdmin();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;
         rolesList = searchRolesData;
     }
 
-
+    /// <summary>
+    /// .
+    /// </summary>
     private void NavigateToPage(int id)
     {
         NavManager.NavigateTo($"admin/roles/edit/{id}");

@@ -2,6 +2,9 @@
 {
     public class GetRoleByNormalizedNameQuery : IRequest<Result<RoleResponse>>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public string? NormalizedName { get; set; }
     }
 }

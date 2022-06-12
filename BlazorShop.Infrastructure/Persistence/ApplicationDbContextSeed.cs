@@ -2,6 +2,11 @@
 {
     public static class ApplicationDbContextSeed
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedRolesAsync(RoleManager<Role> roleManager, RolesSeedModel seedData)
         {
             var adminRole = new Role
@@ -34,6 +39,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedAdminUserAsync(UserManager<User> userManager, RoleManager<Role> roleManager, AdminSeedModel seedData)
         {
             var admin = new User
@@ -54,6 +64,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedClothesDataAsync(ApplicationDbContext context)
         {
             if (!context.Clothes.Any())
@@ -182,6 +197,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedMusicsDataAsync(ApplicationDbContext context)
         {
             if (!context.Musics.Any())
@@ -271,6 +291,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedSubscriptionsDataAsync(ApplicationDbContext context)
         {
             if (!context.Subscriptions.Any())
@@ -316,6 +341,11 @@
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         public static async Task SeedTodosDataAsync(ApplicationDbContext context)
         {
             if (!context.TodoLists.Any())

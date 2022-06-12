@@ -1,6 +1,4 @@
-﻿using MudBlazor;
-
-namespace BlazorShop.WebClient.Services
+﻿namespace BlazorShop.WebClient.Services
 {
     public class ClotheService : IClotheService
     {
@@ -15,6 +13,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<ClotheResponse>> GetClothes()
         {
             var response = await _httpClient.GetAsync("Clothes/clothes");
@@ -32,6 +31,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<ClotheResponse> GetClothe(int id)
         {
             var response = await _httpClient.GetAsync($"Clothes/clothe/{id}");
@@ -49,6 +49,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddClothe(ClotheResponse clothe)
         {
             var response = await _httpClient.PostAsJsonAsync("Clothes/clothe", clothe);
@@ -67,6 +68,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateClothe(ClotheResponse clothe)
         {
             var response = await _httpClient.PutAsJsonAsync("Clothes/clothe", clothe);
@@ -85,6 +87,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteClothe(int id)
         {
             var response = await _httpClient.DeleteAsync($"Clothes/clothe/{id}");

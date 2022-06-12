@@ -2,6 +2,9 @@
 {
     public class GetOrdersQueryValidator : AbstractValidator<GetOrdersQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetOrdersQueryValidator()
         {
             RuleFor(v => v.UserEmail)

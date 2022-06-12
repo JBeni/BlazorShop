@@ -2,6 +2,11 @@
 {
     public class UsersController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("userActivate")]
         public async Task<IActionResult> ActivateUser([FromBody] ActivateUserCommand command)
@@ -22,6 +32,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
@@ -32,6 +47,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("userEmail")]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
@@ -42,6 +62,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("user/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -52,6 +77,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(int id)
@@ -62,6 +92,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
@@ -72,6 +106,10 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpGet("usersInactive")]
         public async Task<IActionResult> GetUsersInactive()

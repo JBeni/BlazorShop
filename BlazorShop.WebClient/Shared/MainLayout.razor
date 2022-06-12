@@ -69,6 +69,9 @@
     private int userId { get; set; }
     private string userRole { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async override Task OnInitializedAsync()
     {
         await httpClient.GetAsync("Home/test");
@@ -91,6 +94,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task<int> GetCartCount(int userId)
     {
         var cart = await CartService.GetCartCounts(userId);

@@ -223,6 +223,9 @@
     private List<SubscriberResponse> subscriptionsInactive = new();
     protected List<SubscriberResponse> searchSubscriptionsInactive = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -237,11 +240,17 @@
         await GetSubscriptions();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetSubscriptions()
     {
         subscriptions = await SubscriptionService.GetSubscriptions();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public async Task GetActveSubscription(int userId)
     {
         subscriptionActive = await SubscriberService.GetUserSubscriber(userId);
@@ -252,6 +261,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public async Task CancelMembership(string stripeSubscriptionCreationId)
     {
         await StripeService.CancelMembership(stripeSubscriptionCreationId);
@@ -261,12 +273,18 @@
         Title = "Activate";
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public async Task GetUserSubscriptions(int userId)
     {
         subscriptionsInactive = await SubscriberService.GetUserAllSubscribers(userId);
         searchSubscriptionsInactive = subscriptionsInactive;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
         var subscriberObj = new SubscriberResponse
@@ -296,6 +314,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterSubscriptions()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -308,6 +329,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;

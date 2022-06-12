@@ -4,6 +4,9 @@
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateTodoListCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -18,6 +21,12 @@
                 .MustAsync(HaveUniqueTitle).WithMessage("The specified title already exists.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<bool> HaveUniqueTitle(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts

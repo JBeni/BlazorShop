@@ -12,6 +12,11 @@
             _emailService = emailService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromForm] LoginCommand login)
@@ -23,6 +28,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="register"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterCommand register)
@@ -33,6 +43,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="changePassword"></param>
+        /// <returns></returns>
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePasswordUser([FromBody] ChangePasswordCommand changePassword)
         {
@@ -42,6 +57,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resetPassword"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPasswordUser([FromForm] ResetPasswordCommand resetPassword)

@@ -86,6 +86,9 @@
     private string userEmail { get; set; }
     private int userId { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -98,17 +101,26 @@
         await GetOrders(userEmail);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public async Task GetOrders(string userEmail)
     {
         ordersList = await OrderService.GetOrders(userEmail);
         searchOrdersData = ordersList;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private void ViewOrder(int id)
     {
         NavigationManager.NavigateTo($"/orders/view/{id}");
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterOrders()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -121,6 +133,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;

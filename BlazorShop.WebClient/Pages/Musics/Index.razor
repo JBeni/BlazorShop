@@ -168,6 +168,9 @@ else
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -181,6 +184,9 @@ else
         await GetUserSubscriber(UserId);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task GetUserSubscriber(int userId)
     {
         subscriber = await SubscriberService.GetUserSubscriber(userId);
@@ -191,6 +197,9 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
         var subscriberObj = new SubscriberResponse
@@ -220,22 +229,34 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private void ViewMusic(int id)
     {
         NavManager.NavigateTo($"musics/view/{id}");
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetMusics()
     {
         musicsList = await MusicService.GetMusics();
         searchMusicsData = musicsList;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetSubscriptions()
     {
         subscriptions = await SubscriptionService.GetSubscriptions();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void FilterMusics()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -248,6 +269,9 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void ResetSearch()
     {
         SearchString = string.Empty;

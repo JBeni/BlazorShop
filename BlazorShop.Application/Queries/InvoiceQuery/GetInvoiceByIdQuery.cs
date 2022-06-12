@@ -2,6 +2,9 @@
 {
     public class GetInvoiceByIdQuery : IRequest<Result<InvoiceResponse>>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public int Id { get; set; }
     }
 }

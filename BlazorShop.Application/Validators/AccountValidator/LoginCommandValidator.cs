@@ -2,6 +2,9 @@
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public LoginCommandValidator()
         {
             RuleFor(v => v.Email)
@@ -16,6 +19,11 @@
                 .NotNull().WithMessage("Password must not be null");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             try

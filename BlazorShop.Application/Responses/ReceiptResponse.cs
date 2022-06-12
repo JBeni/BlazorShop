@@ -2,12 +2,35 @@
 {
     public class ReceiptResponse : IMapFrom<Receipt>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserEmail { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime ReceiptDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ReceiptName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ReceiptUrl { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Receipt, ReceiptResponse>()

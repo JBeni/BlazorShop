@@ -2,6 +2,9 @@
 {
     public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateRoleCommandValidator()
         {
             RuleFor(v => v.Name)

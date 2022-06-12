@@ -2,6 +2,7 @@
 {
     public class EmailService : IEmailService
     {
+        /// <inheritdoc/>
         public async Task SendEmail(string? email, EmailSettings mail)
         {
             using (var client = new SmtpClient())
@@ -29,6 +30,11 @@
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private static AlternateView AddImageLogo()
         {
             // In text where the image will be placed an cid:image must be set
@@ -43,6 +49,11 @@
             return avHtml;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private static Attachment Add(Stream attachmentFilename)
         {
             Attachment attachment = new(attachmentFilename, MediaTypeNames.Application.Octet);
@@ -58,6 +69,11 @@
             return attachment;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private static AlternateView GetEmbeddedImage(string? filePath, string? htmlBody)
         {
             LinkedResource res = new(filePath)

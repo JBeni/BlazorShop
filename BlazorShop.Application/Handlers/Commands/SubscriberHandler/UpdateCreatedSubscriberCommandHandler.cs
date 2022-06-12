@@ -13,6 +13,12 @@
             _userService = userService;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateCreatedSubscriberCommand request, CancellationToken cancellationToken)
         {
             try

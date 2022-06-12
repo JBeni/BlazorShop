@@ -2,6 +2,9 @@
 {
     public class UpdateSubscriberCommandValidator : AbstractValidator<UpdateSubscriberCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateSubscriberCommandValidator()
         {
             RuleFor(x => x.Id)

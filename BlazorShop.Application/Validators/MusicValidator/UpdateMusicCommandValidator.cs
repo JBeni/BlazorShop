@@ -4,6 +4,9 @@
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public UpdateMusicCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -46,6 +49,12 @@
                 .GreaterThan(0).WithMessage("AccessLevel must be greater than 0");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.Musics

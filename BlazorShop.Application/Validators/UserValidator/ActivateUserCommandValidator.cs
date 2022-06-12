@@ -2,6 +2,9 @@
 {
     public class ActivateUserCommandValidator : AbstractValidator<ActivateUserCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public ActivateUserCommandValidator()
         {
             RuleFor(v => v.Id)

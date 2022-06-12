@@ -3,6 +3,11 @@
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class CartsController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("cart")]
         public async Task<IActionResult> CreateCart([FromBody] CreateCartCommand command)
         {
@@ -12,6 +17,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("cart")]
         public async Task<IActionResult> UpdateCart([FromBody] UpdateCartCommand command)
         {
@@ -21,6 +31,12 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpDelete("cart/{id}/{userId}")]
         public async Task<IActionResult> DeleteCart(int id, int userId)
         {
@@ -30,6 +46,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpDelete("carts/{userId}")]
         public async Task<IActionResult> DeleteAllCarts(int userId)
         {
@@ -39,6 +60,12 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("cart/{id}/{userId}")]
         public async Task<IActionResult> GetCart(int id, int userId)
         {
@@ -48,6 +75,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("carts/{userId}")]
         public async Task<IActionResult> GetCarts(int userId)
         {
@@ -57,6 +89,11 @@
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("count/{userId}")]
         public async Task<IActionResult> GetCartsCount(int userId)
         {

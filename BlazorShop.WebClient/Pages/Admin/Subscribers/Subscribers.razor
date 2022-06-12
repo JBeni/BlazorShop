@@ -94,21 +94,33 @@ else
     protected SubscriberResponse subscriber = new();
     protected List<SubscriberResponse> subscribersList { get; set; }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await GetSubscribers();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task GetSubscribers()
     {
         subscribersList = await SubscriberService.GetSubscribers();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected void DeleteConfirm(int Id)
     {
         subscriber = subscribersList.FirstOrDefault(x => x.Id == Id);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task DeleteSubscriber(int Id)
     {
         await SubscriberService.DeleteSubscriber(Id);

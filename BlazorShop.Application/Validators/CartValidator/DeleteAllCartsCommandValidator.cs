@@ -2,6 +2,9 @@
 {
     public class DeleteAllCartsCommandValidator : AbstractValidator<DeleteAllCartsCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DeleteAllCartsCommandValidator()
         {
             RuleFor(v => v.UserId)

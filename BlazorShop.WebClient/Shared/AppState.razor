@@ -23,6 +23,9 @@
 		}
 	}
 
+    /// <summary>
+    /// .
+    /// </summary>
 	protected override void OnInitialized()
 	{
 		var value = JS.Invoke<string>(JsInteropConstants.GetSessionStorage, nameof(CurrentCount));

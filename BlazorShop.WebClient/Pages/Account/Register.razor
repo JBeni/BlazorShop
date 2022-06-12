@@ -68,6 +68,9 @@
 @code {
     private RegisterCommand registerCommand = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -78,6 +81,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task ExecuteRegister()
     {
         var result = await AuthenticationService.Register(registerCommand);

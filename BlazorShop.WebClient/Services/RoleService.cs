@@ -15,6 +15,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddRole(RoleResponse role)
         {
             var response = await _httpClient.PostAsJsonAsync($"Roles/role", role);
@@ -33,6 +34,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteRole(int id)
         {
             var response = await _httpClient.DeleteAsync($"Roles/role/{id}");
@@ -51,6 +53,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RoleResponse> GetRole(int id)
         {
             var response = await _httpClient.GetAsync($"Roles/role/{id}");
@@ -68,6 +71,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRoles()
         {
             var response = await _httpClient.GetAsync("Roles/roles");
@@ -85,6 +89,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRolesForAdmin()
         {
             var response = await _httpClient.GetAsync("Roles/rolesAdmin");
@@ -102,6 +107,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateRole(RoleResponse role)
         {
             var data = new UpdateRoleCommand

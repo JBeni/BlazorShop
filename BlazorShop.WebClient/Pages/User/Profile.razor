@@ -192,7 +192,7 @@
 }
 
 @code {
-        bool showModal = false;
+    bool showModal = false;
     private int UserId = 0;
 
     void ModalShow() => showModal = true;
@@ -202,6 +202,9 @@
     protected ChangePasswordCommand changePassword = new();
     protected UpdateUserEmailCommand updateEmail = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -213,6 +216,9 @@
         userData = await UserService.GetUser(UserId);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task UpdateUserEmail()
     {
         showModal = true;
@@ -226,6 +232,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task UpdateUser()
     {
         if (userData.Id != 0)
@@ -234,6 +243,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task ChangePassword()
     {
         if (

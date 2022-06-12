@@ -95,6 +95,9 @@ else
     protected OrderResponse order = new();
     protected List<InvoiceResponse> orderItems = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -103,6 +106,9 @@ else
         UserEmail = user.Claims.FirstOrDefault(x => x.Type == StringRoleResources.EmailClaim).Value;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
@@ -115,6 +121,9 @@ else
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private void GoBack()
     {
         NavManager.NavigateTo("/orders");

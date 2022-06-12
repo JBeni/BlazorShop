@@ -84,6 +84,9 @@
 
     protected override void OnInitialized() { }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
@@ -93,6 +96,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected async Task SaveMusic()
     {
         RequestResponse result = new RequestResponse();
@@ -110,6 +116,9 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public void Cancel()
     {
         NavManager.NavigateTo("/admin/musics");

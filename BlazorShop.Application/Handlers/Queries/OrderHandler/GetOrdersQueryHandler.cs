@@ -13,6 +13,12 @@
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<Result<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
             try

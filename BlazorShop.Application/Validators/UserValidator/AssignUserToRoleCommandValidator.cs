@@ -2,6 +2,9 @@
 {
     public class AssignUserToRoleCommandValidator : AbstractValidator<AssignUserToRoleCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public AssignUserToRoleCommandValidator()
         {
             RuleFor(v => v.UserId)

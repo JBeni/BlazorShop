@@ -102,6 +102,9 @@
     private int userId { get; set; }
     List<CartResponse> cartItems = new();
 
+    /// <summary>
+    /// .
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
@@ -113,18 +116,27 @@
         cartItems = await CartService.GetCarts(userId);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task DeleteItem(int id)
     {
         await CartService.DeleteCart(id, userId);
         cartItems = await CartService.GetCarts(userId);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task UpdateClotheQuantity(CartResponse cart, int newAmount)
     {
         cart.Amount = newAmount;
         await CartService.UpdateCart(cart);
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     private async Task PlaceOrder()
     {
         string checkoutUrl = await CartService.Checkout(userId);

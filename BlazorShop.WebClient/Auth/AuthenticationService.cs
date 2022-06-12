@@ -18,6 +18,7 @@ public class AuthenticationService : IAuthenticationService
         _toastService = toastService;
     }
 
+    /// <inheritdoc/>
     public async Task<JwtTokenResponse> Login(LoginCommand command)
     {
         var data = new FormUrlEncodedContent(new[]
@@ -52,6 +53,7 @@ public class AuthenticationService : IAuthenticationService
         return new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
     }
 
+    /// <inheritdoc/>
     public async Task<JwtTokenResponse> Register(RegisterCommand command)
     {
         var data = new FormUrlEncodedContent(new[]
@@ -91,6 +93,7 @@ public class AuthenticationService : IAuthenticationService
         return new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
     }
 
+    /// <inheritdoc/>
     public async Task Logout()
     {
         await _localStorage.RemoveItemAsync("authToken");

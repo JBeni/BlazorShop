@@ -2,17 +2,60 @@
 {
     public class SubscriptionResponse : IMapFrom<Subscription>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string StripeSubscriptionId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Price { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Currency { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string CurrencySymbol { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ChargeType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Options { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ImageName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string ImagePath { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Subscription, SubscriptionResponse>()

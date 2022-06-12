@@ -2,6 +2,9 @@
 {
     public class GetMusicByIdQueryValidator : AbstractValidator<GetMusicByIdQuery>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public GetMusicByIdQueryValidator()
         {
             RuleFor(x => x.Id)

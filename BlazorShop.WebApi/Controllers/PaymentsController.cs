@@ -10,6 +10,11 @@
 			_configuration = configuration;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="req"></param>
+		/// <returns></returns>
         [HttpPost("create-subscription")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
@@ -46,6 +51,11 @@
             }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="stripeSubscriptionCreationId"></param>
+		/// <returns></returns>
 		[HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
 		public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
 		{
@@ -68,6 +78,11 @@
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="req"></param>
+		/// <returns></returns>
 		[HttpPost("update-subscription")]
 		public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
 		{
@@ -112,6 +127,11 @@
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cartItems"></param>
+		/// <returns></returns>
 		[HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
@@ -156,6 +176,10 @@
             return Ok(session.Url);
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("webhook")]
 		public async Task<IActionResult> WebHook()
@@ -218,6 +242,11 @@
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="stripeEvent"></param>
+		/// <returns></returns>
 		private async Task CompleteAcceptCheckout(Event stripeEvent)
         {
 			var sessionData = stripeEvent.Data.Object as Session;

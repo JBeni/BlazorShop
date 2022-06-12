@@ -1,6 +1,4 @@
-﻿using MudBlazor;
-
-namespace BlazorShop.WebClient.Services
+﻿namespace BlazorShop.WebClient.Services
 {
     public class AccountService : IAccountService
     {
@@ -15,6 +13,7 @@ namespace BlazorShop.WebClient.Services
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ChangePassword(ChangePasswordCommand command)
         {
             var response = await _httpClient.PutAsJsonAsync("Accounts/change-password", command);
@@ -33,6 +32,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ResetPassword(ResetPasswordCommand command)
         {
             var data = new FormUrlEncodedContent(new[]

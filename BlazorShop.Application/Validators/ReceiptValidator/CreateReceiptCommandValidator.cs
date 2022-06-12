@@ -2,6 +2,9 @@
 {
     public class CreateReceiptCommandValidator : AbstractValidator<CreateReceiptCommand>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public CreateReceiptCommandValidator()
         {
             RuleFor(v => v.UserEmail)

@@ -2,15 +2,50 @@
 {
     public class UserResponse : IMapFrom<User>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Username { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? Email { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? FirstName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? LastName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int RoleId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string? RoleName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserResponse>()

@@ -1,5 +1,10 @@
 ﻿namespace BlazorShop.WebClient.AuthPolicies
 {
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="todoItem">.</param>
+    /// <returns></returns>
     public class CustomerRoleRequirement : IAuthorizationRequirement
     {
         public CustomerRoleRequirement()
@@ -7,6 +12,11 @@
         }
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="todoItem">.</param>
+    /// <returns></returns>
     public class CustomerRoleHandler : AuthorizationHandler<CustomerRoleRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomerRoleRequirement requirement)

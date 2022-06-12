@@ -15,6 +15,7 @@ namespace BlazorShop.WebClient.Services
             _snackBar = snackBar;
         }
 
+        /// <inheritdoc/>
         public async Task<List<ReceiptResponse>> GetReceipts(string userEmail)
         {
             var response = await _httpClient.GetAsync($"Receipts/receipts/{userEmail}");
@@ -32,6 +33,7 @@ namespace BlazorShop.WebClient.Services
             return result.Items;
         }
 
+        /// <inheritdoc/>
         public async Task<ReceiptResponse> GetReceipt(int id, string userEmail)
         {
             var response = await _httpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
@@ -49,6 +51,7 @@ namespace BlazorShop.WebClient.Services
             return result.Item;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AddReceipt(ReceiptResponse receipt)
         {
             var response = await _httpClient.PostAsJsonAsync("Receipts/receipt", receipt);
@@ -67,6 +70,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateReceipt(ReceiptResponse receipt)
         {
             var response = await _httpClient.PutAsJsonAsync("Receipts/receipt", receipt);
@@ -85,6 +89,7 @@ namespace BlazorShop.WebClient.Services
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteReceipt(int id)
         {
             var response = await _httpClient.DeleteAsync($"Receipts/receipt/{id}");

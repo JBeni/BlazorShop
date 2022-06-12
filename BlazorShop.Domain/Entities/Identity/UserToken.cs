@@ -2,6 +2,9 @@
 {
     public class UserToken : IdentityUserToken<int>
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public virtual User User { get; set; }
     }
 }

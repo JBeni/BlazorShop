@@ -3,22 +3,20 @@
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
         public UserService(
             UserManager<User> userManager,
-            RoleManager<Role> roleManager,
             IRoleService roleService,
             IMapper mapper)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _roleService = roleService;
             _mapper = mapper;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> CreateUserAsync(CreateUserCommand command)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.UserName == command.Email && u.IsActive == true);
@@ -43,6 +41,7 @@
             return RequestResponse.Success(user.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> DeleteUserAsync(int userId)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId && u.IsActive == true);
@@ -54,18 +53,21 @@
             return RequestResponse.Success(user.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<User> FindUserByEmailAsync(string email)
         {
             var result = await _userManager.FindByEmailAsync(email);
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<User> FindUserByIdAsync(int userId)
         {
             var result = await _userManager.FindByIdAsync(userId.ToString());
             return result;
         }
 
+        /// <inheritdoc/>
         public UserResponse GetUserById(GetUserByIdQuery query)
         {
             var user = _userManager.Users
@@ -75,6 +77,7 @@
             return user;
         }
 
+        /// <inheritdoc/>
         public UserResponse GetUserByEmail(GetUserByEmailQuery query)
         {
             var user = _userManager.Users
@@ -84,12 +87,14 @@
             return user;
         }
 
+        /// <inheritdoc/>
         public async Task<List<string>> GetUserRoleAsync(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
             return userRoles.ToList();
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUserAsync(UpdateUserCommand command)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.Id && u.IsActive == true);
@@ -109,6 +114,7 @@
             return RequestResponse.Success(existUser.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> ActivateUserAsync(ActivateUserCommand command)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.Id);
@@ -120,6 +126,7 @@
             return RequestResponse.Success(existUser.Id);
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUserEmailAsync(UpdateUserEmailCommand command)
         {
             var existUser = _userManager.Users.SingleOrDefault(u => u.Id == command.UserId &&
@@ -135,6 +142,7 @@
             return RequestResponse.Success(existUser.Id);
         }
 
+        /// <inheritdoc/>
         public List<UserResponse> GetUsers(GetUsersQuery query)
         {
             var result = _userManager.Users
@@ -144,6 +152,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public List<UserResponse> GetUsersInactive(GetUsersInactiveQuery query)
         {
             var result = _userManager.Users
@@ -153,6 +162,7 @@
             return result;
         }
 
+        /// <inheritdoc/>
         public async Task<RequestResponse> AssignUserToRoleAsync(AssignUserToRoleCommand command)
         {
             var user = await _userManager.FindByIdAsync(command.UserId.ToString());

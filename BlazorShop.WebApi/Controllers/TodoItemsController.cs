@@ -5,6 +5,11 @@ namespace BlazorShop.WebApi.Controllers
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
     public class TodoItemsController : ApiControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("item")]
         public async Task<IActionResult> CreateTodoItem([FromBody] CreateTodoItemCommand command)
         {
@@ -14,6 +19,11 @@ namespace BlazorShop.WebApi.Controllers
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("item")]
         public async Task<IActionResult> UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
         {
@@ -23,6 +33,11 @@ namespace BlazorShop.WebApi.Controllers
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("item/{id}")]
         public async Task<IActionResult> DeleteTodoItem(int id)
         {
@@ -32,6 +47,11 @@ namespace BlazorShop.WebApi.Controllers
                 : BadRequest(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("item/{id}")]
         public async Task<IActionResult> GetTodoItemById(int id)
         {
