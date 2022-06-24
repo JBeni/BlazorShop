@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Common.Interfaces
+﻿// <copyright file="IRoleService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Interfaces
 {
     public interface IRoleService
     {

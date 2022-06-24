@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
+﻿// <copyright file="GetInvoicesQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, Result<InvoiceResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Invoices
+                    .TagWith(nameof(GetInvoicesQueryHandler))
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 

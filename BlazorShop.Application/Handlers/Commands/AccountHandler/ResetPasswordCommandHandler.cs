@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="ResetPasswordCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {

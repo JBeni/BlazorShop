@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="UpdateCreatedSubscriberCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
     public class UpdateCreatedSubscriberCommandHandler : IRequestHandler<UpdateCreatedSubscriberCommand, RequestResponse>
     {
@@ -26,7 +30,9 @@
                 var user = await _userService.FindUserByEmailAsync(request.CustomerEmail);
                 if (user == null) throw new Exception("The user does not exists");
 
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Customer.Id == user.Id && x.StripeSubscriberSubscriptionId.Equals(""));
+                var entity = _dbContext.Subscribers
+                    .TagWith(nameof(UpdateCreatedSubscriberCommandHandler))
+                    .FirstOrDefault(x => x.Customer.Id == user.Id && x.StripeSubscriberSubscriptionId.Equals(""));
                 if (entity == null) throw new Exception("The subscriber does not exists");
 
                 entity.StripeSubscriberSubscriptionId = request.StripeSubscriberSubscriptionId;

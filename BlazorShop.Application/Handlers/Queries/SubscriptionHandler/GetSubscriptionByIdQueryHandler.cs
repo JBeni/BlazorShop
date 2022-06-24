@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
+﻿// <copyright file="GetSubscriptionByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
 {
     public class GetSubscriptionByIdQueryHandler : IRequestHandler<GetSubscriptionByIdQuery, Result<SubscriptionResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Subscriptions
+                    .TagWith(nameof(GetSubscriptionByIdQueryHandler))
                     .ProjectTo<SubscriptionResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="DeleteReceiptCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
     public class DeleteReceiptCommandHandler : IRequestHandler<DeleteReceiptCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Receipts.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Receipts
+                    .TagWith(nameof(DeleteReceiptCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The receipt does not exists");
 
                 _dbContext.Receipts.Remove(entity);

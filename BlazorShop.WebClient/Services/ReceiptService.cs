@@ -1,4 +1,8 @@
-﻿using MudBlazor;
+﻿// <copyright file="ReceiptService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {

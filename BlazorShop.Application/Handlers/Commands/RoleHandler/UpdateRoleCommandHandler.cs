@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.RoleHandler
+﻿// <copyright file="UpdateRoleCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 {
     public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, RequestResponse>
     {

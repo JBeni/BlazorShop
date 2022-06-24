@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.ClotheValidator
+﻿// <copyright file="GetClotheByIdQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.ClotheValidator
 {
     public class GetClotheByIdQueryValidator : AbstractValidator<GetClotheByIdQuery>
     {

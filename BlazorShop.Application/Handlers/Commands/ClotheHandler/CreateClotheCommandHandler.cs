@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
+﻿// <copyright file="CreateClotheCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 {
     public class CreateClotheCommandHandler : IRequestHandler<CreateClotheCommand, RequestResponse>
     {

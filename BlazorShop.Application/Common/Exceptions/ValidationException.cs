@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Common.Exceptions
+﻿// <copyright file="ValidationException.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Exceptions
 {
     public class ValidationException : Exception
     {

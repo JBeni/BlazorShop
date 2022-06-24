@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="UpdateSubscriberStatusCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
     public class UpdateSubscriberStatusCommandHandler : IRequestHandler<UpdateSubscriberStatusCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
+                var entity = _dbContext.Subscribers
+                    .TagWith(nameof(UpdateSubscriberStatusCommandHandler))
+                    .FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
                 if (entity == null) throw new Exception("The subscriber does not exists");
 
                 entity.Status = SubscriptionStatus.Inactive;

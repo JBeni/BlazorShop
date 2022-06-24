@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="CartConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
     public class CartConfiguration : IEntityTypeConfiguration<Cart>
     {

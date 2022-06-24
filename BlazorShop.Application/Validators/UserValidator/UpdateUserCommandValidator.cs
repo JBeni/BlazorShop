@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.UserValidator
+﻿// <copyright file="UpdateUserCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.UserValidator
 {
     public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {

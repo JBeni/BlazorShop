@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.RoleHandler
+﻿// <copyright file="GetRoleByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
     public class GetRoleByIdQueryHandler : IRequestHandler<GetRoleByIdQuery, Result<RoleResponse>>
     {

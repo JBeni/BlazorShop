@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Persistence
+﻿// <copyright file="ApplicationDbContextSeed.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
     {

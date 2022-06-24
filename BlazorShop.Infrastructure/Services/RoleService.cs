@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Services
+﻿// <copyright file="RoleService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Services
 {
     public class RoleService : IRoleService
     {
@@ -27,6 +31,7 @@
         public RoleResponse GetDefaultRole()
         {
             var role = _roleManager.Roles
+                .TagWith(nameof(GetDefaultRole))
                 .Where(x => x.Name == StringRoleResources.Default &&
                     x.NormalizedName == StringRoleResources.DefaultNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
@@ -38,6 +43,7 @@
         public RoleResponse GetUserRole()
         {
             var role = _roleManager.Roles
+                .TagWith(nameof(GetUserRole))
                 .Where(x => x.Name == StringRoleResources.User &&
                     x.NormalizedName == StringRoleResources.UserNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
@@ -49,6 +55,7 @@
         public RoleResponse GetAdminRole()
         {
             var role = _roleManager.Roles
+                .TagWith(nameof(GetAdminRole))
                 .Where(x => x.Name == StringRoleResources.Admin &&
                     x.NormalizedName == StringRoleResources.AdminNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
@@ -81,6 +88,7 @@
         public List<RoleResponse> GetRoles()
         {
             var result = _roleManager.Roles
+                .TagWith(nameof(GetRoles))
                 .Where(x => x.Name != StringRoleResources.Admin &&
                     x.NormalizedName != StringRoleResources.AdminNormalized)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
@@ -92,6 +100,7 @@
         public List<RoleResponse> GetRolesForAdmin()
         {
             var result = _roleManager.Roles
+                .TagWith(nameof(GetRolesForAdmin))
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .ToList();
             return result;
@@ -101,6 +110,7 @@
         public RoleResponse GetRoleById(int id)
         {
             var result = _roleManager.Roles
+                .TagWith(nameof(GetRoleById))
                 .Where(_x => _x.Id == id)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
@@ -111,6 +121,7 @@
         public RoleResponse GetRoleByNormalizedName(string normalizedName)
         {
             var result = _roleManager.Roles
+                .TagWith(nameof(GetRoleByNormalizedName))
                 .Where(_x => _x.NormalizedName == normalizedName)
                 .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Domain.Entities.Identity
+﻿// <copyright file="RoleClaim.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Domain.Entities.Identity
 {
     public class RoleClaim : IdentityRoleClaim<int>
     {

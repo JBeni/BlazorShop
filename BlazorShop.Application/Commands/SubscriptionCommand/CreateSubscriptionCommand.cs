@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.SubscriptionCommand
+﻿// <copyright file="CreateSubscriptionCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.SubscriptionCommand
 {
     public class CreateSubscriptionCommand : IRequest<RequestResponse>
     {

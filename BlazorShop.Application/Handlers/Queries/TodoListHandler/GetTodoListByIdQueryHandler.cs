@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
+﻿// <copyright file="GetTodoListByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
     public class GetTodoListByIdQueryHandler : IRequestHandler<GetTodoListByIdQuery, Result<TodoListResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.TodoLists
+                    .TagWith(nameof(GetTodoListByIdQueryHandler))
                     .ProjectTo<TodoListResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 

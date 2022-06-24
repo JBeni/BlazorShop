@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartsCountQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
     public class GetCartsCountQueryHandler : IRequestHandler<GetCartsCountQuery, int>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var result = _dbContext.Carts.Where(x => x.User.Id == request.UserId).Count();
+                var result = _dbContext.Carts
+                    .TagWith(nameof(GetCartsCountQueryHandler))
+                    .Where(x => x.User.Id == request.UserId).Count();
                 return Task.FromResult(result);
             }
             catch (Exception ex)

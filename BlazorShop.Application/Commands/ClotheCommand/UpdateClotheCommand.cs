@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.ClotheCommand
+﻿// <copyright file="UpdateClotheCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.ClotheCommand
 {
     public class UpdateClotheCommand : IRequest<RequestResponse>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.UserValidator
+﻿// <copyright file="DeleteUserCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.UserValidator
 {
     public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
     {

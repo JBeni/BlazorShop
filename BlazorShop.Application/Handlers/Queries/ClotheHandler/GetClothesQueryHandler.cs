@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
+﻿// <copyright file="GetClothesQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
     public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, Result<ClotheResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Clothes
+                    .TagWith(nameof(GetClothesQueryHandler))
                     .Where(x => x.IsActive == true)
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .ToList();

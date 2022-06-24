@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
     public class GetCartByIdQueryHandler : IRequestHandler<GetCartByIdQuery, Result<CartResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Carts
+                    .TagWith(nameof(GetCartByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.User.Id == request.UserId)
                     .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();

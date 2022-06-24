@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.CartHandler
+﻿// <copyright file="DeleteAllCartsCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
     public class DeleteAllCartsCommandHandler : IRequestHandler<DeleteAllCartsCommand, RequestResponse>
     {
@@ -21,7 +25,11 @@
         {
             try
             {
-                _dbContext.Carts.RemoveRange(_dbContext.Carts.Where(x => x.User.Id == request.UserId));
+                _dbContext.Carts.RemoveRange(
+                    _dbContext.Carts
+                        .TagWith(nameof(DeleteAllCartsCommandHandler))
+                        .Where(x => x.User.Id == request.UserId)
+                );
                 await _dbContext.SaveChangesAsync(cancellationToken);
                 return RequestResponse.Success();
             }

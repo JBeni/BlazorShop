@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Services
+﻿// <copyright file="AccountService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Services
 {
     public class AccountService : IAccountService
     {

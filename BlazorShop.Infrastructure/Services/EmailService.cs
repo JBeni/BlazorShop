@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Services
+﻿// <copyright file="EmailService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Services
 {
     public class EmailService : IEmailService
     {

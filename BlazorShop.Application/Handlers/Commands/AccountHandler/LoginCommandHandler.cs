@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="LoginCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, JwtTokenResponse>
     {

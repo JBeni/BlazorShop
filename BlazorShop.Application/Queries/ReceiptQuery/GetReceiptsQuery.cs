@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Queries.ReceiptQuery
+﻿// <copyright file="GetReceiptsQuery.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Queries.ReceiptQuery
 {
     public class GetReceiptsQuery : IRequest<Result<ReceiptResponse>>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="InvoicesController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class InvoicesController : ApiControllerBase

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.CartValidator
+﻿// <copyright file="CreateCartCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.CartValidator
 {
     public class CreateCartCommandValidator : AbstractValidator<CreateCartCommand>
     {

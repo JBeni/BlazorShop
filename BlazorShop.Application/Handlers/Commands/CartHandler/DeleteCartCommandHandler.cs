@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.CartHandler
+﻿// <copyright file="DeleteCartCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
     public class DeleteCartCommandHandler : IRequestHandler<DeleteCartCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
+                var entity = _dbContext.Carts
+                    .TagWith(nameof(DeleteCartCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
                 if (entity == null) throw new Exception("The cart does not exists");
 
                 _dbContext.Carts.Remove(entity);

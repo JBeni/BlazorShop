@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.AccountValidator
+﻿// <copyright file="ChangePasswordCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.AccountValidator
 {
     public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
     {

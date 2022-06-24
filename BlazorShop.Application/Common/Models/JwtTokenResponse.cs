@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Common.Models
+﻿// <copyright file="JwtTokenResponse.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Models
 {
     public class JwtTokenResponse
     {

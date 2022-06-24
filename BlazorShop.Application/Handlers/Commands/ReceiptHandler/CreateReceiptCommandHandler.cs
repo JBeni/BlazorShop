@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="CreateReceiptCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
     public class CreateReceiptCommandHandler : IRequestHandler<CreateReceiptCommand, RequestResponse>
     {

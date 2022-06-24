@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.OrderHandler
+﻿// <copyright file="UpdateOrderCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.OrderHandler
 {
     public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Orders.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Orders
+                    .TagWith(nameof(UpdateOrderCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The order does not exists");
 
                 entity.UserEmail = request.UserEmail;

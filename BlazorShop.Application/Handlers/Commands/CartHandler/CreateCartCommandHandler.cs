@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.CartHandler
+﻿// <copyright file="CreateCartCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, RequestResponse>
     {
@@ -23,7 +27,9 @@
         {
             try
             {
-                var clothe = _dbContext.Clothes.FirstOrDefault(x => x.Id == request.ClotheId);
+                var clothe = _dbContext.Clothes
+                    .TagWith(nameof(CreateCartCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.ClotheId);
                 var user = await _userManager.FindByIdAsync(request.UserId.ToString());
                 if (user == null) throw new Exception("The user does not exists");
 

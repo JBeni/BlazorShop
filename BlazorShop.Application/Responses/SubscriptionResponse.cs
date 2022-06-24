@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Responses
+﻿// <copyright file="SubscriptionResponse.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Responses
 {
     public class SubscriptionResponse : IMapFrom<Subscription>
     {

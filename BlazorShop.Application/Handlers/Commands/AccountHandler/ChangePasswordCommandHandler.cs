@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="ChangePasswordCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, RequestResponse>
     {

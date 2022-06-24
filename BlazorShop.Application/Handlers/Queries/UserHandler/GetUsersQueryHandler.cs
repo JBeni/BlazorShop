@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.UserHandler
+﻿// <copyright file="GetUsersQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<UserResponse>>
     {

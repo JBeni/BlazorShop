@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Common.Mappings
+﻿// <copyright file="MappingProfile.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Mappings
 {
     public class MappingProfile : Profile
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="CreateSubscriberCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
     public class CreateSubscriberCommandHandler : IRequestHandler<CreateSubscriberCommand, RequestResponse>
     {
@@ -23,11 +27,15 @@
         {
             try
             {
-                Subscriber entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
+                Subscriber entity = _dbContext.Subscribers
+                    .TagWith(nameof(CreateSubscriberCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity != null) throw new Exception("The subscriber already exists");
 
                 var customer = await _userService.FindUserByIdAsync(request.CustomerId);
-                var subscription = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.SubscriptionId);
+                var subscription = _dbContext.Subscriptions
+                    .TagWith(nameof(CreateSubscriberCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.SubscriptionId);
 
                 entity = new Subscriber
                 {

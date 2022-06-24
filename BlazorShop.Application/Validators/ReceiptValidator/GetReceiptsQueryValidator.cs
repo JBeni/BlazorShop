@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.ReceiptValidator
+﻿// <copyright file="GetReceiptsQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.ReceiptValidator
 {
     public class GetReceiptsQueryValidator : AbstractValidator<GetReceiptsQuery>
     {

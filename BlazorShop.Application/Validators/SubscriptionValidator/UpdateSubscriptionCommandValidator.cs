@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.SubscriptionValidator
+﻿// <copyright file="UpdateSubscriptionCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
     public class UpdateSubscriptionCommandValidator : AbstractValidator<UpdateSubscriptionCommand>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Common.Behaviours
+﻿// <copyright file="UnhandledExceptionBehaviour.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Behaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {

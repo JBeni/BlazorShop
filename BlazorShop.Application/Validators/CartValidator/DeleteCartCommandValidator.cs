@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.CartValidator
+﻿// <copyright file="DeleteCartCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.CartValidator
 {
     public class DeleteCartCommandValidator : AbstractValidator<DeleteCartCommand>
     {

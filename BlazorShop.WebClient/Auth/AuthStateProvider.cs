@@ -1,4 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿// <copyright file="AuthStateProvider.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 

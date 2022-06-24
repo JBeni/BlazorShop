@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
+﻿// <copyright file="UpdateSubscriptionCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
 {
     public class UpdateSubscriptionCommandHandler : IRequestHandler<UpdateSubscriptionCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Subscriptions.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.Subscriptions
+                    .TagWith(nameof(UpdateSubscriptionCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The subscription does not exists");
 
                 entity.StripeSubscriptionId = request.StripeSubscriptionId;

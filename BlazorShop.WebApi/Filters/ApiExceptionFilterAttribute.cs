@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebApi.Filters
+﻿// <copyright file="ApiExceptionFilterAttribute.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {

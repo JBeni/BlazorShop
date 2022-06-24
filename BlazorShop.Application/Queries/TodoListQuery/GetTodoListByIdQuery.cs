@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Queries.TodoListQuery
+﻿// <copyright file="GetTodoListByIdQuery.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Queries.TodoListQuery
 {
     public class GetTodoListByIdQuery : IRequest<Result<TodoListResponse>>
     {

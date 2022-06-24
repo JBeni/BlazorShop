@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.TodoItemValidator
+﻿// <copyright file="GetTodoItemByIdQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.TodoItemValidator
 {
     public  class GetTodoItemByIdQueryValidator : AbstractValidator<GetTodoItemByIdQuery>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebClient.Interfaces
+﻿// <copyright file="IUserService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Interfaces
 {
     public interface IUserService
     {

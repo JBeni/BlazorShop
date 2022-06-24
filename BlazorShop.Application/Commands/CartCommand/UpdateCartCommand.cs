@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.CartCommand
+﻿// <copyright file="UpdateCartCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.CartCommand
 {
     public class UpdateCartCommand : IRequest<RequestResponse>
     {

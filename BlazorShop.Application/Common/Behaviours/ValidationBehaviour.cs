@@ -1,4 +1,8 @@
-﻿using ValidationException = BlazorShop.Application.Common.Exceptions.ValidationException;
+﻿// <copyright file="ValidationBehaviour.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using ValidationException = BlazorShop.Application.Common.Exceptions.ValidationException;
 
 namespace BlazorShop.Application.Common.Behaviours
 {

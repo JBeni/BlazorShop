@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Domain.Entities
+﻿// <copyright file="Subscriber.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Domain.Entities
 {
     public class Subscriber : EntityBase
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.UserHandler
+﻿// <copyright file="GetUserByEmailQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
     public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, Result<UserResponse>>
     {

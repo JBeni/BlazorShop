@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.SubscriberCommand
+﻿// <copyright file="UpdateCreatedSubscriberCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.SubscriberCommand
 {
     public class UpdateCreatedSubscriberCommand : IRequest<RequestResponse>
     {

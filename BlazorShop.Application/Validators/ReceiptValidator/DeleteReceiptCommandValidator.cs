@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.ReceiptValidator
+﻿// <copyright file="DeleteReceiptCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.ReceiptValidator
 {
     public class DeleteReceiptCommandValidator : AbstractValidator<DeleteReceiptCommand>
     {

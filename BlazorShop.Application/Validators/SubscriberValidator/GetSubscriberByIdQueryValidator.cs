@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.SubscriberValidator
+﻿// <copyright file="GetSubscriberByIdQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.SubscriberValidator
 {
     public class GetSubscriberByIdQueryValidator : AbstractValidator<GetSubscriberByIdQuery>
     {

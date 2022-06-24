@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.CartHandler
+﻿// <copyright file="UpdateCartCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
     public class UpdateCartCommandHandler : IRequestHandler<UpdateCartCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Carts.FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
+                var entity = _dbContext.Carts
+                    .TagWith(nameof(UpdateCartCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id && x.User.Id == request.UserId);
                 if (entity == null) throw new Exception("The cart do not exists");
 
                 entity.Name = request.Name;

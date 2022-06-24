@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
+﻿// <copyright file="CreateTodoItemCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 {
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, Result<TodoItemResponse>>
     {
@@ -23,7 +27,9 @@
         {
             try
             {
-                var list = _dbContext.TodoLists.FirstOrDefault(x => x.Id == request.ListId);
+                var list = _dbContext.TodoLists
+                    .TagWith(nameof(CreateTodoItemCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.ListId);
                 if (list != null) throw new Exception("The todo list record already exists in the database");
 
                 var entity = new TodoItem

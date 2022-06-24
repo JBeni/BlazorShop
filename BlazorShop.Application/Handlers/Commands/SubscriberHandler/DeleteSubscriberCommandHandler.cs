@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="DeleteSubscriberCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
     public class DeleteSubscriberCommandHandler : IRequestHandler<DeleteSubscriberCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.Subscribers
+                    .TagWith(nameof(DeleteSubscriberCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The subscriber does not exists");
 
                 _dbContext.Subscribers.Remove(entity);

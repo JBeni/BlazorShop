@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.MusicCommand
+﻿// <copyright file="CreateMusicCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.MusicCommand
 {
     public class CreateMusicCommand : IRequest<RequestResponse>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.UserHandler
+﻿// <copyright file="UpdateUserCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, RequestResponse>
     {

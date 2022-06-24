@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="OrdersController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
     public class OrdersController : ApiControllerBase
     {

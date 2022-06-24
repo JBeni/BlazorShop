@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.TodoListValidator
+﻿// <copyright file="UpdateTodoListCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.TodoListValidator
 {
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {

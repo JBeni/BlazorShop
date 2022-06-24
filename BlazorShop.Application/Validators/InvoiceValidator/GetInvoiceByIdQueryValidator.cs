@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.InvoiceValidator
+﻿// <copyright file="GetInvoiceByIdQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.InvoiceValidator
 {
     public class GetInvoiceByIdQueryValidator : AbstractValidator<GetInvoiceByIdQuery>
     {

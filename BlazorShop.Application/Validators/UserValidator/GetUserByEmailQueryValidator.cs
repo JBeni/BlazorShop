@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.UserValidator
+﻿// <copyright file="GetUserByEmailQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.UserValidator
 {
     public class GetUserByEmailQueryValidator : AbstractValidator<GetUserByEmailQuery>
     {

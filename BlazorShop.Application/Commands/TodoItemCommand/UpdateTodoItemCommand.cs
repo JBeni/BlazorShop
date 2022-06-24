@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.TodoItemCommand
+﻿// <copyright file="UpdateTodoItemCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.TodoItemCommand
 {
     public class UpdateTodoItemCommand : IRequest<RequestResponse>
     {

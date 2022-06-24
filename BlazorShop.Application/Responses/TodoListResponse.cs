@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Responses
+﻿// <copyright file="TodoListResponse.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Responses
 {
     public class TodoListResponse : IMapFrom<TodoList>
     {

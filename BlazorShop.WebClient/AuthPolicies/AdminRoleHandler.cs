@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebClient.AuthPolicies
+﻿// <copyright file="AdminRoleRequirement.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
     /// .

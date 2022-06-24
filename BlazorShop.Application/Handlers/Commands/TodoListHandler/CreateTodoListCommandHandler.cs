@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
+﻿// <copyright file="CreateTodoListCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
 {
     public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, Result<TodoListResponse>>
     {

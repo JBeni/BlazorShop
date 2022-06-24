@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.TodoItemCommand
+﻿// <copyright file="CreateTodoItemCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.TodoItemCommand
 {
     public class CreateTodoItemCommand : IRequest<Result<TodoItemResponse>>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
+﻿// <copyright file="GetSubscribersQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
     public class GetSubscribersQueryHandler : IRequestHandler<GetSubscribersQuery, Result<SubscriberResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Subscribers
+                    .TagWith(nameof(GetSubscribersQueryHandler))
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 

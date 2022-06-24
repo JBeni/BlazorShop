@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.UserCommand
+﻿// <copyright file="CreateUserCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.UserCommand
 {
     public class CreateUserCommand : IRequest<RequestResponse>
     {

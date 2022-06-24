@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.MusicHandler
+﻿// <copyright file="UpdateMusicCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 {
     public class UpdateMusicCommandHandler : IRequestHandler<UpdateMusicCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Musics.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.Musics
+                    .TagWith(nameof(UpdateMusicCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The music does not exists");
 
                 entity.Title = request.Title;

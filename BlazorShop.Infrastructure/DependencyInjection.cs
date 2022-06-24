@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure
+﻿// <copyright file="DependencyInjection.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure
 {
     public static class DependencyInjection
     {

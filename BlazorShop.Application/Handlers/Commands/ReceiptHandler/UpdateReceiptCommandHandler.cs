@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="UpdateReceiptCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
     public class UpdateReceiptCommandHandler : IRequestHandler<UpdateReceiptCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Receipts.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Receipts
+                    .TagWith(nameof(UpdateReceiptCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The receipt does not exists");
 
                 entity.ReceiptDate = request.ReceiptDate;

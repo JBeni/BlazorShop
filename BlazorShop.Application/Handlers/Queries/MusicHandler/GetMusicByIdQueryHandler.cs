@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.MusicHandler
+﻿// <copyright file="GetMusicByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 {
     public class GetMusicByIdQueryHandler : IRequestHandler<GetMusicByIdQuery, Result<MusicResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Musics
+                    .TagWith(nameof(GetMusicByIdQueryHandler))
                     .ProjectTo<MusicResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.RoleHandler
+﻿// <copyright file="DeleteRoleCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 {
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, RequestResponse>
     {

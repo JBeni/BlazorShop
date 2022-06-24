@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="InvoiceConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
     public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
     {

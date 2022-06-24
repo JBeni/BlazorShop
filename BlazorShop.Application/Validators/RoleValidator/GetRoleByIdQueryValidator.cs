@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.RoleValidator
+﻿// <copyright file="GetRoleByIdQueryValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.RoleValidator
 {
     public class GetRoleByIdQueryValidator : AbstractValidator<GetRoleByIdQuery>
     {

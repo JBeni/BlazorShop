@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
+﻿// <copyright file="UpdateTodoListCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
 {
     public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.TodoLists.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.TodoLists
+                    .TagWith(nameof(UpdateTodoListCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The todo list record does not exists in the database");
 
                 entity.Title = request.Title;

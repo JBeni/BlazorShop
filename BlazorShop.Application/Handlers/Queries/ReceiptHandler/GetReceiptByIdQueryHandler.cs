@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
+﻿// <copyright file="GetReceiptByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
     public class GetReceiptByIdQueryHandler : IRequestHandler<GetReceiptByIdQuery, Result<ReceiptResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Receipts
+                    .TagWith(nameof(GetReceiptByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();

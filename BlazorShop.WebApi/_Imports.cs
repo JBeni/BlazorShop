@@ -1,4 +1,8 @@
-﻿global using FluentValidation.AspNetCore;
+﻿// <copyright file="_Imports.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+global using FluentValidation.AspNetCore;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.IdentityModel.Tokens;

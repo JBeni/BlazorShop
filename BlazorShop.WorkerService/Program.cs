@@ -1,3 +1,7 @@
+// <copyright file="Program.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
 try
 {
     IHost host = Host.CreateDefaultBuilder(args)

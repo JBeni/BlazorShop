@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
+﻿// <copyright file="UpdateClotheCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 {
     public class UpdateClotheCommandHandler : IRequestHandler<UpdateClotheCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Clothes.SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
+                var entity = _dbContext.Clothes
+                    .TagWith(nameof(UpdateClotheCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
                 if (entity == null) throw new Exception("The clothe does not exists");
 
                 entity.Name = request.Name;

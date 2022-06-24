@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
+﻿// <copyright file="GetReceiptsQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
     public class GetReceiptsQueryHandler : IRequestHandler<GetReceiptsQuery, Result<ReceiptResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Receipts
+                    .TagWith(nameof(GetReceiptsQueryHandler))
                     .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .ToList();

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
+﻿// <copyright file="DeleteInvoiceCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 {
     public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.Invoices.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Invoices
+                    .TagWith(nameof(DeleteInvoiceCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The invoice does not exists");
 
                 _dbContext.Invoices.Remove(entity);

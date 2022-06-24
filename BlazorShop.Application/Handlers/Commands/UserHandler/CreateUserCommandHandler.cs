@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.UserHandler
+﻿// <copyright file="CreateUserCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, RequestResponse>
     {

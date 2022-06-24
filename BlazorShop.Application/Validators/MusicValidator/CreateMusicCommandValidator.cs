@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.MusicValidator
+﻿// <copyright file="CreateMusicCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.MusicValidator
 {
     public class CreateMusicCommandValidator : AbstractValidator<CreateMusicCommand>
     {

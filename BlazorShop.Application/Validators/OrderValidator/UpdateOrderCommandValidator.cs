@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.OrderValidator
+﻿// <copyright file="UpdateOrderCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.OrderValidator
 {
     public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Domain.Entities
+﻿// <copyright file="TodoItem.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Domain.Entities
 {
     public class TodoItem : EntityBase
     {

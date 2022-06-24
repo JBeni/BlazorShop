@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.OrderHandler
+﻿// <copyright file="GetOrderByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Result<OrderResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Orders
+                    .TagWith(nameof(GetOrderByIdQueryHandler))
                     .Where(d => d.Id == request.Id && d.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();

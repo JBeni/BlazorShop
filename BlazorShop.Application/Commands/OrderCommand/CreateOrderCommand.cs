@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.OrderCommand
+﻿// <copyright file="CreateOrderCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.OrderCommand
 {
     public class CreateOrderCommand : IRequest<RequestResponse>
     {

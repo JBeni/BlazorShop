@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="SubscriberService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
     public class SubscriberService : ISubscriberService
     {

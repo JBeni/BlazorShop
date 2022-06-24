@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
+﻿// <copyright file="DeleteTodoItemCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 {
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, RequestResponse>
     {
@@ -21,7 +25,9 @@
         {
             try
             {
-                var entity = _dbContext.TodoItems.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.TodoItems
+                    .TagWith(nameof(DeleteTodoItemCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The todo list record does not exists in the database");
 
                 _dbContext.TodoItems.Remove(entity);

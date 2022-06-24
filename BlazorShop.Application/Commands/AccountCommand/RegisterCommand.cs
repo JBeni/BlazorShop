@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.AccountCommand
+﻿// <copyright file="RegisterCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.AccountCommand
 {
     public class RegisterCommand : IRequest<JwtTokenResponse>
     {

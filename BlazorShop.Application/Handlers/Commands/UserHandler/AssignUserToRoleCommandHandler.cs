@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.UserHandler
+﻿// <copyright file="AssignUserToRoleCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
     public class AssignUserToRoleCommandHandler : IRequestHandler<AssignUserToRoleCommand, RequestResponse>
     {

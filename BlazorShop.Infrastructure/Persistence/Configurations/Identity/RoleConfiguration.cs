@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
+﻿// <copyright file="RoleConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
     public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {

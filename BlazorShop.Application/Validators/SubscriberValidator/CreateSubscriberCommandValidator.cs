@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.SubscriberValidator
+﻿// <copyright file="CreateSubscriberCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.SubscriberValidator
 {
     public class CreateSubscriberCommandValidator : AbstractValidator<CreateSubscriberCommand>
     {

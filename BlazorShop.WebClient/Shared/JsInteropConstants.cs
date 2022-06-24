@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebClient.Shared
+﻿// <copyright file="JsInteropConstants.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Shared
 {
     public static class JsInteropConstants
     {

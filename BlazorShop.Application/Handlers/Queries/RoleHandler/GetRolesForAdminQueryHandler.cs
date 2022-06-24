@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.RoleHandler
+﻿// <copyright file="GetRolesForAdminQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
     public class GetRolesForAdminQueryHandler : IRequestHandler<GetRolesForAdminQuery, Result<RoleResponse>>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.UserHandler
+﻿// <copyright file="DeleteUserCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, RequestResponse>
     {

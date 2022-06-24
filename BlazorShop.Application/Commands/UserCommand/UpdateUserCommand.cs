@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Commands.UserCommand
+﻿// <copyright file="UpdateUserCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.UserCommand
 {
     public class UpdateUserCommand : IRequest<RequestResponse>
     {

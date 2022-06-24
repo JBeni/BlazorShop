@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.RoleHandler
+﻿// <copyright file="GetRoleByNormalizedNameQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
     public class GetRoleByNormalizedNameQueryHandler : IRequestHandler<GetRoleByNormalizedNameQuery, Result<RoleResponse>>
     {

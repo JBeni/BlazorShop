@@ -1,4 +1,8 @@
-﻿using BlazorShop.Application.Commands.TodoItemCommand;
+﻿// <copyright file="TodoItemsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using BlazorShop.Application.Commands.TodoItemCommand;
 
 namespace BlazorShop.WebApi.Controllers
 {

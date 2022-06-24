@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="SubscriptionsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
     public class SubscriptionsController : ApiControllerBase
     {

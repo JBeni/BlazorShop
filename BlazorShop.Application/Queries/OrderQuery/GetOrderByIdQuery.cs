@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Queries.OrderQuery
+﻿// <copyright file="GetOrderByIdQuery.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Queries.OrderQuery
 {
     public class GetOrderByIdQuery : IRequest<Result<OrderResponse>>
     {

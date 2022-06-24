@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Validators.TodoListValidator
+﻿// <copyright file="DeleteTodoListCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.TodoListValidator
 {
     public class DeleteTodoListCommandValidator : AbstractValidator<DeleteTodoListCommand>
     {

@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.WebClient.Auth;
+﻿// <copyright file="AuthenticationService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Auth;
 
 public class AuthenticationService : IAuthenticationService
 {

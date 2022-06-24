@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
+﻿// <copyright file="GetTodoItemsQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
 {
     public class GetTodoItemsQueryHandler : IRequestHandler<GetTodoItemsQuery, Result<TodoItemResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.TodoItems
+                    .TagWith(nameof(GetTodoItemsQueryHandler))
                     .ProjectTo<TodoItemResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 

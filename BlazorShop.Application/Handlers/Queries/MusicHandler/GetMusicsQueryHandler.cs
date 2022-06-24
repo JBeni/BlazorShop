@@ -1,4 +1,8 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.MusicHandler
+﻿// <copyright file="GetMusicsQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 {
     public class GetMusicsQueryHandler : IRequestHandler<GetMusicsQuery, Result<MusicResponse>>
     {
@@ -24,6 +28,7 @@
             try
             {
                 var result = _dbContext.Musics
+                    .TagWith(nameof(GetMusicsQueryHandler))
                     .ProjectTo<MusicResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
