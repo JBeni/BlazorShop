@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="ITodoListService"/>.
+    /// </summary>
     public partial class TodoListService : ITodoListService
     {
         private readonly HttpClient _httpClient;

@@ -4,10 +4,13 @@
 
 namespace BlazorShop.Application.Commands.AccountCommand
 {
+    /// <summary>
+    /// A model to change the passwword.
+    /// </summary>
     public class ChangePasswordCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// .
+        /// The
         /// </summary>
         public int UserId { get; set; }
 

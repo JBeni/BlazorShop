@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.AccountCommand
 {
+    /// <summary>
+    /// A model to register the user.
+    /// </summary>
     public class RegisterCommand : IRequest<JwtTokenResponse>
     {
         /// <summary>

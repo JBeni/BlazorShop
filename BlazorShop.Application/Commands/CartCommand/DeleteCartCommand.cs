@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.CartCommand
 {
+    /// <summary>
+    /// A model to delete a cart.
+    /// </summary>
     public class DeleteCartCommand : IRequest<RequestResponse>
     {
         /// <summary>

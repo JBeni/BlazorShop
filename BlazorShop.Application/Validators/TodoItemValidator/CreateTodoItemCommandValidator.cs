@@ -4,7 +4,10 @@
 
 namespace BlazorShop.Application.Validators.TodoItemValidator
 {
-    public  class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCommand>
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
+    public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCommand>
     {
         private readonly IApplicationDbContext _context;
 

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Common.Interfaces
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public interface IEmailService
     {
         /// <summary>

@@ -4,7 +4,10 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
-    [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
+	/// <summary>
+	/// Controller for Payments.
+	/// </summary>
+	[Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class PaymentsController : ApiControllerBase
     {
 		private readonly IConfiguration _configuration;

@@ -4,7 +4,10 @@
 
 namespace BlazorShop.Application.Validators.TodoItemValidator
 {
-    public  class DeleteTodoItemCommandValidator : AbstractValidator<DeleteTodoItemCommand>
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
+    public class DeleteTodoItemCommandValidator : AbstractValidator<DeleteTodoItemCommand>
     {
         /// <summary>
         /// .

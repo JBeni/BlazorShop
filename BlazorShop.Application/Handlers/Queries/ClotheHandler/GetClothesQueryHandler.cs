@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, Result<ClotheResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

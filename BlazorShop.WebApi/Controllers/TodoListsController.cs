@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for TodoLists.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
     public class TodoListsController : ApiControllerBase
     {

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoItemByIdQueryHandler : IRequestHandler<GetTodoItemByIdQuery, Result<TodoItemResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

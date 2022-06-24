@@ -5,10 +5,8 @@
 namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// .
+    /// A custom policy to check for the User role.
     /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class UserRoleRequirement : IAuthorizationRequirement
     {
         public string Role { get; }

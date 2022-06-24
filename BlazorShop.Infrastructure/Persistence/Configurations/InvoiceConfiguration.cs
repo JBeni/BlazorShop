@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Invoice"/>.
+    /// </summary>
     public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
     {
         public void Configure(EntityTypeBuilder<Invoice> builder)

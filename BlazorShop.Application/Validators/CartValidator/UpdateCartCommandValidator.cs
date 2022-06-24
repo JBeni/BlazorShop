@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.CartValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateCartCommandValidator : AbstractValidator<UpdateCartCommand>
     {
         private readonly IApplicationDbContext _context;

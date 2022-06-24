@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, Result<OrderResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

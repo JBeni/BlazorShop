@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Clothe"/>.
+    /// </summary>
     public class ClotheConfiguration : IEntityTypeConfiguration<Clothe>
     {
         public void Configure(EntityTypeBuilder<Clothe> builder)

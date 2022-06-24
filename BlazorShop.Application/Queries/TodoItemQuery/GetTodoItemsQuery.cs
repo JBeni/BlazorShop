@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Queries.TodoItemQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoItemsQuery : IRequest<Result<TodoItemResponse>>
     {
     }

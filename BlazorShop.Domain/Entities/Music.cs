@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity music.
+    /// </summary>
     public class Music : EntityBase
     {
         /// <summary>

@@ -8,6 +8,9 @@ using System.Text;
 
 namespace BlazorShop.WebClient.Auth
 {
+    /// <summary>
+    /// A service to use the authentication state provider.
+    /// </summary>
     public class AuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;

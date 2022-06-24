@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetSubscriptionByIdQueryHandler : IRequestHandler<GetSubscriptionByIdQuery, Result<SubscriptionResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

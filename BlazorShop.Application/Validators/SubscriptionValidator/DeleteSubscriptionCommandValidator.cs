@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteSubscriptionCommandValidator : AbstractValidator<DeleteSubscriptionCommand>
     {
         /// <summary>

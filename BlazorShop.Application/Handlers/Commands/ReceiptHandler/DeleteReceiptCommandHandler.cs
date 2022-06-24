@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteReceiptCommandHandler : IRequestHandler<DeleteReceiptCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

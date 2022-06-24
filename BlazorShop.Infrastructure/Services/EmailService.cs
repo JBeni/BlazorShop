@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IEmailService"/>.
+    /// </summary>
     public class EmailService : IEmailService
     {
         /// <inheritdoc/>

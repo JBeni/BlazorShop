@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Musics.
+    /// </summary>
     public class MusicsController : ApiControllerBase
     {
         /// <summary>

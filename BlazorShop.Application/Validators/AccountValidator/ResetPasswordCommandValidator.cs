@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.AccountValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
     {
         /// <summary>

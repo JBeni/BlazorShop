@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ActivateUserCommandHandler : IRequestHandler<ActivateUserCommand, RequestResponse>
     {
         private readonly IUserService _userService;

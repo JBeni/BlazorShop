@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.AccountCommand
 {
+    /// <summary>
+    /// A model to reset the password.
+    /// </summary>
     public class ResetPasswordCommand : IRequest<RequestResponse>
     {
         /// <summary>

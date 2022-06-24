@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.TodoListValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoListByIdQueryValidator : AbstractValidator<GetTodoListByIdQuery>
     {
         /// <summary>

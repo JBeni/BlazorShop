@@ -4,6 +4,10 @@
 
 namespace BlazorShop.Application.Validators.UserValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
+
     public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
     {
         /// <summary>

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.SubscriberCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateSubscriberStatusCommand : IRequest<RequestResponse>
     {
         /// <summary>

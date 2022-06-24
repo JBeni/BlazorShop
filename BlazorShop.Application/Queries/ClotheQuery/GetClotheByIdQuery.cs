@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Queries.ClotheQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetClotheByIdQuery : IRequest<Result<ClotheResponse>>
     {
         /// <summary>

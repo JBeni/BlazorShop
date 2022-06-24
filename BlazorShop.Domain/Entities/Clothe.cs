@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity clothe.
+    /// </summary>
     public class Clothe : EntityBase
     {
         /// <summary>

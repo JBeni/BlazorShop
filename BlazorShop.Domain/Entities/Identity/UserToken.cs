@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities.Identity
 {
+    /// <summary>
+    /// A template for the entity user token.
+    /// </summary>
     public class UserToken : IdentityUserToken<int>
     {
         /// <summary>

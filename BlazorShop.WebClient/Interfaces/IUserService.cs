@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the user.
+    /// </summary>
     public interface IUserService
     {
         /// <summary>

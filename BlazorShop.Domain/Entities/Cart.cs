@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity cart.
+    /// </summary>
     public class Cart : EntityBase
     {
         /// <summary>

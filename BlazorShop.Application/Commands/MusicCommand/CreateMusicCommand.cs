@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.MusicCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateMusicCommand : IRequest<RequestResponse>
     {
         /// <summary>

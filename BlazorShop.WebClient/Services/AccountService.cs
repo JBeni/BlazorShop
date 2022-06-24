@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IAccountService"/>.
+    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly HttpClient _httpClient;

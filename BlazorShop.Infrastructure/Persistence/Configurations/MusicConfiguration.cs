@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Music"/>.
+    /// </summary>
     public class MusicConfiguration : IEntityTypeConfiguration<Music>
     {
         public void Configure(EntityTypeBuilder<Music> builder)

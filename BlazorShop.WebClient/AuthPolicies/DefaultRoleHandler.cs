@@ -5,10 +5,8 @@
 namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// .
+    /// A custom policy to check for the Default role.
     /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class DefaultRoleRequirement : IAuthorizationRequirement
     {
         public string Role { get; }

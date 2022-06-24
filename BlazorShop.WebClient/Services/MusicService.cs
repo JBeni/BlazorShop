@@ -6,6 +6,9 @@ using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IMusicService"/>.
+    /// </summary>
     public class MusicService : IMusicService
     {
         private readonly HttpClient _httpClient;

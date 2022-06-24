@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Queries.CartQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartsQuery : IRequest<Result<CartResponse>>
     {
         /// <summary>

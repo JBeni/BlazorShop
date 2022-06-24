@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Accounts.
+    /// </summary>
     public class AccountsController : ApiControllerBase
     {
         private readonly IConfiguration _configuration;

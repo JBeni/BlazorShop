@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity order.
+    /// </summary>
     public class Order : EntityBase
     {
         /// <summary>

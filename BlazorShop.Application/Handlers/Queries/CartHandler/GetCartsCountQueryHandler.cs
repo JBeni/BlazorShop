@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartsCountQueryHandler : IRequestHandler<GetCartsCountQuery, int>
     {
         private readonly IApplicationDbContext _dbContext;

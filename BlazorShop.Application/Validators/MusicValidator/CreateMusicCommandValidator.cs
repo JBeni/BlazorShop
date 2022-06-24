@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.MusicValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateMusicCommandValidator : AbstractValidator<CreateMusicCommand>
     {
         private readonly IApplicationDbContext _context;

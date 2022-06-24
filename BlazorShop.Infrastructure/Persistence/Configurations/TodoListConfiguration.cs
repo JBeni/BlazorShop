@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="TodoList"/>.
+    /// </summary>
     public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
     {
         public void Configure(EntityTypeBuilder<TodoList> builder)

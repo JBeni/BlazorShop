@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.UserValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
         /// <summary>

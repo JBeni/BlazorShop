@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IClotheService"/>.
+    /// </summary>
     public class ClotheService : IClotheService
     {
         private readonly HttpClient _httpClient;

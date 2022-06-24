@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Auth;
 
+/// <summary>
+/// An implementation of <see cref="IAuthenticationService"/>.
+/// </summary>
 public class AuthenticationService : IAuthenticationService
 {
     private readonly HttpClient _httpClient;

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Carts.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class CartsController : ApiControllerBase
     {

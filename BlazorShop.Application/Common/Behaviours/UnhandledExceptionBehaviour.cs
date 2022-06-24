@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Common.Behaviours
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ILogger<TRequest> _logger;

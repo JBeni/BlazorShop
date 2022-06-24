@@ -6,6 +6,9 @@ using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IReceiptService"/>.
+    /// </summary>
     public class ReceiptService : IReceiptService
     {
         private readonly HttpClient _httpClient;

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the stripe.
+    /// </summary>
     public interface IStripeService
     {
         /// <summary>

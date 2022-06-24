@@ -4,7 +4,10 @@
 
 namespace BlazorShop.Domain.Entities
 {
-    public class Subscription : EntityBase
+	/// <summary>
+	/// A template for the entity subscription.
+	/// </summary>
+	public class Subscription : EntityBase
     {
 		/// <summary>
 		/// .

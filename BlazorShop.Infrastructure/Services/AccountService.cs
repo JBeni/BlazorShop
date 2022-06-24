@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IAccountService"/>.
+    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;

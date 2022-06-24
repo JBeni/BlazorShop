@@ -5,7 +5,7 @@
 namespace BlazorShop.Domain.Enums
 {
     /// <summary>
-    /// .
+    /// A enumeration for the subscription statuses.
     /// </summary>
     public enum SubscriptionStatus
     {

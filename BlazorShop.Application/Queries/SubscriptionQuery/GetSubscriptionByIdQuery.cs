@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Queries.SubscriptionQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetSubscriptionByIdQuery : IRequest<Result<SubscriptionResponse>>
     {
         /// <summary>

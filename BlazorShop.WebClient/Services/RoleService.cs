@@ -6,6 +6,9 @@ using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IRoleService"/>.
+    /// </summary>
     public class RoleService : IRoleService
     {
         private readonly HttpClient _httpClient;

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the music.
+    /// </summary>
     public interface IMusicService
     {
         /// <summary>

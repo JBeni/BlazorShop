@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IUserService"/>.
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;

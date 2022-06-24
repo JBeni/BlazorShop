@@ -6,6 +6,9 @@ using ValidationException = BlazorShop.Application.Common.Exceptions.ValidationE
 
 namespace BlazorShop.Application.Common.Behaviours
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {

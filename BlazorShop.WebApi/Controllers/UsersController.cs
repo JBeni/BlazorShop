@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Users.
+    /// </summary>
     public class UsersController : ApiControllerBase
     {
         /// <summary>

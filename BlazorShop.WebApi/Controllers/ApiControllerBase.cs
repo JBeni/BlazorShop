@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for setting the Mediator.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]

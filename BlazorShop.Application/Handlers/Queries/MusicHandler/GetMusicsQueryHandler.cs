@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetMusicsQueryHandler : IRequestHandler<GetMusicsQuery, Result<MusicResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

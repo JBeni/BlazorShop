@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity todo item.
+    /// </summary>
     public class TodoItem : EntityBase
     {
         /// <summary>

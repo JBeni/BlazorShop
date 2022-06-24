@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure
 {
+    /// <summary>
+    /// The configuration of Dependency Injection at Infrastructure level.
+    /// </summary>
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Subscribers.
+    /// </summary>
     public class SubscribersController : ApiControllerBase
     {
         /// <summary>

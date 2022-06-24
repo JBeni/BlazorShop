@@ -6,6 +6,9 @@ using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IOrderService"/>.
+    /// </summary>
     public class OrderService : IOrderService
     {
         private readonly HttpClient _httpClient;

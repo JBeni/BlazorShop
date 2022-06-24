@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities.Identity
 {
+    /// <summary>
+    /// A template for the entity user role.
+    /// </summary>
     public class UserRole : IdentityUserRole<int>
     {
         /// <summary>

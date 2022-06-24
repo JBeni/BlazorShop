@@ -4,6 +4,9 @@
 
 using MudBlazor.Services;
 
+/// <summary>
+/// The configurations for the blazor client web application.
+/// </summary>
 try
 {
     var builder = WebAssemblyHostBuilder.CreateDefault(args);

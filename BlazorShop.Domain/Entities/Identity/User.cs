@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities.Identity
 {
+    /// <summary>
+    /// A template for the entity user.
+    /// </summary>
     public class User : IdentityUser<int>
     {
         /// <summary>

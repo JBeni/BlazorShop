@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateMusicCommandHandler : IRequestHandler<UpdateMusicCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

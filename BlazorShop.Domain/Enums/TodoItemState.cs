@@ -5,7 +5,7 @@
 namespace BlazorShop.Domain.Enums
 {
     /// <summary>
-    /// .
+    /// A enumeration for the todo item states.
     /// </summary>
     public enum TodoItemState
     {

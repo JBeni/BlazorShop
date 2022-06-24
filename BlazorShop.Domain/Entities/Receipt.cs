@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity receipt.
+    /// </summary>
     public class Receipt : EntityBase
     {
         /// <summary>

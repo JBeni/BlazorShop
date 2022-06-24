@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Utils
 {
+    /// <summary>
+    /// A model of Roles seed.
+    /// </summary>
     public class RolesSeedModel
     {
         public string? AdminRoleName { get; set; }

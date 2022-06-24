@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, Result<InvoiceResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

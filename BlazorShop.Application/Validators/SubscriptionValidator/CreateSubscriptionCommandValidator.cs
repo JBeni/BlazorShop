@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateSubscriptionCommandValidator : AbstractValidator<CreateSubscriptionCommand>
     {
         private readonly IApplicationDbContext _context;

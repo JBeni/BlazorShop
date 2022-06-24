@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Responses
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class MusicResponse : IMapFrom<Music>
     {
         /// <summary>

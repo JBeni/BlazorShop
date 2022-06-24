@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.UserCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateUserEmailCommand : IRequest<RequestResponse>
     {
         /// <summary>

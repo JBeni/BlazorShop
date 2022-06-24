@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Auth
 {
+    /// <summary>
+    /// A service to parse claims from the generated token.
+    /// </summary>
     public static class JwtTokenParser
     {
         /// <summary>

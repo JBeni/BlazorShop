@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="RoleClaim"/>.
+    /// </summary>
     public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
     {
         public void Configure(EntityTypeBuilder<RoleClaim> builder)

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity invoice.
+    /// </summary>
     public class Invoice : EntityBase
     {
         /// <summary>

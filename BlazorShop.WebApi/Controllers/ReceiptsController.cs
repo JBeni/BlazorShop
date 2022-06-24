@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Receipts.
+    /// </summary>
     public class ReceiptsController : ApiControllerBase
     {
         /// <summary>

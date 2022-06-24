@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.CartValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartByIdQueryValidator : AbstractValidator<GetCartByIdQuery>
     {
         /// <summary>

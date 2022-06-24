@@ -6,6 +6,9 @@ using BlazorShop.Application.Commands.TodoItemCommand;
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for TodoItems.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
     public class TodoItemsController : ApiControllerBase
     {

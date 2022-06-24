@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.AccountCommand
 {
+    /// <summary>
+    /// A model to login the user.
+    /// </summary>
     public class LoginCommand : IRequest<JwtTokenResponse>
     {
         /// <summary>

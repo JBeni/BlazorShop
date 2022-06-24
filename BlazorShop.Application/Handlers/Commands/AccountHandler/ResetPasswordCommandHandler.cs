@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {
         private readonly IAccountService _accountService;

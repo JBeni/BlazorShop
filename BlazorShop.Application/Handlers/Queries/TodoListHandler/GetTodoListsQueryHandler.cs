@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoListsQueryHandler : IRequestHandler<GetTodoListsQuery, Result<TodoListResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

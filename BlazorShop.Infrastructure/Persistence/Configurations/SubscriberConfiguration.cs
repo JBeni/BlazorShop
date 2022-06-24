@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Subscriber"/>.
+    /// </summary>
     public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
     {
         public void Configure(EntityTypeBuilder<Subscriber> builder)

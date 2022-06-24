@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the todoitem.
+    /// </summary>
     public interface ITodoItemService
     {
         /// <summary>

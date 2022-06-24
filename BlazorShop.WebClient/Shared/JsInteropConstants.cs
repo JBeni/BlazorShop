@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Shared
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public static class JsInteropConstants
     {
         private const string FuncPrefix = "BlazorShop";

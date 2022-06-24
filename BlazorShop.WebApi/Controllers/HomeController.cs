@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Home.
+    /// </summary>
     [AllowAnonymous]
     public class HomeController : ApiControllerBase
     {

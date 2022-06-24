@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateSubscriptionCommandHandler : IRequestHandler<UpdateSubscriptionCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

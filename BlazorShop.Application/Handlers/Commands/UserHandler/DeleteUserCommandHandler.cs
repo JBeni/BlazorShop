@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, RequestResponse>
     {
         private readonly IUserService _userService;

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

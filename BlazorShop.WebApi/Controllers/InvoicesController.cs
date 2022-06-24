@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Invoices.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class InvoicesController : ApiControllerBase
     {

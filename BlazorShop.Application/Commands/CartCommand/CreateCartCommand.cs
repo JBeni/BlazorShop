@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.CartCommand
 {
+    /// <summary>
+    /// A model to create a cart.
+    /// </summary>
     public class CreateCartCommand : IRequest<RequestResponse>
     {
         /// <summary>

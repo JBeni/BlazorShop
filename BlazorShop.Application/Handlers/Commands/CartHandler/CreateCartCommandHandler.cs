@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

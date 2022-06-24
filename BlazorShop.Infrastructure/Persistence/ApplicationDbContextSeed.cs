@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The database seed data to run at runtime.
+    /// </summary>
     public static class ApplicationDbContextSeed
     {
         /// <summary>

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteAllCartsCommandHandler : IRequestHandler<DeleteAllCartsCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;

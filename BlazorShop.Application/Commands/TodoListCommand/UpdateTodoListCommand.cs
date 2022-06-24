@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.TodoListCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateTodoListCommand : IRequest<RequestResponse>
     {
         /// <summary>

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Filters
 {
+    /// <summary>
+    /// A middleware to intercept the JWT token.
+    /// </summary>
     public class JwtTokenMiddleware
     {
         private readonly RequestDelegate _next;

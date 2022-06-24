@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="SessionStorageService"/>.
+    /// </summary>
     public class SessionStorageService
     {
         private readonly IJSRuntime _js;

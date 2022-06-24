@@ -6,6 +6,9 @@ using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IStripeService"/>.
+    /// </summary>
     public class StripeService : IStripeService
     {
         private readonly HttpClient _httpClient;

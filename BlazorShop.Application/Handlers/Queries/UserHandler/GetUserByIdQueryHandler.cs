@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<UserResponse>>
     {
         private readonly IUserService _userService;

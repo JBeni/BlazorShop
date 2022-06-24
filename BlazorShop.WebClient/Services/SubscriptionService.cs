@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="ISubscriptionService"/>.
+    /// </summary>
     public class SubscriptionService : ISubscriptionService
     {
         private readonly HttpClient _httpClient;

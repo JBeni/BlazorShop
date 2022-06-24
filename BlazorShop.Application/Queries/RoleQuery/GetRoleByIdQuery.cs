@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Queries.RoleQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetRoleByIdQuery : IRequest<Result<RoleResponse>>
     {
         /// <summary>

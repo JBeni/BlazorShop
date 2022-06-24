@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="UserLogin"/>.
+    /// </summary>
     public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
     {
         public void Configure(EntityTypeBuilder<UserLogin> builder)
@@ -13,17 +16,6 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
             builder.HasOne(userLogin => userLogin.User)
                 .WithMany(user => user.Logins)
                 .HasForeignKey(userLogin => userLogin.UserId);
-/*
-            builder.Property(x => x.LoginProvider)
-                .HasMaxLength(150)
-                .IsRequired();
-            builder.Property(x => x.ProviderKey)
-                .HasMaxLength(250)
-                .IsRequired();
-            builder.Property(x => x.ProviderDisplayName)
-                .HasMaxLength(150)
-                .IsRequired();
-*/
         }
     }
 }

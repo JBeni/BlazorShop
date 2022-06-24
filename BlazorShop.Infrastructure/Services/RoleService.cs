@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IRoleService"/>.
+    /// </summary>
     public class RoleService : IRoleService
     {
         private readonly UserManager<User> _userManager;

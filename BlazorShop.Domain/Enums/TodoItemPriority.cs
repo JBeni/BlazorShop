@@ -5,7 +5,7 @@
 namespace BlazorShop.Domain.Enums
 {
     /// <summary>
-    /// .
+    /// A enumeration for the todo item priorities.
     /// </summary>
     public enum TodoItemPriority
     {

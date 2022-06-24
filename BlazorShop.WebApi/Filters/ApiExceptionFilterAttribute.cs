@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WebApi.Filters
 {
+    /// <summary>
+    /// An exception model to filter the exception's application.
+    /// </summary>
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;

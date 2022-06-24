@@ -4,6 +4,9 @@
 
 namespace BlazorShop.WorkerService
 {
+    /// <summary>
+    /// A service for the background worker.
+    /// </summary>
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;

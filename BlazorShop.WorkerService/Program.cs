@@ -2,6 +2,9 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+/// <summary>
+/// The configurations for the background worker.
+/// </summary>
 try
 {
     IHost host = Host.CreateDefaultBuilder(args)

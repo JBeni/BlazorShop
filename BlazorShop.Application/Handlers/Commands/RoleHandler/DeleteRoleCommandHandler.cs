@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, RequestResponse>
     {
         private readonly IRoleService _roleService;

@@ -2,6 +2,9 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+/// <summary>
+/// The configurations for the Core Web API.
+/// </summary>
 try
 {
     var builder = WebApplication.CreateBuilder(args);

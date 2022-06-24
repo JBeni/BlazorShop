@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Utils
 {
     /// <summary>
-    /// 
+    /// A model to update a cart.
     /// </summary>
     public static class ErrorsManager
     {

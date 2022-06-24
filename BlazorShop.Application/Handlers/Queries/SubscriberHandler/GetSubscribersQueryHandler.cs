@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetSubscribersQueryHandler : IRequestHandler<GetSubscribersQuery, Result<SubscriberResponse>>
     {
         private readonly IApplicationDbContext _dbContext;

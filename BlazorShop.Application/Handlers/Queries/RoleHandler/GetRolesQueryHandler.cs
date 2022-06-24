@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, Result<RoleResponse>>
     {
         private readonly IRoleService _roleService;

@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Commands.InvoiceCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteInvoiceCommand : IRequest<RequestResponse>
     {
         /// <summary>

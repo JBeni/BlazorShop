@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Validators.RoleValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
         /// <summary>

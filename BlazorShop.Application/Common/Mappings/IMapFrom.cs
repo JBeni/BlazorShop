@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Application.Common.Mappings
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public interface IMapFrom<T>
     {
         /// <summary>

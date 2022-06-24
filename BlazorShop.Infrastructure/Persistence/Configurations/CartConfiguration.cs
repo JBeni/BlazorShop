@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Cart"/>.
+    /// </summary>
     public class CartConfiguration : IEntityTypeConfiguration<Cart>
     {
         public void Configure(EntityTypeBuilder<Cart> builder)

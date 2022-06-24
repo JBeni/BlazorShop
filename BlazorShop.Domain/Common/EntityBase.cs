@@ -4,6 +4,9 @@
 
 namespace BlazorShop.Domain.Common
 {
+    /// <summary>
+    /// A template for creating IDs.
+    /// </summary>
     public class EntityBase
     {
         /// <summary>
