@@ -49,7 +49,7 @@ namespace BlazorShop.Application.Validators.CartValidator
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts
-                .TagWith(nameof(UpdateCartCommandValidator))
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

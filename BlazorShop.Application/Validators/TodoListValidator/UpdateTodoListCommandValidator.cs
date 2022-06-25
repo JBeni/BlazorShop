@@ -37,6 +37,7 @@ namespace BlazorShop.Application.Validators.TodoListValidator
         public async Task<bool> HaveUniqueTitle(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts
+                .TagWith(nameof(HaveUniqueTitle))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }
