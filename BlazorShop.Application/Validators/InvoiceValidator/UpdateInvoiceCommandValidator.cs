@@ -51,6 +51,7 @@ namespace BlazorShop.Application.Validators.InvoiceValidator
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Invoices
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

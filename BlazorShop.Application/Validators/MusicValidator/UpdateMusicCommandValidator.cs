@@ -65,6 +65,7 @@ namespace BlazorShop.Application.Validators.MusicValidator
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.Musics
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Title != title, cancellationToken);
         }
     }

@@ -55,6 +55,7 @@ namespace BlazorShop.Application.Validators.ClotheValidator
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Clothes
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }
