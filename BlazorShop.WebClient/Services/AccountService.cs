@@ -32,10 +32,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The password was changed.", Severity.Success);
             }
 
-            _snackBar.Add("The password was changed.", Severity.Success);
             return result;
         }
 
@@ -58,10 +60,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The password was reset.", Severity.Success);
             }
 
-            _snackBar.Add("The password was reset.", Severity.Success);
             return result;
         }
     }

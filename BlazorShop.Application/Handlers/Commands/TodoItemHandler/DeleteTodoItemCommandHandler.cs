@@ -23,9 +23,11 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.TodoItems
@@ -36,13 +38,15 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
                 _dbContext.TodoItems.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                return RequestResponse.Success();
+                response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteTodoItemCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

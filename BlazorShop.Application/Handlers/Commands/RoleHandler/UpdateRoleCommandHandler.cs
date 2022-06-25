@@ -26,16 +26,19 @@ namespace BlazorShop.Application.Handlers.Commands.RoleHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var result = await _roleService.UpdateRoleAsync(request);
-                return result;
+                response = await _roleService.UpdateRoleAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateRoleCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

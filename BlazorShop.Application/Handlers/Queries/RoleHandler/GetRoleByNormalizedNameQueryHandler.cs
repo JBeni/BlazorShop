@@ -26,24 +26,28 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
         /// <returns></returns>
         public Task<Result<RoleResponse>> Handle(GetRoleByNormalizedNameQuery request, CancellationToken cancellationToken)
         {
+            Result<RoleResponse>? response;
+
             try
             {
                 var result = _roleService.GetRoleByNormalizedName(request.NormalizedName);
 
-                return Task.FromResult(new Result<RoleResponse>
+                response = new Result<RoleResponse>
                 {
                     Successful = true,
                     Item = result ?? new RoleResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetRoleByNormalizedNameQuery);
-                return Task.FromResult(new Result<RoleResponse>
+                response = new Result<RoleResponse>
                 {
                     Error = $"{ErrorsManager.GetRoleByNormalizedNameQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteAllCartsCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 _dbContext.Carts.RemoveRange(
@@ -34,13 +36,15 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
                         .Where(x => x.User.Id == request.UserId)
                 );
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteAllCartsCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

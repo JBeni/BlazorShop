@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
         /// <returns></returns>
         public Task<Result<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
+            Result<OrderResponse>? response;
+
             try
             {
                 var result = _dbContext.Orders
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<OrderResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetOrdersQuery);
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Error = $"{ErrorsManager.GetOrdersQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

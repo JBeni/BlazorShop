@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
         /// <returns></returns>
         public Task<Result<InvoiceResponse>> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<InvoiceResponse>? response;
+
             try
             {
                 var result = _dbContext.Invoices
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Successful = true,
                     Item = result ?? new InvoiceResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetInvoiceByIdQuery);
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Error = $"{ErrorsManager.GetInvoiceByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

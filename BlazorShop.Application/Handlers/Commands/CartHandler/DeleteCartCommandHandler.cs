@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteCartCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Carts
@@ -35,13 +37,15 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
 
                 _dbContext.Carts.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteCartCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

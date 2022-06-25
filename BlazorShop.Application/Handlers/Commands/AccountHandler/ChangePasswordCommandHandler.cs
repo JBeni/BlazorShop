@@ -26,15 +26,19 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                return await _accountService.ChangePasswordUserAsync(request);
+                response = await _accountService.ChangePasswordUserAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.ChangePasswordCommand);
-                return RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

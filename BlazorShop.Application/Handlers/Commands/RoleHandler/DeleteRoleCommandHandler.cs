@@ -26,16 +26,19 @@ namespace BlazorShop.Application.Handlers.Commands.RoleHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var result = await _roleService.DeleteRoleAsync(request.Id);
-                return result;
+                response = await _roleService.DeleteRoleAsync(request.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteRoleCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

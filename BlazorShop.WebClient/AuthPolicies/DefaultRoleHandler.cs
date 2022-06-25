@@ -26,15 +26,14 @@ namespace BlazorShop.WebClient.AuthPolicies
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DefaultRoleRequirement requirement)
         {
-            if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
-
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
-            if (userRole == null) return Task.CompletedTask;
-
-            if (userRole.Value.Equals(requirement.Role))
+            if (context.User.Identity.IsAuthenticated)
             {
-                context.Succeed(requirement);
-                return Task.CompletedTask;
+                var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
+
+                if (userRole != null && userRole.Value.Equals(requirement.Role))
+                {
+                    context.Succeed(requirement);
+                }
             }
 
             return Task.CompletedTask;

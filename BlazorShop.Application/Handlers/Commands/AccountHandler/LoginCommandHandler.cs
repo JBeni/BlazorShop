@@ -26,15 +26,19 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
         /// <returns></returns>
         public async Task<JwtTokenResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
+            JwtTokenResponse? response;
+
             try
             {
-                return await _accountService.LoginAsync(request);
+                response = await _accountService.LoginAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.LoginCommand);
-                return JwtTokenResponse.Failure($"{ErrorsManager.LoginCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = JwtTokenResponse.Failure($"{ErrorsManager.LoginCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

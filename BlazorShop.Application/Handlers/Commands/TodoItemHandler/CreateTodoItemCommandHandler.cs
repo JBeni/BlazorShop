@@ -25,9 +25,11 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<Result<TodoItemResponse>> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
+            Result<TodoItemResponse>? response;
+
             try
             {
                 var list = _dbContext.TodoLists
@@ -47,7 +49,7 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 
                 _dbContext.TodoItems.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Successful = true,
                     Item = _mapper.Map<TodoItemResponse>(entity) ?? new TodoItemResponse()
@@ -56,11 +58,13 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateTodoItemCommand);
-                return new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Error = $"{ErrorsManager.CreateTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}"
                 };
             }
+
+            return response;
         }
     }
 }

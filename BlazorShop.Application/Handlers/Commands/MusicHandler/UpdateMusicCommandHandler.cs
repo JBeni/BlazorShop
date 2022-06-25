@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateMusicCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Musics
@@ -43,13 +45,15 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 
                 _dbContext.Musics.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateMusicCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

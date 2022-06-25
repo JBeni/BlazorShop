@@ -23,9 +23,11 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(DeleteSubscriptionCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Subscriptions
@@ -35,13 +37,15 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
 
                 _dbContext.Subscriptions.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteSubscriptionCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteSubscriptionCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteSubscriptionCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

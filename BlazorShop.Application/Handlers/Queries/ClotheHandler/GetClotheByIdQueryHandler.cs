@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
         /// <returns></returns>
         public Task<Result<ClotheResponse>> Handle(GetClotheByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<ClotheResponse>? response;
+
             try
             {
                 var result = _dbContext.Clothes
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
                     .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<ClotheResponse>
+                response = new Result<ClotheResponse>
                 {
                     Successful = true,
                     Item = result ?? new ClotheResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetClotheByIdQuery);
-                return Task.FromResult(new Result<ClotheResponse>
+                response = new Result<ClotheResponse>
                 {
                     Error = $"{ErrorsManager.GetClotheByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

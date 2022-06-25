@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteSubscriberCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Subscribers
@@ -35,13 +37,15 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 
                 _dbContext.Subscribers.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteSubscriberCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

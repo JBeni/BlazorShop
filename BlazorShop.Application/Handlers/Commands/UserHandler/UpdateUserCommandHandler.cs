@@ -23,19 +23,23 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var result = await _userService.UpdateUserAsync(request);
-                return result;
+                response = result;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateUserCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

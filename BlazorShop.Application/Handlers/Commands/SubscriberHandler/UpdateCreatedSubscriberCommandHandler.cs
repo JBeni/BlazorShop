@@ -25,9 +25,11 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(UpdateCreatedSubscriberCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var user = await _userService.FindUserByEmailAsync(request.CustomerEmail);
@@ -46,13 +48,15 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 
                 _dbContext.Subscribers.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateCreatedSubscriberCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateCreatedSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateCreatedSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

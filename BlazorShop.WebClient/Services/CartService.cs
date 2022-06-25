@@ -34,10 +34,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add($"The item was added to cart: {cart.Name}", Severity.Success);
             }
 
-            _snackBar.Add($"The item was added to cart: {cart.Name}", Severity.Success);
             return result;
         }
 
@@ -53,10 +55,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The item was deleted from the cart.", Severity.Success);
             }
 
-            _snackBar.Add("The item was deleted from the cart.", Severity.Success);
             return result;
         }
 
@@ -72,10 +76,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The items from the cart were removed.", Severity.Success);
             }
 
-            _snackBar.Add("The items from the cart were removed.", Severity.Success);
             return result;
         }
 
@@ -91,10 +97,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -102,6 +109,8 @@ namespace BlazorShop.WebClient.Services
         {
             var response = await _httpClient.GetAsync($"Carts/count/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
+
+            var result = 0;
             if (response.IsSuccessStatusCode == false)
             {
                 var resultError = JsonSerializer.Deserialize<RequestResponse>(
@@ -109,13 +118,13 @@ namespace BlazorShop.WebClient.Services
                 );
 
                 _snackBar.Add(resultError.Error, Severity.Error);
-                return 0;
             }
-
-            var result = JsonSerializer.Deserialize<int>(
-                responseResult,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
+            else
+            {
+                result = JsonSerializer.Deserialize<int>(
+                    responseResult, _options
+                );
+            }
 
             return result;
         }
@@ -132,10 +141,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Items;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
@@ -150,10 +160,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The cart was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The cart was updated.", Severity.Success);
             return result;
         }
 
@@ -170,11 +182,15 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
+            }
+            else
+            {
+                _snackBar.Add("The checkout operation was successfully made.", Severity.Success);
             }
 
-            _snackBar.Add("The checkout operation was successfully made.", Severity.Success);
-            return responseResult;
+            return !response.IsSuccessStatusCode
+                ? null
+                : responseResult;
         }
     }
 }
