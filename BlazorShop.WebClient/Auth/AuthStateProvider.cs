@@ -37,17 +37,21 @@ namespace BlazorShop.WebClient.Auth
         {
             var token = await _localStorage.GetItemAsync<string>("authToken");
 
+            AuthenticationState? authenticationState = _anonymous;
             if (string.IsNullOrWhiteSpace(token) || !this.IsCurrentTokenValid(token))
             {
                 this.NotifyUserLogout();
                 _navMagager.NavigateTo("/login");
-                return _anonymous;
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
+                authenticationState = new AuthenticationState(
+                        new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType"))
+                    );
             }
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
-            return new AuthenticationState(
-                    new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType"))
-                );
+            return authenticationState;
         }
 
         /// <summary>
