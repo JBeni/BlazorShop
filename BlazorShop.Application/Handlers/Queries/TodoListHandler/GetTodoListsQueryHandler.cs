@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
         /// <returns></returns>
         public Task<Result<TodoListResponse>> Handle(GetTodoListsQuery request, CancellationToken cancellationToken)
         {
+            Result<TodoListResponse>? response;
+
             try
             {
                 var result = _dbContext.TodoLists
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
                     .ProjectTo<TodoListResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<TodoListResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetTodoListsQuery);
-                return Task.FromResult(new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Error = $"{ErrorsManager.GetTodoListsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

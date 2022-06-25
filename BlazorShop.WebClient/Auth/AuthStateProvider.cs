@@ -81,6 +81,7 @@ namespace BlazorShop.WebClient.Auth
         private bool IsCurrentTokenValid(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            var isTokenValid = true;
 
             try
             {
@@ -99,9 +100,10 @@ namespace BlazorShop.WebClient.Auth
             }
             catch
             {
-                return false;
+                isTokenValid = false;
             }
-            return true;
+
+            return isTokenValid;
         }
     }
 }

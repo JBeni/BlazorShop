@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Order
@@ -39,13 +41,15 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
 
                 _dbContext.Orders.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateOrderCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

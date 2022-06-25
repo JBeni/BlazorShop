@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateClotheCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Clothe
@@ -41,13 +43,15 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 
                 _dbContext.Clothes.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateClotheCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

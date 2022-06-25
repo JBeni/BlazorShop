@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
         /// <returns></returns>
         public Task<Result<SubscriberResponse>> Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriberResponse>? response;
+
             try
             {
                 var result = _dbContext.Subscribers
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.CustomerId == request.UserId && x.Status == SubscriptionStatus.Active);
 
-                return Task.FromResult(new Result<SubscriberResponse>
+                response = new Result<SubscriberResponse>
                 {
                     Successful = true,
                     Item = result ?? new SubscriberResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
-                return Task.FromResult(new Result<SubscriberResponse>
+                response = new Result<SubscriberResponse>
                 {
                     Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

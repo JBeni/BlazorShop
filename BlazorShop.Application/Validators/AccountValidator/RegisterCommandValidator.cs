@@ -49,15 +49,17 @@ namespace BlazorShop.Application.Validators.AccountValidator
         /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
+            var isEmailValid = false;
             try
             {
                 _ = new MailAddress(emailAddress);
-                return true;
+                isEmailValid = true;
             }
             catch (Exception)
             {
-                return false;
             }
+
+            return isEmailValid;
         }
     }
 }

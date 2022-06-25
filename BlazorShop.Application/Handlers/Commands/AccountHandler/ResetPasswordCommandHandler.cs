@@ -26,15 +26,19 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                return await _accountService.ResetPasswordUserAsync(request);
+                response = await _accountService.ResetPasswordUserAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.ResetPasswordCommand);
-                return RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

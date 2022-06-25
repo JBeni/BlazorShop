@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
         /// <returns></returns>
         public Task<Result<SubscriptionResponse>> Handle(GetSubscriptionsQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriptionResponse>? response;
+
             try
             {
                 var result = _dbContext.Subscriptions
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
                     .ProjectTo<SubscriptionResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<SubscriptionResponse>
+                response = new Result<SubscriptionResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<SubscriptionResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetSubscriptionsQuery);
-                return Task.FromResult(new Result<SubscriptionResponse>
+                response = new Result<SubscriptionResponse>
                 {
                     Error = $"{ErrorsManager.GetSubscriptionsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

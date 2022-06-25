@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteReceiptCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Receipts
@@ -35,13 +37,15 @@ namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 
                 _dbContext.Receipts.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteReceiptCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

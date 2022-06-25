@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateInvoiceCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Invoices
@@ -41,13 +43,15 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 
                 _dbContext.Invoices.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateInvoiceCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }
