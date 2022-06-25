@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
         /// <returns></returns>
         public Task<Result<SubscriberResponse>> Handle(GetUserSubscribersQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriberResponse>? response;
+
             try
             {
                 var result = _dbContext.Subscribers
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
                     .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<SubscriberResponse>
+                response = new Result<SubscriberResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<SubscriberResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetUserSubscribersQuery);
-                return Task.FromResult(new Result<SubscriberResponse>
+                response = new Result<SubscriberResponse>
                 {
                     Error = $"{ErrorsManager.GetUserSubscribersQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

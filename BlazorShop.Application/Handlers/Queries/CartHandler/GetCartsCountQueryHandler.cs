@@ -26,18 +26,20 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
         /// <returns></returns>
         public Task<int> Handle(GetCartsCountQuery request, CancellationToken cancellationToken)
         {
+            var result = 0;
+
             try
             {
-                var result = _dbContext.Carts
+                result = _dbContext.Carts
                     .TagWith(nameof(GetCartsCountQueryHandler))
                     .Where(x => x.User.Id == request.UserId).Count();
-                return Task.FromResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetCartsCountQuery);
-                return Task.FromResult(0);
             }
+
+            return Task.FromResult(result);
         }
     }
 }

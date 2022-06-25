@@ -23,9 +23,11 @@ namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.TodoLists
@@ -36,13 +38,15 @@ namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
                 _dbContext.TodoLists.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                return RequestResponse.Success();
+                response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteTodoListCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteTodoListCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteTodoListCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

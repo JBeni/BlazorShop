@@ -26,24 +26,28 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
         /// <returns></returns>
         public Task<Result<UserResponse>> Handle(GetUsersInactiveQuery request, CancellationToken cancellationToken)
         {
+            Result<UserResponse>? response;
+
             try
             {
                 var result = _userService.GetUsersInactive(request);
 
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<UserResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetUsersInactiveQuery);
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Error = $"{ErrorsManager.GetUsersInactiveQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

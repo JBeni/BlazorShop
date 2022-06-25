@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
         /// <returns></returns>
         public Task<Result<InvoiceResponse>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
+            Result<InvoiceResponse>? response;
+
             try
             {
                 var result = _dbContext.Invoices
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<InvoiceResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetInvoicesQuery);
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Error = $"{ErrorsManager.GetInvoicesQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

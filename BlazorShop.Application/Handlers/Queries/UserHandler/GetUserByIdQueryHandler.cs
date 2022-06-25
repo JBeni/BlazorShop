@@ -26,24 +26,28 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
         /// <returns></returns>
         public Task<Result<UserResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<UserResponse>? response;
+
             try
             {
                 var result = _userService.GetUserById(request);
 
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Successful = true,
                     Item = result ?? new UserResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetUserByIdQuery);
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Error = $"{ErrorsManager.GetUserByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

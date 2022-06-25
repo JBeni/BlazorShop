@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
         /// <returns></returns>
         public Task<Result<ReceiptResponse>> Handle(GetReceiptByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<ReceiptResponse>? response;
+
             try
             {
                 var result = _dbContext.Receipts
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<ReceiptResponse>
+                response = new Result<ReceiptResponse>
                 {
                     Successful = true,
                     Item = result ?? new ReceiptResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetReceiptByIdQuery);
-                return Task.FromResult(new Result<ReceiptResponse>
+                response = new Result<ReceiptResponse>
                 {
                     Error = $"{ErrorsManager.GetReceiptByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
         /// <returns></returns>
         public Task<Result<TodoItemResponse>> Handle(GetTodoItemByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<TodoItemResponse>? response;
+
             try
             {
                 var result = _dbContext.TodoItems
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
                     .ProjectTo<TodoItemResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return Task.FromResult(new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Successful = true,
                     Item = result ?? new TodoItemResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetTodoItemByIdQuery);
-                return Task.FromResult(new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Error = $"{ErrorsManager.GetTodoItemByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

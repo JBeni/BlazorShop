@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
         /// <returns></returns>
         public Task<Result<CartResponse>> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<CartResponse>? response;
+
             try
             {
                 var result = _dbContext.Carts
@@ -36,20 +38,22 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
                     .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Successful = true,
                     Item = result ?? new CartResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetCartByIdQuery);
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Error = $"{ErrorsManager.GetCartByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

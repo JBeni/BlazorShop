@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Queries.MusicHandler
         /// <returns></returns>
         public Task<Result<MusicResponse>> Handle(GetMusicByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<MusicResponse>? response;
+
             try
             {
                 var result = _dbContext.Musics
@@ -35,20 +37,22 @@ namespace BlazorShop.Application.Handlers.Queries.MusicHandler
                     .ProjectTo<MusicResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return Task.FromResult(new Result<MusicResponse>
+                response = new Result<MusicResponse>
                 {
                     Successful = true,
                     Item = result ?? new MusicResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetMusicByIdQuery);
-                return Task.FromResult(new Result<MusicResponse>
+                response = new Result<MusicResponse>
                 {
                     Error = $"{ErrorsManager.GetMusicByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

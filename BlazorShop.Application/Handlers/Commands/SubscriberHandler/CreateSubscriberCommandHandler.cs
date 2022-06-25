@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateSubscriberCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 Subscriber entity = _dbContext.Subscribers
@@ -54,13 +56,15 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 
                 _dbContext.Subscribers.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateSubscriberCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

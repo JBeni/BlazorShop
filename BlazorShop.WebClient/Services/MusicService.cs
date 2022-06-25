@@ -34,10 +34,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Items;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
@@ -52,10 +53,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -70,10 +72,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Music was added.", Severity.Success);
             }
 
-            _snackBar.Add("The Music was added.", Severity.Success);
             return result;
         }
 
@@ -89,10 +93,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Music was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The Music was updated.", Severity.Success);
             return result;
         }
 
@@ -108,10 +114,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Music was deleted.", Severity.Success);
             }
 
-            _snackBar.Add("The Music was deleted.", Severity.Success);
             return result;
         }
     }

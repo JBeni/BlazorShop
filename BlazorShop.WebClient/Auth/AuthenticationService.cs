@@ -42,22 +42,25 @@ public class AuthenticationService : IAuthenticationService
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
 
+        JwtTokenResponse? jwtResponse = null;
         if (response.IsSuccessStatusCode == false)
         {
             _toastService.ShowError(result.Error);
-            return null;
         }
         if (result.Access_Token == null)
         {
             _toastService.ShowError("Access Token is null");
-            return null;
+        }
+        else
+        {
+            await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
+            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
+            jwtResponse = new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
         }
 
-        await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
-        ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
-        return new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
+        return jwtResponse;
     }
 
     /// <inheritdoc/>
@@ -80,24 +83,27 @@ public class AuthenticationService : IAuthenticationService
             responseResult,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
+
+        JwtTokenResponse? jwtResponse = null;
         if (response.IsSuccessStatusCode == false)
         {
             _toastService.ShowError(result.Error);
-            return null;
         }
 
         if (result.Access_Token == null)
         {
             _toastService.ShowError("Access Token is null");
-            return null;
+        }
+        else
+        {
+            await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
+            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
+            jwtResponse = new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
         }
 
-        await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
-        ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
-
-        return new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
+        return jwtResponse;
     }
 
     /// <inheritdoc/>

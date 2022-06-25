@@ -26,6 +26,8 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = _dbContext.Orders
@@ -35,13 +37,15 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
 
                 _dbContext.Orders.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteOrderCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

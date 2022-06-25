@@ -28,6 +28,8 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var clothe = _dbContext.Clothes
@@ -47,13 +49,15 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
 
                 _dbContext.Carts.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateCartCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }
