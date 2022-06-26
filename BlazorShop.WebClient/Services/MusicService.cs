@@ -13,19 +13,36 @@ namespace BlazorShop.WebClient.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ISnackbar _snackBar;
+        private readonly NavigationManager _navMagager;
+        private readonly AuthenticationStateProvider _authStateProvider;
+        private readonly ILocalStorageService _localStorage;
         private readonly JsonSerializerOptions _options;
 
-        public MusicService(HttpClient httpClient, ISnackbar snackBar)
+        public MusicService(HttpClient httpClient, ISnackbar snackBar, NavigationManager navMagager, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage)
         {
             _httpClient = httpClient;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             _snackBar = snackBar;
+            _navMagager = navMagager;
+            _authStateProvider = authStateProvider;
+            _localStorage = localStorage;
         }
 
         /// <inheritdoc/>
         public async Task<List<MusicResponse>> GetMusics()
         {
             var response = await _httpClient.GetAsync("Musics/musics");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                await _localStorage.RemoveItemAsync("authToken");
+                //((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(string.Empty);
+
+                ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
+                _navMagager.NavigateTo("/login");
+                return null;
+            }
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<MusicResponse>>(
                 responseResult, _options

@@ -47,7 +47,7 @@ public class AuthenticationService : IAuthenticationService
         {
             _toastService.ShowError(result.Error);
         }
-        if (result.Access_Token == null)
+        else if (result.Access_Token == null)
         {
             _toastService.ShowError("Access Token is null");
         }
@@ -89,8 +89,7 @@ public class AuthenticationService : IAuthenticationService
         {
             _toastService.ShowError(result.Error);
         }
-
-        if (result.Access_Token == null)
+        else if (result.Access_Token == null)
         {
             _toastService.ShowError("Access Token is null");
         }
