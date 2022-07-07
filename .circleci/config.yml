@@ -25,7 +25,7 @@ jobs:
             MAJOR=$(cat version.txt | awk -F"." '{ print $1 }')
             MINOR=$(cat version.txt | awk -F"." '{ print $2 }')
             VERSION=$MAJOR.$MINOR.$CIRCLE_BUILD_NUM
-            docker build -t khteh/asp.netcorewebapi:latest -t khteh/asp.netcorewebapi:$VERSION src
+            docker build -t khteh/asp.netcorewebapi:latest -t khteh/asp.netcorewebapi:$VERSION
       - run:
           name: Login to docker hub
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
