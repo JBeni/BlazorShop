@@ -1,85 +1,13 @@
-version: 2.1
+version: 2.0
 jobs:
-  build_and_test:
-    working_directory: ~/workspace
+  build:
     docker:
-      - image: khteh/circleci-dotnet:latest
+      - image: mcr.microsoft.com/dotnet/core/sdk:6.0
     steps:
       - checkout
-      - run: dotnet restore
-      - run: dotnet build -c Release --no-restore /p:Version=6.0 --version-suffix $CIRCLE_BUILD_NUM
-      - run: dotnet test -c Release --no-restore --no-build BlazorShop.Tests
-      - run: dotnet publish -c Release --no-restore --no-build BlazorShop.WebApi
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-      # use a primary image that already has Docker (recommended)
-      # or install it during a build like we do here
       - run:
-          name: Extract FileVersion from published binary
-          command: |
-            exiftool BlazorShop.WebApi/bin/Release/net6.0/publish/BlazorShop.WebApi.dll | grep "File Version" | awk -F":" '{ print $2 }' | xargs echo -n > version.txt
+          name: Restore packages
+          command: dotnet restore
       - run:
-          name: Build docker image
-          command: |
-            MAJOR=$(cat version.txt | awk -F"." '{ print $1 }')
-            MINOR=$(cat version.txt | awk -F"." '{ print $2 }')
-            VERSION=$MAJOR.$MINOR.$CIRCLE_BUILD_NUM
-            docker build -t khteh/asp.netcorewebapi:latest -t khteh/asp.netcorewebapi:$VERSION BlazorShop.WebApi
-      - run:
-          name: Login to docker hub
-          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run:
-          name: Push images to docker hub
-          command: |
-            MAJOR=$(cat version.txt | awk -F"." '{ print $1 }')
-            MINOR=$(cat version.txt | awk -F"." '{ print $2 }')
-            VERSION=$MAJOR.$MINOR.$CIRCLE_BUILD_NUM
-            echo ${VERSION} > docker-build_number.txt
-            docker push khteh/asp.netcorewebapi --all-tags
-      - persist_to_workspace:
-          name: Save Workspace
-          root: .
-          paths:
-            - docker-build_number.txt
-  deploy-eks:
-    working_directory: /tmp
-    docker:
-      - image: khteh/ubuntu:latest
-    steps:
-      - attach_workspace:
-          at: /tmp
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Use the saved build number here
-          command: |
-            echo 'export CIRCLE_BUILD_NUM_DOCKER="$(cat /tmp/docker-build_number.txt)"' >> $BASH_ENV
-            . $BASH_ENV
-            echo CIRCLE_BUILD_NUM_DOCKER: $CIRCLE_BUILD_NUM_DOCKER
-      - run:
-          name: Set Default AWS Region
-          command: aws configure set default.region $AWS_REGION
-      - run:
-          name: Set AWS Access Key
-          command: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-      - run:
-          name: Set AWS Secret Key
-          command: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-      - run:
-          name: Update Kubectl Configuration with cluster name
-          command: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
-      - run:
-          name: Update Application
-          command: |
-            kubectl patch statefulset aspnetcorewebapi --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value":"'$AWS_ACCOUNT_ID'.dkr.ecr.ap-southeast-1.amazonaws.com/aspnetcorewebapi:'$CIRCLE_BUILD_NUM_DOCKER'"}]'
-workflows:
-  main:
-    jobs:
-      - build_and_test
-#      - deploy-eks:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: develop
+          name: Build
+          command: dotnet build
