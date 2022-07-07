@@ -8,11 +8,8 @@ jobs:
       - checkout
       - run: dotnet restore
       - run: dotnet build -c Release --no-restore /p:Version=6.0 --version-suffix $CIRCLE_BUILD_NUM
-      - run: dotnet test -c Release --no-restore --no-build test/Web.Api.Core.UnitTests
-      - run: dotnet test -c Release --no-restore --no-build test/Web.Api.UnitTests
-      - run: dotnet test -c Release --no-restore --no-build test/Web.Api.Infrastructure.UnitTests
-      - run: dotnet test -c Release --no-restore --no-build test/Web.Api.IntegrationTests
-      - run: dotnet publish -c Release --no-restore --no-build src/Web.Api
+      - run: dotnet test -c Release --no-restore --no-build BlazorShop.Tests
+      - run: dotnet publish -c Release --no-restore --no-build BlazorShop.WebApi
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
@@ -21,7 +18,7 @@ jobs:
       - run:
           name: Extract FileVersion from published binary
           command: |
-            exiftool src/Web.Api/bin/Release/net6.0/publish/Web.Api.dll | grep "File Version" | awk -F":" '{ print $2 }' | xargs echo -n > version.txt
+            exiftool BlazorShop.WebApi/bin/Release/net6.0/publish/BlazorShop.WebApi.dll | grep "File Version" | awk -F":" '{ print $2 }' | xargs echo -n > version.txt
       - run:
           name: Build docker image
           command: |
