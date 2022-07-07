@@ -16,4 +16,4 @@ jobs:
      - run:
          name: Run App
          command:
-           dotnet run
+           dotnet run --project BlazorShop.WebApi
