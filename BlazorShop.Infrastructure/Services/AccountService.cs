@@ -55,7 +55,7 @@ namespace BlazorShop.Infrastructure.Services
                 Issuer = _configuration["JwtToken:Issuer"],
                 Audience = _configuration["JwtToken:Audience"],
             };
-            var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
 
             var userRole = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>
@@ -66,21 +66,21 @@ namespace BlazorShop.Infrastructure.Services
                 new Claim(StringRoleResources.UserIdClaim, user.Id.ToString()),
             };
 
-            var expiresIn = DateTime.Now.AddDays(30);
+            var expiresIn = DateTime.Now.AddSeconds(20);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Audience = jwtSettings.Audience,
                 Issuer = jwtSettings.Issuer,
                 Expires = expiresIn,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             };
             var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
 
             return new JwtTokenResponse
             {
                 Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expires_In = (int)(expiresIn - DateTime.Now).TotalMinutes,
+                Expires_In = (int)(expiresIn - DateTime.Now).TotalSeconds,
                 Successful = true
             };
         }

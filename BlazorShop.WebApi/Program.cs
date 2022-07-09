@@ -2,6 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Diagnostics;
 /// <summary>
 /// The configurations for the Core Web API.
 /// </summary>
@@ -46,7 +47,7 @@ try
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ClockSkew = TimeSpan.FromMinutes(5),
+                ClockSkew = TimeSpan.FromSeconds(1),
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
@@ -126,7 +127,7 @@ try
     app.UseRouting();
 
     app.UseMiddleware<JwtTokenMiddleware>();
-    
+
     app.UseSerilogRequestLogging();
 
     app.UseAuthentication();
