@@ -12,7 +12,6 @@ namespace BlazorShop.Application.Common.Interfaces
         /// <summary>
         /// .
         /// </summary>
-        /// <param name="resetPassword"></param>
         /// <returns></returns>
         Task<RequestResponse> ResetPasswordUserAsync(ResetPasswordCommand resetPassword);
 

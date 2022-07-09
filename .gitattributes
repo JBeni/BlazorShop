@@ -3,6 +3,25 @@
 ###############################################################################
 * text=auto
 
+*.sln text eol=lf
+*.csproj text eol=lf
+*.cs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.ps1 text eol=lf
+*.yml text eol=lf
+*.xml text eol=lf
+*.aff text eol=lf
+*.dic text eol=lf
+*.exclude text eol=lf
+*.txt text eol=lf
+
+*.cmd text eol=crlf
+
+*.jpg merge=binary
+*.png merge=binary
+*.gif merge=binary
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
