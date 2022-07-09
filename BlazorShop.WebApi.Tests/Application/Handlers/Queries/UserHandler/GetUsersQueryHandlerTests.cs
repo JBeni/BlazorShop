@@ -12,20 +12,22 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <summary>
         /// Gets the <see cref="IUserService"/> instance to use.
         /// </summary>
-        private readonly IUserService _userService;
+        private readonly IUserService UserService;
 
         /// <summary>
         /// Gets the <see cref="ILogger<GetUsersQueryHandlerTests>"/> instance to use.
         /// </summary>
-        private readonly ILogger<GetUsersQueryHandlerTests> _logger;
+        private readonly ILogger<GetUsersQueryHandlerTests> Logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersQueryHandlerTests"/> class.
         /// </summary>
+        /// <param name="userService">The <see cref="IUserService"/> instance to use.</param>
+        /// <param name="logger">The <see cref="ILogger<GetUsersQueryHandlerTests>"/> instance to use.</param>
         public GetUsersQueryHandlerTests(IUserService userService, ILogger<GetUsersQueryHandlerTests> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>

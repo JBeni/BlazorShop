@@ -17,7 +17,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
         /// </summary>
         public AssignUserToRoleCommandHandlerTests(IUserService userService, ILogger<AssignUserToRoleCommandHandlerTests> logger)
         {
-            _userService = userService;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

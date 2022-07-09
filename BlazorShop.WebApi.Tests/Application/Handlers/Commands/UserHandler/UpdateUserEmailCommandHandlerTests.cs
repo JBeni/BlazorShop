@@ -17,7 +17,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
         /// </summary>
         public UpdateUserEmailCommandHandlerTests(IUserService userService, ILogger<UpdateUserEmailCommandHandlerTests> logger)
         {
-            _userService = userService;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

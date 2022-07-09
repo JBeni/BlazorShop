@@ -20,7 +20,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
         {
             _dbContext = dbContext;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _userService = userService;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         /// <summary>
