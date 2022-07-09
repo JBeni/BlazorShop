@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Queries.ReceiptQuery
+﻿// <copyright file="GetReceiptByIdQuery.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Queries.ReceiptQuery
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetReceiptByIdQuery : IRequest<Result<ReceiptResponse>>
     {
         /// <summary>

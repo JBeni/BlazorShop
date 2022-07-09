@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Domain.Entities
+﻿// <copyright file="Invoice.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Domain.Entities
 {
+    /// <summary>
+    /// A template for the entity invoice.
+    /// </summary>
     public class Invoice : EntityBase
     {
         /// <summary>

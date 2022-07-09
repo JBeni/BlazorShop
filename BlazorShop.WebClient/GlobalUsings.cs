@@ -1,4 +1,8 @@
-﻿global using BlazorShop.WebClient;
+﻿// <copyright file="GlobalUsings.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+global using BlazorShop.WebClient;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Blazored.LocalStorage;

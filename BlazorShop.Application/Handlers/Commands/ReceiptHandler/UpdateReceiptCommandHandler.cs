@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="UpdateReceiptCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateReceiptCommandHandler : IRequestHandler<UpdateReceiptCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,9 +26,13 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateReceiptCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Receipts.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Receipts
+                    .TagWith(nameof(UpdateReceiptCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The receipt does not exists");
 
                 entity.ReceiptDate = request.ReceiptDate;
@@ -30,13 +41,15 @@
 
                 _dbContext.Receipts.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateReceiptCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

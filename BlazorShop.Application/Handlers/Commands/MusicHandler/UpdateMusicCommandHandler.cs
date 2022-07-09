@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.MusicHandler
+﻿// <copyright file="UpdateMusicCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateMusicCommandHandler : IRequestHandler<UpdateMusicCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,9 +26,13 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateMusicCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Musics.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.Musics
+                    .TagWith(nameof(UpdateMusicCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The music does not exists");
 
                 entity.Title = request.Title;
@@ -34,13 +45,15 @@
 
                 _dbContext.Musics.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateMusicCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

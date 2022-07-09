@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.OrderHandler
+﻿// <copyright file="GetOrdersQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, Result<OrderResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,27 +28,32 @@
         /// <returns></returns>
         public Task<Result<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
+            Result<OrderResponse>? response;
+
             try
             {
                 var result = _dbContext.Orders
+                    .TagWith(nameof(GetOrdersQueryHandler))
                     .Where(x => x.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<OrderResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetOrdersQuery);
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Error = $"{ErrorsManager.GetOrdersQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

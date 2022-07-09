@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Common.Behaviours
+﻿// <copyright file="UnhandledExceptionBehaviour.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Behaviours
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ILogger<TRequest> _logger;

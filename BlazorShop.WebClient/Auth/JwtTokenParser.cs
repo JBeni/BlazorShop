@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Auth
+﻿// <copyright file="JwtTokenParser.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Auth
 {
+    /// <summary>
+    /// A service to parse claims from the generated token.
+    /// </summary>
     public static class JwtTokenParser
     {
         /// <summary>

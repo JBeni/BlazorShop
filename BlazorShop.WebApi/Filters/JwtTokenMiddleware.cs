@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Filters
+﻿// <copyright file="JwtTokenMiddleware.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Filters
 {
+    /// <summary>
+    /// A middleware to intercept the JWT token.
+    /// </summary>
     public class JwtTokenMiddleware
     {
         private readonly RequestDelegate _next;

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Interfaces
+﻿// <copyright file="IAccountService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the account.
+    /// </summary>
     public interface IAccountService
     {
         /// <summary>

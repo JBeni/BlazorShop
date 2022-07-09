@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="TodoItemService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="ITodoItemService"/>.
+    /// </summary>
     public class TodoItemService : ITodoItemService
     {
         private readonly HttpClient _httpClient;
@@ -25,10 +32,11 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -43,10 +51,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The todo item was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The todo item was updated.", Severity.Success);
             return result;
         }
 
@@ -62,10 +72,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The todo item was deleted.", Severity.Success);
             }
 
-            _snackBar.Add("The todo item was deleted.", Severity.Success);
             return result;
         }
 
@@ -81,11 +93,15 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
+            }
+            else
+            {
+                _snackBar.Add("The todo item was added.", Severity.Success);
             }
 
-            _snackBar.Add("The todo item was added.", Severity.Success);
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
     }
 }

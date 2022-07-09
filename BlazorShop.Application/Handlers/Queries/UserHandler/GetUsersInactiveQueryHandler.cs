@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.UserHandler
+﻿// <copyright file="GetUsersInactiveQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetUsersInactiveQueryHandler : IRequestHandler<GetUsersInactiveQuery, Result<UserResponse>>
     {
         private readonly IUserService _userService;
@@ -19,24 +26,28 @@
         /// <returns></returns>
         public Task<Result<UserResponse>> Handle(GetUsersInactiveQuery request, CancellationToken cancellationToken)
         {
+            Result<UserResponse>? response;
+
             try
             {
                 var result = _userService.GetUsersInactive(request);
 
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<UserResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetUsersInactiveQuery);
-                return Task.FromResult(new Result<UserResponse>
+                response = new Result<UserResponse>
                 {
                     Error = $"{ErrorsManager.GetUsersInactiveQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

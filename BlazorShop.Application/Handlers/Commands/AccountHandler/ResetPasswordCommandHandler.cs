@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="ResetPasswordCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {
         private readonly IAccountService _accountService;
@@ -19,15 +26,19 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                return await _accountService.ResetPasswordUserAsync(request);
+                response = await _accountService.ResetPasswordUserAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.ResetPasswordCommand);
-                return RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
+﻿// <copyright file="DeleteClotheCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteClotheCommandHandler : IRequestHandler<DeleteClotheCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,22 +26,28 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteClotheCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Clothes.SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
+                var entity = _dbContext.Clothes
+                    .TagWith(nameof(DeleteClotheCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
                 if (entity == null) throw new Exception("The clothe does not exists");
 
                 entity.IsActive = false;
 
                 _dbContext.Clothes.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteClotheCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

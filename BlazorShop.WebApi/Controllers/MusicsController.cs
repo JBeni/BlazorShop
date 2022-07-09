@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="MusicsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Musics.
+    /// </summary>
     public class MusicsController : ApiControllerBase
     {
         /// <summary>

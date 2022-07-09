@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.SubscriptionValidator
+﻿// <copyright file="CreateSubscriptionCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateSubscriptionCommandValidator : AbstractValidator<CreateSubscriptionCommand>
     {
         private readonly IApplicationDbContext _context;
@@ -52,6 +59,7 @@
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

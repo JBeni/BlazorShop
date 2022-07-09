@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.MusicHandler
+﻿// <copyright file="CreateMusicCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateMusicCommandHandler : IRequestHandler<CreateMusicCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,9 +26,13 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateMusicCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Musics.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.Musics
+                    .TagWith(nameof(CreateMusicCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity != null) throw new Exception("The entity already exists");
 
                 entity = new Music
@@ -37,13 +48,15 @@
 
                 _dbContext.Musics.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateMusicCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

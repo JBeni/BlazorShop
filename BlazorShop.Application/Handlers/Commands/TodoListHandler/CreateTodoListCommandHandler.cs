@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
+﻿// <copyright file="CreateTodoListCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, Result<TodoListResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -18,9 +25,11 @@
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<Result<TodoListResponse>> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
         {
+            Result<TodoListResponse>? response;
+
             try
             {
                 var entity = new TodoList
@@ -30,7 +39,7 @@
 
                 _dbContext.TodoLists.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Successful = true,
                     Item = _mapper.Map<TodoListResponse>(entity) ?? new TodoListResponse()
@@ -39,11 +48,13 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateTodoListCommand);
-                return new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Error = $"{ErrorsManager.CreateTodoListCommand}. {ex.Message}. {ex.InnerException?.Message}"
                 };
             }
+
+            return response;
         }
     }
 }

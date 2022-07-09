@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure
+﻿// <copyright file="DependencyInjection.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure
 {
+    /// <summary>
+    /// The configuration of Dependency Injection at Infrastructure level.
+    /// </summary>
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)

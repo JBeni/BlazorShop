@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Utils
+﻿// <copyright file="AdminSeedModel.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Utils
 {
+    /// <summary>
+    /// A model of Admin user details.
+    /// </summary>
     public class AdminSeedModel
     {
         public string? FirstName { get; set; }

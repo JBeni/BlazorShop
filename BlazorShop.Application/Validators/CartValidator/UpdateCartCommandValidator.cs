@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.CartValidator
+﻿// <copyright file="UpdateCartCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.CartValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateCartCommandValidator : AbstractValidator<UpdateCartCommand>
     {
         private readonly IApplicationDbContext _context;
@@ -42,6 +49,7 @@
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

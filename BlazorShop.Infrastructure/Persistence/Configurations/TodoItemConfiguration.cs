@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="TodoItemConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="TodoItem"/>.
+    /// </summary>
     public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
     {
         public void Configure(EntityTypeBuilder<TodoItem> builder)
@@ -12,10 +19,6 @@
                 .IsRequired();
             builder.Property(t => t.Note)
                 .HasMaxLength(1000);
-            //builder.Property(t => t.Priority)
-            //    .IsRequired();
-            //builder.Property(t => t.State)
-            //    .IsRequired();
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="ChangePasswordCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, RequestResponse>
     {
         private readonly IAccountService _accountService;
@@ -19,15 +26,19 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                return await _accountService.ChangePasswordUserAsync(request);
+                response = await _accountService.ChangePasswordUserAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.ChangePasswordCommand);
-                return RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

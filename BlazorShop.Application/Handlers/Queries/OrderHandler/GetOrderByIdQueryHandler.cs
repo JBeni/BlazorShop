@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.OrderHandler
+﻿// <copyright file="GetOrderByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Result<OrderResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,27 +28,32 @@
         /// <returns></returns>
         public Task<Result<OrderResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<OrderResponse>? response;
+
             try
             {
                 var result = _dbContext.Orders
+                    .TagWith(nameof(GetOrderByIdQueryHandler))
                     .Where(d => d.Id == request.Id && d.UserEmail == request.UserEmail)
                     .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Successful = true,
                     Item = result ?? new OrderResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetOrderByIdQuery);
-                return Task.FromResult(new Result<OrderResponse>
+                response = new Result<OrderResponse>
                 {
                     Error = $"{ErrorsManager.GetOrderByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="UsersController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Users.
+    /// </summary>
     public class UsersController : ApiControllerBase
     {
         /// <summary>

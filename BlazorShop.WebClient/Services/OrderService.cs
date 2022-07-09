@@ -1,7 +1,14 @@
-﻿using MudBlazor;
+﻿// <copyright file="OrderService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IOrderService"/>.
+    /// </summary>
     public class OrderService : IOrderService
     {
         private readonly HttpClient _httpClient;
@@ -27,10 +34,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Items;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
@@ -45,10 +53,11 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -63,10 +72,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Order was added.", Severity.Success);
             }
 
-            _snackBar.Add("The Order was added.", Severity.Success);
             return result;
         }
 
@@ -82,10 +93,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Order was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The Order was updated.", Severity.Success);
             return result;
         }
 
@@ -101,10 +114,12 @@ namespace BlazorShop.WebClient.Services
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The Order was deleted.", Severity.Success);
             }
 
-            _snackBar.Add("The Order was deleted.", Severity.Success);
             return result;
         }
     }

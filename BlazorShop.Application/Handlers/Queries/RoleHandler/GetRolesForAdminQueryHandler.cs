@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.RoleHandler
+﻿// <copyright file="GetRolesForAdminQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetRolesForAdminQueryHandler : IRequestHandler<GetRolesForAdminQuery, Result<RoleResponse>>
     {
         private readonly IRoleService _roleService;
@@ -19,24 +26,28 @@
         /// <returns></returns>
         public Task<Result<RoleResponse>> Handle(GetRolesForAdminQuery request, CancellationToken cancellationToken)
         {
+            Result<RoleResponse>? response;
+
             try
             {
                 var result = _roleService.GetRolesForAdmin();
 
-                return Task.FromResult(new Result<RoleResponse>
+                response = new Result<RoleResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<RoleResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetRolesForAdminQuery);
-                return Task.FromResult(new Result<RoleResponse>
+                response = new Result<RoleResponse>
                 {
                     Error = $"{ErrorsManager.GetRolesForAdminQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

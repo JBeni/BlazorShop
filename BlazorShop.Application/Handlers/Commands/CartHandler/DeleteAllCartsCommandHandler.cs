@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.CartHandler
+﻿// <copyright file="DeleteAllCartsCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteAllCartsCommandHandler : IRequestHandler<DeleteAllCartsCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,17 +26,25 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(DeleteAllCartsCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                _dbContext.Carts.RemoveRange(_dbContext.Carts.Where(x => x.User.Id == request.UserId));
+                _dbContext.Carts.RemoveRange(
+                    _dbContext.Carts
+                        .TagWith(nameof(DeleteAllCartsCommandHandler))
+                        .Where(x => x.User.Id == request.UserId)
+                );
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success();
+                response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteAllCartsCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

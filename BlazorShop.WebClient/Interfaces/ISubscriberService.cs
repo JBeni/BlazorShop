@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Interfaces
+﻿// <copyright file="ISubscriberService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the subscriber.
+    /// </summary>
     public interface ISubscriberService
     {
         /// <summary>

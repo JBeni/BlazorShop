@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
+﻿// <copyright file="UpdateInvoiceCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,9 +26,13 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(UpdateInvoiceCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Invoices.SingleOrDefault(d => d.Id == request.Id);
+                var entity = _dbContext.Invoices
+                    .TagWith(nameof(UpdateInvoiceCommandHandler))
+                    .SingleOrDefault(d => d.Id == request.Id);
                 if (entity == null) throw new Exception("The invoice does not exists");
 
                 entity.UserEmail = request.UserEmail;
@@ -32,13 +43,15 @@
 
                 _dbContext.Invoices.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateInvoiceCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

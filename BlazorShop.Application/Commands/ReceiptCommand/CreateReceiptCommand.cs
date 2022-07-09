@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Commands.ReceiptCommand
+﻿// <copyright file="CreateReceiptCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.ReceiptCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateReceiptCommand : IRequest<RequestResponse>
     {
         /// <summary>

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.RoleHandler
+﻿// <copyright file="CreateRoleCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
         private readonly IRoleService _roleService;
@@ -19,16 +26,19 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var result = await _roleService.CreateRoleAsync(request);
-                return result;
+                response = await _roleService.CreateRoleAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateRoleCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
+﻿// <copyright file="DeleteTodoItemCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -16,24 +23,30 @@
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.TodoItems.FirstOrDefault(x => x.Id == request.Id);
+                var entity = _dbContext.TodoItems
+                    .TagWith(nameof(DeleteTodoItemCommandHandler))
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (entity == null) throw new Exception("The todo list record does not exists in the database");
 
                 _dbContext.TodoItems.Remove(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                return RequestResponse.Success();
+                response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.DeleteTodoItemCommand);
-                return RequestResponse.Failure($"{ErrorsManager.DeleteTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.DeleteTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

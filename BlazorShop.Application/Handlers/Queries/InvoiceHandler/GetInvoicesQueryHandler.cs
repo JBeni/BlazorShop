@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
+﻿// <copyright file="GetInvoicesQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, Result<InvoiceResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,26 +28,31 @@
         /// <returns></returns>
         public Task<Result<InvoiceResponse>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
+            Result<InvoiceResponse>? response;
+
             try
             {
                 var result = _dbContext.Invoices
+                    .TagWith(nameof(GetInvoicesQueryHandler))
                     .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<InvoiceResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetInvoicesQuery);
-                return Task.FromResult(new Result<InvoiceResponse>
+                response = new Result<InvoiceResponse>
                 {
                     Error = $"{ErrorsManager.GetInvoicesQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

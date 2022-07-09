@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="AccountsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Accounts.
+    /// </summary>
     public class AccountsController : ApiControllerBase
     {
         private readonly IConfiguration _configuration;

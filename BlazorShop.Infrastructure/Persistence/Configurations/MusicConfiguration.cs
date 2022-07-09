@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="MusicConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Music"/>.
+    /// </summary>
     public class MusicConfiguration : IEntityTypeConfiguration<Music>
     {
         public void Configure(EntityTypeBuilder<Music> builder)

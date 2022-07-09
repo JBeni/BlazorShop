@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="LoginCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class LoginCommandHandler : IRequestHandler<LoginCommand, JwtTokenResponse>
     {
         private readonly IAccountService _accountService;
@@ -19,15 +26,19 @@
         /// <returns></returns>
         public async Task<JwtTokenResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
+            JwtTokenResponse? response;
+
             try
             {
-                return await _accountService.LoginAsync(request);
+                response = await _accountService.LoginAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.LoginCommand);
-                return JwtTokenResponse.Failure($"{ErrorsManager.LoginCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = JwtTokenResponse.Failure($"{ErrorsManager.LoginCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

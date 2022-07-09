@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
+﻿// <copyright file="GetReceiptByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetReceiptByIdQueryHandler : IRequestHandler<GetReceiptByIdQuery, Result<ReceiptResponse>>
     {
         private readonly IApplicationDbContext _dbContext; 
@@ -21,27 +28,32 @@
         /// <returns></returns>
         public Task<Result<ReceiptResponse>> Handle(GetReceiptByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<ReceiptResponse>? response;
+
             try
             {
                 var result = _dbContext.Receipts
+                    .TagWith(nameof(GetReceiptByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.UserEmail == request.UserEmail)
                     .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<ReceiptResponse>
+                response = new Result<ReceiptResponse>
                 {
                     Successful = true,
                     Item = result ?? new ReceiptResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetReceiptByIdQuery);
-                return Task.FromResult(new Result<ReceiptResponse>
+                response = new Result<ReceiptResponse>
                 {
                     Error = $"{ErrorsManager.GetReceiptByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

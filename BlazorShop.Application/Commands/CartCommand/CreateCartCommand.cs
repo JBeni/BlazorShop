@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Commands.CartCommand
+﻿// <copyright file="CreateCartCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.CartCommand
 {
+    /// <summary>
+    /// A model to create a cart.
+    /// </summary>
     public class CreateCartCommand : IRequest<RequestResponse>
     {
         /// <summary>

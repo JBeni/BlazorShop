@@ -1,6 +1,13 @@
-﻿namespace BlazorShop.Application.Validators.TodoItemValidator
+﻿// <copyright file="UpdateTodoItemCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.TodoItemValidator
 {
-    public  class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCommand>
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
+    public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCommand>
     {
         private readonly IApplicationDbContext _context;
 
@@ -47,6 +54,7 @@
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.TodoItems
+                .TagWith(nameof(HaveUniqueTitle))
                 .AllAsync(l => l.Title != title, cancellationToken);
         }
     }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
+﻿// <copyright file="UserClaimConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="UserClaim"/>.
+    /// </summary>
     public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder)

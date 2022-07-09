@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence
+﻿// <copyright file="ApplicationDbContextSeed.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The database seed data to run at runtime.
+    /// </summary>
     public static class ApplicationDbContextSeed
     {
         /// <summary>

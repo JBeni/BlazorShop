@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Filters
+﻿// <copyright file="ApiExceptionFilterAttribute.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Filters
 {
+    /// <summary>
+    /// An exception model to filter the exception's application.
+    /// </summary>
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;

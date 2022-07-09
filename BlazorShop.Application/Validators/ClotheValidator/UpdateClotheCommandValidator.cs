@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.ClotheValidator
+﻿// <copyright file="UpdateClotheCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.ClotheValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateClotheCommandValidator : AbstractValidator<UpdateClotheCommand>
     {
         private readonly IApplicationDbContext _context;
@@ -51,6 +58,7 @@
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Clothes
+                .TagWith(nameof(HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

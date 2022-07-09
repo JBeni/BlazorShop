@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.TodoListValidator
+﻿// <copyright file="CreateTodoListCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.TodoListValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
     {
         private readonly IApplicationDbContext _context;
@@ -30,6 +37,7 @@
         public async Task<bool> HaveUniqueTitle(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts
+                .TagWith(nameof(HaveUniqueTitle))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

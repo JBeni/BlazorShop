@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
+﻿// <copyright file="GetSubscriptionByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetSubscriptionByIdQueryHandler : IRequestHandler<GetSubscriptionByIdQuery, Result<SubscriptionResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,26 +28,31 @@
         /// <returns></returns>
         public Task<Result<SubscriptionResponse>> Handle(GetSubscriptionByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriptionResponse>? response;
+
             try
             {
                 var result = _dbContext.Subscriptions
+                    .TagWith(nameof(GetSubscriptionByIdQueryHandler))
                     .ProjectTo<SubscriptionResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return Task.FromResult(new Result<SubscriptionResponse>
+                response = new Result<SubscriptionResponse>
                 {
                     Successful = true,
                     Item = result ?? new SubscriptionResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetSubscriptionByIdQuery);
-                return Task.FromResult(new Result<SubscriptionResponse>
+                response = new Result<SubscriptionResponse>
                 {
                     Error = $"{ErrorsManager.GetSubscriptionByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

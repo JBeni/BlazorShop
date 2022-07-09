@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="ClotheConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Clothe"/>.
+    /// </summary>
     public class ClotheConfiguration : IEntityTypeConfiguration<Clothe>
     {
         public void Configure(EntityTypeBuilder<Clothe> builder)

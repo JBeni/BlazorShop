@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
+﻿// <copyright file="GetTodoListByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoListByIdQueryHandler : IRequestHandler<GetTodoListByIdQuery, Result<TodoListResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,26 +28,31 @@
         /// <returns></returns>
         public Task<Result<TodoListResponse>> Handle(GetTodoListByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<TodoListResponse>? response;
+
             try
             {
                 var result = _dbContext.TodoLists
+                    .TagWith(nameof(GetTodoListByIdQueryHandler))
                     .ProjectTo<TodoListResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return Task.FromResult(new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Successful = true,
                     Item = result ?? new TodoListResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetTodoListByIdQuery);
-                return Task.FromResult(new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Error = $"{ErrorsManager.GetTodoListByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="AccountService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IAccountService"/>.
+    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly HttpClient _httpClient;
@@ -25,10 +32,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The password was changed.", Severity.Success);
             }
 
-            _snackBar.Add("The password was changed.", Severity.Success);
             return result;
         }
 
@@ -51,10 +60,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The password was reset.", Severity.Success);
             }
 
-            _snackBar.Add("The password was reset.", Severity.Success);
             return result;
         }
     }

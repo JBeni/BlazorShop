@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="CreateReceiptCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateReceiptCommandHandler : IRequestHandler<CreateReceiptCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,6 +26,8 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateReceiptCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Receipt
@@ -31,13 +40,15 @@
 
                 _dbContext.Receipts.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateReceiptCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

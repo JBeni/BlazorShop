@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartByIdQueryHandler : IRequestHandler<GetCartByIdQuery, Result<CartResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,27 +28,32 @@
         /// <returns></returns>
         public Task<Result<CartResponse>> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<CartResponse>? response;
+
             try
             {
                 var result = _dbContext.Carts
+                    .TagWith(nameof(GetCartByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.User.Id == request.UserId)
                     .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Successful = true,
                     Item = result ?? new CartResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetCartByIdQuery);
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Error = $"{ErrorsManager.GetCartByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

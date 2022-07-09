@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="TodoListService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="ITodoListService"/>.
+    /// </summary>
     public partial class TodoListService : ITodoListService
     {
         private readonly HttpClient _httpClient;
@@ -24,11 +31,12 @@
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return null;
+                _snackBar.Add(result.Error, Severity.Error);                return null;
             }
 
-            return result.Items;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
@@ -43,10 +51,11 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -61,11 +70,15 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return null;
+            }
+            else
+            {
+                _snackBar.Add("The todo list was created.", Severity.Success);
             }
 
-            _snackBar.Add("The todo list was created.", Severity.Success);
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
@@ -80,10 +93,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The todo list was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The todo list was updated.", Severity.Success);
             return result;
         }
 
@@ -99,10 +114,12 @@
             if (response.IsSuccessStatusCode == false)
             {
                 _snackBar.Add(result.Error, Severity.Error);
-                return result;
+            }
+            else
+            {
+                _snackBar.Add("The todo list was deleted.", Severity.Success);
             }
 
-            _snackBar.Add("The todo list was deleted.", Severity.Success);
             return result;
         }
     }

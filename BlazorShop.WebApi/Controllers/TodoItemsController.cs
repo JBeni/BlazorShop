@@ -1,7 +1,14 @@
-﻿using BlazorShop.Application.Commands.TodoItemCommand;
+﻿// <copyright file="TodoItemsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using BlazorShop.Application.Commands.TodoItemCommand;
 
 namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for TodoItems.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
     public class TodoItemsController : ApiControllerBase
     {

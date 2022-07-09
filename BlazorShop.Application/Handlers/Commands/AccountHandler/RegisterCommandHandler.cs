@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.AccountHandler
+﻿// <copyright file="RegisterCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, JwtTokenResponse>
     {
         private readonly IAccountService _accountService;
@@ -19,15 +26,19 @@
         /// <returns></returns>
         public async Task<JwtTokenResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            JwtTokenResponse? response;
+
             try
             {
-                return await _accountService.RegisterAsync(request);
+                response = await _accountService.RegisterAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.RegisterCommand);
-                return JwtTokenResponse.Failure($"{ErrorsManager.RegisterCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = JwtTokenResponse.Failure($"{ErrorsManager.RegisterCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

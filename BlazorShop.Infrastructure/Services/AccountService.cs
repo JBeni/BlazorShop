@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Services
+﻿// <copyright file="AccountService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IAccountService"/>.
+    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;

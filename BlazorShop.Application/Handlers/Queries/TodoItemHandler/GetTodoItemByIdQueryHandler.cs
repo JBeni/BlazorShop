@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
+﻿// <copyright file="GetTodoItemByIdQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetTodoItemByIdQueryHandler : IRequestHandler<GetTodoItemByIdQuery, Result<TodoItemResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,26 +28,31 @@
         /// <returns></returns>
         public Task<Result<TodoItemResponse>> Handle(GetTodoItemByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<TodoItemResponse>? response;
+
             try
             {
                 var result = _dbContext.TodoItems
+                    .TagWith(nameof(GetTodoItemByIdQueryHandler))
                     .ProjectTo<TodoItemResponse>(_mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
-                return Task.FromResult(new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Successful = true,
                     Item = result ?? new TodoItemResponse()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetTodoItemByIdQuery);
-                return Task.FromResult(new Result<TodoItemResponse>
+                response = new Result<TodoItemResponse>
                 {
                     Error = $"{ErrorsManager.GetTodoItemByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

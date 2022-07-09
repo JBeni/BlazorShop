@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.UserHandler
+﻿// <copyright file="AssignUserToRoleCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.UserHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class AssignUserToRoleCommandHandler : IRequestHandler<AssignUserToRoleCommand, RequestResponse>
     {
         private readonly IUserService _userService;
@@ -16,19 +23,22 @@
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var result = await _userService.AssignUserToRoleAsync(request);
-                return result;
+                response = await _userService.AssignUserToRoleAsync(request);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.AssignUserToRoleCommand);
-                return RequestResponse.Failure($"{ErrorsManager.AssignUserToRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.AssignUserToRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

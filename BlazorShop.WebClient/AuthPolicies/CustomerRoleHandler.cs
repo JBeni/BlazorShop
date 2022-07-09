@@ -1,10 +1,12 @@
-﻿namespace BlazorShop.WebClient.AuthPolicies
+﻿// <copyright file="CustomerRoleRequirement.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// .
+    /// A custom policy to check for the Customer role.
     /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class CustomerRoleRequirement : IAuthorizationRequirement
     {
         public CustomerRoleRequirement()
@@ -21,27 +23,18 @@
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomerRoleRequirement requirement)
         {
-            if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
-
-            var defaultRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.User);
-
-            if (userRole == null && defaultRole == null) return Task.CompletedTask;
-
-            if (userRole != null)
+            if (context.User.Identity.IsAuthenticated)
             {
-                if (userRole.Value.Equals(StringRoleResources.User))
+                var defaultRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Default);
+                var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.User);
+
+                if (userRole != null && userRole.Value.Equals(StringRoleResources.User))
                 {
                     context.Succeed(requirement);
-                    return Task.CompletedTask;
                 }
-            }
-            if (defaultRole != null)
-            {
-                if (defaultRole.Value.Equals(StringRoleResources.Default))
+                else if (defaultRole != null && defaultRole.Value.Equals(StringRoleResources.Default))
                 {
                     context.Succeed(requirement);
-                    return Task.CompletedTask;
                 }
             }
 

@@ -1,5 +1,12 @@
+// <copyright file="Program.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
 using MudBlazor.Services;
 
+/// <summary>
+/// The configurations for the blazor client web application.
+/// </summary>
 try
 {
     var builder = WebAssemblyHostBuilder.CreateDefault(args);

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
+﻿// <copyright file="CreateInvoiceCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,6 +26,8 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Invoice
@@ -32,13 +41,15 @@
 
                 _dbContext.Invoices.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateInvoiceCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

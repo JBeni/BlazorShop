@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Commands.InvoiceCommand
+﻿// <copyright file="UpdateInvoiceCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.InvoiceCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateInvoiceCommand : IRequest<RequestResponse>
     {
         /// <summary>

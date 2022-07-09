@@ -1,7 +1,14 @@
-﻿using ValidationException = BlazorShop.Application.Common.Exceptions.ValidationException;
+﻿// <copyright file="ValidationBehaviour.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+using ValidationException = BlazorShop.Application.Common.Exceptions.ValidationException;
 
 namespace BlazorShop.Application.Common.Behaviours
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {

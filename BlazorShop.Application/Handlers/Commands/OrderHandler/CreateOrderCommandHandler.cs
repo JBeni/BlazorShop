@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.OrderHandler
+﻿// <copyright file="CreateOrderCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.OrderHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,6 +26,8 @@
         /// <returns></returns>
         public async Task<RequestResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Order
@@ -32,13 +41,15 @@
 
                 _dbContext.Orders.Add(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.CreateOrderCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

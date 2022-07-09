@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence
+﻿// <copyright file="ApplicationDbContext.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The database context configurations and entities.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<User, Role, int,
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>, IApplicationDbContext

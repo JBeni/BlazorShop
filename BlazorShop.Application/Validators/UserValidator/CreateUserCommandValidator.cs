@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.UserValidator
+﻿// <copyright file="CreateUserCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.UserValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
         /// <summary>
@@ -36,15 +43,17 @@
         /// <returns></returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
+            var isEmailValid = false;
             try
             {
                 _ = new MailAddress(emailAddress);
-                return true;
+                isEmailValid = true;
             }
             catch (Exception)
             {
-                return false;
             }
+
+            return isEmailValid;
         }
     }
 }

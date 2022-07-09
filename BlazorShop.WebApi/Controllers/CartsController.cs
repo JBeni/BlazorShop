@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="CartsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Carts.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class CartsController : ApiControllerBase
     {

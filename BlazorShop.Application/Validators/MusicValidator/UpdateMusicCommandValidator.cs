@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Validators.MusicValidator
+﻿// <copyright file="UpdateMusicCommandValidator.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Validators.MusicValidator
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateMusicCommandValidator : AbstractValidator<UpdateMusicCommand>
     {
         private readonly IApplicationDbContext _context;
@@ -58,6 +65,7 @@
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.Musics
+                .TagWith(nameof(HaveUniqueTitle))
                 .AllAsync(l => l.Title != title, cancellationToken);
         }
     }

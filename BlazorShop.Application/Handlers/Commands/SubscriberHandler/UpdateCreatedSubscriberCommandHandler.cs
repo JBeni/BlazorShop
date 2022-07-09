@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="UpdateCreatedSubscriberCommandHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class UpdateCreatedSubscriberCommandHandler : IRequestHandler<UpdateCreatedSubscriberCommand, RequestResponse>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -18,15 +25,19 @@
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <response =s></response =s>
         public async Task<RequestResponse> Handle(UpdateCreatedSubscriberCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var user = await _userService.FindUserByEmailAsync(request.CustomerEmail);
                 if (user == null) throw new Exception("The user does not exists");
 
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.Customer.Id == user.Id && x.StripeSubscriberSubscriptionId.Equals(""));
+                var entity = _dbContext.Subscribers
+                    .TagWith(nameof(UpdateCreatedSubscriberCommandHandler))
+                    .FirstOrDefault(x => x.Customer.Id == user.Id && x.StripeSubscriberSubscriptionId.Equals(""));
                 if (entity == null) throw new Exception("The subscriber does not exists");
 
                 entity.StripeSubscriberSubscriptionId = request.StripeSubscriberSubscriptionId;
@@ -37,13 +48,15 @@
 
                 _dbContext.Subscribers.Update(entity);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.UpdateCreatedSubscriberCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateCreatedSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateCreatedSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

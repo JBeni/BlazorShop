@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="SubscriberConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Subscriber"/>.
+    /// </summary>
     public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
     {
         public void Configure(EntityTypeBuilder<Subscriber> builder)

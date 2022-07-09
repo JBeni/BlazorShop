@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartsQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartsQueryHandler : IRequestHandler<GetCartsQuery, Result<CartResponse>>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -21,27 +28,32 @@
         /// <returns></returns>
         public Task<Result<CartResponse>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
+            Result<CartResponse>? response;
+
             try
             {
                 var result = _dbContext.Carts
+                    .TagWith(nameof(GetCartsQueryHandler))
                     .Where(x => x.User.Id == request.UserId)
                     .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Successful = true,
                     Items = result ?? new List<CartResponse>()
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetCartsQuery);
-                return Task.FromResult(new Result<CartResponse>
+                response = new Result<CartResponse>
                 {
                     Error = $"{ErrorsManager.GetCartsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

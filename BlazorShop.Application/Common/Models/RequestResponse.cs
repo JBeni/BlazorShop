@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Common.Models
+﻿// <copyright file="RequestResponse.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Common.Models
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class RequestResponse
     {
         /// <summary>

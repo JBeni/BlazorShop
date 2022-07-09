@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="ReceiptConfiguration.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Receipt"/>.
+    /// </summary>
     public class ReceiptConfiguration : IEntityTypeConfiguration<Receipt>
     {
         public void Configure(EntityTypeBuilder<Receipt> builder)

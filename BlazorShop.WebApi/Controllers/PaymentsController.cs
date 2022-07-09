@@ -1,6 +1,13 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="PaymentsController.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
-    [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
+	/// <summary>
+	/// Controller for Payments.
+	/// </summary>
+	[Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class PaymentsController : ApiControllerBase
     {
 		private readonly IConfiguration _configuration;

@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="SessionStorageService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="SessionStorageService"/>.
+    /// </summary>
     public class SessionStorageService
     {
         private readonly IJSRuntime _js;

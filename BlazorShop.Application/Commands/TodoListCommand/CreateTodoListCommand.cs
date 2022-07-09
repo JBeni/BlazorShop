@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Commands.TodoListCommand
+﻿// <copyright file="CreateTodoListCommand.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Commands.TodoListCommand
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class CreateTodoListCommand : IRequest<Result<TodoListResponse>>
     {
         /// <summary>

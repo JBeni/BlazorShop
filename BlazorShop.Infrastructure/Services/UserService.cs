@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Infrastructure.Services
+﻿// <copyright file="UserService.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IUserService"/>.
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
@@ -71,6 +78,7 @@
         public UserResponse GetUserById(GetUserByIdQuery query)
         {
             var user = _userManager.Users
+                .TagWith(nameof(GetUserById))
                 .Where(x => x.Id == query.Id && x.IsActive == true)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
@@ -81,6 +89,7 @@
         public UserResponse GetUserByEmail(GetUserByEmailQuery query)
         {
             var user = _userManager.Users
+                .TagWith(nameof(GetUserByEmail))
                 .Where(x => x.Email == query.Email && x.IsActive == true)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
@@ -146,6 +155,7 @@
         public List<UserResponse> GetUsers(GetUsersQuery query)
         {
             var result = _userManager.Users
+                .TagWith(nameof(GetUsers))
                 .Where(u => u.IsActive == true)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .ToList();
@@ -156,6 +166,7 @@
         public List<UserResponse> GetUsersInactive(GetUsersInactiveQuery query)
         {
             var result = _userManager.Users
+                .TagWith(nameof(GetUsersInactive))
                 .Where(u => u.IsActive == false)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .ToList();

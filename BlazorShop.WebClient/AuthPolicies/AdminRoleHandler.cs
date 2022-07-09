@@ -1,10 +1,12 @@
-﻿namespace BlazorShop.WebClient.AuthPolicies
+﻿// <copyright file="AdminRoleRequirement.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// .
+    /// A custom policy to check for the Admin role.
     /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class AdminRoleRequirement : IAuthorizationRequirement
     {
         public string Role { get; }
@@ -24,15 +26,14 @@
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRoleRequirement requirement)
         {
-            if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
-
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Admin);
-            if (userRole == null) return Task.CompletedTask;
-
-            if (userRole.Value.Equals(requirement.Role))
+            if (context.User.Identity.IsAuthenticated)
             {
-                context.Succeed(requirement);
-                return Task.CompletedTask;
+                var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.Admin);
+
+                if (userRole != null && userRole.Value.Equals(requirement.Role))
+                {
+                    context.Succeed(requirement);
+                }
             }
 
             return Task.CompletedTask;

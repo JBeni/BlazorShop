@@ -1,4 +1,8 @@
-﻿global using MediatR;
+﻿// <copyright file="_Imports.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+global using MediatR;
 global using BlazorShop.Application.Common.Models;
 global using Microsoft.Extensions.Logging;
 global using BlazorShop.Application.Responses;

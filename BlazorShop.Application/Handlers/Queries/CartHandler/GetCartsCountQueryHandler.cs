@@ -1,5 +1,12 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartsCountQueryHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
+    /// <summary>
+    /// A model to update a cart.
+    /// </summary>
     public class GetCartsCountQueryHandler : IRequestHandler<GetCartsCountQuery, int>
     {
         private readonly IApplicationDbContext _dbContext;
@@ -19,16 +26,20 @@
         /// <returns></returns>
         public Task<int> Handle(GetCartsCountQuery request, CancellationToken cancellationToken)
         {
+            var result = 0;
+
             try
             {
-                var result = _dbContext.Carts.Where(x => x.User.Id == request.UserId).Count();
-                return Task.FromResult(result);
+                result = _dbContext.Carts
+                    .TagWith(nameof(GetCartsCountQueryHandler))
+                    .Where(x => x.User.Id == request.UserId).Count();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ErrorsManager.GetCartsCountQuery);
-                return Task.FromResult(0);
             }
+
+            return Task.FromResult(result);
         }
     }
 }
