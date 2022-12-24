@@ -1,0 +1,28 @@
+﻿@*
+  <copyright file="server-error.razor" company="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/server-error"
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<h3 class="mb-3">Server Error</h3>
+
+<div class="d-flex justify-content-center" style="margin-top: 100px;">
+    <h4 style="font-size: 45px;"><em>Something went wrong, please contact Administrator or try again later...</em></h4>
+</div>
+
+@code {
+
+    /// <summary>
+    /// .
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await this.AuthService.Logout();
+    }
+}

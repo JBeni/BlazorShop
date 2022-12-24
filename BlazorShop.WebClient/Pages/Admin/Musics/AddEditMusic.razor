@@ -11,6 +11,7 @@
 
 @inject IMusicService MusicService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title Music</h1>
 <hr />
@@ -88,7 +89,12 @@
     protected string Title = "Add";
     public MusicResponse music = new();
 
-    protected override void OnInitialized() { }
+    public void Dispose() => Interceptor.DisposeEvent();
+
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
 
     /// <summary>
     /// .
