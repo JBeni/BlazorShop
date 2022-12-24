@@ -66,7 +66,7 @@ namespace BlazorShop.Infrastructure.Services
                 new Claim(StringRoleResources.UserIdClaim, user.Id.ToString()),
             };
 
-            var expiresIn = DateTime.Now.AddSeconds(5);
+            var expiresIn = DateTime.Now.AddDays(1);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
