@@ -13,13 +13,19 @@ namespace BlazorShop.WebClient.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ISnackbar _snackBar;
+        private readonly NavigationManager _navMagager;
+        private readonly AuthenticationStateProvider _authStateProvider;
+        private readonly ILocalStorageService _localStorage;
         private readonly JsonSerializerOptions _options;
 
-        public MusicService(HttpClient httpClient, ISnackbar snackBar)
+        public MusicService(HttpClient httpClient, ISnackbar snackBar, NavigationManager navMagager, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage)
         {
             _httpClient = httpClient;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             _snackBar = snackBar;
+            _navMagager = navMagager;
+            _authStateProvider = authStateProvider;
+            _localStorage = localStorage;
         }
 
         /// <inheritdoc/>

@@ -11,6 +11,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrderService OrderService
 @inject NavigationManager NavigationManager
+@inject HttpInterceptorService Interceptor
 
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded">
@@ -92,11 +93,14 @@
     private string userEmail { get; set; }
     private int userId { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 

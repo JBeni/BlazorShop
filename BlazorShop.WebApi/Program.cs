@@ -2,6 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Diagnostics;
 /// <summary>
 /// The configurations for the Core Web API.
 /// </summary>
@@ -46,8 +47,8 @@ try
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ClockSkew = TimeSpan.FromMinutes(5),
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
+                ClockSkew = TimeSpan.FromSeconds(1),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
                 ValidateLifetime = true,
@@ -57,7 +58,6 @@ try
                 ValidIssuer = builder.Configuration["JwtToken:Issuer"]
             };
         });
-
 
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
@@ -126,7 +126,7 @@ try
     app.UseRouting();
 
     app.UseMiddleware<JwtTokenMiddleware>();
-    
+
     app.UseSerilogRequestLogging();
 
     app.UseAuthentication();

@@ -9,6 +9,7 @@
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h3 class="text-center" style="margin-top: 30px;">Subscription Successful Activated</h3>
 
@@ -25,6 +26,16 @@
 @code {
     [Parameter]
     public string Message { get; set; }
+
+    public void Dispose() => Interceptor.DisposeEvent();
+
+    /// <summary>
+    /// .
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        Interceptor.RegisterEvent();
+    }
 
     /// <summary>
     /// .
