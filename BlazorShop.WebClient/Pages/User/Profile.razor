@@ -11,6 +11,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IUserService UserService
 @inject IAccountService AccountService
+@inject HttpInterceptorService Interceptor
 
 <h1>User Profile</h1>
 
@@ -208,11 +209,14 @@
     protected ChangePasswordCommand changePassword = new();
     protected UpdateUserEmailCommand updateEmail = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 

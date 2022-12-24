@@ -11,6 +11,7 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject NavigationManager NavigationManager
+@inject HttpInterceptorService Interceptor
 
 <div class="body-container px-4 px-lg-0">
     <div class="container text-white py-5 text-center">
@@ -108,11 +109,14 @@
     private int userId { get; set; }
     List<CartResponse> cartItems = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 

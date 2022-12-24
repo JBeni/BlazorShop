@@ -14,6 +14,7 @@
 @inject ISubscriberService SubscriberService
 @inject NavigationManager NavManager
 @inject HttpClient HttpClient
+@inject HttpInterceptorService Interceptor
 
 <h3 class="mb-3">Musics Section</h3>
 
@@ -174,11 +175,14 @@ else
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 

@@ -2,6 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.WebClient.Interceptor;
 using MudBlazor.Services;
 
 /// <summary>
@@ -45,6 +46,7 @@ try
 
     builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
     builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+    builder.Services.AddScoped<HttpInterceptorService>();
 
     builder.Services.AddSingleton<IAuthorizationHandler, AdminRoleHandler>();
     builder.Services.AddSingleton<IAuthorizationHandler, UserRoleHandler>();

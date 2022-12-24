@@ -16,15 +16,13 @@ namespace BlazorShop.WebClient.Auth
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
         private readonly AuthenticationState _anonymous;
-        private readonly IConfiguration _configuration;
         private readonly NavigationManager _navMagager;
 
-        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, IConfiguration configuration, NavigationManager navMagager)
+        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, NavigationManager navMagager)
         {
             _httpClient = httpClient;
             _localStorage = localStorage;
             _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-            _configuration = configuration;
             _navMagager = navMagager;
         }
 
@@ -37,11 +35,11 @@ namespace BlazorShop.WebClient.Auth
         {
             var token = await _localStorage.GetItemAsync<string>("authToken");
 
-            AuthenticationState? authenticationState = _anonymous;
-            if (string.IsNullOrWhiteSpace(token) || !this.IsCurrentTokenValid(token))
+            AuthenticationState? authenticationState;
+            if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(_httpClient.DefaultRequestHeaders.Authorization?.Parameter))
             {
                 this.NotifyUserLogout();
-                _navMagager.NavigateTo("/login");
+                authenticationState = _anonymous;
             }
             else
             {
@@ -75,39 +73,6 @@ namespace BlazorShop.WebClient.Auth
         {
             var authState = Task.FromResult(_anonymous);
             NotifyAuthenticationStateChanged(authState);
-        }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
-        private bool IsCurrentTokenValid(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var isTokenValid = true;
-
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ClockSkew = TimeSpan.FromSeconds(1),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtToken:SecretKey"])),
-                    RequireSignedTokens = true,
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true,
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidAudience = _configuration["JwtToken:Audience"],
-                    ValidIssuer = _configuration["JwtToken:Issuer"]
-                }, out SecurityToken validatedToken);
-            }
-            catch
-            {
-                isTokenValid = false;
-            }
-
-            return isTokenValid;
         }
     }
 }

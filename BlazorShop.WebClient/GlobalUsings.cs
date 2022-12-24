@@ -31,3 +31,7 @@ global using Microsoft.JSInterop;
 global using Microsoft.AspNetCore.Components;
 global using BlazorShop.WebClient.Shared;
 global using MudBlazor;
+global using BlazorShop.WebClient.Interceptor;
+global using System.Net;
+global using Toolbelt.Blazor;
+global using System.Runtime.Serialization;
