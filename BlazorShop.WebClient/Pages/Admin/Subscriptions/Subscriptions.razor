@@ -10,6 +10,7 @@
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Subscriptions</h1>
 
@@ -112,11 +113,14 @@ else
     protected SubscriptionResponse subscription = new();
     protected List<SubscriptionResponse> subscriptionsList { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         await GetSubscriptions();
     }
 

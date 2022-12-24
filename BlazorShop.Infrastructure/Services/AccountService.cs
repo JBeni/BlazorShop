@@ -55,7 +55,7 @@ namespace BlazorShop.Infrastructure.Services
                 Issuer = _configuration["JwtToken:Issuer"],
                 Audience = _configuration["JwtToken:Audience"],
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
+            var key = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(jwtSettings.Secret));
 
             var userRole = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>
@@ -66,7 +66,7 @@ namespace BlazorShop.Infrastructure.Services
                 new Claim(StringRoleResources.UserIdClaim, user.Id.ToString()),
             };
 
-            var expiresIn = DateTime.Now.AddSeconds(20);
+            var expiresIn = DateTime.Now.AddSeconds(5);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),

@@ -39,7 +39,6 @@ namespace BlazorShop.WebClient.Auth
             if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(_httpClient.DefaultRequestHeaders.Authorization?.Parameter))
             {
                 this.NotifyUserLogout();
-                _navMagager.NavigateTo("/login");
                 authenticationState = _anonymous;
             }
             else

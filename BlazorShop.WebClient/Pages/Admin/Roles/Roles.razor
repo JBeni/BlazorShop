@@ -10,6 +10,7 @@
 
 @inject IRoleService RoleService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Roles List</h1>
 
@@ -111,11 +112,14 @@ else
     protected List<RoleResponse> rolesList { get; set; }
     protected List<RoleResponse> searchRolesData { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         await GetRolesForAdmin();
     }
 

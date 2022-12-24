@@ -12,6 +12,7 @@
 @inject IUserService UserService
 @inject IRoleService RoleService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title User</h1>
 <hr />
@@ -71,11 +72,14 @@
     public UserResponse User = new();
     protected List<RoleResponse> roles = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
     /// .
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         roles = await RoleService.GetRolesForAdmin();
     }
 

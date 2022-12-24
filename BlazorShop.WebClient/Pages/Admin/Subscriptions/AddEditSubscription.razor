@@ -11,6 +11,7 @@
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title Subscription</h1>
 <hr />
@@ -85,7 +86,12 @@
     protected string Title = "Add";
     public SubscriptionResponse Subscription = new();
 
-    protected override void OnInitialized() { }
+    public void Dispose() => Interceptor.DisposeEvent();
+
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
 
     /// <summary>
     /// .

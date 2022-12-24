@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Filters
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ClockSkew = TimeSpan.FromSeconds(1),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtToken:SecretKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(_configuration["JwtToken:SecretKey"])),
                     RequireSignedTokens = true,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
@@ -62,7 +62,7 @@ namespace BlazorShop.WebApi.Filters
                     ValidIssuer = _configuration["JwtToken:Issuer"]
                 }, out SecurityToken validatedToken);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 isTokenValid = false;
             }

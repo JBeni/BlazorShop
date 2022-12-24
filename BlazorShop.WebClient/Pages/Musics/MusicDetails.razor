@@ -9,6 +9,7 @@
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject IMusicService MusicService
+@inject HttpInterceptorService Interceptor
 
 <h3 class="text-center">View Music Details</h3>
 
@@ -45,6 +46,16 @@ else
     [Parameter]
     public int Id { get; set; }
     public MusicResponse music = new();
+
+    public void Dispose() => Interceptor.DisposeEvent();
+
+    /// <summary>
+    /// .
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        Interceptor.RegisterEvent();
+    }
 
     /// <summary>
     /// .

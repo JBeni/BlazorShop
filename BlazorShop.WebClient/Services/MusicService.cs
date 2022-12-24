@@ -32,17 +32,6 @@ namespace BlazorShop.WebClient.Services
         public async Task<List<MusicResponse>> GetMusics()
         {
             var response = await _httpClient.GetAsync("Musics/musics");
-
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                await _localStorage.RemoveItemAsync("authToken");
-                //((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(string.Empty);
-
-                ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
-                _navMagager.NavigateTo("/login");
-                return null;
-            }
-
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<MusicResponse>>(
                 responseResult, _options

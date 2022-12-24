@@ -48,7 +48,7 @@ try
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ClockSkew = TimeSpan.FromSeconds(1),
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
                 ValidateLifetime = true,
@@ -58,7 +58,6 @@ try
                 ValidIssuer = builder.Configuration["JwtToken:Issuer"]
             };
         });
-
 
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
