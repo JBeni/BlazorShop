@@ -13,11 +13,32 @@ namespace BlazorShop.WebClient.Auth
     /// </summary>
     public class AuthStateProvider : AuthenticationStateProvider
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ILocalStorageService _localStorage;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly AuthenticationState _anonymous;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly NavigationManager _navMagager;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="localStorage"></param>
+        /// <param name="navMagager"></param>
         public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, NavigationManager navMagager)
         {
             _httpClient = httpClient;

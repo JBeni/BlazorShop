@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
     /// </summary>
     public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<TodoItem> builder)
         {
             builder.ToTable("TodoItems");

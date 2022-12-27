@@ -9,9 +9,20 @@ namespace BlazorShop.WebClient.Services
     /// </summary>
     public class SessionStorageService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IJSRuntime _js;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IJSInProcessRuntime _jsInProcess;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="js"></param>
         public SessionStorageService(IJSRuntime js)
         {
             _js = js;

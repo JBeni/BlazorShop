@@ -11,11 +11,34 @@ namespace BlazorShop.WebClient.Services
     /// </summary>
     public class MusicService : IMusicService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ISnackbar _snackBar;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly NavigationManager _navMagager;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly AuthenticationStateProvider _authStateProvider;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ILocalStorageService _localStorage;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly JsonSerializerOptions _options;
 
         public MusicService(HttpClient httpClient, ISnackbar snackBar, NavigationManager navMagager, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage)

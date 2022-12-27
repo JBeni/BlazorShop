@@ -9,6 +9,9 @@ namespace BlazorShop.Infrastructure.Services
     /// </summary>
     public class DateTimeService : IDateTimeService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public DateTime Now => DateTime.Now;
     }
 }

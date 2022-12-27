@@ -1,4 +1,4 @@
-// <copyright file="Worker.cs" company="Beniamin Jitca">
+﻿// <copyright file="Worker.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,10 +9,27 @@ namespace BlazorShop.WorkerService
     /// </summary>
     public class Worker : BackgroundService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ILogger<Worker> _logger;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IServiceScopeFactory _serviceScopeFactory;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="serviceScopeFactory"></param>
+        /// <param name="httpClient"></param>
         public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory, HttpClient httpClient)
         {
             _logger = logger;
@@ -20,6 +37,11 @@ namespace BlazorShop.WorkerService
             _httpClient = httpClient;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try
@@ -34,11 +56,11 @@ namespace BlazorShop.WorkerService
                     {
                         if (subscription.Status == SubscriptionStatus.Active && subscription.CurrentPeriodEnd > DateTime.Now)
                         {
-                            await _httpClient.DeleteAsync($"https://localhost:44351/api/Payments/cancel-subscription/{subscription.StripeSubscriberSubscriptionId}");
+                            await this._httpClient.DeleteAsync($"https://localhost:44351/api/Payments/cancel-subscription/{subscription.StripeSubscriberSubscriptionId}");
 
                             subscription.Status = SubscriptionStatus.Inactive;
                             dbContext.Subscribers.Update(subscription);
-                            await dbContext.SaveChangesAsync();
+                            await dbContext.SaveChangesAsync(stoppingToken);
                         }
                     }
 

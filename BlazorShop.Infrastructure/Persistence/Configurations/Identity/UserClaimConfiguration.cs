@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     /// </summary>
     public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserClaim> builder)
         {
             builder.ToTable("AppUserClaims");

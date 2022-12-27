@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     /// </summary>
     public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
             builder.ToTable("AppUserLogins");

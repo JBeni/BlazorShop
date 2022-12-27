@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     /// </summary>
     public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {
             builder.ToTable("AppUserTokens");

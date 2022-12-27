@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
     /// </summary>
     public class ReceiptConfiguration : IEntityTypeConfiguration<Receipt>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Receipt> builder)
         {
             builder.ToTable("Receipts");

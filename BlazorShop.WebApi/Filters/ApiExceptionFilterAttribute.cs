@@ -9,8 +9,14 @@ namespace BlazorShop.WebApi.Filters
     /// </summary>
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 
+        /// <summary>
+        /// .
+        /// </summary>
         public ApiExceptionFilterAttribute()
         {
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>

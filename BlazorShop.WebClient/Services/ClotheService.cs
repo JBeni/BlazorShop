@@ -9,10 +9,26 @@ namespace BlazorShop.WebClient.Services
     /// </summary>
     public class ClotheService : IClotheService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ISnackbar _snackBar;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly JsonSerializerOptions _options;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="snackBar"></param>
         public ClotheService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;

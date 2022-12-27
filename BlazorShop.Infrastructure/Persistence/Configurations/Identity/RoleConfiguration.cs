@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     /// </summary>
     public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.ToTable("AppRoles");

@@ -9,10 +9,26 @@ namespace BlazorShop.WebClient.Services
     /// </summary>
     public class UserService : IUserService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ISnackbar _snackBar;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly JsonSerializerOptions _options;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="snackBar"></param>
         public UserService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;

@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
     /// </summary>
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable("Orders");

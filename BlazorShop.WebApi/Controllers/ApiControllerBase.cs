@@ -12,8 +12,14 @@ namespace BlazorShop.WebApi.Controllers
     [Authorize]
     public abstract class ApiControllerBase : ControllerBase
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private ISender _mediator = null!;
 
+        /// <summary>
+        /// .
+        /// </summary>
         protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
     }
 }

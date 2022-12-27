@@ -2,8 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using MudBlazor;
-
 namespace BlazorShop.WebClient.Services
 {
     /// <summary>
@@ -11,10 +9,26 @@ namespace BlazorShop.WebClient.Services
     /// </summary>
     public class RoleService : IRoleService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly ISnackbar _snackBar;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly JsonSerializerOptions _options;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="snackBar"></param>
         public RoleService(HttpClient httpClient, ISnackbar snackBar)
         {
             _httpClient = httpClient;

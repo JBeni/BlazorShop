@@ -9,9 +9,21 @@ namespace BlazorShop.WebApi.Controllers
     /// </summary>
     public class AccountsController : ApiControllerBase
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IConfiguration _configuration;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IEmailService _emailService;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="emailService"></param>
         public AccountsController(IConfiguration configuration,
                                   IEmailService emailService)
         {
