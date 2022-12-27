@@ -9,10 +9,27 @@ namespace BlazorShop.Infrastructure.Services
     /// </summary>
     public class AccountService : IAccountService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly UserManager<User> _userManager;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly RoleManager<Role> _roleManager;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="roleManager"></param>
+        /// <param name="configuration"></param>
         public AccountService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,

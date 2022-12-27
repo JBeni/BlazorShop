@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
     /// </summary>
     public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Subscription> builder)
         {
             builder.ToTable("Subscriptions");

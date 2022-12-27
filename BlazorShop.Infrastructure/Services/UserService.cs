@@ -9,10 +9,27 @@ namespace BlazorShop.Infrastructure.Services
     /// </summary>
     public class UserService : IUserService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly UserManager<User> _userManager;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IRoleService _roleService;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="roleService"></param>
+        /// <param name="mapper"></param>
         public UserService(
             UserManager<User> userManager,
             IRoleService roleService,

@@ -11,25 +11,77 @@ namespace BlazorShop.Infrastructure.Persistence
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>, IApplicationDbContext
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="options"></param>
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Cart> Carts { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Clothe> Clothes { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Invoice> Invoices { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Music> Musics { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Order> Orders { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Subscriber> Subscribers { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Subscription> Subscriptions { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<Receipt> Receipts { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<TodoItem> TodoItems { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public DbSet<TodoList> TodoLists { get; set; }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

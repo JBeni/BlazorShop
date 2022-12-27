@@ -9,6 +9,12 @@ namespace BlazorShop.Infrastructure
     /// </summary>
     public static class DependencyInjection
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>

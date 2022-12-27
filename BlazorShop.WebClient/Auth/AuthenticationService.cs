@@ -9,11 +9,33 @@ namespace BlazorShop.WebClient.Auth;
 /// </summary>
 public class AuthenticationService : IAuthenticationService
 {
+    /// <summary>
+    /// .
+    /// </summary>
     private readonly HttpClient _httpClient;
+
+    /// <summary>
+    /// .
+    /// </summary>
     private readonly AuthenticationStateProvider _authStateProvider;
+
+    /// <summary>
+    /// .
+    /// </summary>
     private readonly ILocalStorageService _localStorage;
+
+    /// <summary>
+    /// .
+    /// </summary>
     private readonly IToastService _toastService;
 
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="httpClient"></param>
+    /// <param name="authStateProvider"></param>
+    /// <param name="localStorage"></param>
+    /// <param name="toastService"></param>
     public AuthenticationService(HttpClient httpClient,
                                  AuthenticationStateProvider authStateProvider,
                                  ILocalStorageService localStorage,

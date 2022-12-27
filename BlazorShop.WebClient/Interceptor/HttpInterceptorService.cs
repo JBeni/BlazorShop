@@ -4,19 +4,40 @@
 
 namespace BlazorShop.WebClient.Interceptor
 {
+    /// <summary>
+    /// .
+    /// </summary>
     public class HttpInterceptorService
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly HttpClientInterceptor _interceptor;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly NavigationManager _navManager;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="interceptor"></param>
+        /// <param name="navManager"></param>
         public HttpInterceptorService(HttpClientInterceptor interceptor, NavigationManager navManager)
         {
             _interceptor = interceptor;
             _navManager = navManager;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
         public void RegisterEvent() => _interceptor.AfterSend += this.InterceptResponse;
 
+        /// <summary>
+        /// .
+        /// </summary>
         private void InterceptResponse(object sender, HttpClientInterceptorEventArgs e)
         {
             if (!e.Response.IsSuccessStatusCode)
@@ -44,6 +65,9 @@ namespace BlazorShop.WebClient.Interceptor
             }
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
         public void DisposeEvent() => _interceptor.AfterSend -= this.InterceptResponse;
     }
 }

@@ -9,6 +9,10 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
     /// </summary>
     public class ClotheConfiguration : IEntityTypeConfiguration<Clothe>
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Clothe> builder)
         {
             builder.ToTable("Clothes");

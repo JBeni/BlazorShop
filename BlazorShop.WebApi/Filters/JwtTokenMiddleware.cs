@@ -11,9 +11,21 @@ namespace BlazorShop.WebApi.Filters
     /// </summary>
     public class JwtTokenMiddleware
     {
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly RequestDelegate _next;
+
+        /// <summary>
+        /// .
+        /// </summary>
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="configuration"></param>
         public JwtTokenMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
