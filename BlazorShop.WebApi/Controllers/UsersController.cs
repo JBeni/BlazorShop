@@ -44,7 +44,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [Authorize(Roles = $"{StringRoleResources.Admin}")]
+        [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {

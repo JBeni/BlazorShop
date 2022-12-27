@@ -55,6 +55,10 @@ namespace BlazorShop.WebClient.Interceptor
                         _navManager.NavigateTo("/unauthorized");
                         message = "User is not authorized";
                         break;
+                    case HttpStatusCode.Forbidden:
+                        _navManager.NavigateTo("/unauthorized");
+                        message = "User is not authorized";
+                        break;
                     default:
                         _navManager.NavigateTo("/server-error");
                         message = "Something went wrong, please contact Administrator";
