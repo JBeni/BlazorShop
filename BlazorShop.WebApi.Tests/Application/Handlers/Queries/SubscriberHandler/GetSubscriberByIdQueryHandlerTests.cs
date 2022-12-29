@@ -1,4 +1,4 @@
-﻿// <copyright file="GetSubscriberByIdQueryHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetSubscriberByIdQueryHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -24,11 +24,11 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.SubscriberHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
         }

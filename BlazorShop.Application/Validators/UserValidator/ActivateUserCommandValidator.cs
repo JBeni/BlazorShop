@@ -1,16 +1,16 @@
-﻿// <copyright file="ActivateUserCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="ActivateUserCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.UserValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{ActivateUserCommand}"/>.
     /// </summary>
     public class ActivateUserCommandValidator : AbstractValidator<ActivateUserCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ActivateUserCommandValidator"/> class.
         /// </summary>
         public ActivateUserCommandValidator()
         {

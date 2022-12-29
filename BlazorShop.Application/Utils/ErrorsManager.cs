@@ -1,11 +1,11 @@
-﻿// <copyright file="ErrorsManager.cs" company="Beniamin Jitca">
+﻿// <copyright file="ErrorsManager.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Utils
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An Error Messages Manager.
     /// </summary>
     public static class ErrorsManager
     {

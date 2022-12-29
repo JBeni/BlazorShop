@@ -1,16 +1,16 @@
-﻿// <copyright file="GetTodoListByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetTodoListByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.TodoListValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetTodoListByIdQuery}"/>.
     /// </summary>
     public class GetTodoListByIdQueryValidator : AbstractValidator<GetTodoListByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetTodoListByIdQueryValidator"/> class.
         /// </summary>
         public GetTodoListByIdQueryValidator()
         {

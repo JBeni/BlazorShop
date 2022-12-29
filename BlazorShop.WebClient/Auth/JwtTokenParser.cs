@@ -1,4 +1,4 @@
-﻿// <copyright file="JwtTokenParser.cs" company="Beniamin Jitca">
+﻿// <copyright file="JwtTokenParser.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

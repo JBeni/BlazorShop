@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartByIdQueryHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetCartByIdQueryHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="JwtTokenMiddleware.cs" company="Beniamin Jitca">
+﻿// <copyright file="JwtTokenMiddleware.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

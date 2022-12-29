@@ -1,16 +1,16 @@
-﻿// <copyright file="UpdateOrderCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateOrderCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.OrderValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateOrderCommand}"/>.
     /// </summary>
     public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateOrderCommandValidator"/> class.
         /// </summary>
         public UpdateOrderCommandValidator()
         {

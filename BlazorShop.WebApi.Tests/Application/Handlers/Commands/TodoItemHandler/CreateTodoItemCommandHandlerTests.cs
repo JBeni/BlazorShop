@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateTodoItemCommandHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="CreateTodoItemCommandHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

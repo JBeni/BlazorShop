@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoItemPriority.cs" company="Beniamin Jitca">
+﻿// <copyright file="TodoItemPriority.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

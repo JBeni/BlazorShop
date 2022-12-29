@@ -1,16 +1,16 @@
-﻿// <copyright file="DeleteRoleCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteRoleCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.RoleValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{DeleteRoleCommand}"/>.
     /// </summary>
     public class DeleteRoleCommandValidator : AbstractValidator<DeleteRoleCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="DeleteRoleCommandValidator"/> class.
         /// </summary>
         public DeleteRoleCommandValidator()
         {

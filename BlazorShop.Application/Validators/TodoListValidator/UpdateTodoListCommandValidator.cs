@@ -1,19 +1,23 @@
-﻿// <copyright file="UpdateTodoListCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoListCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.TodoListValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateTodoListCommand}"/>.
     /// </summary>
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateTodoListCommandValidator"/> class.
         /// </summary>
+        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateTodoListCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -29,11 +33,11 @@ namespace BlazorShop.Application.Validators.TodoListValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the list has an unique title or not.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the list.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueTitle(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts

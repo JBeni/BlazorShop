@@ -1,16 +1,16 @@
-﻿// <copyright file="UpdateUserEmailCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateUserEmailCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.UserValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateUserEmailCommand}"/>.
     /// </summary>
     public class UpdateUserEmailCommandValidator : AbstractValidator<UpdateUserEmailCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateUserEmailCommandValidator"/> class.
         /// </summary>
         public UpdateUserEmailCommandValidator()
         {
@@ -32,10 +32,10 @@ namespace BlazorShop.Application.Validators.UserValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the user has a valid email or not.
         /// </summary>
-        /// <param name="emailAddress"></param>
-        /// <returns></returns>
+        /// <param name="emailAddress">The email address.</param>
+        /// <returns>A boolean value.</returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             var isEmailValid = false;

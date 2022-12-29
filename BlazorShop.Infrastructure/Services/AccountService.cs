@@ -1,4 +1,4 @@
-﻿// <copyright file="AccountService.cs" company="Beniamin Jitca">
+﻿// <copyright file="AccountService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -96,8 +96,8 @@ namespace BlazorShop.Infrastructure.Services
 
             return new JwtTokenResponse
             {
-                Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expires_In = (int)(expiresIn - DateTime.Now).TotalSeconds,
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresIn = (int)(expiresIn - DateTime.Now).TotalSeconds,
                 Successful = true
             };
         }

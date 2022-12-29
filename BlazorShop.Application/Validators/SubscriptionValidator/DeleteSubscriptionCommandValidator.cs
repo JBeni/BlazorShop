@@ -1,16 +1,16 @@
-﻿// <copyright file="DeleteSubscriptionCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteSubscriptionCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{DeleteSubscriptionCommand}"/>.
     /// </summary>
     public class DeleteSubscriptionCommandValidator : AbstractValidator<DeleteSubscriptionCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="DeleteSubscriptionCommandValidator"/> class.
         /// </summary>
         public DeleteSubscriptionCommandValidator()
         {

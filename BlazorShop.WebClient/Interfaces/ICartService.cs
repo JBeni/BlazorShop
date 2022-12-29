@@ -1,4 +1,4 @@
-﻿// <copyright file="ICartService.cs" company="Beniamin Jitca">
+﻿// <copyright file="ICartService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

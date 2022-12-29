@@ -1,16 +1,16 @@
-﻿// <copyright file="DeleteCartCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteCartCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.CartValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{DeleteCartCommand}"/>.
     /// </summary>
     public class DeleteCartCommandValidator : AbstractValidator<DeleteCartCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="DeleteCartCommandValidator"/> class.
         /// </summary>
         public DeleteCartCommandValidator()
         {

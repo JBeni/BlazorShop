@@ -1,58 +1,58 @@
-﻿// <copyright file="UserResponse.cs" company="Beniamin Jitca">
+﻿// <copyright file="UserResponse.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Responses
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An User response model.
     /// </summary>
     public class UserResponse : IMapFrom<User>
     {
         /// <summary>
-        /// 
+        /// The id of the user.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// The username of the user.
         /// </summary>
         public string? Username { get; set; }
 
         /// <summary>
-        /// 
+        /// The email of the user.
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// 
+        /// The firstname of the user.
         /// </summary>
         public string? FirstName { get; set; }
 
         /// <summary>
-        /// 
+        /// The lastname of the user.
         /// </summary>
         public string? LastName { get; set; }
 
         /// <summary>
-        /// 
+        /// The id of the role.
         /// </summary>
         public int RoleId { get; set; }
 
         /// <summary>
-        /// 
+        /// The name of the role.
         /// </summary>
         public string? RoleName { get; set; }
 
         /// <summary>
-        /// 
+        /// The status of the user.
         /// </summary>
         public bool IsActive { get; set; }
 
         /// <summary>
-        /// 
+        /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
-        /// <param name="profile"></param>
+        /// <param name="profile">The profile to use for the mapping operation.</param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserResponse>()

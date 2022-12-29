@@ -1,4 +1,4 @@
-﻿// <copyright file="SubscriptionStatus.cs" company="Beniamin Jitca">
+﻿// <copyright file="SubscriptionStatus.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

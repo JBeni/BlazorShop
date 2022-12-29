@@ -1,16 +1,30 @@
-﻿// <copyright file="CreateMusicCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="CreateMusicCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{CreateMusicCommand, RequestResponse}"/>.
     /// </summary>
     public class CreateMusicCommandHandler : IRequestHandler<CreateMusicCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{CreateMusicCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<CreateMusicCommandHandler> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateMusicCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{CreateMusicCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
 
         public CreateMusicCommandHandler(IApplicationDbContext dbContext, ILogger<CreateMusicCommandHandler> logger)
         {
@@ -19,11 +33,11 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="CreateMusicCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(CreateMusicCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

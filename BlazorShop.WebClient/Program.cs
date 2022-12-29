@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Beniamin Jitca">
+﻿// <copyright file="Program.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

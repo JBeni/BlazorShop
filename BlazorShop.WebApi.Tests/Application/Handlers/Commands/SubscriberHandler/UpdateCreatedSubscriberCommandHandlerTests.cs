@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateCreatedSubscriberCommandHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateCreatedSubscriberCommandHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

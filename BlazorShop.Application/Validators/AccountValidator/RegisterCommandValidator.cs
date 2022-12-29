@@ -1,16 +1,16 @@
-﻿// <copyright file="RegisterCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="RegisterCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.AccountValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{RegisterCommand}"/>.
     /// </summary>
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="RegisterCommandValidator"/> class.
         /// </summary>
         public RegisterCommandValidator()
         {

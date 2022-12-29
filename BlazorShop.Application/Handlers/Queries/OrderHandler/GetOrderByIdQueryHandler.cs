@@ -1,18 +1,36 @@
-﻿// <copyright file="GetOrderByIdQueryHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetOrderByIdQueryHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{GetOrderByIdQuery, Result{OrderResponse}}"/>.
     /// </summary>
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Result<OrderResponse>>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.
+        /// </summary>
         private readonly ILogger<GetOrderByIdQueryHandler> _logger;
+
+        /// <summary>
+        /// An instance of <see cref="IMapper"/>.
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetOrderByIdQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetOrderByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetOrderByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -21,11 +39,11 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="GetOrderByIdQuery"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{OrderResponse}}"/>.</returns>
         public Task<Result<OrderResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
             Result<OrderResponse>? response;

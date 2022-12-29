@@ -1,17 +1,30 @@
-﻿// <copyright file="GetUsersQueryHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetUsersQueryHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{GetUsersQuery, Result{UserResponse}}"/>.
     /// </summary>
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<UserResponse>>
     {
+        /// <summary>
+        /// An instance of <see cref="IUserService"/>.
+        /// </summary>
         private readonly IUserService _userService;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.
+        /// </summary>
         private readonly ILogger<GetUsersQueryHandler> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUsersQueryHandler"/> class.
+        /// </summary>
+        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetUsersQueryHandler(IUserService userService, ILogger<GetUsersQueryHandler> logger)
         {
             _userService = userService;
@@ -19,11 +32,11 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="GetUsersQuery"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{UserResponse}}"/>.</returns>
         public Task<Result<UserResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             Result<UserResponse>? response;

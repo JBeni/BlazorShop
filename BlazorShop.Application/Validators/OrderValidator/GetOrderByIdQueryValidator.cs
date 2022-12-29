@@ -1,16 +1,16 @@
-﻿// <copyright file="GetOrderByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetOrderByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.OrderValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetOrderByIdQuery}"/>.
     /// </summary>
     public class GetOrderByIdQueryValidator : AbstractValidator<GetOrderByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetOrderByIdQueryValidator"/> class.
         /// </summary>
         public GetOrderByIdQueryValidator()
         {

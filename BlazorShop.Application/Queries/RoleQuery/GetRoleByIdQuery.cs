@@ -1,16 +1,16 @@
-﻿// <copyright file="GetRoleByIdQuery.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetRoleByIdQuery.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Queries.RoleQuery
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A model to get the role.
     /// </summary>
     public class GetRoleByIdQuery : IRequest<Result<RoleResponse>>
     {
         /// <summary>
-        /// .
+        /// The id of the role.
         /// </summary>
         public int Id { get; set; }
     }

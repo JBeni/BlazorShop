@@ -1,16 +1,32 @@
-﻿// <copyright file="ChangePasswordCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="ChangePasswordCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    ///     /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{ChangePasswordCommand, RequestResponse}"/>.
+    /// </summary>
     /// </summary>
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IAccountService"/>.
+        /// </summary>
         private readonly IAccountService _accountService;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<ChangePasswordCommandHandler> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChangePasswordCommandHandler"/> class.
+        /// </summary>
+        /// <param name="accountService">An instance of <see cref="IAccountService"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
 
         public ChangePasswordCommandHandler(IAccountService accountService, ILogger<ChangePasswordCommandHandler> logger)
         {
@@ -19,11 +35,11 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="ChangePasswordCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

@@ -1,4 +1,4 @@
-﻿// <copyright file="IClotheService.cs" company="Beniamin Jitca">
+﻿// <copyright file="IClotheService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

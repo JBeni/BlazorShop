@@ -1,18 +1,21 @@
-﻿// <copyright file="UpdateTodoItemCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoItemCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.TodoItemValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateTodoItemCommand}"/>.
     /// </summary>
     public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCommand>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateTodoItemCommandValidator"/> class.
         /// </summary>
         public UpdateTodoItemCommandValidator(IApplicationDbContext context)
         {
@@ -46,11 +49,11 @@ namespace BlazorShop.Application.Validators.TodoItemValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the item has an unique title or not.
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="title">The title of the item.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.TodoItems

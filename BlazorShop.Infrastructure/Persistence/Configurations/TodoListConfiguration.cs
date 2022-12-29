@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoListConfiguration.cs" company="Beniamin Jitca">
+﻿// <copyright file="TodoListConfiguration.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

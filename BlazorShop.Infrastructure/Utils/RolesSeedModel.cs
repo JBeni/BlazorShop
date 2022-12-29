@@ -1,4 +1,4 @@
-﻿// <copyright file="RolesSeedModel.cs" company="Beniamin Jitca">
+﻿// <copyright file="RolesSeedModel.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

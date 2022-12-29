@@ -1,4 +1,4 @@
-﻿// <copyright file="EmailService.cs" company="Beniamin Jitca">
+﻿// <copyright file="EmailService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

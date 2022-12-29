@@ -1,4 +1,4 @@
-﻿// <copyright file="AssignUserToRoleCommandHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="AssignUserToRoleCommandHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

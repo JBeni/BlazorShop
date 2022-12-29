@@ -1,4 +1,4 @@
-﻿// <copyright file="AuthenticationService.cs" company="Beniamin Jitca">
+﻿// <copyright file="AuthenticationService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -69,17 +69,17 @@ public class AuthenticationService : IAuthenticationService
         {
             _toastService.ShowError(result.Error);
         }
-        else if (result.Access_Token == null)
+        else if (result.AccessToken == null)
         {
             _toastService.ShowError("Access Token is null");
         }
         else
         {
-            await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
-            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
+            await _localStorage.SetItemAsync("authToken", result.AccessToken.ToString());
+            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
-            jwtResponse = new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
+            jwtResponse = new JwtTokenResponse { AccessToken = result.AccessToken.ToString() };
         }
 
         return jwtResponse;
@@ -111,17 +111,17 @@ public class AuthenticationService : IAuthenticationService
         {
             _toastService.ShowError(result.Error);
         }
-        else if (result.Access_Token == null)
+        else if (result.AccessToken == null)
         {
             _toastService.ShowError("Access Token is null");
         }
         else
         {
-            await _localStorage.SetItemAsync("authToken", result.Access_Token.ToString());
-            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token.ToString());
+            await _localStorage.SetItemAsync("authToken", result.AccessToken.ToString());
+            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.Access_Token.ToString());
-            jwtResponse = new JwtTokenResponse { Access_Token = result.Access_Token.ToString() };
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
+            jwtResponse = new JwtTokenResponse { AccessToken = result.AccessToken.ToString() };
         }
 
         return jwtResponse;

@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteTodoListCommandHandlerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteTodoListCommandHandlerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

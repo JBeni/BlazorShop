@@ -1,4 +1,4 @@
-﻿// <copyright file="UsersController.cs" company="Beniamin Jitca">
+﻿// <copyright file="UsersController.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

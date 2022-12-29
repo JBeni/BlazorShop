@@ -1,4 +1,4 @@
-﻿// <copyright file="MusicService.cs" company="Beniamin Jitca">
+﻿// <copyright file="MusicService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

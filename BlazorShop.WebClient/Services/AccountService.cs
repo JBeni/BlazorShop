@@ -1,4 +1,4 @@
-﻿// <copyright file="AccountService.cs" company="Beniamin Jitca">
+﻿// <copyright file="AccountService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

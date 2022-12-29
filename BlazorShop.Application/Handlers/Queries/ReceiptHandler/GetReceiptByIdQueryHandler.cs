@@ -1,18 +1,36 @@
-﻿// <copyright file="GetReceiptByIdQueryHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetReceiptByIdQueryHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{GetReceiptByIdQuery, Result{ReceiptResponse}}"/>.
     /// </summary>
     public class GetReceiptByIdQueryHandler : IRequestHandler<GetReceiptByIdQuery, Result<ReceiptResponse>>
     {
-        private readonly IApplicationDbContext _dbContext; 
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.
+        /// </summary>
         private readonly ILogger<GetReceiptByIdQueryHandler> _logger;
+
+        /// <summary>
+        /// An instance of <see cref="IMapper"/>.
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetReceiptByIdQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetReceiptByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetReceiptByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -21,11 +39,11 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="GetReceiptByIdQuery"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{ReceiptResponse}}"/>.</returns>
         public Task<Result<ReceiptResponse>> Handle(GetReceiptByIdQuery request, CancellationToken cancellationToken)
         {
             Result<ReceiptResponse>? response;

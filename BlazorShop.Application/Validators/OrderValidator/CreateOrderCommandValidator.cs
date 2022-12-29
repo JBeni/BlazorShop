@@ -1,16 +1,16 @@
-﻿// <copyright file="CreateOrderCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="CreateOrderCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.OrderValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{CreateOrderCommand}"/>.
     /// </summary>
     public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="CreateOrderCommandValidator"/> class.
         /// </summary>
         public CreateOrderCommandValidator()
         {

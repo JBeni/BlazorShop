@@ -1,11 +1,11 @@
-﻿// <copyright file="GetMusicsQuery.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetMusicsQuery.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Queries.MusicQuery
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A model to get the musics.
     /// </summary>
     public class GetMusicsQuery : IRequest<Result<MusicResponse>>
     {

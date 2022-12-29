@@ -1,4 +1,4 @@
-﻿// <copyright file="MusicsControllerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="MusicsControllerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

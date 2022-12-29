@@ -1,16 +1,16 @@
-﻿// <copyright file="GetTodoItemByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetTodoItemByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.TodoItemValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetTodoItemByIdQuery}"/>.
     /// </summary>
     public class GetTodoItemByIdQueryValidator : AbstractValidator<GetTodoItemByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetTodoItemByIdQueryValidator"/> class.
         /// </summary>
         public GetTodoItemByIdQueryValidator()
         {

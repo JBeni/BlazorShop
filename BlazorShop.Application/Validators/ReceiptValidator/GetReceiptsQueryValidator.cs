@@ -1,16 +1,16 @@
-﻿// <copyright file="GetReceiptsQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetReceiptsQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.ReceiptValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetReceiptsQuery}"/>.
     /// </summary>
     public class GetReceiptsQueryValidator : AbstractValidator<GetReceiptsQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetReceiptsQueryValidator"/> class.
         /// </summary>
         public GetReceiptsQueryValidator()
         {

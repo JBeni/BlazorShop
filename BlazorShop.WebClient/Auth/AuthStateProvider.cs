@@ -1,4 +1,4 @@
-﻿// <copyright file="AuthStateProvider.cs" company="Beniamin Jitca">
+﻿// <copyright file="AuthStateProvider.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

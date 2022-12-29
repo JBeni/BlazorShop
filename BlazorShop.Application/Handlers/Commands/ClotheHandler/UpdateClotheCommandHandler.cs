@@ -1,16 +1,30 @@
-﻿// <copyright file="UpdateClotheCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateClotheCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{UpdateClotheCommand, RequestResponse}"/>.
     /// </summary>
     public class UpdateClotheCommandHandler : IRequestHandler<UpdateClotheCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<UpdateClotheCommandHandler> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateClotheCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
 
         public UpdateClotheCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateClotheCommandHandler> logger)
         {
@@ -19,11 +33,11 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="UpdateClotheCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(UpdateClotheCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;
