@@ -1,16 +1,16 @@
-﻿// <copyright file="UpdateReceiptCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateReceiptCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.ReceiptValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateReceiptCommand}"/>.
     /// </summary>
     public class UpdateReceiptCommandValidator : AbstractValidator<UpdateReceiptCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateReceiptCommandValidator"/> class.
         /// </summary>
         public UpdateReceiptCommandValidator()
         {

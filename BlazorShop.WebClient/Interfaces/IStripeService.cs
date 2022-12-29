@@ -1,4 +1,4 @@
-﻿// <copyright file="IStripeService.cs" company="Beniamin Jitca">
+﻿// <copyright file="IStripeService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

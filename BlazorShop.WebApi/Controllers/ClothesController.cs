@@ -1,4 +1,4 @@
-﻿// <copyright file="ClothesController.cs" company="Beniamin Jitca">
+﻿// <copyright file="ClothesController.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

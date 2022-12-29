@@ -1,11 +1,11 @@
-﻿// <copyright file="DeleteSubscriberCommand.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteSubscriberCommand.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Commands.SubscriberCommand
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A model to delete a subscriber.
     /// </summary>
     public class DeleteSubscriberCommand : IRequest<RequestResponse>
     {

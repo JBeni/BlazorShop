@@ -1,4 +1,4 @@
-﻿// <copyright file="DependencyInjection.cs" company="Beniamin Jitca">
+﻿// <copyright file="DependencyInjection.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

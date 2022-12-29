@@ -1,16 +1,16 @@
-﻿// <copyright file="DeleteTodoItemCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteTodoItemCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.TodoItemValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{DeleteTodoItemCommand}"/>.
     /// </summary>
     public class DeleteTodoItemCommandValidator : AbstractValidator<DeleteTodoItemCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="DeleteTodoItemCommandValidator"/> class.
         /// </summary>
         public DeleteTodoItemCommandValidator()
         {

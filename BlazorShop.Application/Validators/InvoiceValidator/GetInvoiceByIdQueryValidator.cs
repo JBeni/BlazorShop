@@ -1,16 +1,16 @@
-﻿// <copyright file="GetInvoiceByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetInvoiceByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.InvoiceValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetInvoiceByIdQuery}"/>.
     /// </summary>
     public class GetInvoiceByIdQueryValidator : AbstractValidator<GetInvoiceByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetInvoiceByIdQueryValidator"/> class.
         /// </summary>
         public GetInvoiceByIdQueryValidator()
         {

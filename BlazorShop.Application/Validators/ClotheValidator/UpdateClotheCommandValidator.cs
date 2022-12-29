@@ -1,19 +1,20 @@
-﻿// <copyright file="UpdateClotheCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateClotheCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.ClotheValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateClotheCommand}"/>.
     /// </summary>
     public class UpdateClotheCommandValidator : AbstractValidator<UpdateClotheCommand>
     {
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateClotheCommandValidator"/> class.
         /// </summary>
+        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateClotheCommandValidator(IApplicationDbContext context)
         {
             _context = context;

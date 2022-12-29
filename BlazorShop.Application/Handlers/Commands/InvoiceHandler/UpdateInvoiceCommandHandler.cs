@@ -1,16 +1,30 @@
-﻿// <copyright file="UpdateInvoiceCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateInvoiceCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{UpdateInvoiceCommand, RequestResponse}"/>.
     /// </summary>
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<UpdateInvoiceCommandHandler> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInvoiceCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
 
         public UpdateInvoiceCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateInvoiceCommandHandler> logger)
         {
@@ -19,11 +33,11 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="UpdateInvoiceCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(UpdateInvoiceCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

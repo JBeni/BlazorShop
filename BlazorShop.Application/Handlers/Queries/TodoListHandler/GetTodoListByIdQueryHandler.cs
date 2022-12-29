@@ -1,18 +1,36 @@
-﻿// <copyright file="GetTodoListByIdQueryHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetTodoListByIdQueryHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{GetTodoListByIdQuery, Result{TodoListResponse}}"/>.
     /// </summary>
     public class GetTodoListByIdQueryHandler : IRequestHandler<GetTodoListByIdQuery, Result<TodoListResponse>>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{GetTodoListByIdQueryHandler}"/>.
+        /// </summary>
         private readonly ILogger<GetTodoListByIdQueryHandler> _logger;
+
+        /// <summary>
+        /// An instance of <see cref="IMapper"/>.
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTodoListByIdQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{GetTodoListByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetTodoListByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetTodoListByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -21,11 +39,11 @@ namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="GetTodoListByIdQuery"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{TodoListResponse}}"/>.</returns>
         public Task<Result<TodoListResponse>> Handle(GetTodoListByIdQuery request, CancellationToken cancellationToken)
         {
             Result<TodoListResponse>? response;

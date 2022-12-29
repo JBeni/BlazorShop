@@ -1,4 +1,4 @@
-﻿// <copyright file="ApiControllerBase.cs" company="Beniamin Jitca">
+﻿// <copyright file="ApiControllerBase.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

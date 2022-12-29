@@ -1,23 +1,26 @@
-﻿// <copyright file="MappingProfile.cs" company="Beniamin Jitca">
+﻿// <copyright file="MappingProfile.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Common.Mappings
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A mapping profile for applying the new mapping using reflection.
     /// </summary>
     public class MappingProfile : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingProfile"/> class.
+        /// </summary>
         public MappingProfile()
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         /// <summary>
-        /// .
+        /// Applying the mapping from the assembly.
         /// </summary>
-        /// <param name="assembly"></param>
+        /// <param name="assembly">The assembly reflection.</param>
         private void ApplyMappingFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()

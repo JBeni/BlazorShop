@@ -1,4 +1,4 @@
-﻿// <copyright file="UserRoleConfiguration.cs" company="Beniamin Jitca">
+﻿// <copyright file="UserRoleConfiguration.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

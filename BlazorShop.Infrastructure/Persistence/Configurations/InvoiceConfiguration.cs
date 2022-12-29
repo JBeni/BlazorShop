@@ -1,4 +1,4 @@
-﻿// <copyright file="InvoiceConfiguration.cs" company="Beniamin Jitca">
+﻿// <copyright file="InvoiceConfiguration.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

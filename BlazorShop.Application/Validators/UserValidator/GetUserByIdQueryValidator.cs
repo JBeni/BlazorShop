@@ -1,17 +1,16 @@
-﻿// <copyright file="GetUserByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetUserByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.UserValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetUserByIdQuery}"/>.
     /// </summary>
-
     public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetUserByIdQueryValidator"/> class.
         /// </summary>
         public GetUserByIdQueryValidator()
         {

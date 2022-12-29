@@ -1,11 +1,11 @@
-﻿// <copyright file="GetUsersInactiveQuery.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetUsersInactiveQuery.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Queries.UserQuery
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A model to get the inactive users.
     /// </summary>
     public class GetUsersInactiveQuery : IRequest<Result<UserResponse>>
     {

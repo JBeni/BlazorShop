@@ -1,17 +1,30 @@
-﻿// <copyright file="DeleteReceiptCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteReceiptCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{DeleteReceiptCommand, RequestResponse}"/>.
     /// </summary>
     public class DeleteReceiptCommandHandler : IRequestHandler<DeleteReceiptCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{DeleteReceiptCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<DeleteReceiptCommandHandler> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteReceiptCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{DeleteReceiptCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public DeleteReceiptCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteReceiptCommandHandler> logger)
         {
             _dbContext = dbContext;
@@ -19,11 +32,11 @@ namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="DeleteReceiptCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(DeleteReceiptCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

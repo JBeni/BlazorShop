@@ -1,4 +1,4 @@
-﻿// <copyright file="ReceiptService.cs" company="Beniamin Jitca">
+﻿// <copyright file="ReceiptService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

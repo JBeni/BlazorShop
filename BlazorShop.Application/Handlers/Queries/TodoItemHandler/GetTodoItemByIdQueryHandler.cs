@@ -1,18 +1,36 @@
-﻿// <copyright file="GetTodoItemByIdQueryHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetTodoItemByIdQueryHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{GetTodoItemByIdQuery, Result{TodoItemResponse}}"/>.
     /// </summary>
     public class GetTodoItemByIdQueryHandler : IRequestHandler<GetTodoItemByIdQuery, Result<TodoItemResponse>>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.
+        /// </summary>
         private readonly ILogger<GetTodoItemByIdQueryHandler> _logger;
+
+        /// <summary>
+        /// An instance of <see cref="IMapper"/>.
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTodoItemByIdQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetTodoItemByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetTodoItemByIdQueryHandler> logger, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -21,11 +39,11 @@ namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="GetTodoItemByIdQuery"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{TodoItemResponse}}"/>.</returns>
         public Task<Result<TodoItemResponse>> Handle(GetTodoItemByIdQuery request, CancellationToken cancellationToken)
         {
             Result<TodoItemResponse>? response;

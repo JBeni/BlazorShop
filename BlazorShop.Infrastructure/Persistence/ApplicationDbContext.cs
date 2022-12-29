@@ -1,4 +1,4 @@
-﻿// <copyright file="ApplicationDbContext.cs" company="Beniamin Jitca">
+﻿// <copyright file="ApplicationDbContext.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

@@ -1,17 +1,30 @@
-﻿// <copyright file="UpdateSubscriptionCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriptionCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{UpdateSubscriptionCommand, RequestResponse}"/>.
     /// </summary>
     public class UpdateSubscriptionCommandHandler : IRequestHandler<UpdateSubscriptionCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{UpdateSubscriptionCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<UpdateSubscriptionCommandHandler> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateSubscriptionCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{UpdateSubscriptionCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateSubscriptionCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateSubscriptionCommandHandler> logger)
         {
             _dbContext = dbContext;
@@ -19,11 +32,11 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriptionHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="UpdateSubscriptionCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <response =s></response =s>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(UpdateSubscriptionCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

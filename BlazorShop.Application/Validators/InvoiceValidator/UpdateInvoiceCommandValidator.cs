@@ -1,19 +1,23 @@
-﻿// <copyright file="UpdateInvoiceCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateInvoiceCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.InvoiceValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateInvoiceCommand}"/>.
     /// </summary>
     public class UpdateInvoiceCommandValidator : AbstractValidator<UpdateInvoiceCommand>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateInvoiceCommandValidator"/> class.
         /// </summary>
+        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateInvoiceCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -43,11 +47,11 @@ namespace BlazorShop.Application.Validators.InvoiceValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the invoice has an unique name or not.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the invoice.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Invoices

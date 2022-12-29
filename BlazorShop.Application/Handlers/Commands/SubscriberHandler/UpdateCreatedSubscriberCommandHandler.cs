@@ -1,18 +1,36 @@
-﻿// <copyright file="UpdateCreatedSubscriberCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateCreatedSubscriberCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{UpdateCreatedSubscriberCommand, RequestResponse}"/>.
     /// </summary>
     public class UpdateCreatedSubscriberCommandHandler : IRequestHandler<UpdateCreatedSubscriberCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{UpdateCreatedSubscriberCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<UpdateCreatedSubscriberCommandHandler> _logger;
+
+        /// <summary>
+        /// An instance of <see cref="IUserService"/>.
+        /// </summary>
         private readonly IUserService _userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCreatedSubscriberCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{UpdateCreatedSubscriberCommandHandler}"/>.</param>
+        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateCreatedSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateCreatedSubscriberCommandHandler> logger, IUserService userService)
         {
             _dbContext = dbContext;
@@ -21,11 +39,11 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="UpdateCreatedSubscriberCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <response =s></response =s>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(UpdateCreatedSubscriberCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

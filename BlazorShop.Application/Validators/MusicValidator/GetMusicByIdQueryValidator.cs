@@ -1,16 +1,16 @@
-﻿// <copyright file="GetMusicByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetMusicByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.MusicValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetMusicByIdQuery}"/>.
     /// </summary>
     public class GetMusicByIdQueryValidator : AbstractValidator<GetMusicByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetMusicByIdQueryValidator"/> class.
         /// </summary>
         public GetMusicByIdQueryValidator()
         {

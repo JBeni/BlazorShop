@@ -1,43 +1,43 @@
-﻿// <copyright file="ReceiptResponse.cs" company="Beniamin Jitca">
+﻿// <copyright file="ReceiptResponse.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Responses
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A Receipt response model.
     /// </summary>
     public class ReceiptResponse : IMapFrom<Receipt>
     {
         /// <summary>
-        /// 
+        /// The id of the receipt.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// The email of the user.
         /// </summary>
         public string UserEmail { get; set; }
 
         /// <summary>
-        /// 
+        /// The date when the receipt was generated.
         /// </summary>
         public DateTime ReceiptDate { get; set; }
 
         /// <summary>
-        /// 
+        /// The name of the receipt.
         /// </summary>
         public string ReceiptName { get; set; }
 
         /// <summary>
-        /// 
+        /// The url of the receipt.
         /// </summary>
         public string ReceiptUrl { get; set; }
 
         /// <summary>
-        /// 
+        /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
-        /// <param name="profile"></param>
+        /// <param name="profile">The profile to use for the mapping operation.</param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Receipt, ReceiptResponse>()

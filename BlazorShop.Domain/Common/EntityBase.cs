@@ -1,4 +1,4 @@
-﻿// <copyright file="EntityBase.cs" company="Beniamin Jitca">
+﻿// <copyright file="EntityBase.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Domain.Common
     public class EntityBase
     {
         /// <summary>
-        /// .
+        /// The id of the entity.
         /// </summary>
         public int Id { get; set; }
     }

@@ -1,58 +1,58 @@
-﻿// <copyright file="TodoItemResponse.cs" company="Beniamin Jitca">
+﻿// <copyright file="TodoItemResponse.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Responses
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A TodoItem response model.
     /// </summary>
     public class TodoItemResponse : IMapFrom<TodoItem>
     {
         /// <summary>
-        /// 
+        /// The id of the item.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// The id of the list.
         /// </summary>
         public int ListId { get; set; }
 
         /// <summary>
-        /// 
+        /// The title of the item.
         /// </summary>
         public string? Title { get; set; }
 
         /// <summary>
-        /// 
+        /// The note of the item.
         /// </summary>
         public string? Note { get; set; }
 
         /// <summary>
-        /// 
+        /// The priority of the item.
         /// </summary>
         public TodoItemPriority Priority { get; set; }
 
         /// <summary>
-        /// 
+        /// The state of the item.
         /// </summary>
         public TodoItemState State { get; set; }
 
         /// <summary>
-        /// 
+        /// The status of the item.
         /// </summary>
         public bool Done { get; set; }
 
         /// <summary>
-        /// 
+        /// The list.
         /// </summary>
         public TodoListResponse List { get; set; }
 
         /// <summary>
-        /// 
+        /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
-        /// <param name="profile"></param>
+        /// <param name="profile">The profile to use for the mapping operation.</param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TodoItem, TodoItemResponse>()

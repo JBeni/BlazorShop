@@ -1,16 +1,16 @@
-﻿// <copyright file="GetSubscriptionByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetSubscriptionByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.SubscriptionValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetSubscriptionByIdQuery}"/>.
     /// </summary>
     public class GetSubscriptionByIdQueryValidator : AbstractValidator<GetSubscriptionByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetSubscriptionByIdQueryValidator"/> class.
         /// </summary>
         public GetSubscriptionByIdQueryValidator()
         {

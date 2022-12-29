@@ -1,16 +1,16 @@
-﻿// <copyright file="ResetPasswordCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="ResetPasswordCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.AccountValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{ResetPasswordCommand}"/>.
     /// </summary>
     public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ResetPasswordCommandValidator"/> class.
         /// </summary>
         public ResetPasswordCommandValidator()
         {

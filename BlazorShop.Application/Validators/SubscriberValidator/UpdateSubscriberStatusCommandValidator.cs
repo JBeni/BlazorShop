@@ -1,16 +1,16 @@
-﻿// <copyright file="UpdateSubscriberStatusCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberStatusCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.SubscriberValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateSubscriberStatusCommand}"/>.
     /// </summary>
     public class UpdateSubscriberStatusCommandValidator : AbstractValidator<UpdateSubscriberStatusCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateSubscriberStatusCommandValidator"/> class.
         /// </summary>
         public UpdateSubscriberStatusCommandValidator()
         {

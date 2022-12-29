@@ -1,19 +1,23 @@
-﻿// <copyright file="UpdateMusicCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="UpdateMusicCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.MusicValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{UpdateMusicCommand}"/>.
     /// </summary>
     public class UpdateMusicCommandValidator : AbstractValidator<UpdateMusicCommand>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UpdateMusicCommandValidator"/> class.
         /// </summary>
+        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateMusicCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -57,11 +61,11 @@ namespace BlazorShop.Application.Validators.MusicValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the music has an unique title or not.
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="title">The title of the music.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
             return await _context.Musics

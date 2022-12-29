@@ -1,16 +1,16 @@
-﻿// <copyright file="LoginCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="LoginCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.AccountValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator<LoginCommand>"/>.
     /// </summary>
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="LoginCommandValidator"/> class.
         /// </summary>
         public LoginCommandValidator()
         {
@@ -27,10 +27,10 @@ namespace BlazorShop.Application.Validators.AccountValidator
         }
 
         /// <summary>
-        /// 
+        /// A value indicating whether the email address is valid or not.
         /// </summary>
-        /// <param name="emailAddress"></param>
-        /// <returns></returns>
+        /// <param name="emailAddress">The email address.</param>
+        /// <returns>A boolean value.</returns>
         public bool IsValidEmailAddress(string emailAddress)
         {
             var isEmailValid = false;

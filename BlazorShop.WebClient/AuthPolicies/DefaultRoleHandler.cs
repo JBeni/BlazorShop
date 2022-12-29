@@ -1,4 +1,4 @@
-﻿// <copyright file="DefaultRoleRequirement.cs" company="Beniamin Jitca">
+﻿// <copyright file="DefaultRoleRequirement.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

@@ -1,16 +1,16 @@
-﻿// <copyright file="CreateRoleCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="CreateRoleCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.RoleValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{CreateRoleCommand}"/>.
     /// </summary>
     public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="CreateRoleCommandValidator"/> class.
         /// </summary>
         public CreateRoleCommandValidator()
         {

@@ -1,4 +1,4 @@
-﻿// <copyright file="ApplicationDbContextSeed.cs" company="Beniamin Jitca">
+﻿// <copyright file="ApplicationDbContextSeed.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

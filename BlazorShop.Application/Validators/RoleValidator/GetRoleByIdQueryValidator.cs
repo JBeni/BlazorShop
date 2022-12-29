@@ -1,16 +1,16 @@
-﻿// <copyright file="GetRoleByIdQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetRoleByIdQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.RoleValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetRoleByIdQuery}"/>.
     /// </summary>
     public class GetRoleByIdQueryValidator : AbstractValidator<GetRoleByIdQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetRoleByIdQueryValidator"/> class.
         /// </summary>
         public GetRoleByIdQueryValidator()
         {

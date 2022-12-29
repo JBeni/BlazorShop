@@ -1,33 +1,33 @@
-﻿// <copyright file="RoleResponse.cs" company="Beniamin Jitca">
+﻿// <copyright file="RoleResponse.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Responses
 {
     /// <summary>
-    /// A model to update a cart.
+    /// A Role response model.
     /// </summary>
     public class RoleResponse : IMapFrom<Role>
     {
         /// <summary>
-        /// 
+        /// The id of the role.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// The name of the role.
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
-        /// 
+        /// The normalized name of the role.
         /// </summary>
         public string? NormalizedName { get; set; }
 
         /// <summary>
-        /// 
+        /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
-        /// <param name="profile"></param>
+        /// <param name="profile">The profile to use for the mapping operation.</param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Role, RoleResponse>()

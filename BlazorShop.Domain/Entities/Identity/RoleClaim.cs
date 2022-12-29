@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleClaim.cs" company="Beniamin Jitca">
+﻿// <copyright file="RoleClaim.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

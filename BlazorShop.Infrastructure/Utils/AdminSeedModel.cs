@@ -1,4 +1,4 @@
-﻿// <copyright file="AdminSeedModel.cs" company="Beniamin Jitca">
+﻿// <copyright file="AdminSeedModel.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

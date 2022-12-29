@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoListsControllerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="TodoListsControllerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

@@ -1,16 +1,16 @@
-﻿// <copyright file="GetRoleByNormalizedNameQueryValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="GetRoleByNormalizedNameQueryValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.RoleValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{GetRoleByNormalizedNameQuery}"/>.
     /// </summary>
     public class GetRoleByNormalizedNameQueryValidator : AbstractValidator<GetRoleByNormalizedNameQuery>
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="GetRoleByNormalizedNameQueryValidator"/> class.
         /// </summary>
         public GetRoleByNormalizedNameQueryValidator()
         {

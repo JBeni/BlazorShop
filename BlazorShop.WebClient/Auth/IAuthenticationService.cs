@@ -1,4 +1,4 @@
-﻿// <copyright file="IAuthenticationService.cs" company="Beniamin Jitca">
+﻿// <copyright file="IAuthenticationService.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

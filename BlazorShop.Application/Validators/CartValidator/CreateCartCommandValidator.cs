@@ -1,19 +1,23 @@
-﻿// <copyright file="CreateCartCommandValidator.cs" company="Beniamin Jitca">
+﻿// <copyright file="CreateCartCommandValidator.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.CartValidator
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="AbstractValidator{CreateCartCommand}"/>.
     /// </summary>
     public class CreateCartCommandValidator : AbstractValidator<CreateCartCommand>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _context;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="CreateCartCommandValidator"/> class.
         /// </summary>
+        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
         public CreateCartCommandValidator(IApplicationDbContext context)
         {
             _context = context;
@@ -38,11 +42,11 @@ namespace BlazorShop.Application.Validators.CartValidator
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the cart has an unique name or not.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the cart.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Carts

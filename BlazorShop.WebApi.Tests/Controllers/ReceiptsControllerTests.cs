@@ -1,4 +1,4 @@
-﻿// <copyright file="ReceiptsControllerTests.cs" company="Beniamin Jitca">
+﻿// <copyright file="ReceiptsControllerTests.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

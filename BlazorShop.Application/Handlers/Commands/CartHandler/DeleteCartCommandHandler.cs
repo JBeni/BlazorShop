@@ -1,16 +1,30 @@
-﻿// <copyright file="DeleteCartCommandHandler.cs" company="Beniamin Jitca">
+﻿// <copyright file="DeleteCartCommandHandler.cs" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.CartHandler
 {
     /// <summary>
-    /// A model to update a cart.
+    /// An implementation of the <see cref="IRequestHandler{DeleteCartCommand, RequestResponse}"/>.
     /// </summary>
     public class DeleteCartCommandHandler : IRequestHandler<DeleteCartCommand, RequestResponse>
     {
+        /// <summary>
+        /// An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
         private readonly IApplicationDbContext _dbContext;
+
+        /// <summary>
+        /// An instance of <see cref="ILogger{DeleteCartCommandHandler}"/>.
+        /// </summary>
         private readonly ILogger<DeleteCartCommandHandler> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteCartCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">An instance of <see cref="ILogger{DeleteCartCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
 
         public DeleteCartCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteCartCommandHandler> logger)
         {
@@ -19,11 +33,11 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
         }
 
         /// <summary>
-        /// .
+        /// An implementation of the handler for <see cref="DeleteCartCommand"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(DeleteCartCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;
