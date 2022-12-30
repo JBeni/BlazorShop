@@ -1,4 +1,4 @@
-﻿// <copyright file="GetOrderByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetOrderByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Result<OrderResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetOrderByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetOrderByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetOrderByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetOrderByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetOrderByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetOrderByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetOrderByIdQuery"/>.
@@ -50,24 +50,24 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 
             try
             {
-                var result = _dbContext.Orders
+                var result = this.DbContext.Orders
                     .TagWith(nameof(GetOrderByIdQueryHandler))
                     .Where(d => d.Id == request.Id && d.UserEmail == request.UserEmail)
-                    .ProjectTo<OrderResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<OrderResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
                 response = new Result<OrderResponse>
                 {
                     Successful = true,
-                    Item = result ?? new OrderResponse()
+                    Item = result ?? new OrderResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetOrderByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetOrderByIdQuery);
                 response = new Result<OrderResponse>
                 {
-                    Error = $"{ErrorsManager.GetOrderByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetOrderByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

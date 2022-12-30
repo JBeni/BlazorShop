@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTodoItemsQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetTodoItemsQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,18 +9,18 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.TodoItemHandler
     /// </summary>
     public class GetTodoItemsQueryHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetTodoItemsQueryHandlerTests> _logger;
-        private readonly IMapper _mapper;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<GetTodoItemsQueryHandlerTests> Logger { get; }
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetTodoItemsQueryHandlerTests"/> class.
         /// </summary>
         public GetTodoItemsQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetTodoItemsQueryHandlerTests> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -29,8 +29,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.TodoItemHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(GetTodoItemsQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetTodoItemsQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

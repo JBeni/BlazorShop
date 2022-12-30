@@ -1,8 +1,6 @@
-﻿// <copyright file="ReceiptService.cs" author="Beniamin Jitca">
+﻿// <copyright file="ReceiptService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
@@ -12,44 +10,43 @@ namespace BlazorShop.WebClient.Services
     public class ReceiptService : IReceiptService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ReceiptService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public ReceiptService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<List<ReceiptResponse>> GetReceipts(string userEmail)
         {
-            var response = await _httpClient.GetAsync($"Receipts/receipts/{userEmail}");
+            var response = await this.HttpClient.GetAsync($"Receipts/receipts/{userEmail}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ReceiptResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -60,15 +57,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<ReceiptResponse> GetReceipt(int id, string userEmail)
         {
-            var response = await _httpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
+            var response = await this.HttpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ReceiptResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -79,19 +75,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddReceipt(ReceiptResponse receipt)
         {
-            var response = await _httpClient.PostAsJsonAsync("Receipts/receipt", receipt);
+            var response = await this.HttpClient.PostAsJsonAsync("Receipts/receipt", receipt);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Receipt was added.", Severity.Success);
+                this.SnackBar.Add("The Receipt was added.", Severity.Success);
             }
 
             return result;
@@ -100,19 +95,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateReceipt(ReceiptResponse receipt)
         {
-            var response = await _httpClient.PutAsJsonAsync("Receipts/receipt", receipt);
+            var response = await this.HttpClient.PutAsJsonAsync("Receipts/receipt", receipt);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Receipt was updated.", Severity.Success);
+                this.SnackBar.Add("The Receipt was updated.", Severity.Success);
             }
 
             return result;
@@ -121,19 +115,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteReceipt(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Receipts/receipt/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Receipts/receipt/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Receipt was deleted.", Severity.Success);
+                this.SnackBar.Add("The Receipt was deleted.", Severity.Success);
             }
 
             return result;

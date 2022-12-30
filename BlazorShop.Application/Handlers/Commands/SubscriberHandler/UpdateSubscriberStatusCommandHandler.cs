@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriberStatusCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberStatusCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
     public class UpdateSubscriberStatusCommandHandler : IRequestHandler<UpdateSubscriberStatusCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateSubscriberStatusCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateSubscriberStatusCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateSubscriberStatusCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateSubscriberStatusCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateSubscriberStatusCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateSubscriberStatusCommand"/>.
@@ -43,20 +43,23 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 
             try
             {
-                var entity = _dbContext.Subscribers
+                var entity = this.DbContext.Subscribers
                     .TagWith(nameof(UpdateSubscriberStatusCommandHandler))
                     .FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
-                if (entity == null) throw new Exception("The subscriber does not exists");
+                if (entity == null)
+                {
+                    throw new Exception("The subscriber does not exists");
+                }
 
                 entity.Status = SubscriptionStatus.Inactive;
 
-                _dbContext.Subscribers.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Subscribers.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateSubscriberStatusCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateSubscriberStatusCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateSubscriberStatusCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

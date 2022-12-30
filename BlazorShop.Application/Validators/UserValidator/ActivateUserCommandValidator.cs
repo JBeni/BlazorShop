@@ -1,4 +1,4 @@
-﻿// <copyright file="ActivateUserCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="ActivateUserCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.UserValidator
         /// </summary>
         public ActivateUserCommandValidator()
         {
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTodoItemByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetTodoItemByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

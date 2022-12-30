@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriptionCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriptionCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriptionHand
     /// </summary>
     public class UpdateSubscriptionCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<UpdateSubscriptionCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<UpdateSubscriptionCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateSubscriptionCommandHandlerTests"/> class.
         /// </summary>
         public UpdateSubscriptionCommandHandlerTests(IApplicationDbContext dbContext, ILogger<UpdateSubscriptionCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriptionHand
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(UpdateSubscriptionCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateSubscriptionCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="EmailService.cs" author="Beniamin Jitca">
+﻿// <copyright file="EmailService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -17,7 +17,7 @@ namespace BlazorShop.Infrastructure.Services
                 var credential = new NetworkCredential
                 {
                     UserName = mail.Username,
-                    Password = mail.Password
+                    Password = mail.Password,
                 };
 
                 client.Credentials = credential;
@@ -34,36 +34,36 @@ namespace BlazorShop.Infrastructure.Services
 
                 client.Send(mailMessage);
             }
+
             await Task.CompletedTask;
         }
 
         /// <summary>
-        /// .
+        /// Add image to the mail content.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <returns>The view with the image.</returns>
         private static AlternateView AddImageLogo()
         {
             // In text where the image will be placed an cid:image must be set
             AlternateView avHtml = AlternateView.CreateAlternateViewFromString("Email Template", null, MediaTypeNames.Text.Html);
-            LinkedResource inline = new("filename.jpg", MediaTypeNames.Image.Jpeg)
+            LinkedResource inline = new ("filename.jpg", MediaTypeNames.Image.Jpeg)
             {
-                ContentId = Guid.NewGuid().ToString()
+                ContentId = Guid.NewGuid().ToString(),
             };
             avHtml.LinkedResources.Add(inline);
-            Attachment att = new("filePath");
+            Attachment att = new ("filePath");
             att.ContentDisposition.Inline = true;
             return avHtml;
         }
 
         /// <summary>
-        /// .
+        /// Adding an attachment to the mail body.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="attachmentFilename">The attachment to be added to the mail.</param>
+        /// <returns>The attachment.</returns>
         private static Attachment Add(Stream attachmentFilename)
         {
-            Attachment attachment = new(attachmentFilename, MediaTypeNames.Application.Octet);
+            Attachment attachment = new (attachmentFilename, MediaTypeNames.Application.Octet);
             ContentDisposition disposition = attachment.ContentDisposition;
 
             disposition.CreationDate = File.GetCreationTime(attachmentFilename.ToString());
@@ -77,15 +77,16 @@ namespace BlazorShop.Infrastructure.Services
         }
 
         /// <summary>
-        /// .
+        /// Creates an alternate view for the mail.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="filePath">The path for the file to create a view.</param>
+        /// <param name="htmlBody">The body in html format.</param>
+        /// <returns>The alternate view of the email.</returns>
         private static AlternateView GetEmbeddedImage(string? filePath, string? htmlBody)
         {
-            LinkedResource res = new(filePath)
+            LinkedResource res = new (filePath)
             {
-                ContentId = "logo"
+                ContentId = "logo",
             };
             AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
             alternateView.LinkedResources.Add(res);

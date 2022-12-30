@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserByEmailQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserByEmailQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.UserQuery
     public class GetUserByEmailQuery : IRequest<Result<UserResponse>>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string? Email { get; set; }
     }

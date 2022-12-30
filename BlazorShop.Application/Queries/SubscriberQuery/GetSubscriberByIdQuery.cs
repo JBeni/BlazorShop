@@ -1,4 +1,4 @@
-﻿// <copyright file="GetSubscriberByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetSubscriberByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.SubscriberQuery
     public class GetSubscriberByIdQuery : IRequest<Result<SubscriberResponse>>
     {
         /// <summary>
-        /// The id of the user.
+        /// Gets or sets The id of the user.
         /// </summary>
         public int UserId { get; set; }
     }

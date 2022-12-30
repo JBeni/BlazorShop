@@ -1,8 +1,6 @@
-﻿// <copyright file="JwtTokenMiddleware.cs" author="Beniamin Jitca">
+﻿// <copyright file="JwtTokenMiddleware.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using System.IdentityModel.Tokens.Jwt;
 
 namespace BlazorShop.WebApi.Filters
 {
@@ -12,48 +10,48 @@ namespace BlazorShop.WebApi.Filters
     public class JwtTokenMiddleware
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="JwtTokenMiddleware"/> class.
         /// </summary>
-        private readonly RequestDelegate _next;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly IConfiguration _configuration;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="next"></param>
-        /// <param name="configuration"></param>
+        /// <param name="next">The instance of the <see cref="RequestDelegate"/> to use.</param>
+        /// <param name="configuration">The instance of the <see cref="IConfiguration"/> to use.</param>
         public JwtTokenMiddleware(RequestDelegate next, IConfiguration configuration)
         {
-            _next = next;
-            _configuration = configuration;
+            this.Next = next;
+            this.Configuration = configuration;
         }
 
         /// <summary>
-        /// 
+        /// Gets the instance of the <see cref="RequestDelegate"/> to use.
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        private RequestDelegate Next { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="IConfiguration"/> to use.
+        /// </summary>
+        private IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// The method running every time a request its being made to the server.
+        /// </summary>
+        /// <param name="httpContext">The http context.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task Invoke(HttpContext httpContext)
         {
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-            if (token != null && !IsCurrentTokenValid(token))
+            if (token != null && !this.IsCurrentTokenValid(token))
             {
-                httpContext.Request.Headers["Authorization"] = "";
+                httpContext.Request.Headers["Authorization"] = string.Empty;
             }
 
-            await _next(httpContext);
+            await this.Next(httpContext);
         }
 
         /// <summary>
-        /// .
+        /// Validating the bearer token validity.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="token">The bearer token data.</param>
+        /// <returns>A boolean value.</returns>
         private bool IsCurrentTokenValid(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -61,18 +59,20 @@ namespace BlazorShop.WebApi.Filters
 
             try
             {
+                #pragma warning disable SA1117 // Parameters should be on same line or separate lines
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ClockSkew = TimeSpan.FromSeconds(1),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(_configuration["JwtToken:SecretKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(this.Configuration["JwtToken:SecretKey"])),
                     RequireSignedTokens = true,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
                     ValidateAudience = true,
                     ValidateIssuer = true,
-                    ValidAudience = _configuration["JwtToken:Audience"],
-                    ValidIssuer = _configuration["JwtToken:Issuer"]
-                }, out SecurityToken validatedToken);
+                    ValidAudience = this.Configuration["JwtToken:Audience"],
+                    ValidIssuer = this.Configuration["JwtToken:Issuer"],
+                }, validatedToken: out SecurityToken validatedToken);
+                #pragma warning restore SA1117 // Parameters should be on same line or separate lines
             }
             catch (Exception)
             {

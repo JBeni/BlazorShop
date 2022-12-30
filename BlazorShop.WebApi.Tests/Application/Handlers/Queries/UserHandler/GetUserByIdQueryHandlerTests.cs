@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserByIdQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserByIdQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -17,7 +17,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <summary>
         /// Gets the <see cref="ILogger<GetUserByIdQueryHandlerTests>"/> instance to use.
         /// </summary>
-        private readonly ILogger<GetUserByIdQueryHandlerTests> Logger;
+        private ILogger<GetUserByIdQueryHandlerTests> Logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUserByIdQueryHandlerTests"/> class.
@@ -36,8 +36,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

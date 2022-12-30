@@ -1,8 +1,6 @@
-﻿// <copyright file="Program.cs" author="Beniamin Jitca">
+﻿// <copyright file="Program.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using MudBlazor.Services;
 
 /// <summary>
 /// The configurations for the blazor client web application.
@@ -18,7 +16,7 @@ try
     builder.Services.AddScoped(sp =>
         new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:44351/api/")
+            BaseAddress = new Uri("https://localhost:44351/api/"),
         }.EnableIntercept(sp));
 
     builder.Services.AddBlazoredLocalStorage();

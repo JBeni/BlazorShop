@@ -1,4 +1,4 @@
-﻿// <copyright file="SessionStorageService.cs" author="Beniamin Jitca">
+﻿// <copyright file="SessionStorageService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,29 +10,34 @@ namespace BlazorShop.WebClient.Services
     public class SessionStorageService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="SessionStorageService"/> class.
         /// </summary>
-        private readonly IJSRuntime _js;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly IJSInProcessRuntime _jsInProcess;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="js"></param>
+        /// <param name="js">The instance of the <see cref="IJSRuntime"/> to use.</param>
         public SessionStorageService(IJSRuntime js)
         {
-            _js = js;
-            _jsInProcess = (IJSInProcessRuntime)_js;
+            this.Js = js;
+            this.JsInProcess = (IJSInProcessRuntime)this.Js;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets the instance of the <see cref="IJSRuntime"/> to use..
+        /// </summary>
+        private IJSRuntime Js { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="IJSInProcessRuntime"/> to use..
+        /// </summary>
+        private IJSInProcessRuntime JsInProcess { get; }
+
+        /// <summary>
+        /// Get an item from session storage.
+        /// </summary>
+        /// <typeparam name="T">The generic type of the object.</typeparam>
+        /// <param name="key">The key to be added.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<T> GetItemAsync<T>(string key)
         {
-            var json = await _js.InvokeAsync<string>(
+            var json = await this.Js.InvokeAsync<string>(
                 "BlazorShop.getSessionStorage",
                 key);
 
@@ -41,19 +46,30 @@ namespace BlazorShop.WebClient.Services
                     : JsonSerializer.Deserialize<T>(json);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Set an item to session storage - async.
+        /// </summary>
+        /// <typeparam name="T">The generic type of the object.</typeparam>
+        /// <param name="key">The key to be added.</param>
+        /// <param name="item">The item of type T.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SetItemAsync<T>(string key, T item)
         {
-            await _js.InvokeVoidAsync(
+            await this.Js.InvokeVoidAsync(
                 "BlazorShop.setSessionStorage",
                 key,
                 JsonSerializer.Serialize(item));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Set an item to session storage.
+        /// </summary>
+        /// <typeparam name="T">The generic type of the object.</typeparam>
+        /// <param name="key">The key to be added.</param>
+        /// <param name="item">The item of type T.</param>
         public void SetItem<T>(string key, T item)
         {
-            _jsInProcess.InvokeVoid(
+            this.JsInProcess.InvokeVoid(
                 "BlazorShop.setSessionStorage",
                 key,
                 JsonSerializer.Serialize(item));

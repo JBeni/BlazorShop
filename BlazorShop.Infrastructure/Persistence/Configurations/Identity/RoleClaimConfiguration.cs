@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleClaimConfiguration.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleClaimConfiguration.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,9 +10,9 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
     {
         /// <summary>
-        /// .
+        /// A method to configure an entity.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">The builder for configuring the entity metadata.</param>
         public void Configure(EntityTypeBuilder<RoleClaim> builder)
         {
             builder.ToTable("AppRoleClaims");

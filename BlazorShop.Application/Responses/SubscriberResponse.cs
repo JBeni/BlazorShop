@@ -1,4 +1,4 @@
-﻿// <copyright file="SubscriberResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="SubscriberResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,77 +10,77 @@ namespace BlazorShop.Application.Responses
     public class SubscriberResponse : IMapFrom<Subscriber>
     {
         /// <summary>
-        /// The id of the subscriber.
+        /// Gets or sets The id of the subscriber.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The status of the subscription.
+        /// Gets or sets The status of the subscription.
         /// </summary>
         public SubscriptionStatus Status { get; set; }
 
         /// <summary>
-        /// The started date of the subscriber.
+        /// Gets or sets The started date of the subscriber.
         /// </summary>
         public DateTime DateStart { get; set; }
 
         /// <summary>
-        /// The date when the current period ends.
+        /// Gets or sets The date when the current period ends.
         /// </summary>
         public DateTime CurrentPeriodEnd { get; set; }
 
         /// <summary>
-        /// The date when the current period starts.
+        /// Gets or sets The date when the current period starts.
         /// </summary>
         public DateTime CurrentPeriodStart { get; set; }
 
         /// <summary>
-        /// The id of the customer.
+        /// Gets or sets The id of the customer.
         /// </summary>
         public int CustomerId { get; set; }
 
         /// <summary>
-        /// The name of the customer.
+        /// Gets or sets The name of the customer.
         /// </summary>
         public string CustomerName { get; set; }
 
         /// <summary>
-        /// The id of the subscription.
+        /// Gets or sets The id of the subscription.
         /// </summary>
         public int SubscriptionId { get; set; }
 
         /// <summary>
-        /// The name of the subscription.
+        /// Gets or sets The name of the subscription.
         /// </summary>
         public string SubscriptionName { get; set; }
 
         /// <summary>
-        /// The id of the stripe subscription.
+        /// Gets or sets The id of the stripe subscription.
         /// </summary>
         public string StripeSubscriptionId { get; set; }
 
         /// <summary>
-        /// The email of the customer.
+        /// Gets or sets The email of the customer.
         /// </summary>
         public string CustomerEmail { get; set; }
 
         /// <summary>
-        /// The id of the stripe subscriber subscription.
+        /// Gets or sets The id of the stripe subscriber subscription.
         /// </summary>
         public string StripeSubscriberSubscriptionId { get; set; }
 
         /// <summary>
-        /// The url of the invoice.
+        /// Gets or sets The url of the invoice.
         /// </summary>
         public string HostedInvoiceUrl { get; set; }
 
         /// <summary>
-        /// The image name of the subscriber.
+        /// Gets or sets The image name of the subscriber.
         /// </summary>
         public string ImageName { get; set; }
 
         /// <summary>
-        /// The image path of the subscriber.
+        /// Gets or sets The image path of the subscriber.
         /// </summary>
         public string ImagePath { get; set; }
 

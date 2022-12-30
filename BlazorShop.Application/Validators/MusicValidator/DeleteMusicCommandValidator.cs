@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteMusicCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteMusicCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.MusicValidator
         /// </summary>
         public DeleteMusicCommandValidator()
         {
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

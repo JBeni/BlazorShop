@@ -1,4 +1,4 @@
-﻿// <copyright file="SubscriberService.cs" author="Beniamin Jitca">
+﻿// <copyright file="SubscriberService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,44 +10,43 @@ namespace BlazorShop.WebClient.Services
     public class SubscriberService : ISubscriberService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="SubscriberService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public SubscriberService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetSubscribers()
         {
-            var response = await _httpClient.GetAsync("Subscribers/subscribers");
+            var response = await this.HttpClient.GetAsync("Subscribers/subscribers");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -58,15 +57,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetUserAllSubscribers(int userId)
         {
-            var response = await _httpClient.GetAsync($"Subscribers/subscribers/{userId}");
+            var response = await this.HttpClient.GetAsync($"Subscribers/subscribers/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -77,15 +75,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<SubscriberResponse> GetUserSubscriber(int userId)
         {
-            var response = await _httpClient.GetAsync($"Subscribers/subscriber/{userId}");
+            var response = await this.HttpClient.GetAsync($"Subscribers/subscriber/{userId}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -94,42 +91,40 @@ namespace BlazorShop.WebClient.Services
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> AddSubscriber(SubscriberResponse Subscriber)
+        public async Task<RequestResponse> AddSubscriber(SubscriberResponse subscriber)
         {
-            var response = await _httpClient.PostAsJsonAsync("Subscribers/subscriber", Subscriber);
+            var response = await this.HttpClient.PostAsJsonAsync("Subscribers/subscriber", subscriber);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Subscriber was added.", Severity.Success);
+                this.SnackBar.Add("The Subscriber was added.", Severity.Success);
             }
 
             return result;
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse Subscriber)
+        public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse subscriber)
         {
-            var response = await _httpClient.PutAsJsonAsync("Subscribers/subscriber", Subscriber);
+            var response = await this.HttpClient.PutAsJsonAsync("Subscribers/subscriber", subscriber);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Subscriber was updated.", Severity.Success);
+                this.SnackBar.Add("The Subscriber was updated.", Severity.Success);
             }
 
             return result;
@@ -138,19 +133,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteSubscriber(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Subscribers/subscriber/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Subscribers/subscriber/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Subscriber was deleted.", Severity.Success);
+                this.SnackBar.Add("The Subscriber was deleted.", Severity.Success);
             }
 
             return result;

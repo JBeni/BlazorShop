@@ -1,4 +1,4 @@
-﻿// <copyright file="ITodoListService.cs" author="Beniamin Jitca">
+﻿// <copyright file="ITodoListService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,38 +10,37 @@ namespace BlazorShop.WebClient.Interfaces
     public interface ITodoListService
     {
         /// <summary>
-        /// .
+        /// Get the todo lists.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<TodoListResponse>> GetTodoListsAsync();
 
         /// <summary>
-        /// .
+        /// Get the todo list.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<TodoListResponse> GetTodoListAsync(int id);
 
         /// <summary>
-        /// .
+        /// Save a list.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="todoList">The todo list.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<TodoListResponse> PostTodoListAsync(TodoListResponse todoList);
 
         /// <summary>
-        /// .
+        /// Update a list.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="todoList">The todo list.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> PutTodoListAsync(TodoListResponse todoList);
 
         /// <summary>
-        /// .
+        /// Delete a list.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> DeleteTodoListAsync(int id);
     }
 }

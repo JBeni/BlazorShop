@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Index.razor" author="Beniamin Jitca">
+  <copyright file="Index.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -113,7 +113,7 @@ else
                                     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                                         @foreach (var subscription in subscriptions)
                                         {
-                                            <div class="col" style="height:">
+                                            <div class="col" style="">
                                                 <div class="card mb-4 rounded-3 shadow-sm">
                                                     <div class="card-header py-3">
                                                         <h4 class="my-0 fw-normal">@subscription.Name</h4>
@@ -178,7 +178,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -195,7 +195,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the user subscriber.
     /// </summary>
     private async Task GetUserSubscriber(int userId)
     {
@@ -208,7 +208,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Activate the membership.
     /// </summary>
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
@@ -240,7 +240,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// View the music details.
     /// </summary>
     private void ViewMusic(int id)
     {
@@ -248,7 +248,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the musics.
     /// </summary>
     protected async Task GetMusics()
     {
@@ -257,7 +257,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the subscriptions.
     /// </summary>
     protected async Task GetSubscriptions()
     {
@@ -265,7 +265,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Filter the musics.
     /// </summary>
     protected void FilterMusics()
     {
@@ -280,7 +280,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

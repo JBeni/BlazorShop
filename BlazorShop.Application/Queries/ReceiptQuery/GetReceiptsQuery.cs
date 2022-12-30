@@ -1,4 +1,4 @@
-﻿// <copyright file="GetReceiptsQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetReceiptsQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.ReceiptQuery
     public class GetReceiptsQuery : IRequest<Result<ReceiptResponse>>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string UserEmail { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿// <copyright file="HomeController.cs" author="Beniamin Jitca">
+﻿// <copyright file="HomeController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,50 +10,51 @@ namespace BlazorShop.WebApi.Controllers
     [AllowAnonymous]
     public class HomeController : ApiControllerBase
     {
-
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="webHostEnvironment"></param>
+        /// <param name="webHostEnvironment">The instance of the <see cref="IWebHostEnvironment"/> to use.</param>
         public HomeController(IWebHostEnvironment webHostEnvironment)
         {
-            _webHostEnvironment = webHostEnvironment;
+            this.WebHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
-        /// 
+        /// Gets the instance of the <see cref="IWebHostEnvironment"/> to use.
         /// </summary>
-        /// <returns></returns>
+        private IWebHostEnvironment WebHostEnvironment { get; }
+
+        /// <summary>
+        /// A test request.
+        /// </summary>
+        /// <returns>An empty result.</returns>
         [HttpGet("test")]
         public IActionResult Index()
         {
-            return Ok();
+            return this.Ok();
         }
 
         /// <summary>
-        /// 
+        /// Get the home page from server.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A default html page.</returns>
         [HttpGet("home")]
         public IActionResult Home()
         {
-            return new PhysicalFileResult(Path.Combine(_webHostEnvironment.ContentRootPath, "Views/Home.html"),
+            return new PhysicalFileResult(
+                Path.Combine(this.WebHostEnvironment.ContentRootPath, "Views/Home.html"),
                 new MediaTypeHeaderValue("text/html").ToString());
         }
 
         /// <summary>
-        /// 
+        /// Get the error page from server.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A default error page.</returns>
         [HttpGet("error")]
         public IActionResult Error()
         {
-            return new PhysicalFileResult(Path.Combine(_webHostEnvironment.ContentRootPath, "Views/Error.html"),
+            return new PhysicalFileResult(
+                Path.Combine(this.WebHostEnvironment.ContentRootPath, "Views/Error.html"),
                 new MediaTypeHeaderValue("text/html").ToString());
         }
     }

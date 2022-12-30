@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUsersQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUsersQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<UserResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetUsersQueryHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersQueryHandler"/> class.
         /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetUsersQueryHandler(IUserService userService, ILogger<GetUsersQueryHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetUsersQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetUsersQueryHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetUsersQuery"/>.
@@ -43,20 +43,20 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
 
             try
             {
-                var result = _userService.GetUsers(request);
+                var result = this.UserService.GetUsers(request);
 
                 response = new Result<UserResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<UserResponse>()
+                    Items = result ?? new List<UserResponse>(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetUsersQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetUsersQuery);
                 response = new Result<UserResponse>
                 {
-                    Error = $"{ErrorsManager.GetUsersQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUsersQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

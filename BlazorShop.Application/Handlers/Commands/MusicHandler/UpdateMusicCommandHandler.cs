@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateMusicCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateMusicCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
     public class UpdateMusicCommandHandler : IRequestHandler<UpdateMusicCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateMusicCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateMusicCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateMusicCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateMusicCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateMusicCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public UpdateMusicCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateMusicCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateMusicCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateMusicCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateMusicCommand"/>.
@@ -44,10 +43,13 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
 
             try
             {
-                var entity = _dbContext.Musics
+                var entity = this.DbContext.Musics
                     .TagWith(nameof(UpdateMusicCommandHandler))
                     .FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The music does not exists");
+                if (entity == null)
+                {
+                    throw new Exception("The music does not exists");
+                }
 
                 entity.Title = request.Title;
                 entity.Description = request.Description;
@@ -57,13 +59,13 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
                 entity.ImagePath = request.ImagePath;
                 entity.AccessLevel = request.AccessLevel;
 
-                _dbContext.Musics.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Musics.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateMusicCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateMusicCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateMusicCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

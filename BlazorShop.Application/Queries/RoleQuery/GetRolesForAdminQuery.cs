@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRolesForAdminQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRolesForAdminQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

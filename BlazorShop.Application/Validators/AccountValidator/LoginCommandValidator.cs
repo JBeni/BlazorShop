@@ -1,11 +1,11 @@
-﻿// <copyright file="LoginCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="LoginCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Validators.AccountValidator
 {
     /// <summary>
-    /// An implementation of the <see cref="AbstractValidator<LoginCommand>"/>.
+    /// An implementation of the <see cref="AbstractValidator{LoginCommand}"/>.
     /// </summary>
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
@@ -14,13 +14,13 @@ namespace BlazorShop.Application.Validators.AccountValidator
         /// </summary>
         public LoginCommandValidator()
         {
-            RuleFor(v => v.Email)
+            this.RuleFor(v => v.Email)
                 .MaximumLength(100).WithMessage("Email maximum length exceeded")
                 .NotEmpty().WithMessage("Email must not be empty")
                 .NotNull().WithMessage("Email must not be null")
-                .Must(IsValidEmailAddress).WithMessage("The value is not a valid email address");
+                .Must(this.IsValidEmailAddress).WithMessage("The value is not a valid email address");
 
-            RuleFor(v => v.Password)
+            this.RuleFor(v => v.Password)
                 .MaximumLength(100).WithMessage("Password maximum length exceeded")
                 .NotEmpty().WithMessage("Password must not be empty")
                 .NotNull().WithMessage("Password must not be null");

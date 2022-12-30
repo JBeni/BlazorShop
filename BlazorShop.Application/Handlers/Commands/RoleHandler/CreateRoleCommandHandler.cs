@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateRoleCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateRoleCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.RoleHandler
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IRoleService _roleService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateRoleCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateRoleCommandHandler"/> class.
         /// </summary>
-        /// <param name="roleService">An instance of <see cref="IRoleService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.</param>
+        /// <param name="roleService">Gets An instance of <see cref="IRoleService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateRoleCommandHandler(IRoleService roleService, ILogger<CreateRoleCommandHandler> logger)
         {
-            _roleService = roleService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.RoleService = roleService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IRoleService"/>.
+        /// </summary>
+        private IRoleService RoleService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateRoleCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateRoleCommand"/>.
@@ -43,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 
             try
             {
-                response = await _roleService.CreateRoleAsync(request);
+                response = await this.RoleService.CreateRoleAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateRoleCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateRoleCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

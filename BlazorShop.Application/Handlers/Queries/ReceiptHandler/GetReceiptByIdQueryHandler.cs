@@ -1,4 +1,4 @@
-﻿// <copyright file="GetReceiptByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetReceiptByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
     public class GetReceiptByIdQueryHandler : IRequestHandler<GetReceiptByIdQuery, Result<ReceiptResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetReceiptByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetReceiptByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetReceiptByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetReceiptByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetReceiptByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetReceiptByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetReceiptByIdQuery"/>.
@@ -50,24 +50,24 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 
             try
             {
-                var result = _dbContext.Receipts
+                var result = this.DbContext.Receipts
                     .TagWith(nameof(GetReceiptByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.UserEmail == request.UserEmail)
-                    .ProjectTo<ReceiptResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ReceiptResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
                 response = new Result<ReceiptResponse>
                 {
                     Successful = true,
-                    Item = result ?? new ReceiptResponse()
+                    Item = result ?? new ReceiptResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetReceiptByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetReceiptByIdQuery);
                 response = new Result<ReceiptResponse>
                 {
-                    Error = $"{ErrorsManager.GetReceiptByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetReceiptByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

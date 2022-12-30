@@ -1,4 +1,4 @@
-﻿// <copyright file="ChangePasswordCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="ChangePasswordCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,19 +14,19 @@ namespace BlazorShop.Application.Validators.AccountValidator
         /// </summary>
         public ChangePasswordCommandValidator()
         {
-            _ = RuleFor(v => v.UserId)
+            _ = this.RuleFor(v => v.UserId)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
 
-            _ = RuleFor(v => v.OldPassword)
+            _ = this.RuleFor(v => v.OldPassword)
                 .NotEmpty().WithMessage("OldPassword must not be empty")
                 .NotNull().WithMessage("OldPassword must not be null")
                 .NotEqual(v => v.NewPassword).WithMessage("OldPassword must not be equal with NewPassword");
 
-            _ = RuleFor(v => v.NewPassword)
+            _ = this.RuleFor(v => v.NewPassword)
                 .NotEmpty().WithMessage("NewPassword must not be empty")
                 .NotNull().WithMessage("NewPassword must not be null");
 
-            _ = RuleFor(v => v.ConfirmNewPassword)
+            _ = this.RuleFor(v => v.ConfirmNewPassword)
                 .NotEmpty().WithMessage("ConfirmNewPassword must not be empty")
                 .NotNull().WithMessage("ConfirmNewPassword must not be null")
                 .Equal(v => v.NewPassword).WithMessage("NewPassword must be equal with ConfirmNewPassword");

@@ -1,4 +1,4 @@
-﻿// <copyright file="IRoleService.cs" author="Beniamin Jitca">
+﻿// <copyright file="IRoleService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -19,7 +19,7 @@ namespace BlazorShop.Application.Common.Interfaces
         /// <summary>
         /// Gets the default role.
         /// </summary>
-        /// <returns>The default entity role</returns>
+        /// <returns>The default entity role.</returns>
         RoleResponse GetDefaultRole();
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace BlazorShop.Application.Common.Interfaces
         Task<RequestResponse> SetUserRoleAsync(User user, string role);
 
         /// <summary>
-        /// 
+        /// Finding the role by id.
         /// </summary>
-        /// <param name="roleId"></param>
-        /// <returns></returns>
+        /// <param name="roleId">The id of the role.</param>
+        /// <returns>The role data.</returns>
         Task<Role> FindRoleByIdAsync(int roleId);
 
         /// <summary>

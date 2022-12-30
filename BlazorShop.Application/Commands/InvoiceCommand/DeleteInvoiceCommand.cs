@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteInvoiceCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteInvoiceCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.InvoiceCommand
     public class DeleteInvoiceCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the invoice.
+        /// Gets or sets The id of the invoice.
         /// </summary>
         public int Id { get; set; }
     }

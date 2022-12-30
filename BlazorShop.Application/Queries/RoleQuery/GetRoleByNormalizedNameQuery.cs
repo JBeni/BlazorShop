@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRoleByNormalizedNameQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRoleByNormalizedNameQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.RoleQuery
     public class GetRoleByNormalizedNameQuery : IRequest<Result<RoleResponse>>
     {
         /// <summary>
-        /// The normalized name of the role.
+        /// Gets or sets The normalized name of the role.
         /// </summary>
         public string? NormalizedName { get; set; }
     }

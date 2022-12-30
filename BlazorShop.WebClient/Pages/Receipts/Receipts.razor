@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Receipts.razor" author="Beniamin Jitca">
+  <copyright file="Receipts.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -93,7 +93,7 @@
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -108,7 +108,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the receipts.
     /// </summary>
     public async Task GetReceipts(string userEmail)
     {
@@ -117,7 +117,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Filter the receipts.
     /// </summary>
     protected void FilterReceipts()
     {
@@ -132,7 +132,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

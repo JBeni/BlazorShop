@@ -1,4 +1,4 @@
-﻿// <copyright file="GetInvoiceByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetInvoiceByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
     public class GetInvoiceByIdQueryHandler : IRequestHandler<GetInvoiceByIdQuery, Result<InvoiceResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetInvoiceByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetInvoiceByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetInvoiceByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetInvoiceByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetInvoiceByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetInvoiceByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetInvoiceByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetInvoiceByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetInvoiceByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetInvoiceByIdQuery"/>.
@@ -50,24 +50,24 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 
             try
             {
-                var result = _dbContext.Invoices
+                var result = this.DbContext.Invoices
                     .TagWith(nameof(GetInvoiceByIdQueryHandler))
                     .Where(x => x.Id == request.Id)
-                    .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<InvoiceResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
                 response = new Result<InvoiceResponse>
                 {
                     Successful = true,
-                    Item = result ?? new InvoiceResponse()
+                    Item = result ?? new InvoiceResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetInvoiceByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetInvoiceByIdQuery);
                 response = new Result<InvoiceResponse>
                 {
-                    Error = $"{ErrorsManager.GetInvoiceByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetInvoiceByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

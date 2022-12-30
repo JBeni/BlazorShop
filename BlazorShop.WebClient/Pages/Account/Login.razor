@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Login.razor" author="Beniamin Jitca">
+  <copyright file="Login.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -59,7 +59,7 @@
     public bool showPassword { get; set; } = false;
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -72,7 +72,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Show the password.
     /// </summary>
     public void ShowPassword() 
     {
@@ -87,7 +87,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Login the user.
     /// </summary>
     private async Task ExecuteLogin()
     {

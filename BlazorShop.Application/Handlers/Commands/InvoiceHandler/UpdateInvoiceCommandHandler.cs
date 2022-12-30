@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateInvoiceCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateInvoiceCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateInvoiceCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateInvoiceCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public UpdateInvoiceCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateInvoiceCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateInvoiceCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateInvoiceCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateInvoiceCommand"/>.
@@ -44,10 +43,13 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 
             try
             {
-                var entity = _dbContext.Invoices
+                var entity = this.DbContext.Invoices
                     .TagWith(nameof(UpdateInvoiceCommandHandler))
                     .SingleOrDefault(d => d.Id == request.Id);
-                if (entity == null) throw new Exception("The invoice does not exists");
+                if (entity == null)
+                {
+                    throw new Exception("The invoice does not exists");
+                }
 
                 entity.UserEmail = request.UserEmail;
                 entity.Name = request.Name;
@@ -55,13 +57,13 @@ namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
                 entity.AmountTotal = request.AmountTotal;
                 entity.Quantity = request.Quantity;
 
-                _dbContext.Invoices.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Invoices.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateInvoiceCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateInvoiceCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateRoleCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateRoleCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.RoleValidator
         /// </summary>
         public CreateRoleCommandValidator()
         {
-            RuleFor(v => v.Name)
+            this.RuleFor(v => v.Name)
                 .MaximumLength(100).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null");

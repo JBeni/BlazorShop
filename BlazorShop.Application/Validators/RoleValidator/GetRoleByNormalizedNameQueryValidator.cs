@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRoleByNormalizedNameQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRoleByNormalizedNameQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.RoleValidator
         /// </summary>
         public GetRoleByNormalizedNameQueryValidator()
         {
-            RuleFor(v => v.NormalizedName)
+            this.RuleFor(v => v.NormalizedName)
                 .MaximumLength(100).WithMessage("NormalizedName maximum length exceeded")
                 .NotEmpty().WithMessage("NormalizedName must not be empty")
                 .NotNull().WithMessage("NormalizedName must not be null");

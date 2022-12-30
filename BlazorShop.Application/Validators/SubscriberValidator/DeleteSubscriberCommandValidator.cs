@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteSubscriberCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteSubscriberCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.SubscriberValidator
         /// </summary>
         public DeleteSubscriberCommandValidator()
         {
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

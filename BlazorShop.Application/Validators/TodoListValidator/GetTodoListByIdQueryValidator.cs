@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTodoListByIdQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetTodoListByIdQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.TodoListValidator
         /// </summary>
         public GetTodoListByIdQueryValidator()
         {
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateInvoiceCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateInvoiceCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,38 +10,38 @@ namespace BlazorShop.Application.Validators.InvoiceValidator
     public class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceCommand>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _context;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateInvoiceCommandValidator"/> class.
         /// </summary>
-        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="context">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         public CreateInvoiceCommandValidator(IApplicationDbContext context)
         {
-            _context = context;
+            this.Context = context;
 
-            RuleFor(v => v.UserEmail)
+            this.RuleFor(v => v.UserEmail)
                 .MaximumLength(100).WithMessage("UserEmail maximum length exceeded")
                 .NotEmpty().WithMessage("UserEmail must not be empty")
                 .NotNull().WithMessage("UserEmail must not be null");
 
-            RuleFor(v => v.Name)
+            this.RuleFor(v => v.Name)
                 .MaximumLength(200).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null")
-                .MustAsync(HaveUniqueName).WithMessage("The specified name already exists.");
+                .MustAsync(this.HaveUniqueName).WithMessage("The specified name already exists.");
 
-            RuleFor(v => v.AmountSubTotal)
+            this.RuleFor(v => v.AmountSubTotal)
                 .GreaterThan(0).WithMessage("AmountSubTotal must be greater than 0");
 
-            RuleFor(v => v.AmountTotal)
+            this.RuleFor(v => v.AmountTotal)
                 .GreaterThan(0).WithMessage("AmountTotal must be greater than 0");
 
-            RuleFor(v => v.Quantity)
+            this.RuleFor(v => v.Quantity)
                 .GreaterThan(0).WithMessage("Quantity must be greater than 0");
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext Context { get; }
 
         /// <summary>
         /// Gets a value indicating whether the invoice has an unique name or not.
@@ -51,8 +51,8 @@ namespace BlazorShop.Application.Validators.InvoiceValidator
         /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
-            return await _context.Invoices
-                .TagWith(nameof(HaveUniqueName))
+            return await this.Context.Invoices
+                .TagWith(nameof(this.HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

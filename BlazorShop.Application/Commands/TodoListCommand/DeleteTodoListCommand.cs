@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteTodoListCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteTodoListCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.TodoListCommand
     public class DeleteTodoListCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the list.
+        /// Gets or sets The id of the list.
         /// </summary>
         public int Id { get; set; }
     }

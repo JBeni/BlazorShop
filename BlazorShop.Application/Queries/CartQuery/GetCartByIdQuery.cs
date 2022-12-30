@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetCartByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,12 +10,12 @@ namespace BlazorShop.Application.Queries.CartQuery
     public class GetCartByIdQuery : IRequest<Result<CartResponse>>
     {
         /// <summary>
-        /// The id of the cart.
+        /// Gets or sets The id of the cart.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The id of the user.
+        /// Gets or sets The id of the user.
         /// </summary>
         public int UserId { get; set; }
     }

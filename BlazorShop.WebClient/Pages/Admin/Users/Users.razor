@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Users.razor" author="Beniamin Jitca">
+  <copyright file="Users.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -188,7 +188,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -198,7 +198,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the active users.
     /// </summary>
     protected async Task GetUsers()
     {
@@ -206,7 +206,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the inactive users.
     /// </summary>
     protected async Task GetUsersInactive()
     {
@@ -214,7 +214,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -222,7 +222,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the user activation.
     /// </summary>
     protected void ActivateUserConfirm(int Id)
     {
@@ -230,7 +230,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the user.
     /// </summary>
     protected async Task DeleteUser(int Id)
     {
@@ -240,7 +240,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Activate the user.
     /// </summary>
     protected async Task ActivateUser(int Id)
     {
@@ -250,7 +250,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Navigation page.
     /// </summary>
     private void NavigateToPage(int id)
     {

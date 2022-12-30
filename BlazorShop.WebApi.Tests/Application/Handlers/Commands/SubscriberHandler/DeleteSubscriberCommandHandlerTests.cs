@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteSubscriberCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteSubscriberCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
     /// </summary>
     public class DeleteSubscriberCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<DeleteSubscriberCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<DeleteSubscriberCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteSubscriberCommandHandlerTests"/> class.
         /// </summary>
         public DeleteSubscriberCommandHandlerTests(IApplicationDbContext dbContext, ILogger<DeleteSubscriberCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(DeleteSubscriberCommand request, CancellationToken cancellationToken)
+        public Task Handle(DeleteSubscriberCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

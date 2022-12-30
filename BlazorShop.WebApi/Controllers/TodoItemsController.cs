@@ -1,8 +1,6 @@
-﻿// <copyright file="TodoItemsController.cs" author="Beniamin Jitca">
+﻿// <copyright file="TodoItemsController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using BlazorShop.Application.Commands.TodoItemCommand;
 
 namespace BlazorShop.WebApi.Controllers
 {
@@ -13,59 +11,59 @@ namespace BlazorShop.WebApi.Controllers
     public class TodoItemsController : ApiControllerBase
     {
         /// <summary>
-        /// 
+        /// Create the todo item.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPost("item")]
         public async Task<IActionResult> CreateTodoItem([FromBody] CreateTodoItemCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Update the todo item.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPut("item")]
         public async Task<IActionResult> UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Delete the todo item.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpDelete("item/{id}")]
         public async Task<IActionResult> DeleteTodoItem(int id)
         {
-            var result = await Mediator.Send(new DeleteTodoItemCommand { Id = id });
+            var result = await this.Mediator.Send(new DeleteTodoItemCommand { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the todo item.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("item/{id}")]
         public async Task<IActionResult> GetTodoItemById(int id)
         {
-            var result = await Mediator.Send(new GetTodoItemByIdQuery { Id = id });
+            var result = await this.Mediator.Send(new GetTodoItemByIdQuery { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetMusicByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetMusicByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.MusicQuery
     public class GetMusicByIdQuery : IRequest<Result<MusicResponse>>
     {
         /// <summary>
-        /// The id of the music.
+        /// Gets or sets The id of the music.
         /// </summary>
         public int Id { get; set; }
     }

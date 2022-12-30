@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserByEmailQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserByEmailQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,11 +14,11 @@ namespace BlazorShop.Application.Validators.UserValidator
         /// </summary>
         public GetUserByEmailQueryValidator()
         {
-            RuleFor(v => v.Email)
+            this.RuleFor(v => v.Email)
                 .MaximumLength(150).WithMessage("Email maximum length exceeded")
                 .NotEmpty().WithMessage("Email must not be empty")
                 .NotNull().WithMessage("Email must not be null")
-                .Must(IsValidEmailAddress).WithMessage("The value is not a valid email address");
+                .Must(this.IsValidEmailAddress).WithMessage("The value is not a valid email address");
         }
 
         /// <summary>

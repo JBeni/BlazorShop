@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteTodoListCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteTodoListCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.TodoListValidator
         /// </summary>
         public DeleteTodoListCommandValidator()
         {
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

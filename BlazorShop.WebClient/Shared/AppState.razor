@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="AppState.razor" author="Beniamin Jitca">
+  <copyright file="AppState.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -30,8 +30,8 @@
 	}
 
     /// <summary>
-    /// .
-    /// </summary>
+	/// Initialize the component on load.
+	/// </summary>
 	protected override void OnInitialized()
 	{
 		var value = JS.Invoke<string>(JsInteropConstants.GetSessionStorage, nameof(CurrentCount));

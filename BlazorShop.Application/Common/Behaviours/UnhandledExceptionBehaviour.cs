@@ -1,4 +1,4 @@
-﻿// <copyright file="UnhandledExceptionBehaviour.cs" author="Beniamin Jitca">
+﻿// <copyright file="UnhandledExceptionBehaviour.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -7,21 +7,23 @@ namespace BlazorShop.Application.Common.Behaviours
     /// <summary>
     /// A service to configure the unhandled exception behaviour.
     /// </summary>
+    /// <typeparam name="TRequest">The request type.</typeparam>
+    /// <typeparam name="TResponse">The response type.</typeparam>
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         /// <summary>
-        /// An instance of <see cref="ILogger{TRequest}"/>.
-        /// </summary>
-        private readonly ILogger<TRequest> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UnhandledExceptionBehaviour{TRequest, TResponse}"/> class.
         /// </summary>
-        /// <param name="logger">An instance of <see cref="ILogger{TRequest}"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{TRequest}"/>.</param>
         public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
         {
-            _logger = logger;
+            this.Logger = logger;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{TRequest}"/>.
+        /// </summary>
+        private ILogger<TRequest> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for unhandled exception behaviour.
@@ -39,7 +41,7 @@ namespace BlazorShop.Application.Common.Behaviours
             catch (Exception ex)
             {
                 var requestName = typeof(TRequest).Name;
-                _logger.LogError(ex, "BlazorShop Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                this.Logger.LogError(ex, "BlazorShop Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
                 throw;
             }
         }

@@ -1,4 +1,4 @@
-﻿// <copyright file="UserClaim.cs" author="Beniamin Jitca">
+﻿// <copyright file="UserClaim.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Domain.Entities.Identity
     public class UserClaim : IdentityUserClaim<int>
     {
         /// <summary>
-        /// .
+        /// Gets or Sets the user.
         /// </summary>
         public virtual User User { get; set; }
     }

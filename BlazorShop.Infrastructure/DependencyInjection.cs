@@ -1,27 +1,26 @@
-﻿// <copyright file="DependencyInjection.cs" author="Beniamin Jitca">
+﻿// <copyright file="DependencyInjection.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Infrastructure
 {
     /// <summary>
-    /// The configuration of Dependency Injection at Infrastructure level.
+    /// Extension methods on <see cref="IServiceCollection"/> at Infrastructure level.
     /// </summary>
     public static class DependencyInjection
     {
         /// <summary>
-        /// .
+        /// Make service modules available to the infrastructure level via dependancy injection.
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// <param name="services">The <see cref="IServiceCollection"/> instance to use.</param>
+        /// <param name="configuration">The <see cref="IConfiguration"/> instance to use.</param>
+        /// <returns>The services collection.</returns>
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration["ConnectionStrings:WebApiConnection"],
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-            ));
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             // Inject services
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

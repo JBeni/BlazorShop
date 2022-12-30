@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateTodoItemCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoItemCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
     /// </summary>
     public class UpdateTodoItemCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<UpdateTodoItemCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<UpdateTodoItemCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateTodoItemCommandHandlerTests"/> class.
         /// </summary>
         public UpdateTodoItemCommandHandlerTests(IApplicationDbContext dbContext, ILogger<UpdateTodoItemCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

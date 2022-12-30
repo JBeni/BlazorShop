@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriberStatusCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberStatusCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
     /// </summary>
     public class UpdateSubscriberStatusCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<UpdateSubscriberStatusCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<UpdateSubscriberStatusCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateSubscriberStatusCommandHandlerTests"/> class.
         /// </summary>
         public UpdateSubscriberStatusCommandHandlerTests(IApplicationDbContext dbContext, ILogger<UpdateSubscriberStatusCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(UpdateSubscriberStatusCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateSubscriberStatusCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

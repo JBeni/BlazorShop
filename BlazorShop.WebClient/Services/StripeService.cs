@@ -1,8 +1,6 @@
-﻿// <copyright file="StripeService.cs" author="Beniamin Jitca">
+﻿// <copyright file="StripeService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
@@ -12,48 +10,47 @@ namespace BlazorShop.WebClient.Services
     public class StripeService : IStripeService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="StripeService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public StripeService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task CancelMembership(string stripeSubscriptionCreationId)
         {
-            var response = await _httpClient.DeleteAsync($"Payments/cancel-subscription/{stripeSubscriptionCreationId}");
+            var response = await this.HttpClient.DeleteAsync($"Payments/cancel-subscription/{stripeSubscriptionCreationId}");
             if (response.IsSuccessStatusCode == false)
             {
                 var responseResult = await response.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<RequestResponse>(
-                    responseResult, _options
-                );
+                    responseResult, this.Options);
 
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("Subscription was cancelled.", Severity.Success);
+                this.SnackBar.Add("Subscription was cancelled.", Severity.Success);
             }
         }
     }

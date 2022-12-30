@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriberStatusCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberStatusCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.SubscriberValidator
         /// </summary>
         public UpdateSubscriberStatusCommandValidator()
         {
-            RuleFor(x => x.StripeSubscriberSubscriptionId)
+            this.RuleFor(x => x.StripeSubscriberSubscriptionId)
                 .MaximumLength(500).WithMessage("StripeSubscriberSubscriptionId maximum length exceeded")
                 .NotEmpty().WithMessage("StripeSubscriberSubscriptionId must not be empty")
                 .NotNull().WithMessage("StripeSubscriberSubscriptionId must not be null");

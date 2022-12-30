@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateClotheCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateClotheCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
     public class CreateClotheCommandHandler : IRequestHandler<CreateClotheCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateClotheCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateClotheCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateClotheCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateClotheCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateClotheCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public CreateClotheCommandHandler(IApplicationDbContext dbContext, ILogger<CreateClotheCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateClotheCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateClotheCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateClotheCommand"/>.
@@ -55,13 +54,13 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
                     IsActive = true,
                 };
 
-                _dbContext.Clothes.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Clothes.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateClotheCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateClotheCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

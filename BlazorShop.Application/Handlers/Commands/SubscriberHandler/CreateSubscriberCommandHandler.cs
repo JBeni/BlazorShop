@@ -1,8 +1,6 @@
-﻿// <copyright file="CreateSubscriberCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateSubscriberCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using BlazorShop.Application.Handlers.Commands.SubscriptionHandler;
 
 namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
@@ -12,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
     public class CreateSubscriberCommandHandler : IRequestHandler<CreateSubscriberCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateSubscriberCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateSubscriberCommandHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubscriberCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateSubscriberCommandHandler}"/>.</param>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateSubscriberCommandHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateSubscriberCommandHandler(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandler> logger, IUserService userService)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _userService = userService;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateSubscriberCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateSubscriberCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateSubscriberCommand"/>.
@@ -52,13 +50,16 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 
             try
             {
-                Subscriber entity = _dbContext.Subscribers
+                Subscriber entity = this.DbContext.Subscribers
                     .TagWith(nameof(CreateSubscriberCommandHandler))
                     .FirstOrDefault(x => x.Id == request.Id);
-                if (entity != null) throw new Exception("The subscriber already exists");
+                if (entity != null)
+                {
+                    throw new Exception("The subscriber already exists");
+                }
 
-                var customer = await _userService.FindUserByIdAsync(request.CustomerId);
-                var subscription = _dbContext.Subscriptions
+                var customer = await this.UserService.FindUserByIdAsync(request.CustomerId);
+                var subscription = this.DbContext.Subscriptions
                     .TagWith(nameof(CreateSubscriberCommandHandler))
                     .FirstOrDefault(x => x.Id == request.SubscriptionId);
 
@@ -70,17 +71,17 @@ namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
                     DateStart = request.DateStart,
                     Customer = customer,
                     Subscription = subscription,
-                    StripeSubscriberSubscriptionId = "",
-                    HostedInvoiceUrl = "",
+                    StripeSubscriberSubscriptionId = string.Empty,
+                    HostedInvoiceUrl = string.Empty,
                 };
 
-                _dbContext.Subscribers.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Subscribers.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateSubscriberCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateSubscriberCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateSubscriberCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

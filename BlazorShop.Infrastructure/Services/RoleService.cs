@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleService.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,51 +10,51 @@ namespace BlazorShop.Infrastructure.Services
     public class RoleService : IRoleService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="RoleService"/> class.
         /// </summary>
-        private readonly UserManager<User> _userManager;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly RoleManager<Role> _roleManager;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="userManager"></param>
-        /// <param name="roleManager"></param>
-        /// <param name="mapper"></param>
+        /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
+        /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
+        /// <param name="mapper">The instance of <see cref="IMapper"/> to use.</param>
         public RoleService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IMapper mapper)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _mapper = mapper;
+            this.UserManager = userManager;
+            this.RoleManager = roleManager;
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets the instance of <see cref="UserManager{User}"/> to use.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="RoleManager{Role}"/> to use.
+        /// </summary>
+        private RoleManager<Role> RoleManager { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <inheritdoc/>
         public async Task<List<string>> CheckUserRolesAsync(User user)
         {
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await this.UserManager.GetRolesAsync(user);
             return roles.ToList();
         }
 
         /// <inheritdoc/>
         public RoleResponse GetDefaultRole()
         {
-            var role = _roleManager.Roles
-                .TagWith(nameof(GetDefaultRole))
+            var role = this.RoleManager.Roles
+                .TagWith(nameof(this.GetDefaultRole))
                 .Where(x => x.Name == StringRoleResources.Default &&
                     x.NormalizedName == StringRoleResources.DefaultNormalized)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
         }
@@ -62,11 +62,11 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public RoleResponse GetUserRole()
         {
-            var role = _roleManager.Roles
-                .TagWith(nameof(GetUserRole))
+            var role = this.RoleManager.Roles
+                .TagWith(nameof(this.GetUserRole))
                 .Where(x => x.Name == StringRoleResources.User &&
                     x.NormalizedName == StringRoleResources.UserNormalized)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
         }
@@ -74,11 +74,11 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public RoleResponse GetAdminRole()
         {
-            var role = _roleManager.Roles
-                .TagWith(nameof(GetAdminRole))
+            var role = this.RoleManager.Roles
+                .TagWith(nameof(this.GetAdminRole))
                 .Where(x => x.Name == StringRoleResources.Admin &&
                     x.NormalizedName == StringRoleResources.AdminNormalized)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return role;
         }
@@ -86,18 +86,18 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> SetUserRoleAsync(User user, string role)
         {
-            var roles = await CheckUserRolesAsync(user);
+            var roles = await this.CheckUserRolesAsync(user);
             if (roles.Count == 0)
             {
-                await _userManager.AddToRoleAsync(user, role);
-                var roleData = await _roleManager.FindByNameAsync(role);
+                await this.UserManager.AddToRoleAsync(user, role);
+                var roleData = await this.RoleManager.FindByNameAsync(role);
                 return RequestResponse.Success(roleData.Id);
             }
             else if (roles.Count > 0)
             {
-                await _userManager.RemoveFromRoleAsync(user, roles[0]);
-                await _userManager.AddToRoleAsync(user, role);
-                var roleData = await _roleManager.FindByNameAsync(role);
+                await this.UserManager.RemoveFromRoleAsync(user, roles[0]);
+                await this.UserManager.AddToRoleAsync(user, role);
+                var roleData = await this.RoleManager.FindByNameAsync(role);
                 return RequestResponse.Success(roleData.Id);
             }
 
@@ -107,11 +107,11 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public List<RoleResponse> GetRoles()
         {
-            var result = _roleManager.Roles
-                .TagWith(nameof(GetRoles))
+            var result = this.RoleManager.Roles
+                .TagWith(nameof(this.GetRoles))
                 .Where(x => x.Name != StringRoleResources.Admin &&
                     x.NormalizedName != StringRoleResources.AdminNormalized)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .ToList();
             return result;
         }
@@ -119,9 +119,9 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public List<RoleResponse> GetRolesForAdmin()
         {
-            var result = _roleManager.Roles
-                .TagWith(nameof(GetRolesForAdmin))
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+            var result = this.RoleManager.Roles
+                .TagWith(nameof(this.GetRolesForAdmin))
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .ToList();
             return result;
         }
@@ -129,10 +129,10 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public RoleResponse GetRoleById(int id)
         {
-            var result = _roleManager.Roles
-                .TagWith(nameof(GetRoleById))
-                .Where(_x => _x.Id == id)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+            var result = this.RoleManager.Roles
+                .TagWith(nameof(this.GetRoleById))
+                .Where(x => x.Id == id)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return result;
         }
@@ -140,10 +140,10 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public RoleResponse GetRoleByNormalizedName(string normalizedName)
         {
-            var result = _roleManager.Roles
-                .TagWith(nameof(GetRoleByNormalizedName))
-                .Where(_x => _x.NormalizedName == normalizedName)
-                .ProjectTo<RoleResponse>(_mapper.ConfigurationProvider)
+            var result = this.RoleManager.Roles
+                .TagWith(nameof(this.GetRoleByNormalizedName))
+                .Where(x => x.NormalizedName == normalizedName)
+                .ProjectTo<RoleResponse>(this.Mapper.ConfigurationProvider)
                 .FirstOrDefault();
             return result;
         }
@@ -151,56 +151,68 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> CreateRoleAsync(CreateRoleCommand command)
         {
-            var role = await _roleManager.FindByNameAsync(command.Name);
-            if (role != null) throw new Exception("The role was already created");
+            var role = await this.RoleManager.FindByNameAsync(command.Name);
+            if (role != null)
+            {
+                throw new Exception("The role was already created");
+            }
 
-            await _roleManager.CreateAsync(new Role
+            await this.RoleManager.CreateAsync(new Role
             {
                 Name = command.Name,
-                NormalizedName = command.Name.ToUpper()
+                NormalizedName = command.Name.ToUpper(),
             });
 
-            var roleData = await _roleManager.FindByNameAsync(command.Name);
+            var roleData = await this.RoleManager.FindByNameAsync(command.Name);
             return RequestResponse.Success(roleData.Id);
         }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand command)
         {
-            var existsRole = await _roleManager.FindByNameAsync(command.Name);
-            if (existsRole != null) throw new Exception("The new role already exists");
+            var existsRole = await this.RoleManager.FindByNameAsync(command.Name);
+            if (existsRole != null)
+            {
+                throw new Exception("The new role already exists");
+            }
 
-            var role = await _roleManager.FindByIdAsync(command.Id.ToString());
-            if (role == null) throw new Exception("The role was not created");
+            var role = await this.RoleManager.FindByIdAsync(command.Id.ToString());
+            if (role == null)
+            {
+                throw new Exception("The role was not created");
+            }
 
             role.Name = command.Name;
             role.NormalizedName = command.Name.ToUpper();
 
-            await _roleManager.UpdateAsync(role);
+            await this.RoleManager.UpdateAsync(role);
             return RequestResponse.Success(role.Id);
         }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteRoleAsync(int roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId.ToString());
-            if (role == null) throw new Exception("The role was not found");
+            var role = await this.RoleManager.FindByIdAsync(roleId.ToString());
+            if (role == null)
+            {
+                throw new Exception("The role was not found");
+            }
 
-            await _roleManager.DeleteAsync(role);
+            await this.RoleManager.DeleteAsync(role);
             return RequestResponse.Success(role.Id);
         }
 
         /// <inheritdoc/>
         public async Task<Role> FindRoleByIdAsync(int roleId)
         {
-            var result = await _roleManager.FindByIdAsync(roleId.ToString());
+            var result = await this.RoleManager.FindByIdAsync(roleId.ToString());
             return result;
         }
 
         /// <inheritdoc/>
         public async Task<Role> FindRoleByNameAsync(string name)
         {
-            var result = await _roleManager.FindByNameAsync(name);
+            var result = await this.RoleManager.FindByNameAsync(name);
             return result;
         }
     }

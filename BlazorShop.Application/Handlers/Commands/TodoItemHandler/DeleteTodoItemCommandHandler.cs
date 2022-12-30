@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteTodoItemCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteTodoItemCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{DeleteTodoItemCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<DeleteTodoItemCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DeleteTodoItemCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{DeleteTodoItemCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{DeleteTodoItemCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public DeleteTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteTodoItemCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{DeleteTodoItemCommandHandler}"/>.
+        /// </summary>
+        private ILogger<DeleteTodoItemCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="DeleteTodoItemCommand"/>.
@@ -43,19 +43,22 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 
             try
             {
-                var entity = _dbContext.TodoItems
+                var entity = this.DbContext.TodoItems
                     .TagWith(nameof(DeleteTodoItemCommandHandler))
                     .FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The todo list record does not exists in the database");
+                if (entity == null)
+                {
+                    throw new Exception("The todo list record does not exists in the database");
+                }
 
-                _dbContext.TodoItems.Remove(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.TodoItems.Remove(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
 
                 response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.DeleteTodoItemCommand);
+                this.Logger.LogError(ex, ErrorsManager.DeleteTodoItemCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.DeleteTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

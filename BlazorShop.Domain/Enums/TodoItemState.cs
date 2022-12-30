@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoItemState.cs" author="Beniamin Jitca">
+﻿// <copyright file="TodoItemState.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,24 @@ namespace BlazorShop.Domain.Enums
     /// </summary>
     public enum TodoItemState
     {
+        /// <summary>
+        /// The item was not started.
+        /// </summary>
         NotStarted,
+
+        /// <summary>
+        /// The item is in progress.
+        /// </summary>
         InProgress,
+
+        /// <summary>
+        /// The item was blocked.
+        /// </summary>
         Blocked,
-        Done
+
+        /// <summary>
+        /// The item was completed.
+        /// </summary>
+        Done,
     }
 }

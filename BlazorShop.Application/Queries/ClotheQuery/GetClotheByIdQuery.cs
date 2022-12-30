@@ -1,4 +1,4 @@
-﻿// <copyright file="GetClotheByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetClotheByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.ClotheQuery
     public class GetClotheByIdQuery : IRequest<Result<ClotheResponse>>
     {
         /// <summary>
-        /// The id of the clothe.
+        /// Gets or sets The id of the clothe.
         /// </summary>
         public int Id { get; set; }
     }

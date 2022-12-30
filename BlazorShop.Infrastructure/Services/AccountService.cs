@@ -1,4 +1,4 @@
-﻿// <copyright file="AccountService.cs" author="Beniamin Jitca">
+﻿// <copyright file="AccountService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,56 +10,63 @@ namespace BlazorShop.Infrastructure.Services
     public class AccountService : IAccountService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="AccountService"/> class.
         /// </summary>
-        private readonly UserManager<User> _userManager;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly RoleManager<Role> _roleManager;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly IConfiguration _configuration;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="userManager"></param>
-        /// <param name="roleManager"></param>
-        /// <param name="configuration"></param>
+        /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
+        /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
+        /// <param name="configuration">The instance of <see cref="IConfiguration"/> to use.</param>
         public AccountService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IConfiguration configuration)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _configuration = configuration;
+            this.UserManager = userManager;
+            this.RoleManager = roleManager;
+            this.Configuration = configuration;
         }
+
+        /// <summary>
+        /// Gets the instance of <see cref="UserManager{User}"/> to use.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="RoleManager{Role}"/> to use.
+        /// </summary>
+        private RoleManager<Role> RoleManager { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="IConfiguration"/> to use.
+        /// </summary>
+        private IConfiguration Configuration { get; }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> ChangePasswordUserAsync(ChangePasswordCommand changePassword)
         {
-            var user = await _userManager.FindByIdAsync(changePassword.UserId.ToString());
-            if (user == null) throw new Exception("The user does not exist");
+            var user = await this.UserManager.FindByIdAsync(changePassword.UserId.ToString());
+            if (user == null)
+            {
+                throw new Exception("The user does not exist");
+            }
 
-            if (!await _userManager.CheckPasswordAsync(user, changePassword.OldPassword))
+            if (!await this.UserManager.CheckPasswordAsync(user, changePassword.OldPassword))
+            {
                 throw new Exception("The credentials are not valid");
+            }
 
             if (!changePassword.NewPassword.Equals(changePassword.ConfirmNewPassword))
+            {
                 throw new Exception("Passwords do not match");
+            }
 
-            await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
+            await this.UserManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
             return RequestResponse.Success();
         }
 
         /// <inheritdoc/>
         public async Task<bool> CheckPasswordAsync(User user, string password)
         {
-            var result = await _userManager.CheckPasswordAsync(user, password);
+            var result = await this.UserManager.CheckPasswordAsync(user, password);
             return result;
         }
 
@@ -68,13 +75,13 @@ namespace BlazorShop.Infrastructure.Services
         {
             var jwtSettings = new JwtTokenConfig
             {
-                Secret = _configuration["JwtToken:SecretKey"],
-                Issuer = _configuration["JwtToken:Issuer"],
-                Audience = _configuration["JwtToken:Audience"],
+                Secret = this.Configuration["JwtToken:SecretKey"],
+                Issuer = this.Configuration["JwtToken:Issuer"],
+                Audience = this.Configuration["JwtToken:Audience"],
             };
             var key = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(jwtSettings.Secret));
 
-            var userRole = await _userManager.GetRolesAsync(user);
+            var userRole = await this.UserManager.GetRolesAsync(user);
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -90,7 +97,7 @@ namespace BlazorShop.Infrastructure.Services
                 Audience = jwtSettings.Audience,
                 Issuer = jwtSettings.Issuer,
                 Expires = expiresIn,
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
             };
             var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
 
@@ -98,27 +105,36 @@ namespace BlazorShop.Infrastructure.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpiresIn = (int)(expiresIn - DateTime.Now).TotalSeconds,
-                Successful = true
+                Successful = true,
             };
         }
 
         /// <inheritdoc/>
         public async Task<JwtTokenResponse> LoginAsync(LoginCommand login)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.Email == login.Email);
-            if (user == null) throw new Exception("Email / password incorrect");
+            var user = this.UserManager.Users.SingleOrDefault(u => u.Email == login.Email);
+            if (user == null)
+            {
+                throw new Exception("Email / password incorrect");
+            }
 
-            var passwordValid = await CheckPasswordAsync(user, login.Password);
-            if (passwordValid == false) throw new Exception("Email / password incorrect");
+            var passwordValid = await this.CheckPasswordAsync(user, login.Password);
+            if (passwordValid == false)
+            {
+                throw new Exception("Email / password incorrect");
+            }
 
-            return await GenerateToken(user);
+            return await this.GenerateToken(user);
         }
 
         /// <inheritdoc/>
         public async Task<JwtTokenResponse> RegisterAsync(RegisterCommand register)
         {
-            var existUser = _userManager.Users.SingleOrDefault(u => u.Email == register.Email);
-            if (existUser != null) throw new Exception("The user with the unique identifier already exists");
+            var existUser = this.UserManager.Users.SingleOrDefault(u => u.Email == register.Email);
+            if (existUser != null)
+            {
+                throw new Exception("The user with the unique identifier already exists");
+            }
 
             var newUser = new User
             {
@@ -129,28 +145,38 @@ namespace BlazorShop.Infrastructure.Services
                 IsActive = true,
             };
             if (!register.Password.Equals(register.ConfirmPassword))
+            {
                 throw new Exception("Passwords do not match");
+            }
 
-            await _userManager.CreateAsync(newUser, register.Password);
+            await this.UserManager.CreateAsync(newUser, register.Password);
 
-            var role = await _roleManager.FindByNameAsync(StringRoleResources.Default);
-            if (role == null) throw new Exception("The role does not exist");
+            var role = await this.RoleManager.FindByNameAsync(StringRoleResources.Default);
+            if (role == null)
+            {
+                throw new Exception("The role does not exist");
+            }
 
-            await _userManager.AddToRoleAsync(newUser, role.Name);
-            return await GenerateToken(newUser);
+            await this.UserManager.AddToRoleAsync(newUser, role.Name);
+            return await this.GenerateToken(newUser);
         }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> ResetPasswordUserAsync(ResetPasswordCommand resetPassword)
         {
-            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
-            if (user == null) throw new Exception("The user does not exist");
-            
-            if (!resetPassword.NewPassword.Equals(resetPassword.NewConfirmPassword))
-                throw new Exception("Passwords do not match");
+            var user = await this.UserManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null)
+            {
+                throw new Exception("The user does not exist");
+            }
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
+            if (!resetPassword.NewPassword.Equals(resetPassword.NewConfirmPassword))
+            {
+                throw new Exception("Passwords do not match");
+            }
+
+            var token = await this.UserManager.GeneratePasswordResetTokenAsync(user);
+            await this.UserManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
             return RequestResponse.Success();
         }
     }

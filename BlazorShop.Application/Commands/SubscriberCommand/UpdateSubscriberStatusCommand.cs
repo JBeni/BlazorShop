@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriberStatusCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberStatusCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.SubscriberCommand
     public class UpdateSubscriberStatusCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the stripe subscriber subscription.
+        /// Gets or sets The id of the stripe subscriber subscription.
         /// </summary>
         public string StripeSubscriberSubscriptionId { get; set; }
     }

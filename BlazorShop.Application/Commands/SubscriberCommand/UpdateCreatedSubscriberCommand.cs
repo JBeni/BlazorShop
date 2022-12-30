@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateCreatedSubscriberCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateCreatedSubscriberCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,27 @@ namespace BlazorShop.Application.Commands.SubscriberCommand
     public class UpdateCreatedSubscriberCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The date when the current period ends.
+        /// Gets or sets The date when the current period ends.
         /// </summary>
         public DateTime CurrentPeriodEnd { get; set; }
 
         /// <summary>
-        /// The date when the current period starts.
+        /// Gets or sets The date when the current period starts.
         /// </summary>
         public DateTime CurrentPeriodStart { get; set; }
 
         /// <summary>
-        /// The email of the customer.
+        /// Gets or sets The email of the customer.
         /// </summary>
         public string CustomerEmail { get; set; }
 
         /// <summary>
-        /// The id of the stripe subscriber subscription.
+        /// Gets or sets The id of the stripe subscriber subscription.
         /// </summary>
         public string StripeSubscriberSubscriptionId { get; set; }
 
         /// <summary>
-        /// The url of the invoice.
+        /// Gets or sets The url of the invoice.
         /// </summary>
         public string HostedInvoiceUrl { get; set; }
     }

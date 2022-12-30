@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,17 +10,17 @@ namespace BlazorShop.Application.Responses
     public class RoleResponse : IMapFrom<Role>
     {
         /// <summary>
-        /// The id of the role.
+        /// Gets or sets The id of the role.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The name of the role.
+        /// Gets or sets The name of the role.
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
-        /// The normalized name of the role.
+        /// Gets or sets The normalized name of the role.
         /// </summary>
         public string? NormalizedName { get; set; }
 

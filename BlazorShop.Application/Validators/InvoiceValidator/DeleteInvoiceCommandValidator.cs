@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteInvoiceCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteInvoiceCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.InvoiceValidator
         /// </summary>
         public DeleteInvoiceCommandValidator()
         {
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

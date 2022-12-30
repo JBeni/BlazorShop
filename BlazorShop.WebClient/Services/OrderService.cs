@@ -1,4 +1,4 @@
-﻿// <copyright file="OrderService.cs" author="Beniamin Jitca">
+﻿// <copyright file="OrderService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,44 +10,43 @@ namespace BlazorShop.WebClient.Services
     public class OrderService : IOrderService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public OrderService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<List<OrderResponse>> GetOrders(string userEmail)
         {
-            var response = await _httpClient.GetAsync($"Orders/orders/{userEmail}");
+            var response = await this.HttpClient.GetAsync($"Orders/orders/{userEmail}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<OrderResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -58,15 +57,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<OrderResponse> GetOrder(int id, string userEmail)
         {
-            var response = await _httpClient.GetAsync($"Orders/order/{id}/{userEmail}");
+            var response = await this.HttpClient.GetAsync($"Orders/order/{id}/{userEmail}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<OrderResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -77,19 +75,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddOrder(OrderResponse order)
         {
-            var response = await _httpClient.PostAsJsonAsync("Orders/order", order);
+            var response = await this.HttpClient.PostAsJsonAsync("Orders/order", order);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Order was added.", Severity.Success);
+                this.SnackBar.Add("The Order was added.", Severity.Success);
             }
 
             return result;
@@ -98,19 +95,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateOrder(OrderResponse order)
         {
-            var response = await _httpClient.PutAsJsonAsync("Orders/order", order);
+            var response = await this.HttpClient.PutAsJsonAsync("Orders/order", order);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Order was updated.", Severity.Success);
+                this.SnackBar.Add("The Order was updated.", Severity.Success);
             }
 
             return result;
@@ -119,19 +115,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteOrder(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Orders/order/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Orders/order/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Order was deleted.", Severity.Success);
+                this.SnackBar.Add("The Order was deleted.", Severity.Success);
             }
 
             return result;

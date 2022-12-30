@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateClotheCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateClotheCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
     public class UpdateClotheCommandHandler : IRequestHandler<UpdateClotheCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateClotheCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateClotheCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public UpdateClotheCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateClotheCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateClotheCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateClotheCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateClotheCommand"/>.
@@ -44,10 +43,13 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
 
             try
             {
-                var entity = _dbContext.Clothes
+                var entity = this.DbContext.Clothes
                     .TagWith(nameof(UpdateClotheCommandHandler))
                     .SingleOrDefault(d => d.Id == request.Id && d.IsActive == true);
-                if (entity == null) throw new Exception("The clothe does not exists");
+                if (entity == null)
+                {
+                    throw new Exception("The clothe does not exists");
+                }
 
                 entity.Name = request.Name;
                 entity.Description = request.Description;
@@ -56,13 +58,13 @@ namespace BlazorShop.Application.Handlers.Commands.ClotheHandler
                 entity.ImageName = request.ImageName;
                 entity.ImagePath = request.ImagePath;
 
-                _dbContext.Clothes.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Clothes.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateClotheCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateClotheCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateClotheCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

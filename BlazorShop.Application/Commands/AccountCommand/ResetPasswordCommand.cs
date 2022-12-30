@@ -1,4 +1,4 @@
-﻿// <copyright file="ResetPasswordCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="ResetPasswordCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,17 +10,17 @@ namespace BlazorShop.Application.Commands.AccountCommand
     public class ResetPasswordCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// The new password to be used.
+        /// Gets or sets The new password to be used.
         /// </summary>
         public string? NewPassword { get; set; }
 
         /// <summary>
-        /// The new confirmed password to be used.
+        /// Gets or sets The new confirmed password to be used.
         /// </summary>
         public string? NewConfirmPassword { get; set; }
     }

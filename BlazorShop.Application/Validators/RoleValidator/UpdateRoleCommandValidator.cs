@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateRoleCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateRoleCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,10 +14,10 @@ namespace BlazorShop.Application.Validators.RoleValidator
         /// </summary>
         public UpdateRoleCommandValidator()
         {
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
-            RuleFor(v => v.Name)
+            this.RuleFor(v => v.Name)
                 .MaximumLength(100).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null");
