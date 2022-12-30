@@ -1,28 +1,66 @@
-﻿namespace BlazorShop.Infrastructure.Persistence
+﻿// <copyright file="ApplicationDbContext.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The database context configurations and entities.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<User, Role, int,
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options for the db context.</param>
+        public ApplicationDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
 
+        /// <inheritdoc/>
         public DbSet<Cart> Carts { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Clothe> Clothes { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Invoice> Invoices { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Music> Musics { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Order> Orders { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Subscriber> Subscribers { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Subscription> Subscriptions { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<Receipt> Receipts { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<TodoItem> TodoItems { get; set; }
+
+        /// <inheritdoc/>
         public DbSet<TodoList> TodoLists { get; set; }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        /// <inheritdoc/>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
 
+        /// <summary>
+        /// Adding more settings to the db context.
+        /// </summary>
+        /// <param name="builder">The model builder of the db context.</param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

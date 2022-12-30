@@ -1,7 +1,18 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="InvoiceConfiguration.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Invoice"/>.
+    /// </summary>
     public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
     {
+        /// <summary>
+        /// A method to configure an entity.
+        /// </summary>
+        /// <param name="builder">The builder for configuring the entity metadata.</param>
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
             builder.ToTable("Invoices");

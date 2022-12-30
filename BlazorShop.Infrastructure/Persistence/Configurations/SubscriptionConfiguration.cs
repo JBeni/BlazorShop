@@ -1,7 +1,18 @@
-﻿namespace BlazorShop.Infrastructure.Persistence.Configurations
+﻿// <copyright file="SubscriptionConfiguration.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence.Configurations
 {
+    /// <summary>
+    /// The configuration for the entity <see cref="Subscription"/>.
+    /// </summary>
     public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
     {
+        /// <summary>
+        /// A method to configure an entity.
+        /// </summary>
+        /// <param name="builder">The builder for configuring the entity metadata.</param>
         public void Configure(EntityTypeBuilder<Subscription> builder)
         {
             builder.ToTable("Subscriptions");

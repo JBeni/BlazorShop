@@ -1,10 +1,17 @@
-﻿@page "/admin/Subscriptions/add"
+﻿@*
+  <copyright file="AddEditSubscription.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/Subscriptions/add"
 @page "/admin/Subscriptions/edit/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title Subscription</h1>
 <hr />
@@ -79,10 +86,18 @@
     protected string Title = "Add";
     public SubscriptionResponse Subscription = new();
 
-    protected override void OnInitialized() { }
+    public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -94,7 +109,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Save the subscription.
     /// </summary>
     protected async Task SaveSubscription()
     {
@@ -114,7 +129,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel.
     /// </summary>
     public void Cancel()
     {

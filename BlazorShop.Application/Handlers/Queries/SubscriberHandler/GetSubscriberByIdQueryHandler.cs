@@ -1,46 +1,76 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
+﻿// <copyright file="GetSubscriberByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetSubscriberByIdQuery, Result{SubscriberResponse}}"/>.
+    /// </summary>
     public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, Result<SubscriberResponse>>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetSubscriberByIdQueryHandler> _logger;
-        private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetSubscriberByIdQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetSubscriberByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetSubscriberByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetSubscriberByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetSubscriberByIdQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{SubscriberResponse}}"/>.</returns>
         public Task<Result<SubscriberResponse>> Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriberResponse>? response;
+
             try
             {
-                var result = _dbContext.Subscribers
-                    .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
+                var result = this.DbContext.Subscribers
+                    .TagWith(nameof(GetSubscriberByIdQueryHandler))
+                    .ProjectTo<SubscriberResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.CustomerId == request.UserId && x.Status == SubscriptionStatus.Active);
 
-                return Task.FromResult(new Result<SubscriberResponse>
+                response = new Result<SubscriberResponse>
                 {
                     Successful = true,
-                    Item = result ?? new SubscriberResponse()
-                });
+                    Item = result ?? new SubscriberResponse(),
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
-                return Task.FromResult(new Result<SubscriberResponse>
+                this.Logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
+                response = new Result<SubscriberResponse>
                 {
-                    Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                    Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

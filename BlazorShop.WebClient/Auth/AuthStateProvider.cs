@@ -1,100 +1,90 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+﻿// <copyright file="AuthStateProvider.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
 
 namespace BlazorShop.WebClient.Auth
 {
+    /// <summary>
+    /// A service to use the authentication state provider.
+    /// </summary>
     public class AuthStateProvider : AuthenticationStateProvider
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorage;
-        private readonly AuthenticationState _anonymous;
-        private readonly IConfiguration _configuration;
-        private readonly NavigationManager _navMagager;
-
-        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, IConfiguration configuration, NavigationManager navMagager)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthStateProvider"/> class.
+        /// </summary>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="localStorage">The instance of the <see cref="ILocalStorageService"/> to use.</param>
+        /// <param name="navMagager">The instance of the <see cref="NavigationManager"/> to use.</param>
+        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, NavigationManager navMagager)
         {
-            _httpClient = httpClient;
-            _localStorage = localStorage;
-            _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-            _configuration = configuration;
-            _navMagager = navMagager;
+            this.HttpClient = httpClient;
+            this.LocalStorage = localStorage;
+            this.Anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            this.NavMagager = navMagager;
         }
 
         /// <summary>
-        /// .
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ILocalStorageService"/> to use.
+        /// </summary>
+        private ILocalStorageService LocalStorage { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="AuthenticationState"/> to use.
+        /// </summary>
+        private AuthenticationState Anonymous { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="NavigationManager"/> to use.
+        /// </summary>
+        private NavigationManager NavMagager { get; }
+
+        /// <summary>
+        /// Authenticate the user if the user its not authenticated.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var token = await _localStorage.GetItemAsync<string>("authToken");
+            var token = await this.LocalStorage.GetItemAsync<string>("authToken");
 
-            if (string.IsNullOrWhiteSpace(token) || !this.IsCurrentTokenValid(token))
+            AuthenticationState? authenticationState;
+            if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(this.HttpClient.DefaultRequestHeaders.Authorization?.Parameter))
             {
                 this.NotifyUserLogout();
-                _navMagager.NavigateTo("/login");
-                return _anonymous;
+                authenticationState = this.Anonymous;
+            }
+            else
+            {
+                this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
+                authenticationState = new AuthenticationState(
+                        new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType")));
             }
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
-            return new AuthenticationState(
-                    new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType"))
-                );
+            return authenticationState;
         }
 
         /// <summary>
-        /// .
+        /// Notify the app that the user is authenticated.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="token">The bearer token value.</param>
         public void NotifyUserAuthentication(string token)
         {
             var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtTokenParser.ParseClaimsFromJwt(token), "jwtAuthType"));
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            NotifyAuthenticationStateChanged(authState);
+            this.NotifyAuthenticationStateChanged(authState);
         }
 
         /// <summary>
-        /// .
+        /// Logout the user and notify the application state.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
         public void NotifyUserLogout()
         {
-            var authState = Task.FromResult(_anonymous);
-            NotifyAuthenticationStateChanged(authState);
-        }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
-        private bool IsCurrentTokenValid(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ClockSkew = TimeSpan.FromSeconds(1),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtToken:SecretKey"])),
-                    RequireSignedTokens = true,
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true,
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidAudience = _configuration["JwtToken:Audience"],
-                    ValidIssuer = _configuration["JwtToken:Issuer"]
-                }, out SecurityToken validatedToken);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
+            var authState = Task.FromResult(this.Anonymous);
+            this.NotifyAuthenticationStateChanged(authState);
         }
     }
 }

@@ -1,10 +1,17 @@
-﻿@page "/cart"
+﻿@*
+  <copyright file="Cart.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/cart"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ICartService CartService
 @inject NavigationManager NavigationManager
+@inject HttpInterceptorService Interceptor
 
 <div class="body-container px-4 px-lg-0">
     <div class="container text-white py-5 text-center">
@@ -102,11 +109,14 @@
     private int userId { get; set; }
     List<CartResponse> cartItems = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -117,7 +127,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Deleting the item.
     /// </summary>
     private async Task DeleteItem(int id)
     {
@@ -126,7 +136,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the clothe quantity.
     /// </summary>
     private async Task UpdateClotheQuantity(CartResponse cart, int newAmount)
     {
@@ -135,7 +145,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Placing the order.
     /// </summary>
     private async Task PlaceOrder()
     {

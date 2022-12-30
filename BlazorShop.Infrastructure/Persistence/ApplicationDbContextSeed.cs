@@ -1,38 +1,48 @@
-﻿namespace BlazorShop.Infrastructure.Persistence
+﻿// <copyright file="ApplicationDbContextSeed.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Infrastructure.Persistence
 {
+    /// <summary>
+    /// The database seed data to run at runtime.
+    /// </summary>
     public static class ApplicationDbContextSeed
     {
         /// <summary>
-        /// .
+        /// Adding the roles data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
+        /// <param name="seedData">The seed data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedRolesAsync(RoleManager<Role> roleManager, RolesSeedModel seedData)
         {
             var adminRole = new Role
             {
                 Name = seedData.AdminRoleName,
-                NormalizedName = seedData.AdminRoleNormalizedName
+                NormalizedName = seedData.AdminRoleNormalizedName,
             };
             var defaultRole = new Role
             {
                 Name = seedData.DefaultRoleName,
-                NormalizedName = seedData.DefaultRoleNormalizedName
+                NormalizedName = seedData.DefaultRoleNormalizedName,
             };
             var userRole = new Role
             {
                 Name = seedData.UserRoleName,
-                NormalizedName = seedData.UserRoleNormalizedName
+                NormalizedName = seedData.UserRoleNormalizedName,
             };
 
             if (roleManager.Roles.All(r => r.Name != adminRole.Name))
             {
                 await roleManager.CreateAsync(adminRole);
             }
+
             if (roleManager.Roles.All(r => r.Name != defaultRole.Name))
             {
                 await roleManager.CreateAsync(defaultRole);
             }
+
             if (roleManager.Roles.All(r => r.Name != userRole.Name))
             {
                 await roleManager.CreateAsync(userRole);
@@ -40,10 +50,12 @@
         }
 
         /// <summary>
-        /// .
+        /// Adding the admin data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
+        /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
+        /// <param name="seedData">The seed data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedAdminUserAsync(UserManager<User> userManager, RoleManager<Role> roleManager, AdminSeedModel seedData)
         {
             var admin = new User
@@ -55,7 +67,10 @@
                 IsActive = true,
             };
             var adminRole = roleManager.Roles.Where(x => x.Name == seedData.RoleName).FirstOrDefault();
-            if (adminRole == null) throw new Exception("The selected role does not exists.");
+            if (adminRole == null)
+            {
+                throw new Exception("The selected role does not exists.");
+            }
 
             if (userManager.Users.All(u => u.Email != admin.Email))
             {
@@ -65,10 +80,10 @@
         }
 
         /// <summary>
-        /// .
+        /// Adding the clothes data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedClothesDataAsync(ApplicationDbContext context)
         {
             if (!context.Clothes.Any())
@@ -80,7 +95,7 @@
                     Price = new decimal(344.00), Amount = 12,
                     ImageName = "buy-3",
                     ImagePath = "buy-3.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -90,7 +105,7 @@
                     Amount = 3,
                     ImageName = "category-1",
                     ImagePath = "category-1.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -100,7 +115,7 @@
                     Amount = 16,
                     ImageName = "category-2",
                     ImagePath = "category-2.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -110,7 +125,7 @@
                     Amount = 6,
                     ImageName = "product-2",
                     ImagePath = "product-2.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -120,7 +135,7 @@
                     Amount = 13,
                     ImageName = "product-3",
                     ImagePath = "product-3.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -130,9 +145,9 @@
                     Amount = 10,
                     ImageName = "product-4",
                     ImagePath = "product-4.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
-                context.Clothes.Add(new Clothe 
+                context.Clothes.Add(new Clothe
                 {
                     Name = "Shoes 5",
                     Description = "as asd as  sadas sad sa sd asdas",
@@ -140,7 +155,7 @@
                     Amount = 3,
                     ImageName = "product-5",
                     ImagePath = "product-5.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -150,9 +165,9 @@
                     Amount = 4,
                     ImageName = "product-6",
                     ImagePath = "product-6.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
-                context.Clothes.Add(new Clothe 
+                context.Clothes.Add(new Clothe
                 {
                     Name = "Socks",
                     Description = "df fdg fdg dfg dfgdfgdfgfdgdfg",
@@ -160,7 +175,7 @@
                     Amount = 8,
                     ImageName = "product-7",
                     ImagePath = "product-7.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -170,7 +185,7 @@
                     Amount = 5,
                     ImageName = "product-10",
                     ImagePath = "product-10.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -180,7 +195,7 @@
                     Amount = 8,
                     ImageName = "product-11",
                     ImagePath = "product-11.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
                 context.Clothes.Add(new Clothe
                 {
@@ -190,7 +205,7 @@
                     Amount = 17,
                     ImageName = "product-12",
                     ImagePath = "product-12.jpg",
-                    IsActive = true
+                    IsActive = true,
                 });
 
                 await context.SaveChangesAsync();
@@ -198,10 +213,10 @@
         }
 
         /// <summary>
-        /// .
+        /// Adding the musics data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedMusicsDataAsync(ApplicationDbContext context)
         {
             if (!context.Musics.Any())
@@ -292,10 +307,10 @@
         }
 
         /// <summary>
-        /// .
+        /// Adding the subscription data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedSubscriptionsDataAsync(ApplicationDbContext context)
         {
             if (!context.Subscriptions.Any())
@@ -310,7 +325,7 @@
                     Options = "3 music songs included, Email support, 25% discount",
                     StripeSubscriptionId = "price_1KKjybAtLEfG8Jr34XNaPOQ7",
                     ImageName = "Basic Subscription",
-                    ImagePath = "basic_subscription.png"
+                    ImagePath = "basic_subscription.png",
                 });
                 context.Subscriptions.Add(new Subscription
                 {
@@ -322,19 +337,19 @@
                     Options = "5 music songs included, Priority Email support, 40% discount",
                     StripeSubscriptionId = "price_1KKk3pAtLEfG8Jr3bF6j5iC4",
                     ImageName = "Pro Subscription",
-                    ImagePath = "pro_subscription.png"
+                    ImagePath = "pro_subscription.png",
                 });
                 context.Subscriptions.Add(new Subscription
                 {
                     Name = "Enterprise",
-                    Price =50,
+                    Price = 50,
                     Currency = "usd",
                     CurrencySymbol = "$",
                     ChargeType = "month",
                     Options = "all music songs included, Phone and email support, Help center access",
                     StripeSubscriptionId = "price_1KKk4AAtLEfG8Jr3HmFEpJkm",
                     ImageName = "Enterprise Subscription",
-                    ImagePath = "enterprise_subscription.jpg"
+                    ImagePath = "enterprise_subscription.jpg",
                 });
 
                 await context.SaveChangesAsync();
@@ -342,10 +357,10 @@
         }
 
         /// <summary>
-        /// .
+        /// Adding the todos data when the app is deploy the first time.
         /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task SeedTodosDataAsync(ApplicationDbContext context)
         {
             if (!context.TodoLists.Any())

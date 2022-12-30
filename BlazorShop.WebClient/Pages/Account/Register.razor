@@ -1,4 +1,10 @@
-﻿@page "/register"
+﻿@*
+  <copyright file="Register.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/register"
 
 @inject NavigationManager NavManager
 @inject IAuthenticationService AuthenticationService
@@ -69,7 +75,7 @@
     private RegisterCommand registerCommand = new();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -82,7 +88,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Register the user.
     /// </summary>
     private async Task ExecuteRegister()
     {

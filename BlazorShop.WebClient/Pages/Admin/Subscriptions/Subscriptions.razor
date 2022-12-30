@@ -1,9 +1,16 @@
-﻿@page "/admin/subscriptions"
+﻿@*
+  <copyright file="Subscriptions.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/subscriptions"
 
 @attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriptionService SubscriptionService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1 class="display-3 font-weight-bold mb-0 text-primary mb-3">Subscriptions</h1>
 
@@ -106,16 +113,19 @@ else
     protected SubscriptionResponse subscription = new();
     protected List<SubscriptionResponse> subscriptionsList { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         await GetSubscriptions();
     }
 
     /// <summary>
-    /// .
+    /// Get the subscriptions.
     /// </summary>
     protected async Task GetSubscriptions()
     {
@@ -123,7 +133,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -131,7 +141,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the subscription.
     /// </summary>
     protected async Task DeleteSubscription(int Id)
     {
@@ -140,7 +150,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Navigation.
     /// </summary>
     private void NavigateToPage(int id)
     {

@@ -1,38 +1,30 @@
-﻿namespace BlazorShop.WebClient.AuthPolicies
+﻿// <copyright file="UserRoleHandler.cs" company="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// .
+    /// Handle the requirement of user role.
     /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
-    public class UserRoleRequirement : IAuthorizationRequirement
-    {
-        public string Role { get; }
-
-        public UserRoleRequirement(string role)
-        {
-            Role = role;
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class UserRoleHandler : AuthorizationHandler<UserRoleRequirement>
     {
+        /// <summary>
+        /// Search for the user role.
+        /// </summary>
+        /// <param name="context">The instance of the <see cref="AuthorizationHandlerContext"/>.</param>
+        /// <param name="requirement">The instance of the <see cref="UserRoleRequirement"/>.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, UserRoleRequirement requirement)
         {
-            if (!context.User.Identity.IsAuthenticated) return Task.CompletedTask;
-
-            var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.User);
-            if (userRole == null) return Task.CompletedTask;
-
-            if (userRole.Value.Equals(requirement.Role))
+            if (context.User.Identity.IsAuthenticated)
             {
-                context.Succeed(requirement);
-                return Task.CompletedTask;
+                var userRole = context.User.Claims.FirstOrDefault(c => c.Type == StringRoleResources.RoleClaim && c.Value == StringRoleResources.User);
+
+                if (userRole != null && userRole.Value.Equals(requirement.Role))
+                {
+                    context.Succeed(requirement);
+                }
             }
 
             return Task.CompletedTask;

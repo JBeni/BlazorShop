@@ -1,40 +1,69 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
+﻿// <copyright file="UpdateSubscriberStatusCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.SubscriberHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{UpdateSubscriberStatusCommand, RequestResponse}"/>.
+    /// </summary>
     public class UpdateSubscriberStatusCommandHandler : IRequestHandler<UpdateSubscriberStatusCommand, RequestResponse>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<UpdateSubscriberStatusCommandHandler> _logger;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateSubscriberStatusCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateSubscriberStatusCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateSubscriberStatusCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateSubscriberStatusCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateSubscriberStatusCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="UpdateSubscriberStatusCommand"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(UpdateSubscriberStatusCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var entity = _dbContext.Subscribers.FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
-                if (entity == null) throw new Exception("The subscriber does not exists");
+                var entity = this.DbContext.Subscribers
+                    .TagWith(nameof(UpdateSubscriberStatusCommandHandler))
+                    .FirstOrDefault(x => x.StripeSubscriberSubscriptionId == request.StripeSubscriberSubscriptionId);
+                if (entity == null)
+                {
+                    throw new Exception("The subscriber does not exists");
+                }
 
                 entity.Status = SubscriptionStatus.Inactive;
 
-                _dbContext.Subscribers.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                this.DbContext.Subscribers.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateSubscriberStatusCommand);
-                return RequestResponse.Failure($"{ErrorsManager.UpdateSubscriberStatusCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                this.Logger.LogError(ex, ErrorsManager.UpdateSubscriberStatusCommand);
+                response = RequestResponse.Failure($"{ErrorsManager.UpdateSubscriberStatusCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

@@ -1,3 +1,10 @@
+﻿// <copyright file="Program.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+/// <summary>
+/// The configurations for the Core Web API.
+/// </summary>
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -39,18 +46,17 @@ try
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ClockSkew = TimeSpan.FromMinutes(5),
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
+                ClockSkew = TimeSpan.FromSeconds(1),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(builder.Configuration["JwtToken:SecretKey"])),
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
                 ValidateLifetime = true,
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidAudience = builder.Configuration["JwtToken:Audience"],
-                ValidIssuer = builder.Configuration["JwtToken:Issuer"]
+                ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             };
         });
-
 
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
@@ -67,6 +73,7 @@ try
             {
                 context.Database.Migrate();
             }
+
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<Role>>();
 
@@ -119,7 +126,7 @@ try
     app.UseRouting();
 
     app.UseMiddleware<JwtTokenMiddleware>();
-    
+
     app.UseSerilogRequestLogging();
 
     app.UseAuthentication();
@@ -134,13 +141,15 @@ try
         context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
         context.Response.Headers.Add("Referrer-Policy", "same-origin");
         context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
-        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src " +
-            "self  " +
-            "https://maxcdn.bootstrapcdn.com  " +
-            "https://login.microsoftonline.com " +
-            "https://sshmantest.azurewebsites.net " +
-            "https://code.jquery.com https://dc.services.visualstudio.com " +
-            " 'unsafe-inline' 'unsafe-eval'");
+        #pragma warning disable SA1118 // Parameter should not span multiple lines
+        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src "
+            + "self  "
+            + "https://maxcdn.bootstrapcdn.com  "
+            + "https://login.microsoftonline.com "
+            + "https://sshmantest.azurewebsites.net "
+            + "https://code.jquery.com https://dc.services.visualstudio.com "
+            + " 'unsafe-inline' 'unsafe-eval'");
+        #pragma warning restore SA1118 // Parameter should not span multiple lines
         context.Response.Headers.Add("SameSite", "Strict");
         context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
         await next();

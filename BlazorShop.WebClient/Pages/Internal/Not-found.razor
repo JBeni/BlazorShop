@@ -1,0 +1,28 @@
+﻿@*
+  <copyright file="not-found.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/not-found"
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<h3 class="mb-3">Not Found</h3>
+
+<div class="d-flex justify-content-center" style="margin-top: 100px;">
+    <h4 style="font-size: 45px;"><em>The requested resource was not found....</em></h4>
+</div>
+
+@code {
+
+    /// <summary>
+    /// Initialize the component on load.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await this.AuthService.Logout();
+    }
+}

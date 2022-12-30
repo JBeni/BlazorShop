@@ -1,61 +1,66 @@
-﻿namespace BlazorShop.WebClient.Interfaces
+﻿// <copyright file="IUserService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Interfaces
 {
+    /// <summary>
+    /// The service to interact with the user.
+    /// </summary>
     public interface IUserService
     {
         /// <summary>
-        /// .
+        /// Get the users.
         /// </summary>
-        /// <param name="todoItem">The required todo item.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<UserResponse>> GetUsers();
 
         /// <summary>
-        /// .
+        /// Get the inactive users.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<UserResponse>> GetUsersInactive();
 
         /// <summary>
         /// .
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id of the user.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<UserResponse> GetUser(int id);
 
         /// <summary>
-        /// .
+        /// Activate the user.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="userId">The id of the user.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> ActivateUser(int userId);
 
         /// <summary>
-        /// .
+        /// Add an user.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="user">The user data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> AddUser(UserResponse user);
 
         /// <summary>
-        /// .
+        /// Update the user.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="user">The user data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> UpdateUser(UserResponse user);
 
         /// <summary>
-        /// .
+        /// Update the user email.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="user">The user data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user);
 
         /// <summary>
-        /// .
+        /// Delete the user.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id of the user.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> DeleteUser(int id);
     }
 }

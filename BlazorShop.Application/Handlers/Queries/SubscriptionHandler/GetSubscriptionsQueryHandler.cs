@@ -1,46 +1,76 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
+﻿// <copyright file="GetSubscriptionsQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetSubscriptionsQuery, Result{SubscriptionResponse}}"/>.
+    /// </summary>
     public class GetSubscriptionsQueryHandler : IRequestHandler<GetSubscriptionsQuery, Result<SubscriptionResponse>>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetSubscriptionsQueryHandler> _logger;
-        private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetSubscriptionsQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetSubscriptionsQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetSubscriptionsQueryHandler(IApplicationDbContext dbContext, ILogger<GetSubscriptionsQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetSubscriptionsQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetSubscriptionsQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetSubscriptionsQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{SubscriptionResponse}}"/>.</returns>
         public Task<Result<SubscriptionResponse>> Handle(GetSubscriptionsQuery request, CancellationToken cancellationToken)
         {
+            Result<SubscriptionResponse>? response;
+
             try
             {
-                var result = _dbContext.Subscriptions
-                    .ProjectTo<SubscriptionResponse>(_mapper.ConfigurationProvider)
+                var result = this.DbContext.Subscriptions
+                    .TagWith(nameof(GetSubscriptionsQueryHandler))
+                    .ProjectTo<SubscriptionResponse>(this.Mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<SubscriptionResponse>
+                response = new Result<SubscriptionResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<SubscriptionResponse>()
-                });
+                    Items = result ?? new List<SubscriptionResponse>(),
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetSubscriptionsQuery);
-                return Task.FromResult(new Result<SubscriptionResponse>
+                this.Logger.LogError(ex, ErrorsManager.GetSubscriptionsQuery);
+                response = new Result<SubscriptionResponse>
                 {
-                    Error = $"{ErrorsManager.GetSubscriptionsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                    Error = $"{ErrorsManager.GetSubscriptionsQuery}. {ex.Message}. {ex.InnerException?.Message}",
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

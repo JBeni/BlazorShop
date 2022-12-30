@@ -1,9 +1,16 @@
-﻿@page "/receipts"
+﻿@*
+  <copyright file="Receipts.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/receipts"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IReceiptService ReceiptService
+@inject HttpInterceptorService Interceptor
 
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded">
@@ -83,11 +90,14 @@
     protected string SearchString { get; set; } = string.Empty;
     private string userEmail { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -98,7 +108,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the receipts.
     /// </summary>
     public async Task GetReceipts(string userEmail)
     {
@@ -107,7 +117,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Filter the receipts.
     /// </summary>
     protected void FilterReceipts()
     {
@@ -122,7 +132,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

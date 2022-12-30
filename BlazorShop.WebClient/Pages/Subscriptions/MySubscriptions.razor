@@ -1,4 +1,10 @@
-﻿@page "/subscriptions"
+﻿@*
+  <copyright file="MySubscriptions.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/subscriptions"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
@@ -8,6 +14,7 @@
 @inject IStripeService StripeService
 @inject HttpClient HttpClient
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <main class="container">
     <div class="col-xxl-12 d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded mb-5">
@@ -72,7 +79,7 @@
                                                     </ul>
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Subscriptions"
                                                         Color="Color.Success"
-                                                        @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
+                                                       @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
                                                             @Title @subscription.Name Plan
                                                     </MudButton>
                                                 </div>
@@ -223,11 +230,14 @@
     private List<SubscriberResponse> subscriptionsInactive = new();
     protected List<SubscriberResponse> searchSubscriptionsInactive = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -241,7 +251,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Getting the subscriptions.
     /// </summary>
     protected async Task GetSubscriptions()
     {
@@ -249,7 +259,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the active subscription.
     /// </summary>
     public async Task GetActveSubscription(int userId)
     {
@@ -262,7 +272,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel the membership.
     /// </summary>
     public async Task CancelMembership(string stripeSubscriptionCreationId)
     {
@@ -274,7 +284,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the user subscriptions.
     /// </summary>
     public async Task GetUserSubscriptions(int userId)
     {
@@ -283,7 +293,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Activate the membership.
     /// </summary>
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
@@ -315,7 +325,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Filter the subscriptions.
     /// </summary>
     protected void FilterSubscriptions()
     {
@@ -330,7 +340,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

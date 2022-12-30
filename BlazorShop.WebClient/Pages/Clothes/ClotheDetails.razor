@@ -1,10 +1,17 @@
-﻿@page "/clothes/view/{Id:int}"
+﻿@*
+  <copyright file="ClotheDetails.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/clothes/view/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
 @inject ICartService CartService
+@inject HttpInterceptorService Interceptor
 
 <h3>View Clothe Details</h3>
 
@@ -47,11 +54,14 @@ else
     public int UserId { get; set; }
     public ClotheResponse clothe = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -60,7 +70,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -71,7 +81,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Add item to cart.
     /// </summary>
     private async Task AddToCart(ClotheResponse clothe)
     {

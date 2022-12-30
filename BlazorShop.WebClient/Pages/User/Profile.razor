@@ -1,10 +1,17 @@
-﻿@page "/profile"
+﻿@*
+  <copyright file="Profile.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/profile"
 
 @attribute [Authorize]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IUserService UserService
 @inject IAccountService AccountService
+@inject HttpInterceptorService Interceptor
 
 <h1>User Profile</h1>
 
@@ -202,11 +209,14 @@
     protected ChangePasswordCommand changePassword = new();
     protected UpdateUserEmailCommand updateEmail = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -217,7 +227,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the user email.
     /// </summary>
     private async Task UpdateUserEmail()
     {
@@ -233,7 +243,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the user.
     /// </summary>
     private async Task UpdateUser()
     {
@@ -244,7 +254,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Changing the user password.
     /// </summary>
     private async Task ChangePassword()
     {

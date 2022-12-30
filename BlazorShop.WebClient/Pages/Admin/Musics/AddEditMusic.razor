@@ -1,10 +1,17 @@
-﻿@page "/admin/musics/add"
+﻿@*
+  <copyright file="AddEditMusic.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/musics/add"
 @page "/admin/musics/edit/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IMusicService MusicService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title Music</h1>
 <hr />
@@ -82,10 +89,18 @@
     protected string Title = "Add";
     public MusicResponse music = new();
 
-    protected override void OnInitialized() { }
+    public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -97,7 +112,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Save the music.
     /// </summary>
     protected async Task SaveMusic()
     {
@@ -117,7 +132,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel.
     /// </summary>
     public void Cancel()
     {

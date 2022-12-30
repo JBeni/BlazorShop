@@ -1,88 +1,95 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="RolesController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Roles.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}")]
     public class RolesController : ApiControllerBase
     {
         /// <summary>
-        /// 
+        /// Create a role.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPost("role")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Update a role.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPut("role")]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Delete a role.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the role.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpDelete("role/{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
-            var result = await Mediator.Send(new DeleteRoleCommand { Id = id });
+            var result = await this.Mediator.Send(new DeleteRoleCommand { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the role.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the role.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("role/{id}")]
         public async Task<IActionResult> GetRoleById(int id)
         {
-            var result = await Mediator.Send(new GetRoleByIdQuery { Id = id });
+            var result = await this.Mediator.Send(new GetRoleByIdQuery { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the user roles for a non admin role.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles()
         {
-            var result = await Mediator.Send(new GetRolesQuery { });
+            var result = await this.Mediator.Send(new GetRolesQuery { });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the roles for an admin user.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("rolesAdmin")]
         public async Task<IActionResult> GetRolesForAdmin()
         {
-            var result = await Mediator.Send(new GetRolesForAdminQuery { });
+            var result = await this.Mediator.Send(new GetRolesForAdminQuery { });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
     }
 }

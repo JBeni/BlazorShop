@@ -1,56 +1,63 @@
-﻿namespace BlazorShop.Application.Responses
+﻿// <copyright file="CartResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Responses
 {
+    /// <summary>
+    /// A Cart response model.
+    /// </summary>
     public class CartResponse : IMapFrom<Cart>
     {
         /// <summary>
-        /// 
+        /// Gets or sets The id of the cart.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The name of the cart.
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The price of the cart.
         /// </summary>
         public decimal Price { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The amount of the cart.
         /// </summary>
         public int Amount { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The id of the clothe.
         /// </summary>
         public int ClotheId { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The name of the clothe.
         /// </summary>
         public string ClotheName { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The image name of the clothe.
         /// </summary>
         public string ClotheImageName { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The image path of the clothe.
         /// </summary>
         public string ClotheImagePath { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets The id of the user.
         /// </summary>
         public int UserId { get; set; }
 
         /// <summary>
-        /// .
+        /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
-        /// <param name="profile"></param>
+        /// <param name="profile">The profile to use for the mapping operation.</param>
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Cart, CartResponse>()

@@ -1,24 +1,46 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
+﻿// <copyright file="CreateInvoiceCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.InvoiceHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{CreateInvoiceCommand, RequestResponse}"/>.
+    /// </summary>
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, RequestResponse>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<CreateInvoiceCommandHandler> _logger;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateInvoiceCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateInvoiceCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateInvoiceCommandHandler(IApplicationDbContext dbContext, ILogger<CreateInvoiceCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateInvoiceCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateInvoiceCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="CreateInvoiceCommand"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Invoice
@@ -30,15 +52,17 @@
                     Quantity = request.Quantity,
                 };
 
-                _dbContext.Invoices.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                this.DbContext.Invoices.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateInvoiceCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                this.Logger.LogError(ex, ErrorsManager.CreateInvoiceCommand);
+                response = RequestResponse.Failure($"{ErrorsManager.CreateInvoiceCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

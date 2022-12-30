@@ -1,24 +1,46 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
+﻿// <copyright file="CreateReceiptCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{CreateReceiptCommand, RequestResponse}"/>.
+    /// </summary>
     public class CreateReceiptCommandHandler : IRequestHandler<CreateReceiptCommand, RequestResponse>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<CreateReceiptCommandHandler> _logger;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateReceiptCommandHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateReceiptCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateReceiptCommandHandler(IApplicationDbContext dbContext, ILogger<CreateReceiptCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateReceiptCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateReceiptCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="CreateReceiptCommand"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(CreateReceiptCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
                 var entity = new Receipt
@@ -29,15 +51,17 @@
                     ReceiptUrl = request.ReceiptUrl,
                 };
 
-                _dbContext.Receipts.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                return RequestResponse.Success(entity.Id);
+                this.DbContext.Receipts.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
+                response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateReceiptCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                this.Logger.LogError(ex, ErrorsManager.CreateReceiptCommand);
+                response = RequestResponse.Failure($"{ErrorsManager.CreateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

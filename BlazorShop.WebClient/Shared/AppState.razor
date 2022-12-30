@@ -1,4 +1,10 @@
-﻿@inject IJSInProcessRuntime JS
+﻿@*
+  <copyright file="AppState.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@inject IJSInProcessRuntime JS
 
 <CascadingValue Value=this>
     @ChildContent
@@ -24,8 +30,8 @@
 	}
 
     /// <summary>
-    /// .
-    /// </summary>
+	/// Initialize the component on load.
+	/// </summary>
 	protected override void OnInitialized()
 	{
 		var value = JS.Invoke<string>(JsInteropConstants.GetSessionStorage, nameof(CurrentCount));

@@ -1,75 +1,82 @@
-﻿namespace BlazorShop.WebApi.Controllers
+﻿// <copyright file="InvoicesController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebApi.Controllers
 {
+    /// <summary>
+    /// Controller for Invoices.
+    /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class InvoicesController : ApiControllerBase
     {
         /// <summary>
-        /// 
+        /// Create the invoice.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPost("invoice")]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Update the invoice.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPut("invoice")]
         public async Task<IActionResult> UpdateInvoice([FromBody] UpdateInvoiceCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Delete the invoice.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the invoice.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpDelete("invoice/{id}")]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
-            var result = await Mediator.Send(new DeleteInvoiceCommand { Id = id });
+            var result = await this.Mediator.Send(new DeleteInvoiceCommand { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the invoice.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the invoice.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("invoice/{id}")]
         public async Task<IActionResult> GetInvoice(int id)
         {
-            var result = await Mediator.Send(new GetInvoiceByIdQuery { Id = id });
+            var result = await this.Mediator.Send(new GetInvoiceByIdQuery { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the invoices.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet("invoices")]
         public async Task<IActionResult> GetInvoices()
         {
-            var result = await Mediator.Send(new GetInvoicesQuery { });
+            var result = await this.Mediator.Send(new GetInvoicesQuery { });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
     }
 }

@@ -1,46 +1,76 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
+﻿// <copyright file="GetTodoListsQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetTodoListsQuery, Result{TodoListResponse}}"/>.
+    /// </summary>
     public class GetTodoListsQueryHandler : IRequestHandler<GetTodoListsQuery, Result<TodoListResponse>>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetTodoListsQueryHandler> _logger;
-        private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTodoListsQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetTodoListsQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetTodoListsQueryHandler(IApplicationDbContext dbContext, ILogger<GetTodoListsQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetTodoListsQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetTodoListsQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetTodoListsQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{TodoListResponse}}"/>.</returns>
         public Task<Result<TodoListResponse>> Handle(GetTodoListsQuery request, CancellationToken cancellationToken)
         {
+            Result<TodoListResponse>? response;
+
             try
             {
-                var result = _dbContext.TodoLists
-                    .ProjectTo<TodoListResponse>(_mapper.ConfigurationProvider)
+                var result = this.DbContext.TodoLists
+                    .TagWith(nameof(GetTodoListsQueryHandler))
+                    .ProjectTo<TodoListResponse>(this.Mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<TodoListResponse>
+                response = new Result<TodoListResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<TodoListResponse>()
-                });
+                    Items = result ?? new List<TodoListResponse>(),
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetTodoListsQuery);
-                return Task.FromResult(new Result<TodoListResponse>
+                this.Logger.LogError(ex, ErrorsManager.GetTodoListsQuery);
+                response = new Result<TodoListResponse>
                 {
-                    Error = $"{ErrorsManager.GetTodoListsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                    Error = $"{ErrorsManager.GetTodoListsQuery}. {ex.Message}. {ex.InnerException?.Message}",
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

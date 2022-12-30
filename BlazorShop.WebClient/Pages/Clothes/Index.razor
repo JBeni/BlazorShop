@@ -1,10 +1,17 @@
-﻿@page "/clothes"
+﻿@*
+  <copyright file="Index.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/clothes"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IClotheService ClotheService
 @inject ICartService CartService
+@inject HttpInterceptorService Interceptor
 
 <h3>Clothes Shop</h3>
 
@@ -79,11 +86,14 @@ else
     protected string SearchString { get; set; } = string.Empty;
     private int UserId { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         clothesList = new List<ClotheResponse>();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
@@ -95,7 +105,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the clothes.
     /// </summary>
     protected async Task GetClothes()
     {
@@ -104,7 +114,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Add item to cart.
     /// </summary>
     private async Task AddToCart(ClotheResponse clothe)
     {
@@ -120,7 +130,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Filter the clothes.
     /// </summary>
     protected void FilterClothes()
     {
@@ -135,7 +145,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

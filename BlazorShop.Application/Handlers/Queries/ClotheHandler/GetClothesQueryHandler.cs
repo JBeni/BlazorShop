@@ -1,47 +1,77 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
+﻿// <copyright file="GetClothesQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetClothesQuery, Result{ClotheResponse}}"/>.
+    /// </summary>
     public class GetClothesQueryHandler : IRequestHandler<GetClothesQuery, Result<ClotheResponse>>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetClothesQueryHandler> _logger;
-        private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetClothesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetClothesQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetClothesQueryHandler(IApplicationDbContext dbContext, ILogger<GetClothesQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetClothesQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetClothesQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetClothesQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{ClotheResponse}}"/>.</returns>
         public Task<Result<ClotheResponse>> Handle(GetClothesQuery request, CancellationToken cancellationToken)
         {
+            Result<ClotheResponse>? response;
+
             try
             {
-                var result = _dbContext.Clothes
+                var result = this.DbContext.Clothes
+                    .TagWith(nameof(GetClothesQueryHandler))
                     .Where(x => x.IsActive == true)
-                    .ProjectTo<ClotheResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ClotheResponse>(this.Mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<ClotheResponse>
+                response = new Result<ClotheResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<ClotheResponse>()
-                });
+                    Items = result ?? new List<ClotheResponse>(),
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetClothesQuery);
-                return Task.FromResult(new Result<ClotheResponse>
+                this.Logger.LogError(ex, ErrorsManager.GetClothesQuery);
+                response = new Result<ClotheResponse>
                 {
-                    Error = $"{ErrorsManager.GetClothesQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                    Error = $"{ErrorsManager.GetClothesQuery}. {ex.Message}. {ex.InnerException?.Message}",
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

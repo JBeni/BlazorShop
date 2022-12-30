@@ -1,34 +1,57 @@
-﻿namespace BlazorShop.Application.Handlers.Commands.RoleHandler
+﻿// <copyright file="CreateRoleCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Commands.RoleHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{CreateRoleCommand, RequestResponse}"/>.
+    /// </summary>
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, RequestResponse>
     {
-        private readonly IRoleService _roleService;
-        private readonly ILogger<CreateRoleCommandHandler> _logger;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateRoleCommandHandler"/> class.
+        /// </summary>
+        /// <param name="roleService">Gets An instance of <see cref="IRoleService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateRoleCommandHandler(IRoleService roleService, ILogger<CreateRoleCommandHandler> logger)
         {
-            _roleService = roleService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.RoleService = roleService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IRoleService"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IRoleService RoleService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateRoleCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateRoleCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="CreateRoleCommand"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         public async Task<RequestResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
+            RequestResponse? response;
+
             try
             {
-                var result = await _roleService.CreateRoleAsync(request);
-                return result;
+                response = await this.RoleService.CreateRoleAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateRoleCommand);
-                return RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
+                this.Logger.LogError(ex, ErrorsManager.CreateRoleCommand);
+                response = RequestResponse.Failure($"{ErrorsManager.CreateRoleCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
+
+            return response;
         }
     }
 }

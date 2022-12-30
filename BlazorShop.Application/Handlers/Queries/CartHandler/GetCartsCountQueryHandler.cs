@@ -1,34 +1,64 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.CartHandler
+﻿// <copyright file="GetCartsCountQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetCartsCountQuery, int}"/>.
+    /// </summary>
     public class GetCartsCountQueryHandler : IRequestHandler<GetCartsCountQuery, int>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetCartsCountQueryHandler> _logger;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCartsCountQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetCartsCountQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetCartsCountQueryHandler(IApplicationDbContext dbContext, ILogger<GetCartsCountQueryHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetCartsCountQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetCartsCountQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetCartsCountQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{int}"/>.</returns>
         public Task<int> Handle(GetCartsCountQuery request, CancellationToken cancellationToken)
         {
+            var result = 0;
+
             try
             {
-                var result = _dbContext.Carts.Where(x => x.User.Id == request.UserId).Count();
-                return Task.FromResult(result);
+                result = this.DbContext.Carts
+                    .TagWith(nameof(GetCartsCountQueryHandler))
+                    .Where(x => x.User.Id == request.UserId).Count();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetCartsCountQuery);
-                return Task.FromResult(0);
+                this.Logger.LogError(ex, ErrorsManager.GetCartsCountQuery);
             }
+
+            return Task.FromResult(result);
         }
     }
 }

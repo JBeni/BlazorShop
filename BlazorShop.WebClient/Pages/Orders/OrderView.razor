@@ -1,10 +1,17 @@
-﻿@page "/orders/view/{Id:int}"
+﻿@*
+  <copyright file="OrderView.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/orders/view/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrderService OrderService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 @if (order.Id > 0)
 {
@@ -95,11 +102,14 @@ else
     protected OrderResponse order = new();
     protected List<InvoiceResponse> orderItems = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
         if (!user.Identity.IsAuthenticated) return;
@@ -107,7 +117,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -122,7 +132,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Going to previous page.
     /// </summary>
     private void GoBack()
     {

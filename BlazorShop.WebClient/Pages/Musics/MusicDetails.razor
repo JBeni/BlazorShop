@@ -1,8 +1,15 @@
-﻿@page "/musics/view/{Id:int}"
+﻿@*
+  <copyright file="MusicDetails.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/musics/view/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject IMusicService MusicService
+@inject HttpInterceptorService Interceptor
 
 <h3 class="text-center">View Music Details</h3>
 
@@ -40,8 +47,18 @@ else
     public int Id { get; set; }
     public MusicResponse music = new();
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {

@@ -1,108 +1,134 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="SubscriptionService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="ISubscriptionService"/>.
+    /// </summary>
     public class SubscriptionService : ISubscriptionService
     {
-        private readonly HttpClient _httpClient;
-        private readonly ISnackbar _snackBar;
-        private readonly JsonSerializerOptions _options;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionService"/> class.
+        /// </summary>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public SubscriptionService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<List<SubscriptionResponse>> GetSubscriptions()
         {
-            var response = await _httpClient.GetAsync("Subscriptions/subscriptions");
+            var response = await this.HttpClient.GetAsync("Subscriptions/subscriptions");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return null;
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
-            return result.Items;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
         public async Task<SubscriptionResponse> GetSubscription(int id)
         {
-            var response = await _httpClient.GetAsync($"Subscriptions/subscription/{id}");
+            var response = await this.HttpClient.GetAsync($"Subscriptions/subscription/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriptionResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return null;
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
-            return result.Item;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Item;
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> AddSubscription(SubscriptionResponse Subscription)
+        public async Task<RequestResponse> AddSubscription(SubscriptionResponse subscription)
         {
-            var response = await _httpClient.PostAsJsonAsync("Subscriptions/subscription", Subscription);
+            var response = await this.HttpClient.PostAsJsonAsync("Subscriptions/subscription", subscription);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return result;
+                this.SnackBar.Add(result.Error, Severity.Error);
+            }
+            else
+            {
+                this.SnackBar.Add("The Subscription was added.", Severity.Success);
             }
 
-            _snackBar.Add("The Subscription was added.", Severity.Success);
             return result;
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> UpdateSubscription(SubscriptionResponse Subscription)
+        public async Task<RequestResponse> UpdateSubscription(SubscriptionResponse subscription)
         {
-            var response = await _httpClient.PutAsJsonAsync("Subscriptions/subscription", Subscription);
+            var response = await this.HttpClient.PutAsJsonAsync("Subscriptions/subscription", subscription);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return result;
+                this.SnackBar.Add(result.Error, Severity.Error);
+            }
+            else
+            {
+                this.SnackBar.Add("The Subscription was updated.", Severity.Success);
             }
 
-            _snackBar.Add("The Subscription was updated.", Severity.Success);
             return result;
         }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteSubscription(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Subscriptions/subscription/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Subscriptions/subscription/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return result;
+                this.SnackBar.Add(result.Error, Severity.Error);
+            }
+            else
+            {
+                this.SnackBar.Add("The Subscription was deleted.", Severity.Success);
             }
 
-            _snackBar.Add("The Subscription was deleted.", Severity.Success);
             return result;
         }
     }

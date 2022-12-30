@@ -1,4 +1,10 @@
-﻿@if (State.Initialised)
+﻿@*
+  <copyright file="TodoItems.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@if (State.Initialised)
 {
 	<div class="clearfix">
 		<h2 class="float-start">@State.SelectedList.Title</h2>
@@ -24,7 +30,7 @@
 						}
 						else
 						{
-							<input @ref="_titleInput" type="text" class="form-control item-input-control" @bind="item.Title" @onblur="SaveItem" />
+							<input @ref="TitleInput" type="text" class="form-control item-input-control" @bind="item.Title" @onblur="SaveItem" />
 						}
 					</div>
 				</div>
@@ -35,7 +41,7 @@
 		</li>
 	</ul>
 
-	<div @ref="_listOptionsModal" class="modal fade" id="listOptionsModal" tabindex="-1" aria-labelledby="listOptionsModalLabel" aria-hidden="true">
+	<div @ref="ListOptionsModal" class="modal fade" id="listOptionsModal" tabindex="-1" aria-labelledby="listOptionsModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -52,7 +58,7 @@
 								<label for="titleInput">Title</label>
 							</div>
 							<div class="col-auto">
-								<input id="titleInput" @ref="_titleInput" @bind-value="@State.SelectedList.Title" type="text" class="form-control" placeholder="Title..." />
+								<input id="titleInput" @ref="TitleInput" @bind-value="@State.SelectedList.Title" type="text" class="form-control" placeholder="Title..." />
 							</div>
 							<div class="col-auto">
 								<ValidationMessage For="@(() => State.SelectedList.Title)" />

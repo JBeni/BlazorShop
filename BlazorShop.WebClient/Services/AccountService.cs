@@ -1,34 +1,58 @@
-﻿namespace BlazorShop.WebClient.Services
+﻿// <copyright file="AccountService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.WebClient.Services
 {
+    /// <summary>
+    /// An implementation of <see cref="IAccountService"/>.
+    /// </summary>
     public class AccountService : IAccountService
     {
-        private readonly HttpClient _httpClient;
-        private readonly ISnackbar _snackBar;
-        private readonly JsonSerializerOptions _options;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountService"/> class.
+        /// </summary>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public AccountService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _snackBar = snackBar;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.HttpClient = httpClient;
+            this.SnackBar = snackBar;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> ChangePassword(ChangePasswordCommand command)
         {
-            var response = await _httpClient.PutAsJsonAsync("Accounts/change-password", command);
+            var response = await this.HttpClient.PutAsJsonAsync("Accounts/change-password", command);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return result;
+                this.SnackBar.Add(result.Error, Severity.Error);
+            }
+            else
+            {
+                this.SnackBar.Add("The password was changed.", Severity.Success);
             }
 
-            _snackBar.Add("The password was changed.", Severity.Success);
             return result;
         }
 
@@ -42,19 +66,20 @@
                 new KeyValuePair<string, string>("NewConfirmPassword", command.NewConfirmPassword),
             });
 
-            var response = await _httpClient.PostAsync("Accounts/reset-password", data);
+            var response = await this.HttpClient.PostAsync("Accounts/reset-password", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
-                return result;
+                this.SnackBar.Add(result.Error, Severity.Error);
+            }
+            else
+            {
+                this.SnackBar.Add("The password was reset.", Severity.Success);
             }
 
-            _snackBar.Add("The password was reset.", Severity.Success);
             return result;
         }
     }

@@ -1,0 +1,28 @@
+﻿@*
+  <copyright file="unauthorized.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/unauthorized"
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<h3 class="mb-3">Unauthorized Request</h3>
+
+<div class="d-flex justify-content-center" style="margin-top: 100px;">
+    <h4 style="font-size: 45px;"><em>User is not authorized...</em></h4>
+</div>
+
+@code {
+
+    /// <summary>
+    /// Initialize the component on load.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await this.AuthService.Logout();
+    }
+}

@@ -1,4 +1,10 @@
-﻿@page "/logout"
+﻿@*
+  <copyright file="Logout.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/logout"
 
 @attribute [Authorize]
 
@@ -7,7 +13,7 @@
 
 @code {
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {

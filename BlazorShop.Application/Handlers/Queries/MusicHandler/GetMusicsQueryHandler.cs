@@ -1,46 +1,76 @@
-﻿namespace BlazorShop.Application.Handlers.Queries.MusicHandler
+﻿// <copyright file="GetMusicsQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+// Copyright (c) Beniamin Jitca. All rights reserved.
+// </copyright>
+
+namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 {
+    /// <summary>
+    /// An implementation of the <see cref="IRequestHandler{GetMusicsQuery, Result{MusicResponse}}"/>.
+    /// </summary>
     public class GetMusicsQueryHandler : IRequestHandler<GetMusicsQuery, Result<MusicResponse>>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetMusicsQueryHandler> _logger;
-        private readonly IMapper _mapper;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetMusicsQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetMusicsQueryHandler(IApplicationDbContext dbContext, ILogger<GetMusicsQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
-        /// .
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetMusicsQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
+
+        /// <summary>
+        /// An implementation of the handler for <see cref="GetMusicsQuery"/>.
+        /// </summary>
+        /// <param name="request">The request object to handle.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task{Result{MusicResponse}}"/>.</returns>
         public Task<Result<MusicResponse>> Handle(GetMusicsQuery request, CancellationToken cancellationToken)
         {
+            Result<MusicResponse>? response;
+
             try
             {
-                var result = _dbContext.Musics
-                    .ProjectTo<MusicResponse>(_mapper.ConfigurationProvider)
+                var result = this.DbContext.Musics
+                    .TagWith(nameof(GetMusicsQueryHandler))
+                    .ProjectTo<MusicResponse>(this.Mapper.ConfigurationProvider)
                     .ToList();
 
-                return Task.FromResult(new Result<MusicResponse>
+                response = new Result<MusicResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<MusicResponse>()
-                });
+                    Items = result ?? new List<MusicResponse>(),
+                };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetMusicsQuery);
-                return Task.FromResult(new Result<MusicResponse>
+                this.Logger.LogError(ex, ErrorsManager.GetMusicsQuery);
+                response = new Result<MusicResponse>
                 {
-                    Error = $"{ErrorsManager.GetMusicsQuery}. {ex.Message}. {ex.InnerException?.Message}"
-                });
+                    Error = $"{ErrorsManager.GetMusicsQuery}. {ex.Message}. {ex.InnerException?.Message}",
+                };
             }
+
+            return Task.FromResult(response);
         }
     }
 }

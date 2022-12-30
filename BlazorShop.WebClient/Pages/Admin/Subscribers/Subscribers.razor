@@ -1,9 +1,16 @@
-﻿@page "/admin/subscribers"
+﻿@*
+  <copyright file="Subscribers.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/subscribers"
 
 @attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject ISubscriberService SubscriberService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h3>Subscribers</h3>
 
@@ -94,16 +101,19 @@ else
     protected SubscriberResponse subscriber = new();
     protected List<SubscriberResponse> subscribersList { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         await GetSubscribers();
     }
 
     /// <summary>
-    /// .
+    /// Get the subscribers.
     /// </summary>
     protected async Task GetSubscribers()
     {
@@ -111,7 +121,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -119,7 +129,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the subscribers.
     /// </summary>
     protected async Task DeleteSubscriber(int Id)
     {

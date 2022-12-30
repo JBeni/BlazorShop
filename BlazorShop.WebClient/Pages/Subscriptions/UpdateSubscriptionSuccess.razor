@@ -1,8 +1,15 @@
-﻿@page "/update-subscription-success/{Message}"
+﻿@*
+  <copyright file="UpdateSubscriptionSuccess.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/update-subscription-success/{Message}"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h3 class="text-center" style="margin-top: 30px;">Subscription Successful Updated</h3>
 
@@ -20,8 +27,18 @@
     [Parameter]
     public string Message { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override void OnParametersSet()
     {

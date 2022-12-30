@@ -1,10 +1,17 @@
-﻿@page "/admin/roles/add"
+﻿@*
+  <copyright file="AddEditRole.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/roles/add"
 @page "/admin/roles/edit/{Id:int}"
 
 @attribute [Authorize(Policy = StringRoleResources.Admin)]
 
 @inject IRoleService RoleService
 @inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
 
 <h1>@Title Role</h1>
 <hr />
@@ -38,10 +45,18 @@
 
     public RoleResponse Role = new();
 
-    protected override void OnInitialized() { }
+    public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -53,7 +68,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Save the role.
     /// </summary>
     protected async Task SaveRole()
     {
@@ -73,7 +88,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel.
     /// </summary>
     public void Cancel()
     {

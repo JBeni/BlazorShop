@@ -1,10 +1,17 @@
-﻿@page "/orders"
+﻿@*
+  <copyright file="MyOrders.razor" company="Beniamin Jitca" author="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/orders"
 
 @attribute [Authorize(Policy = StringRoleResources.Customer)]
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IOrderService OrderService
 @inject NavigationManager NavigationManager
+@inject HttpInterceptorService Interceptor
 
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple shadow-lg p-3 bg-white rounded">
@@ -86,11 +93,14 @@
     private string userEmail { get; set; }
     private int userId { get; set; }
 
+    public void Dispose() => Interceptor.DisposeEvent();
+
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
@@ -102,7 +112,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the orders.
     /// </summary>
     public async Task GetOrders(string userEmail)
     {
@@ -111,7 +121,7 @@
     }
 
     /// <summary>
-    /// .
+    /// View the order details.
     /// </summary>
     private void ViewOrder(int id)
     {
@@ -119,7 +129,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Filter the orders.
     /// </summary>
     protected void FilterOrders()
     {
@@ -134,7 +144,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {
