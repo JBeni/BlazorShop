@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleService.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,48 +10,47 @@ namespace BlazorShop.WebClient.Services
     public class RoleService : IRoleService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="RoleService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public RoleService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> AddRole(RoleResponse role)
         {
-            var response = await _httpClient.PostAsJsonAsync($"Roles/role", role);
+            var response = await this.HttpClient.PostAsJsonAsync($"Roles/role", role);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The role was added.", Severity.Success);
+                this.SnackBar.Add("The role was added.", Severity.Success);
             }
 
             return result;
@@ -60,19 +59,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteRole(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Roles/role/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Roles/role/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The role was deleted.", Severity.Success);
+                this.SnackBar.Add("The role was deleted.", Severity.Success);
             }
 
             return result;
@@ -81,15 +79,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RoleResponse> GetRole(int id)
         {
-            var response = await _httpClient.GetAsync($"Roles/role/{id}");
+            var response = await this.HttpClient.GetAsync($"Roles/role/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -100,15 +97,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRoles()
         {
-            var response = await _httpClient.GetAsync("Roles/roles");
+            var response = await this.HttpClient.GetAsync("Roles/roles");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -119,15 +115,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRolesForAdmin()
         {
-            var response = await _httpClient.GetAsync("Roles/rolesAdmin");
+            var response = await this.HttpClient.GetAsync("Roles/rolesAdmin");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -143,19 +138,18 @@ namespace BlazorShop.WebClient.Services
                 Id = role.Id,
                 Name = role.Name,
             };
-            var response = await _httpClient.PutAsJsonAsync($"Roles/role", data);
+            var response = await this.HttpClient.PutAsJsonAsync($"Roles/role", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The role was updated.", Severity.Success);
+                this.SnackBar.Add("The role was updated.", Severity.Success);
             }
 
             return result;

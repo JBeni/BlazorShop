@@ -1,4 +1,4 @@
-﻿// <copyright file="JwtTokenParser.cs" author="Beniamin Jitca">
+﻿// <copyright file="JwtTokenParser.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,10 +10,10 @@ namespace BlazorShop.WebClient.Auth
     public static class JwtTokenParser
     {
         /// <summary>
-        /// .
+        /// Taking the claims from the token.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="jwt">The token.</param>
+        /// <returns>The user claims list</returns>
         public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var claims = new List<Claim>();
@@ -28,10 +28,10 @@ namespace BlazorShop.WebClient.Auth
         }
 
         /// <summary>
-        /// .
+        /// Extracts the roles from the JWT token.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="claims">The list of user claims.</param>
+        /// <param name="keyValuePairs">The dictionary.</param>
         private static void ExtractRolesFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
@@ -50,15 +50,16 @@ namespace BlazorShop.WebClient.Auth
                 {
                     claims.Add(new Claim(ClaimTypes.Role, parsedRoles[0]));
                 }
+
                 keyValuePairs.Remove(ClaimTypes.Role);
             }
         }
 
         /// <summary>
-        /// .
+        /// Checking the base64 string nad fix it in case of missing the padding.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="base64">The base64 value.</param>
+        /// <returns>The completed base64 string.</returns>
         private static byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)
@@ -70,6 +71,7 @@ namespace BlazorShop.WebClient.Auth
                     base64 += "=";
                     break;
             }
+
             return Convert.FromBase64String(base64);
         }
     }

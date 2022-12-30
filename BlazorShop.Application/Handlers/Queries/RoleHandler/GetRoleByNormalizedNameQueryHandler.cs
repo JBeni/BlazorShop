@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRoleByNormalizedNameQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRoleByNormalizedNameQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
     public class GetRoleByNormalizedNameQueryHandler : IRequestHandler<GetRoleByNormalizedNameQuery, Result<RoleResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IRoleService"/>.
-        /// </summary>
-        private readonly IRoleService _roleService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetRoleByNormalizedNameQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetRoleByNormalizedNameQueryHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetRoleByNormalizedNameQueryHandler"/> class.
         /// </summary>
-        /// <param name="roleService">An instance of <see cref="IRoleService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetRoleByNormalizedNameQueryHandler}"/>.</param>
+        /// <param name="roleService">Gets An instance of <see cref="IRoleService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetRoleByNormalizedNameQueryHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetRoleByNormalizedNameQueryHandler(IRoleService roleService, ILogger<GetRoleByNormalizedNameQueryHandler> logger)
         {
-            _roleService = roleService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.RoleService = roleService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IRoleService"/>.
+        /// </summary>
+        private IRoleService RoleService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetRoleByNormalizedNameQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetRoleByNormalizedNameQueryHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetRoleByNormalizedNameQuery"/>.
@@ -43,20 +43,20 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 
             try
             {
-                var result = _roleService.GetRoleByNormalizedName(request.NormalizedName);
+                var result = this.RoleService.GetRoleByNormalizedName(request.NormalizedName);
 
                 response = new Result<RoleResponse>
                 {
                     Successful = true,
-                    Item = result ?? new RoleResponse()
+                    Item = result ?? new RoleResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetRoleByNormalizedNameQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetRoleByNormalizedNameQuery);
                 response = new Result<RoleResponse>
                 {
-                    Error = $"{ErrorsManager.GetRoleByNormalizedNameQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetRoleByNormalizedNameQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

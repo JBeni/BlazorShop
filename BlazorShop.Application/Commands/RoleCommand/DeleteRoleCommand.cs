@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteRoleCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteRoleCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.RoleCommand
     public class DeleteRoleCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the role.
+        /// Gets or sets The id of the role.
         /// </summary>
         public int Id { get; set; }
     }

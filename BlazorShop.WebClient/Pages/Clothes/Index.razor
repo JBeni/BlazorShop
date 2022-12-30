@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Index.razor" author="Beniamin Jitca">
+  <copyright file="Index.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -89,7 +89,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -105,7 +105,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the clothes.
     /// </summary>
     protected async Task GetClothes()
     {
@@ -114,7 +114,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Add item to cart.
     /// </summary>
     private async Task AddToCart(ClotheResponse clothe)
     {
@@ -130,7 +130,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Filter the clothes.
     /// </summary>
     protected void FilterClothes()
     {
@@ -145,7 +145,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

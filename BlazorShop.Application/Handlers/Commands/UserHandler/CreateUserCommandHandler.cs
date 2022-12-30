@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateUserCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateUserCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateUserCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateUserCommandHandler"/> class.
         /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateUserCommandHandler(IUserService userService, ILogger<CreateUserCommandHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateUserCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateUserCommand"/>.
@@ -43,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
 
             try
             {
-                response = await _userService.CreateUserAsync(request);
+                response = await this.UserService.CreateUserAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateUserCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateUserCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

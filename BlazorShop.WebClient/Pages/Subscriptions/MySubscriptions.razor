@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="MySubscriptions.razor" author="Beniamin Jitca">
+  <copyright file="MySubscriptions.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -79,7 +79,7 @@
                                                     </ul>
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Subscriptions"
                                                         Color="Color.Success"
-                                                        @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
+                                                       @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
                                                             @Title @subscription.Name Plan
                                                     </MudButton>
                                                 </div>
@@ -233,7 +233,7 @@
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -251,7 +251,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Getting the subscriptions.
     /// </summary>
     protected async Task GetSubscriptions()
     {
@@ -259,7 +259,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the active subscription.
     /// </summary>
     public async Task GetActveSubscription(int userId)
     {
@@ -272,7 +272,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel the membership.
     /// </summary>
     public async Task CancelMembership(string stripeSubscriptionCreationId)
     {
@@ -284,7 +284,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Get the user subscriptions.
     /// </summary>
     public async Task GetUserSubscriptions(int userId)
     {
@@ -293,7 +293,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Activate the membership.
     /// </summary>
     private async Task ActivateMembership(SubscriptionResponse subscription)
     {
@@ -325,7 +325,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Filter the subscriptions.
     /// </summary>
     protected void FilterSubscriptions()
     {
@@ -340,7 +340,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

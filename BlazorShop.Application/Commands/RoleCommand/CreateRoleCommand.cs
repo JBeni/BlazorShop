@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateRoleCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateRoleCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.RoleCommand
     public class CreateRoleCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The name of the role.
+        /// Gets or sets The name of the role.
         /// </summary>
         public string? Name { get; set; }
     }

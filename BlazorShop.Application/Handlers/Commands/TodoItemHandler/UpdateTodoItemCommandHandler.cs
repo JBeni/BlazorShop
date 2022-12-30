@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateTodoItemCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoItemCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
     public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateTodoItemCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateTodoItemCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateTodoItemCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateTodoItemCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateTodoItemCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateTodoItemCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateTodoItemCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateTodoItemCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateTodoItemCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateTodoItemCommand"/>.
@@ -43,10 +43,13 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 
             try
             {
-                var entity = _dbContext.TodoItems
+                var entity = this.DbContext.TodoItems
                     .TagWith(nameof(UpdateTodoItemCommandHandler))
                     .FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The todo list record does not exists in the database");
+                if (entity == null)
+                {
+                    throw new Exception("The todo list record does not exists in the database");
+                }
 
                 entity.Title = request.Title;
                 entity.Note = request.Note;
@@ -54,14 +57,14 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
                 entity.State = request.State;
                 entity.Done = request.Done;
 
-                _dbContext.TodoItems.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.TodoItems.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
 
                 response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateTodoItemCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateTodoItemCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateTodoItemCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

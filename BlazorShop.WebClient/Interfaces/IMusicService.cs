@@ -1,4 +1,4 @@
-﻿// <copyright file="IMusicService.cs" author="Beniamin Jitca">
+﻿// <copyright file="IMusicService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,38 +10,37 @@ namespace BlazorShop.WebClient.Interfaces
     public interface IMusicService
     {
         /// <summary>
-        /// .
+        /// Get the musics.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<MusicResponse>> GetMusics();
 
         /// <summary>
-        /// .
+        /// Get a music.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id of the music.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<MusicResponse> GetMusic(int id);
 
         /// <summary>
-        /// .
+        /// Add a music.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="music">The music.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> AddMusic(MusicResponse music);
 
         /// <summary>
-        /// .
+        /// Update a music.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="music">The music.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> UpdateMusic(MusicResponse music);
 
         /// <summary>
-        /// .
+        /// Delete a music.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id of the music.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> DeleteMusic(int id);
     }
 }

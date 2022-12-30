@@ -1,11 +1,11 @@
-﻿// <copyright file="ApiControllerBase.cs" author="Beniamin Jitca">
+﻿// <copyright file="ApiControllerBase.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebApi.Controllers
 {
     /// <summary>
-    /// Controller for setting the Mediator.
+    /// Controller for setting the this.Mediator.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -13,13 +13,13 @@ namespace BlazorShop.WebApi.Controllers
     public abstract class ApiControllerBase : ControllerBase
     {
         /// <summary>
-        /// .
+        /// Gets the instance of the <see cref="ISender"/> to use.
         /// </summary>
-        private ISender _mediator = null!;
+        private ISender mediator = null!;
 
         /// <summary>
-        /// .
+        /// Gets the instance of the <see cref="ISender"/> to use.
         /// </summary>
-        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+        protected ISender Mediator => this.mediator ??= this.HttpContext.RequestServices.GetRequiredService<ISender>();
     }
 }

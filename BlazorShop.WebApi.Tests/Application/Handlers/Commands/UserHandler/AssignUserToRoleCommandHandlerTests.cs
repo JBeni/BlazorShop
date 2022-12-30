@@ -1,4 +1,4 @@
-﻿// <copyright file="AssignUserToRoleCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="AssignUserToRoleCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
     /// </summary>
     public class AssignUserToRoleCommandHandlerTests
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<AssignUserToRoleCommandHandlerTests> _logger;
+        private IUserService UserService { get; }
+        private ILogger<AssignUserToRoleCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssignUserToRoleCommandHandlerTests"/> class.
         /// </summary>
         public AssignUserToRoleCommandHandlerTests(IUserService userService, ILogger<AssignUserToRoleCommandHandlerTests> logger)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
+        public Task Handle(AssignUserToRoleCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

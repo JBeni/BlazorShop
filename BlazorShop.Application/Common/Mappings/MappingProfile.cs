@@ -1,4 +1,4 @@
-﻿// <copyright file="MappingProfile.cs" author="Beniamin Jitca">
+﻿// <copyright file="MappingProfile.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Common.Mappings
         /// </summary>
         public MappingProfile()
         {
-            ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
+            this.ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿// <copyright file="IDateTimeService.cs" author="Beniamin Jitca">
+﻿// <copyright file="IDateTimeService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

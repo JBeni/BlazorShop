@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Subscribers.razor" author="Beniamin Jitca">
+  <copyright file="Subscribers.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -104,7 +104,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -113,7 +113,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the subscribers.
     /// </summary>
     protected async Task GetSubscribers()
     {
@@ -121,7 +121,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -129,7 +129,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the subscribers.
     /// </summary>
     protected async Task DeleteSubscriber(int Id)
     {

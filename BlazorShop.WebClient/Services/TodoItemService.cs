@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoItemService.cs" author="Beniamin Jitca">
+﻿// <copyright file="TodoItemService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,44 +10,43 @@ namespace BlazorShop.WebClient.Services
     public class TodoItemService : ITodoItemService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="TodoItemService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public TodoItemService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<TodoItemResponse> GetTodoItemAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"TodoItems/item/{id}");
+            var response = await this.HttpClient.GetAsync($"TodoItems/item/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoItemResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -58,19 +57,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> PutTodoItemAsync(TodoItemResponse todoItem)
         {
-            var response = await _httpClient.PutAsJsonAsync("TodoItems/item", todoItem);
+            var response = await this.HttpClient.PutAsJsonAsync("TodoItems/item", todoItem);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The todo item was updated.", Severity.Success);
+                this.SnackBar.Add("The todo item was updated.", Severity.Success);
             }
 
             return result;
@@ -79,19 +77,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteTodoItemAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"TodoItems/item/{id}");
+            var response = await this.HttpClient.DeleteAsync($"TodoItems/item/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The todo item was deleted.", Severity.Success);
+                this.SnackBar.Add("The todo item was deleted.", Severity.Success);
             }
 
             return result;
@@ -100,19 +97,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<TodoItemResponse> PostTodoItemAsync(TodoItemResponse todoItem)
         {
-            var response = await _httpClient.PostAsJsonAsync("TodoItems/item", todoItem);
+            var response = await this.HttpClient.PostAsJsonAsync("TodoItems/item", todoItem);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoItemResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The todo item was added.", Severity.Success);
+                this.SnackBar.Add("The todo item was added.", Severity.Success);
             }
 
             return !response.IsSuccessStatusCode

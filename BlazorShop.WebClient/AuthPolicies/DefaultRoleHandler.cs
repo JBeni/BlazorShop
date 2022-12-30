@@ -1,29 +1,20 @@
-﻿// <copyright file="DefaultRoleRequirement.cs" author="Beniamin Jitca">
+﻿// <copyright file="DefaultRoleHandler.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// A custom policy to check for the Default role.
+    /// Handle the requirement of default role.
     /// </summary>
-    public class DefaultRoleRequirement : IAuthorizationRequirement
-    {
-        public string Role { get; }
-
-        public DefaultRoleRequirement(string role)
-        {
-            Role = role;
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class DefaultRoleHandler : AuthorizationHandler<DefaultRoleRequirement>
     {
+        /// <summary>
+        /// Search for the default role.
+        /// </summary>
+        /// <param name="context">The instance of the <see cref="AuthorizationHandlerContext"/>.</param>
+        /// <param name="requirement">The instance of the <see cref="UserRoleRequirement"/>.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DefaultRoleRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)

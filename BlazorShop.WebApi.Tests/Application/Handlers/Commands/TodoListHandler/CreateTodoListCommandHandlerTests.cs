@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateTodoListCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateTodoListCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,18 +9,18 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoListHandler
     /// </summary>
     public class CreateTodoListCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<CreateTodoListCommandHandlerTests> _logger;
-        private readonly IMapper _mapper;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<CreateTodoListCommandHandlerTests> Logger { get; }
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateTodoListCommandHandlerTests"/> class.
         /// </summary>
         public CreateTodoListCommandHandlerTests(IApplicationDbContext dbContext, ILogger<CreateTodoListCommandHandlerTests> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -29,8 +29,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoListHandler
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+        public Task Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

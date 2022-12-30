@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateCartCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateCartCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateCartCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateCartCommandHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="UserManager{User}"/>.
-        /// </summary>
-        private readonly UserManager<User> _userManager;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateCartCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="userManager">An instance of <see cref="UserManager{User}"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateCartCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="userManager">Gets An instance of <see cref="UserManager{User}"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateCartCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateCartCommandHandler(IApplicationDbContext dbContext, ILogger<CreateCartCommandHandler> logger, UserManager<User> userManager)
         {
-            _dbContext = dbContext;
-            _userManager = userManager;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.UserManager = userManager;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateCartCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateCartCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="UserManager{User}"/>.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateCartCommand"/>.
@@ -50,11 +50,14 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
 
             try
             {
-                var clothe = _dbContext.Clothes
+                var clothe = this.DbContext.Clothes
                     .TagWith(nameof(CreateCartCommandHandler))
                     .FirstOrDefault(x => x.Id == request.ClotheId);
-                var user = await _userManager.FindByIdAsync(request.UserId.ToString());
-                if (user == null) throw new Exception("The user does not exists");
+                var user = await this.UserManager.FindByIdAsync(request.UserId.ToString());
+                if (user == null)
+                {
+                    throw new Exception("The user does not exists");
+                }
 
                 var entity = new Cart
                 {
@@ -62,16 +65,16 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
                     Price = request.Price,
                     Amount = request.Amount,
                     Clothe = clothe,
-                    User = user
+                    User = user,
                 };
 
-                _dbContext.Carts.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Carts.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateCartCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateCartCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateCartCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

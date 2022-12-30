@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTodoItemByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetTodoItemByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
     public class GetTodoItemByIdQueryHandler : IRequestHandler<GetTodoItemByIdQuery, Result<TodoItemResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetTodoItemByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetTodoItemByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetTodoItemByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetTodoItemByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetTodoItemByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetTodoItemByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetTodoItemByIdQuery"/>.
@@ -50,23 +50,23 @@ namespace BlazorShop.Application.Handlers.Queries.TodoItemHandler
 
             try
             {
-                var result = _dbContext.TodoItems
+                var result = this.DbContext.TodoItems
                     .TagWith(nameof(GetTodoItemByIdQueryHandler))
-                    .ProjectTo<TodoItemResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<TodoItemResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.Id == request.Id);
 
                 response = new Result<TodoItemResponse>
                 {
                     Successful = true,
-                    Item = result ?? new TodoItemResponse()
+                    Item = result ?? new TodoItemResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetTodoItemByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetTodoItemByIdQuery);
                 response = new Result<TodoItemResponse>
                 {
-                    Error = $"{ErrorsManager.GetTodoItemByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetTodoItemByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

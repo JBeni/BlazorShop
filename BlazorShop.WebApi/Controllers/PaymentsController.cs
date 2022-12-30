@@ -1,145 +1,152 @@
-﻿// <copyright file="PaymentsController.cs" author="Beniamin Jitca">
+﻿// <copyright file="PaymentsController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebApi.Controllers
 {
-	/// <summary>
-	/// Controller for Payments.
-	/// </summary>
-	[Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
+    /// <summary>
+    /// Controller for Payments.
+    /// </summary>
+    [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
     public class PaymentsController : ApiControllerBase
     {
-		private readonly IConfiguration _configuration;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentsController"/> class.
+        /// </summary>
+        /// <param name="configuration">The instance of the <see cref="IConfiguration"/> to use.</param>
+        public PaymentsController(IConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
 
-		public PaymentsController(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
+        /// <summary>
+        /// Gets the instance of the <see cref="IConfiguration"/> to use.
+        /// </summary>
+        private IConfiguration Configuration { get; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="req"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// Create the subscription session.
+        /// </summary>
+        /// <param name="req">The req data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPost("create-subscription")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
-			var options = new SessionCreateOptions
-			{
-				SuccessUrl = "https://localhost:7066/subscription-success/subscription-made",
-				CancelUrl = "https://localhost:7066/musics",
-				PaymentMethodTypes = new List<string>
-				{
-					"card",
-				},
-				Mode = "subscription",
-				LineItems = new List<SessionLineItemOptions>
-				{
-					new SessionLineItemOptions
-					{
-						Price = req.StripeSubscriptionId,
-						Quantity = 1,
-					},
-				}
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = "https://localhost:7066/subscription-success/subscription-made",
+                CancelUrl = "https://localhost:7066/musics",
+                PaymentMethodTypes = new List<string>
+                {
+                    "card",
+                },
+                Mode = "subscription",
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        Price = req.StripeSubscriptionId,
+                        Quantity = 1,
+                    },
+                },
             };
 
-			try
+            try
             {
-				var service = new SessionService();
-				var session = await service.CreateAsync(options);
+                var service = new SessionService();
+                var session = await service.CreateAsync(options);
 
-				return Ok(session.Url);
+                return this.Ok(session.Url);
             }
             catch (StripeException e)
             {
                 Console.WriteLine(e.StripeError.Message);
-				return BadRequest();
+                return this.BadRequest();
             }
-		}
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="stripeSubscriptionCreationId"></param>
-		/// <returns></returns>
-		[HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
-		public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
-		{
-			try
-			{
-				var subscriptionService = new SubscriptionService();
-				subscriptionService.Cancel(stripeSubscriptionCreationId);
+        /// <summary>
+        /// Cancel the stripe subscription.
+        /// </summary>
+        /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
+        public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
+        {
+            try
+            {
+                var subscriptionService = new SubscriptionService();
+                subscriptionService.Cancel(stripeSubscriptionCreationId);
 
-				await Mediator.Send(new UpdateSubscriberStatusCommand
-				{
-					StripeSubscriberSubscriptionId = stripeSubscriptionCreationId,
-				});
+                await this.Mediator.Send(new UpdateSubscriberStatusCommand
+                {
+                    StripeSubscriberSubscriptionId = stripeSubscriptionCreationId,
+                });
 
-				return Ok();
-			}
-			catch (StripeException e)
-			{
-				Console.WriteLine(e.StripeError.Message);
-				return BadRequest();
-			}
-		}
+                return this.Ok();
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine(e.StripeError.Message);
+                return this.BadRequest();
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="req"></param>
-		/// <returns></returns>
-		[HttpPost("update-subscription")]
-		public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
-		{
+        /// <summary>
+        /// Updating the stripe subscription.
+        /// </summary>
+        /// <param name="req">The req data.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [HttpPost("update-subscription")]
+        public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
+        {
             var subscriptionService = new SubscriptionService();
-			subscriptionService.Cancel(req.StripeSubscriberSubscriptionId);
+            subscriptionService.Cancel(req.StripeSubscriberSubscriptionId);
 
-			await Mediator.Send(new UpdateSubscriberStatusCommand
-			{
-				StripeSubscriberSubscriptionId = req.StripeSubscriberSubscriptionId,
-			});
+            await this.Mediator.Send(new UpdateSubscriberStatusCommand
+            {
+                StripeSubscriberSubscriptionId = req.StripeSubscriberSubscriptionId,
+            });
 
             var options = new SessionCreateOptions
-			{
-				SuccessUrl = "https://localhost:7066/update-subscription-success/subscription-made",
-				CancelUrl = "https://localhost:7066/musics",
-				PaymentMethodTypes = new List<string>
-				{
-					"card",
-				},
-				Mode = "subscription",
-				LineItems = new List<SessionLineItemOptions>
-				{
-					new SessionLineItemOptions
-					{
-						Price = req.StripeSubscriptionId,
-						Quantity = 1,
-					},
-				}
-			};
+            {
+                SuccessUrl = "https://localhost:7066/update-subscription-success/subscription-made",
+                CancelUrl = "https://localhost:7066/musics",
+                PaymentMethodTypes = new List<string>
+                {
+                    "card",
+                },
+                Mode = "subscription",
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        Price = req.StripeSubscriptionId,
+                        Quantity = 1,
+                    },
+                },
+            };
 
-			try
-			{
-				var service = new SessionService();
-				var session = await service.CreateAsync(options);
+            try
+            {
+                var service = new SessionService();
+                var session = await service.CreateAsync(options);
 
-				return Ok(session.Url);
-			}
-			catch (StripeException e)
-			{
-				Console.WriteLine(e.StripeError.Message);
-				return BadRequest();
-			}
-		}
+                return this.Ok(session.Url);
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine(e.StripeError.Message);
+                return this.BadRequest();
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="cartItems"></param>
-		/// <returns></returns>
-		[HttpPost("checkout")]
+        /// <summary>
+        /// Create the checkout operation.
+        /// </summary>
+        /// <param name="cartItems">The cart items.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
             var lineItems = new List<SessionLineItemOptions>();
@@ -153,18 +160,18 @@ namespace BlazorShop.WebApi.Controllers
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = x.Name,
-                            //Images = new List<string> { x.Image }
-                        }
+
+                            // Images = new List<string> { x.Image }
+                        },
                     },
                     Quantity = x.Amount,
-                })
-            );
+                }));
 
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
                 {
-                    "card"
+                    "card",
                 },
                 LineItems = lineItems,
                 Mode = "payment",
@@ -176,121 +183,122 @@ namespace BlazorShop.WebApi.Controllers
              * https://localhost:7066/order-success
              * SuccessUrl = https://localhost:44351/api/Payments/checkout-response?session_id={CHECKOUT_SESSION_ID}
              */
-
             var service = new SessionService();
             Session session = service.Create(options);
 
-            return Ok(session.Url);
+            return this.Ok(session.Url);
         }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		[AllowAnonymous]
-		[HttpPost("webhook")]
-		public async Task<IActionResult> WebHook()
-		{
-			var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-
-			try
-			{
-				var stripeEvent = EventUtility.ConstructEvent(
-					json,
-					Request.Headers["Stripe-Signature"],
-					_configuration["StripeSettings:WebHookKey"]
-				);
-
-				// Handle the event
-				switch (stripeEvent.Type)
-                {
-					case Events.CheckoutSessionCompleted:
-						await CompleteAcceptCheckout(stripeEvent);
-						break;
-					case Events.CustomerSubscriptionCreated:
-						var subscription = stripeEvent.Data.Object as Subscription;
-						var service = new InvoiceService();
-						var invoiceData = service.Get(subscription.LatestInvoiceId);
-
-						await Mediator.Send(new UpdateCreatedSubscriberCommand
-                        {
-							CurrentPeriodEnd = subscription.CurrentPeriodEnd,
-							CurrentPeriodStart = subscription.CurrentPeriodStart,
-							CustomerEmail = invoiceData.CustomerEmail,
-							StripeSubscriberSubscriptionId = subscription.Id,
-							HostedInvoiceUrl = invoiceData.HostedInvoiceUrl,
-                        });
-						break;
-/*
-					case Events.CustomerSubscriptionUpdated:
-						var subscriptionUpdate = stripeEvent.Data.Object as Subscription;
-						var serviceUpdate = new InvoiceService();
-						var invoiceDataUpdate = serviceUpdate.Get(subscriptionUpdate.LatestInvoiceId);
-
-						await Mediator.Send(new UpdateCreatedSubscriberCommand
-						{
-							CurrentPeriodEnd = subscriptionUpdate.CurrentPeriodEnd,
-							CurrentPeriodStart = subscriptionUpdate.CurrentPeriodStart,
-							CustomerEmail = invoiceDataUpdate.CustomerEmail,
-							StripeSubscriberSubscriptionId = subscriptionUpdate.Id,
-							HostedInvoiceUrl = invoiceDataUpdate.HostedInvoiceUrl,
-						});
-						break;
-*/
-					default:
-						break;
-				}
-				return Ok();
-			}
-			catch (StripeException e)
-			{
-				Console.WriteLine(e.StripeError.Message);
-				return BadRequest();
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="stripeEvent"></param>
-		/// <returns></returns>
-		private async Task CompleteAcceptCheckout(Event stripeEvent)
+        /// <summary>
+        /// Activate the background webhook.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [AllowAnonymous]
+        [HttpPost("webhook")]
+        public async Task<IActionResult> WebHook()
         {
-			var sessionData = stripeEvent.Data.Object as Session;
-			var service = new PaymentIntentService();
-			var result = service.Get(sessionData.PaymentIntentId);
+            var json = await new StreamReader(this.HttpContext.Request.Body).ReadToEndAsync();
 
-			var sessionService = new SessionService();
-			StripeList<LineItem> lineItems = sessionService.ListLineItems(sessionData.Id);
+            try
+            {
+                var stripeEvent = EventUtility.ConstructEvent(
+                    json,
+                    this.Request.Headers["Stripe-Signature"],
+                    this.Configuration["StripeSettings:WebHookKey"]);
 
-			List<InvoiceResponse> items = new();
-			foreach (var item in lineItems.Data)
-			{
-				var invoice = new InvoiceResponse
-				{
-					Name = item.Description,
-					AmountSubTotal = Convert.ToInt32(item.AmountSubtotal) / 100,
-					AmountTotal = Convert.ToInt32(item.AmountTotal) / 100,
-					Quantity = Convert.ToInt32(item.Quantity)
-				};
-				items.Add(invoice);
-			}
-			var orderCommand = new CreateOrderCommand
-			{
-				UserEmail = sessionData.CustomerDetails.Email,
-				OrderDate = DateTime.Now,
-				LineItems = JsonSerializer.Serialize(items),
-				AmountTotal = Convert.ToInt32(sessionData.AmountTotal) / 100
-			};
+                // Handle the event
+                switch (stripeEvent.Type)
+                {
+                    case Events.CheckoutSessionCompleted:
+                        await this.CompleteAcceptCheckout(stripeEvent);
+                        break;
+                    case Events.CustomerSubscriptionCreated:
+                        var subscription = stripeEvent.Data.Object as Subscription;
+                        var service = new InvoiceService();
+                        var invoiceData = service.Get(subscription.LatestInvoiceId);
 
-			await Mediator.Send(orderCommand);
-			await Mediator.Send(new CreateReceiptCommand
-			{
-				UserEmail= sessionData.CustomerDetails.Email,
-				ReceiptDate = DateTime.Now,
-				ReceiptName = "Receipt Nr. " + Guid.NewGuid(),
-				ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl
-			});
-		}
-	}
+                        await this.Mediator.Send(new UpdateCreatedSubscriberCommand
+                        {
+                            CurrentPeriodEnd = subscription.CurrentPeriodEnd,
+                            CurrentPeriodStart = subscription.CurrentPeriodStart,
+                            CustomerEmail = invoiceData.CustomerEmail,
+                            StripeSubscriberSubscriptionId = subscription.Id,
+                            HostedInvoiceUrl = invoiceData.HostedInvoiceUrl,
+                        });
+                        break;
+
+                    /*
+                    case Events.CustomerSubscriptionUpdated:
+                        var subscriptionUpdate = stripeEvent.Data.Object as Subscription;
+                        var serviceUpdate = new InvoiceService();
+                        var invoiceDataUpdate = serviceUpdate.Get(subscriptionUpdate.LatestInvoiceId);
+
+                        await this.Mediator.Send(new UpdateCreatedSubscriberCommand
+                        {
+                            CurrentPeriodEnd = subscriptionUpdate.CurrentPeriodEnd,
+                            CurrentPeriodStart = subscriptionUpdate.CurrentPeriodStart,
+                            CustomerEmail = invoiceDataUpdate.CustomerEmail,
+                            StripeSubscriberSubscriptionId = subscriptionUpdate.Id,
+                            HostedInvoiceUrl = invoiceDataUpdate.HostedInvoiceUrl,
+                        });
+                        break;
+                    */
+                    default:
+                        break;
+                }
+
+                return this.Ok();
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine(e.StripeError.Message);
+                return this.BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Complet the checkout.
+        /// </summary>
+        /// <param name="stripeEvent">The stripe event.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        private async Task CompleteAcceptCheckout(Event stripeEvent)
+        {
+            var sessionData = stripeEvent.Data.Object as Session;
+            var service = new PaymentIntentService();
+            var result = service.Get(sessionData.PaymentIntentId);
+
+            var sessionService = new SessionService();
+            StripeList<LineItem> lineItems = sessionService.ListLineItems(sessionData.Id);
+
+            List<InvoiceResponse> items = new ();
+            foreach (var item in lineItems.Data)
+            {
+                var invoice = new InvoiceResponse
+                {
+                    Name = item.Description,
+                    AmountSubTotal = Convert.ToInt32(item.AmountSubtotal) / 100,
+                    AmountTotal = Convert.ToInt32(item.AmountTotal) / 100,
+                    Quantity = Convert.ToInt32(item.Quantity),
+                };
+                items.Add(invoice);
+            }
+
+            var orderCommand = new CreateOrderCommand
+            {
+                UserEmail = sessionData.CustomerDetails.Email,
+                OrderDate = DateTime.Now,
+                LineItems = JsonSerializer.Serialize(items),
+                AmountTotal = Convert.ToInt32(sessionData.AmountTotal) / 100,
+            };
+
+            await this.Mediator.Send(orderCommand);
+            await this.Mediator.Send(new CreateReceiptCommand
+            {
+                UserEmail = sessionData.CustomerDetails.Email,
+                ReceiptDate = DateTime.Now,
+                ReceiptName = "Receipt Nr. " + Guid.NewGuid(),
+                ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl,
+            });
+        }
+    }
 }

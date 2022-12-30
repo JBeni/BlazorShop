@@ -1,4 +1,4 @@
-﻿// <copyright file="DateTimeService.cs" author="Beniamin Jitca">
+﻿// <copyright file="DateTimeService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Infrastructure.Services
     public class DateTimeService : IDateTimeService
     {
         /// <summary>
-        /// .
+        /// Gets the current time.
         /// </summary>
         public DateTime Now => DateTime.Now;
     }

@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Musics.razor" author="Beniamin Jitca">
+  <copyright file="Musics.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -116,7 +116,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -125,7 +125,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the musics.
     /// </summary>
     protected async Task GetMusics()
     {
@@ -133,7 +133,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -141,7 +141,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the music.
     /// </summary>
     protected async Task DeleteMusic(int Id)
     {
@@ -150,7 +150,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Navigate.
     /// </summary>
     private void NavigateToPage(int id)
     {

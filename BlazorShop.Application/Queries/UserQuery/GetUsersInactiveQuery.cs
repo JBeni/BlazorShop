@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUsersInactiveQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUsersInactiveQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

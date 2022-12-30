@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteReceiptCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteReceiptCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.ReceiptCommand
     public class DeleteReceiptCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the receipt.
+        /// Gets or sets The id of the receipt.
         /// </summary>
         public int Id { get; set; }
     }

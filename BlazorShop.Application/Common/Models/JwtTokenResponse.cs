@@ -1,8 +1,6 @@
-﻿// <copyright file="JwtTokenResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="JwtTokenResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using Newtonsoft.Json;
 
 namespace BlazorShop.Application.Common.Models
 {
@@ -12,7 +10,7 @@ namespace BlazorShop.Application.Common.Models
     public class JwtTokenResponse
     {
         /// <summary>
-        /// The access token.
+        /// Gets or sets The access token.
         /// </summary>
         [JsonProperty("access_token")]
         public string? AccessToken { get; set; } = null;
@@ -35,12 +33,12 @@ namespace BlazorShop.Application.Common.Models
         public string? Type => "Bearer";
 
         /// <summary>
-        /// A value indicating whether the request was successfully or not.
+        /// Gets or sets A value indicating whether the request was successfully or not.
         /// </summary>
         public bool Successful { get; set; } = false;
 
         /// <summary>
-        /// The error message if the request is not successful.
+        /// Gets or sets The error message if the request is not successful.
         /// </summary>
         public string? Error { get; set; } = null;
 

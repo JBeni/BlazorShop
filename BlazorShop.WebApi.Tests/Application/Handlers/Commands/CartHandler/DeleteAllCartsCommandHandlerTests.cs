@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteAllCartsCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteAllCartsCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
     /// </summary>
     public class DeleteAllCartsCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<DeleteAllCartsCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<DeleteAllCartsCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAllCartsCommandHandlerTests"/> class.
         /// </summary>
         public DeleteAllCartsCommandHandlerTests(IApplicationDbContext dbContext, ILogger<DeleteAllCartsCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(DeleteAllCartsCommand request, CancellationToken cancellationToken)
+        public Task Handle(DeleteAllCartsCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

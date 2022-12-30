@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleServiceTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleServiceTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

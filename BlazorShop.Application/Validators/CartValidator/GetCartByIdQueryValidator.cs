@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartByIdQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetCartByIdQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,10 +14,10 @@ namespace BlazorShop.Application.Validators.CartValidator
         /// </summary>
         public GetCartByIdQueryValidator()
         {
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
-            RuleFor(v => v.UserId)
+            this.RuleFor(v => v.UserId)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }

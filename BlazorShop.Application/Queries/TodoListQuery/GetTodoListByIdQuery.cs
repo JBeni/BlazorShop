@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTodoListByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetTodoListByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.TodoListQuery
     public class GetTodoListByIdQuery : IRequest<Result<TodoListResponse>>
     {
         /// <summary>
-        /// The id of the list.
+        /// Gets or sets The id of the list.
         /// </summary>
         public int Id { get; set; }
     }

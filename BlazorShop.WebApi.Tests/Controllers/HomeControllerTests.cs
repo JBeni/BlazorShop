@@ -1,4 +1,4 @@
-﻿// <copyright file="HomeControllerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="HomeControllerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetCartByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
     public class GetCartByIdQueryHandler : IRequestHandler<GetCartByIdQuery, Result<CartResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetCartByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetCartByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetCartByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetCartByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetCartByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetCartByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetCartByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetCartByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetCartByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetCartByIdQuery"/>.
@@ -50,24 +50,24 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
 
             try
             {
-                var result = _dbContext.Carts
+                var result = this.DbContext.Carts
                     .TagWith(nameof(GetCartByIdQueryHandler))
                     .Where(x => x.Id == request.Id && x.User.Id == request.UserId)
-                    .ProjectTo<CartResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<CartResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault();
 
                 response = new Result<CartResponse>
                 {
                     Successful = true,
-                    Item = result ?? new CartResponse()
+                    Item = result ?? new CartResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetCartByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetCartByIdQuery);
                 response = new Result<CartResponse>
                 {
-                    Error = $"{ErrorsManager.GetCartByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetCartByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

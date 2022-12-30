@@ -1,8 +1,6 @@
-﻿// <copyright file="MusicService.cs" author="Beniamin Jitca">
+﻿// <copyright file="MusicService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
-using MudBlazor;
 
 namespace BlazorShop.WebClient.Services
 {
@@ -12,57 +10,43 @@ namespace BlazorShop.WebClient.Services
     public class MusicService : IMusicService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="MusicService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly NavigationManager _navMagager;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly AuthenticationStateProvider _authStateProvider;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ILocalStorageService _localStorage;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        public MusicService(HttpClient httpClient, ISnackbar snackBar, NavigationManager navMagager, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage)
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
+        public MusicService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
-            _navMagager = navMagager;
-            _authStateProvider = authStateProvider;
-            _localStorage = localStorage;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<List<MusicResponse>> GetMusics()
         {
-            var response = await _httpClient.GetAsync("Musics/musics");
+            var response = await this.HttpClient.GetAsync("Musics/musics");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<MusicResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -73,15 +57,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<MusicResponse> GetMusic(int id)
         {
-            var response = await _httpClient.GetAsync($"Musics/music/{id}");
+            var response = await this.HttpClient.GetAsync($"Musics/music/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<MusicResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -92,19 +75,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddMusic(MusicResponse music)
         {
-            var response = await _httpClient.PostAsJsonAsync("Musics/music", music);
+            var response = await this.HttpClient.PostAsJsonAsync("Musics/music", music);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Music was added.", Severity.Success);
+                this.SnackBar.Add("The Music was added.", Severity.Success);
             }
 
             return result;
@@ -113,19 +95,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateMusic(MusicResponse music)
         {
-            var response = await _httpClient.PutAsJsonAsync("Musics/music", music);
+            var response = await this.HttpClient.PutAsJsonAsync("Musics/music", music);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Music was updated.", Severity.Success);
+                this.SnackBar.Add("The Music was updated.", Severity.Success);
             }
 
             return result;
@@ -134,19 +115,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteMusic(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Musics/music/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Musics/music/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The Music was deleted.", Severity.Success);
+                this.SnackBar.Add("The Music was deleted.", Severity.Success);
             }
 
             return result;

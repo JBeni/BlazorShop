@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartsCountQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetCartsCountQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.CartQuery
     public class GetCartsCountQuery : IRequest<int>
     {
         /// <summary>
-        /// The id of the user.
+        /// Gets or sets The id of the user.
         /// </summary>
         public int UserId { get; set; }
     }

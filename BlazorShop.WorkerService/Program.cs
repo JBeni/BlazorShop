@@ -1,4 +1,4 @@
-// <copyright file="Program.cs" author="Beniamin Jitca">
+// <copyright file="Program.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -16,8 +16,7 @@ try
             services.AddDbContext<ApplicationDbContext>(opts =>
                   opts.UseSqlServer(
                     configuration["ConnectionStrings:WebApiConnection"],
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
-                  );
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddHostedService<Worker>();
         })

@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Profile.razor" author="Beniamin Jitca">
+  <copyright file="Profile.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -212,7 +212,7 @@
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -227,7 +227,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the user email.
     /// </summary>
     private async Task UpdateUserEmail()
     {
@@ -243,7 +243,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the user.
     /// </summary>
     private async Task UpdateUser()
     {
@@ -254,7 +254,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Changing the user password.
     /// </summary>
     private async Task ChangePassword()
     {

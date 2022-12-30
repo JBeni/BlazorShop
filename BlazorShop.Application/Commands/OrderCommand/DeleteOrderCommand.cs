@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteOrderCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteOrderCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.OrderCommand
     public class DeleteOrderCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the order.
+        /// Gets or sets The id of the order.
         /// </summary>
         public int Id { get; set; }
     }

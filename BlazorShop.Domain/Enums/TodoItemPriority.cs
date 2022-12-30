@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoItemPriority.cs" author="Beniamin Jitca">
+﻿// <copyright file="TodoItemPriority.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,24 @@ namespace BlazorShop.Domain.Enums
     /// </summary>
     public enum TodoItemPriority
     {
+        /// <summary>
+        /// The item priority is None.
+        /// </summary>
         None,
+
+        /// <summary>
+        /// The item priority is Low.
+        /// </summary>
         Low,
+
+        /// <summary>
+        /// The item priority is Medium.
+        /// </summary>
         Medium,
-        High
+
+        /// <summary>
+        /// The item priority is High.
+        /// </summary>
+        High,
     }
 }

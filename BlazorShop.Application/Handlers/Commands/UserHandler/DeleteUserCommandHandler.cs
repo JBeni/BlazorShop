@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteUserCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteUserCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{DeleteUserCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<DeleteUserCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DeleteUserCommandHandler"/> class.
         /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{DeleteUserCommandHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{DeleteUserCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public DeleteUserCommandHandler(IUserService userService, ILogger<DeleteUserCommandHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{DeleteUserCommandHandler}"/>.
+        /// </summary>
+        private ILogger<DeleteUserCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="DeleteUserCommand"/>.
@@ -43,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
 
             try
             {
-                response = await _userService.DeleteUserAsync(request.Id);
+                response = await this.UserService.DeleteUserAsync(request.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.DeleteUserCommand);
+                this.Logger.LogError(ex, ErrorsManager.DeleteUserCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.DeleteUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

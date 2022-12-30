@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateClotheCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateClotheCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,57 +9,60 @@ namespace BlazorShop.Application.Validators.ClotheValidator
     /// </summary>
     public class UpdateClotheCommandValidator : AbstractValidator<UpdateClotheCommand>
     {
-        private readonly IApplicationDbContext _context;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateClotheCommandValidator"/> class.
         /// </summary>
-        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="context">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateClotheCommandValidator(IApplicationDbContext context)
         {
-            _context = context;
+            this.Context = context;
 
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
-            RuleFor(v => v.Name)
+            this.RuleFor(v => v.Name)
                 .MaximumLength(200).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null")
-                .MustAsync(HaveUniqueName).WithMessage("The specified name already exists.");
+                .MustAsync(this.HaveUniqueName).WithMessage("The specified name already exists.");
 
-            RuleFor(v => v.Description)
+            this.RuleFor(v => v.Description)
                 .MaximumLength(1000).WithMessage("Description maximum length exceeded")
                 .NotEmpty().WithMessage("Description must not be empty")
                 .NotNull().WithMessage("Description must not be null");
 
-            RuleFor(v => v.Price)
+            this.RuleFor(v => v.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than 0");
 
-            RuleFor(v => v.Amount)
+            this.RuleFor(v => v.Amount)
                 .GreaterThan(0).WithMessage("Amount must be greater than 0");
 
-            RuleFor(v => v.ImageName)
+            this.RuleFor(v => v.ImageName)
                 .MaximumLength(200).WithMessage("ImageName maximum length exceeded")
                 .NotEmpty().WithMessage("ImageName must not be empty")
                 .NotNull().WithMessage("ImageName must not be null");
 
-            RuleFor(v => v.ImagePath)
+            this.RuleFor(v => v.ImagePath)
                 .MaximumLength(200).WithMessage("ImagePath maximum length exceeded")
                 .NotEmpty().WithMessage("ImagePath must not be empty")
                 .NotNull().WithMessage("ImagePath must not be null");
         }
 
         /// <summary>
-        /// 
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        private IApplicationDbContext Context { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the clothe has an unique name or not.
+        /// </summary>
+        /// <param name="name">The name of the clothe.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
-            return await _context.Clothes
-                .TagWith(nameof(HaveUniqueName))
+            return await this.Context.Clothes
+                .TagWith(nameof(this.HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

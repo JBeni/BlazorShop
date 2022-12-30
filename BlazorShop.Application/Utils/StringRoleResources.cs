@@ -1,4 +1,4 @@
-﻿// <copyright file="StringRoleResources.cs" author="Beniamin Jitca">
+﻿// <copyright file="StringRoleResources.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

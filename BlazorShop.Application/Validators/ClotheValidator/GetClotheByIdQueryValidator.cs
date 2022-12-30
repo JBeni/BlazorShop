@@ -1,4 +1,4 @@
-﻿// <copyright file="GetClotheByIdQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetClotheByIdQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.ClotheValidator
         /// </summary>
         public GetClotheByIdQueryValidator()
         {
-            _ = RuleFor(v => v.Id)
+            _ = this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }

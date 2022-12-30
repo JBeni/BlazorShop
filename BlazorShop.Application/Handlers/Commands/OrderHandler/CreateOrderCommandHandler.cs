@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateOrderCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateOrderCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{CreateOrderCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<CreateOrderCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrderCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateOrderCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateOrderCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public CreateOrderCommandHandler(IApplicationDbContext dbContext, ILogger<CreateOrderCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{CreateOrderCommandHandler}"/>.
+        /// </summary>
+        private ILogger<CreateOrderCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="CreateOrderCommand"/>.
@@ -52,13 +52,13 @@ namespace BlazorShop.Application.Handlers.Commands.OrderHandler
                     AmountTotal = request.AmountTotal,
                 };
 
-                _dbContext.Orders.Add(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Orders.Add(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.CreateOrderCommand);
+                this.Logger.LogError(ex, ErrorsManager.CreateOrderCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.CreateOrderCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

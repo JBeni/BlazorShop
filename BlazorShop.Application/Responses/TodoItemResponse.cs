@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoItemResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="TodoItemResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,42 +10,42 @@ namespace BlazorShop.Application.Responses
     public class TodoItemResponse : IMapFrom<TodoItem>
     {
         /// <summary>
-        /// The id of the item.
+        /// Gets or sets The id of the item.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The id of the list.
+        /// Gets or sets The id of the list.
         /// </summary>
         public int ListId { get; set; }
 
         /// <summary>
-        /// The title of the item.
+        /// Gets or sets The title of the item.
         /// </summary>
         public string? Title { get; set; }
 
         /// <summary>
-        /// The note of the item.
+        /// Gets or sets The note of the item.
         /// </summary>
         public string? Note { get; set; }
 
         /// <summary>
-        /// The priority of the item.
+        /// Gets or sets The priority of the item.
         /// </summary>
         public TodoItemPriority Priority { get; set; }
 
         /// <summary>
-        /// The state of the item.
+        /// Gets or sets The state of the item.
         /// </summary>
         public TodoItemState State { get; set; }
 
         /// <summary>
-        /// The status of the item.
+        /// Gets or sets a value indicating whether the item is done or not.
         /// </summary>
         public bool Done { get; set; }
 
         /// <summary>
-        /// The list.
+        /// Gets or sets The list.
         /// </summary>
         public TodoListResponse List { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Roles.razor" author="Beniamin Jitca">
+  <copyright file="Roles.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -115,7 +115,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -124,7 +124,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the admin roles.
     /// </summary>
     protected async Task GetRolesForAdmin()
     {
@@ -133,7 +133,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Filter the roles.
     /// </summary>
     protected void FilterRoles()
     {
@@ -148,7 +148,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -156,7 +156,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the role.
     /// </summary>
     protected async Task DeleteRole(int Id)
     {
@@ -165,7 +165,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {
@@ -174,7 +174,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Navigate.
     /// </summary>
     private void NavigateToPage(int id)
     {

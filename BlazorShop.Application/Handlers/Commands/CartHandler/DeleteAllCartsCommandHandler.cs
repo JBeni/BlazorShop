@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteAllCartsCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteAllCartsCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
     public class DeleteAllCartsCommandHandler : IRequestHandler<DeleteAllCartsCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{DeleteAllCartsCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<DeleteAllCartsCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DeleteAllCartsCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{DeleteAllCartsCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{DeleteAllCartsCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public DeleteAllCartsCommandHandler(IApplicationDbContext dbContext, ILogger<DeleteAllCartsCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{DeleteAllCartsCommandHandler}"/>.
+        /// </summary>
+        private ILogger<DeleteAllCartsCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="DeleteAllCartsCommand"/>.
@@ -44,17 +43,16 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
 
             try
             {
-                _dbContext.Carts.RemoveRange(
-                    _dbContext.Carts
+                this.DbContext.Carts.RemoveRange(
+                    this.DbContext.Carts
                         .TagWith(nameof(DeleteAllCartsCommandHandler))
-                        .Where(x => x.User.Id == request.UserId)
-                );
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                        .Where(x => x.User.Id == request.UserId));
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.DeleteAllCartsCommand);
+                this.Logger.LogError(ex, ErrorsManager.DeleteAllCartsCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.DeleteAllCartsCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetInvoiceByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetInvoiceByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.InvoiceQuery
     public class GetInvoiceByIdQuery : IRequest<Result<InvoiceResponse>>
     {
         /// <summary>
-        /// The id of the invoice.
+        /// Gets or sets The id of the invoice.
         /// </summary>
         public int Id { get; set; }
     }

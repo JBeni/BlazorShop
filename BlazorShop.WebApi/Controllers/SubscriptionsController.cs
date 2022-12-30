@@ -1,4 +1,4 @@
-﻿// <copyright file="SubscriptionsController.cs" author="Beniamin Jitca">
+﻿// <copyright file="SubscriptionsController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,77 +10,77 @@ namespace BlazorShop.WebApi.Controllers
     public class SubscriptionsController : ApiControllerBase
     {
         /// <summary>
-        /// 
+        /// Create a subscription.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("subscription")]
         public async Task<IActionResult> CreateSubscription([FromBody] CreateSubscriptionCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Update a subscription.
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        /// <param name="command">The command.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("subscription")]
         public async Task<IActionResult> UpdateSubscription([FromBody] UpdateSubscriptionCommand command)
         {
-            var result = await Mediator.Send(command);
+            var result = await this.Mediator.Send(command);
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Delete a subscription.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the subscription.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("subscription/{id}")]
         public async Task<IActionResult> DeleteSubscription(int id)
         {
-            var result = await Mediator.Send(new DeleteSubscriptionCommand { Id = id });
+            var result = await this.Mediator.Send(new DeleteSubscriptionCommand { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get a subscription.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the subscription.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscription/{id}")]
         public async Task<IActionResult> GetSubscription(int id)
         {
-            var result = await Mediator.Send(new GetSubscriptionByIdQuery { Id = id });
+            var result = await this.Mediator.Send(new GetSubscriptionByIdQuery { Id = id });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
 
         /// <summary>
-        /// 
+        /// Get the subscriptions.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscriptions")]
         public async Task<IActionResult> GetSubscriptions()
         {
-            var result = await Mediator.Send(new GetSubscriptionsQuery { });
+            var result = await this.Mediator.Send(new GetSubscriptionsQuery { });
             return result.Successful == true
-                ? Ok(result)
-                : BadRequest(result);
+                ? this.Ok(result)
+                : this.BadRequest(result);
         }
     }
 }

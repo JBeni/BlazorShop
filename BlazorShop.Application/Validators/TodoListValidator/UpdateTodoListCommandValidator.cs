@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateTodoListCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoListCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,27 @@ namespace BlazorShop.Application.Validators.TodoListValidator
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _context;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateTodoListCommandValidator"/> class.
         /// </summary>
-        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="context">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateTodoListCommandValidator(IApplicationDbContext context)
         {
-            _context = context;
+            this.Context = context;
 
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
-            RuleFor(x => x.Title)
+            this.RuleFor(x => x.Title)
                 .MaximumLength(200).WithMessage("Title maximum length exceeded")
                 .NotEmpty().WithMessage("Title must not be empty")
                 .NotNull().WithMessage("Title must not be null")
-                .MustAsync(HaveUniqueTitle).WithMessage("The specified title already exists.");
+                .MustAsync(this.HaveUniqueTitle).WithMessage("The specified title already exists.");
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext Context { get; }
 
         /// <summary>
         /// Gets a value indicating whether the list has an unique title or not.
@@ -40,8 +40,8 @@ namespace BlazorShop.Application.Validators.TodoListValidator
         /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueTitle(string name, CancellationToken cancellationToken)
         {
-            return await _context.Carts
-                .TagWith(nameof(HaveUniqueTitle))
+            return await this.Context.Carts
+                .TagWith(nameof(this.HaveUniqueTitle))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

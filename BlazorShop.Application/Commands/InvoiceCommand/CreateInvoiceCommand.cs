@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateInvoiceCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateInvoiceCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,27 +10,27 @@ namespace BlazorShop.Application.Commands.InvoiceCommand
     public class CreateInvoiceCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string UserEmail { get; set; }
 
         /// <summary>
-        /// The name of the invoice.
+        /// Gets or sets The name of the invoice.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The sub total amount of the invoice.
+        /// Gets or sets The sub total amount of the invoice.
         /// </summary>
         public int AmountSubTotal { get; set; }
 
         /// <summary>
-        /// The total amount of the invoice.
+        /// Gets or sets The total amount of the invoice.
         /// </summary>
         public int AmountTotal { get; set; }
 
         /// <summary>
-        /// The quantity of the invoice.
+        /// Gets or sets The quantity of the invoice.
         /// </summary>
         public int Quantity { get; set; }
     }

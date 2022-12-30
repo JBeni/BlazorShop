@@ -1,4 +1,4 @@
-﻿// <copyright file="AuthenticationService.cs" author="Beniamin Jitca">
+﻿// <copyright file="AuthenticationService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,42 +10,43 @@ namespace BlazorShop.WebClient.Auth;
 public class AuthenticationService : IAuthenticationService
 {
     /// <summary>
-    /// .
+    /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
     /// </summary>
-    private readonly HttpClient _httpClient;
-
-    /// <summary>
-    /// .
-    /// </summary>
-    private readonly AuthenticationStateProvider _authStateProvider;
-
-    /// <summary>
-    /// .
-    /// </summary>
-    private readonly ILocalStorageService _localStorage;
-
-    /// <summary>
-    /// .
-    /// </summary>
-    private readonly IToastService _toastService;
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="httpClient"></param>
-    /// <param name="authStateProvider"></param>
-    /// <param name="localStorage"></param>
-    /// <param name="toastService"></param>
-    public AuthenticationService(HttpClient httpClient,
-                                 AuthenticationStateProvider authStateProvider,
-                                 ILocalStorageService localStorage,
-                                 IToastService toastService)
+    /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+    /// <param name="authStateProvider">The instance of the <see cref="AuthenticationStateProvider"/> to use.</param>
+    /// <param name="localStorage">The instance of the <see cref="ILocalStorageService"/> to use.</param>
+    /// <param name="toastService">The instance of the <see cref="IToastService"/> to use.</param>
+    public AuthenticationService(
+        HttpClient httpClient,
+        AuthenticationStateProvider authStateProvider,
+        ILocalStorageService localStorage,
+        IToastService toastService)
     {
-        _httpClient = httpClient;
-        _authStateProvider = authStateProvider;
-        _localStorage = localStorage;
-        _toastService = toastService;
+        this.HttpClient = httpClient;
+        this.AuthStateProvider = authStateProvider;
+        this.LocalStorage = localStorage;
+        this.ToastService = toastService;
     }
+
+    /// <summary>
+    /// Gets the instance of the <see cref="HttpClient"/> to use.
+    /// </summary>
+    private HttpClient HttpClient { get; }
+
+    /// <summary>
+    /// Gets the instance of the <see cref="AuthenticationStateProvider"/> to use.
+    /// </summary>
+    private AuthenticationStateProvider AuthStateProvider { get; }
+
+    /// <summary>
+    /// Gets the instance of the <see cref="ILocalStorageService"/> to use.
+    /// </summary>
+    private ILocalStorageService LocalStorage { get; }
+
+    /// <summary>
+    /// Gets the instance of the <see cref="IToastService"/> to use.
+    /// </summary>
+    private IToastService ToastService { get; }
 
     /// <inheritdoc/>
     public async Task<JwtTokenResponse> Login(LoginCommand command)
@@ -56,29 +57,28 @@ public class AuthenticationService : IAuthenticationService
             new KeyValuePair<string, string>("Password", command.Password),
         });
 
-        var response = await _httpClient.PostAsync("Accounts/login", data);
+        var response = await this.HttpClient.PostAsync("Accounts/login", data);
         var responseResult = await response.Content.ReadAsStringAsync();
 
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
             responseResult,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-        );
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         JwtTokenResponse? jwtResponse = null;
         if (response.IsSuccessStatusCode == false)
         {
-            _toastService.ShowError(result.Error);
+            this.ToastService.ShowError(result.Error);
         }
         else if (result.AccessToken == null)
         {
-            _toastService.ShowError("Access Token is null");
+            this.ToastService.ShowError("Access Token is null");
         }
         else
         {
-            await _localStorage.SetItemAsync("authToken", result.AccessToken.ToString());
-            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
+            await this.LocalStorage.SetItemAsync("authToken", result.AccessToken.ToString());
+            ((AuthStateProvider)this.AuthStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
+            this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
             jwtResponse = new JwtTokenResponse { AccessToken = result.AccessToken.ToString() };
         }
 
@@ -98,29 +98,28 @@ public class AuthenticationService : IAuthenticationService
             new KeyValuePair<string, string>("ConfirmPassword", command.ConfirmPassword),
         });
 
-        var response = await _httpClient.PostAsync("Accounts/register", data);
+        var response = await this.HttpClient.PostAsync("Accounts/register", data);
         var responseResult = await response.Content.ReadAsStringAsync();
 
         var result = JsonSerializer.Deserialize<JwtTokenResponse>(
             responseResult,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-        );
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         JwtTokenResponse? jwtResponse = null;
         if (response.IsSuccessStatusCode == false)
         {
-            _toastService.ShowError(result.Error);
+            this.ToastService.ShowError(result.Error);
         }
         else if (result.AccessToken == null)
         {
-            _toastService.ShowError("Access Token is null");
+            this.ToastService.ShowError("Access Token is null");
         }
         else
         {
-            await _localStorage.SetItemAsync("authToken", result.AccessToken.ToString());
-            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
+            await this.LocalStorage.SetItemAsync("authToken", result.AccessToken.ToString());
+            ((AuthStateProvider)this.AuthStateProvider).NotifyUserAuthentication(result.AccessToken.ToString());
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
+            this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(result.Type, result.AccessToken.ToString());
             jwtResponse = new JwtTokenResponse { AccessToken = result.AccessToken.ToString() };
         }
 
@@ -130,8 +129,8 @@ public class AuthenticationService : IAuthenticationService
     /// <inheritdoc/>
     public async Task Logout()
     {
-        await _localStorage.RemoveItemAsync("authToken");
-        ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
-        _httpClient.DefaultRequestHeaders.Authorization = null;
+        await this.LocalStorage.RemoveItemAsync("authToken");
+        ((AuthStateProvider)this.AuthStateProvider).NotifyUserLogout();
+        this.HttpClient.DefaultRequestHeaders.Authorization = null;
     }
 }

@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Cart.razor" author="Beniamin Jitca">
+  <copyright file="Cart.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -112,7 +112,7 @@
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -127,7 +127,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Deleting the item.
     /// </summary>
     private async Task DeleteItem(int id)
     {
@@ -136,7 +136,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Updating the clothe quantity.
     /// </summary>
     private async Task UpdateClotheQuantity(CartResponse cart, int newAmount)
     {
@@ -145,7 +145,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Placing the order.
     /// </summary>
     private async Task PlaceOrder()
     {

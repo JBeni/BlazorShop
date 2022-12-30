@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUsersQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUsersQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -17,7 +17,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <summary>
         /// Gets the <see cref="ILogger<GetUsersQueryHandlerTests>"/> instance to use.
         /// </summary>
-        private readonly ILogger<GetUsersQueryHandlerTests> Logger;
+        private ILogger<GetUsersQueryHandlerTests> Logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersQueryHandlerTests"/> class.
@@ -42,8 +42,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// returns outstanding appointments for the current user.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public async Task Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

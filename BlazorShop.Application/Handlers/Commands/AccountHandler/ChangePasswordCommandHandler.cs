@@ -1,38 +1,35 @@
-﻿// <copyright file="ChangePasswordCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="ChangePasswordCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
-    ///     /// <summary>
     /// An implementation of the <see cref="IRequestHandler{ChangePasswordCommand, RequestResponse}"/>.
-    /// </summary>
     /// </summary>
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IAccountService"/>.
-        /// </summary>
-        private readonly IAccountService _accountService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<ChangePasswordCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ChangePasswordCommandHandler"/> class.
         /// </summary>
-        /// <param name="accountService">An instance of <see cref="IAccountService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.</param>
+        /// <param name="accountService">Gets An instance of <see cref="IAccountService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
-
         public ChangePasswordCommandHandler(IAccountService accountService, ILogger<ChangePasswordCommandHandler> logger)
         {
-            _accountService = accountService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.AccountService = accountService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IAccountService"/>.
+        /// </summary>
+        private IAccountService AccountService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{ChangePasswordCommandHandler}"/>.
+        /// </summary>
+        private ILogger<ChangePasswordCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="ChangePasswordCommand"/>.
@@ -46,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 
             try
             {
-                response = await _accountService.ChangePasswordUserAsync(request);
+                response = await this.AccountService.ChangePasswordUserAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.ChangePasswordCommand);
+                this.Logger.LogError(ex, ErrorsManager.ChangePasswordCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.ChangePasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

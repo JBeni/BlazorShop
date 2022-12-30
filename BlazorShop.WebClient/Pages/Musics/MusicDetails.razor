@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="MusicDetails.razor" author="Beniamin Jitca">
+  <copyright file="MusicDetails.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -50,15 +50,15 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         Interceptor.RegisterEvent();
     }
 
     /// <summary>
-    /// .
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {

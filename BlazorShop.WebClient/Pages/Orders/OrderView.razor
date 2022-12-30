@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="OrderView.razor" author="Beniamin Jitca">
+  <copyright file="OrderView.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -105,7 +105,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -117,7 +117,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -132,7 +132,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Going to previous page.
     /// </summary>
     private void GoBack()
     {

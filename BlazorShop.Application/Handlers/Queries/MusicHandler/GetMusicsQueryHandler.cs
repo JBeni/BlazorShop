@@ -1,4 +1,4 @@
-﻿// <copyright file="GetMusicsQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetMusicsQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.MusicHandler
     public class GetMusicsQueryHandler : IRequestHandler<GetMusicsQuery, Result<MusicResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetMusicsQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetMusicsQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetMusicsQueryHandler(IApplicationDbContext dbContext, ILogger<GetMusicsQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetMusicsQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetMusicsQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetMusicsQuery"/>.
@@ -50,23 +50,23 @@ namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 
             try
             {
-                var result = _dbContext.Musics
+                var result = this.DbContext.Musics
                     .TagWith(nameof(GetMusicsQueryHandler))
-                    .ProjectTo<MusicResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<MusicResponse>(this.Mapper.ConfigurationProvider)
                     .ToList();
 
                 response = new Result<MusicResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<MusicResponse>()
+                    Items = result ?? new List<MusicResponse>(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetMusicsQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetMusicsQuery);
                 response = new Result<MusicResponse>
                 {
-                    Error = $"{ErrorsManager.GetMusicsQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetMusicsQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

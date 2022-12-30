@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteClotheCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteClotheCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.ClotheCommand
     public class DeleteClotheCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the clothe.
+        /// Gets or sets The id of the clothe.
         /// </summary>
         public int Id { get; set; }
     }

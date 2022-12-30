@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateUserCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateUserCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
+        /// Initializes a new instance of the <see cref="UpdateUserCommandHandler"/> class.
         /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateUserCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateUserCommandHandler> _logger;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResetPasswordCommandHandler"/> class.
-        /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateUserCommandHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateUserCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateUserCommandHandler(IUserService userService, ILogger<UpdateUserCommandHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateUserCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateUserCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateUserCommand"/>.
@@ -43,12 +43,12 @@ namespace BlazorShop.Application.Handlers.Commands.UserHandler
 
             try
             {
-                var result = await _userService.UpdateUserAsync(request);
+                var result = await this.UserService.UpdateUserAsync(request);
                 response = result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateUserCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateUserCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateUserCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

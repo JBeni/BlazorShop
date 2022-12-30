@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="AddEditUser.razor" author="Beniamin Jitca">
+  <copyright file="AddEditUser.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -75,7 +75,7 @@
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -84,7 +84,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Initialize the component using the parameter.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -96,7 +96,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Save the user.
     /// </summary>
     protected async Task SaveUser()
     {
@@ -116,7 +116,7 @@
     }
 
     /// <summary>
-    /// .
+    /// Cancel the operation.
     /// </summary>
     public void Cancel()
     {

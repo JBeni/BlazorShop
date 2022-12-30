@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<UserResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetUserByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetUserByIdQueryHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetUserByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetUserByIdQueryHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetUserByIdQueryHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetUserByIdQueryHandler(IUserService userService, ILogger<GetUserByIdQueryHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetUserByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetUserByIdQueryHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetUserByIdQuery"/>.
@@ -43,20 +43,20 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
 
             try
             {
-                var result = _userService.GetUserById(request);
+                var result = this.UserService.GetUserById(request);
 
                 response = new Result<UserResponse>
                 {
                     Successful = true,
-                    Item = result ?? new UserResponse()
+                    Item = result ?? new UserResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetUserByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetUserByIdQuery);
                 response = new Result<UserResponse>
                 {
-                    Error = $"{ErrorsManager.GetUserByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUserByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

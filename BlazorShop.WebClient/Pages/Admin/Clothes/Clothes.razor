@@ -1,5 +1,5 @@
 ﻿@*
-  <copyright file="Clothes.razor" author="Beniamin Jitca">
+  <copyright file="Clothes.razor" company="Beniamin Jitca" author="Beniamin Jitca">
    Copyright (c) Beniamin Jitca. All rights reserved.
   </copyright>
 *@
@@ -124,7 +124,7 @@ else
     public void Dispose() => Interceptor.DisposeEvent();
 
     /// <summary>
-    /// .
+    /// Initialize the component on load.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
@@ -133,7 +133,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Get the clothes.
     /// </summary>
     protected async Task GetClothes()
     {
@@ -142,7 +142,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Filter the clothes.
     /// </summary>
     protected void FilterClothes()
     {
@@ -157,7 +157,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Navigate.
     /// </summary>
     private void NavigateToPage(int id)
     {
@@ -165,7 +165,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Confirm the delete operation.
     /// </summary>
     protected void DeleteConfirm(int Id)
     {
@@ -173,7 +173,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Delete the clothe.
     /// </summary>
     protected async Task DeleteClothe(int Id)
     {
@@ -182,7 +182,7 @@ else
     }
 
     /// <summary>
-    /// .
+    /// Reset the search filter.
     /// </summary>
     public void ResetSearch()
     {

@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateUserCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateUserCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,22 +10,22 @@ namespace BlazorShop.Application.Commands.UserCommand
     public class CreateUserCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// The first name of the user.
+        /// Gets or sets The first name of the user.
         /// </summary>
         public string? FirstName { get; set; }
 
         /// <summary>
-        /// The last name of the user.
+        /// Gets or sets The last name of the user.
         /// </summary>
         public string? LastName { get; set; }
 
         /// <summary>
-        /// The role of the user.
+        /// Gets or sets The role of the user.
         /// </summary>
         public string? Role { get; set; }
     }

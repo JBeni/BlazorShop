@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateCartCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateCartCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,39 +10,39 @@ namespace BlazorShop.Application.Validators.CartValidator
     public class UpdateCartCommandValidator : AbstractValidator<UpdateCartCommand>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _context;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateCartCommandValidator"/> class.
         /// </summary>
-        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="context">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         public UpdateCartCommandValidator(IApplicationDbContext context)
         {
-            _context = context;
+            this.Context = context;
 
-            RuleFor(v => v.UserId)
+            this.RuleFor(v => v.UserId)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
 
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
 
-            RuleFor(v => v.ClotheId)
+            this.RuleFor(v => v.ClotheId)
                 .GreaterThan(0).WithMessage("ClotheId must be greater than 0");
 
-            RuleFor(v => v.Name)
+            this.RuleFor(v => v.Name)
                 .MaximumLength(200).WithMessage("Name maximum length exceeded")
                 .NotEmpty().WithMessage("Name must not be empty")
                 .NotNull().WithMessage("Name must not be null")
-                .MustAsync(HaveUniqueName).WithMessage("The specified name already exists.");
+                .MustAsync(this.HaveUniqueName).WithMessage("The specified name already exists.");
 
-            RuleFor(v => v.Price)
+            this.RuleFor(v => v.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than 0");
 
-            RuleFor(v => v.Amount)
+            this.RuleFor(v => v.Amount)
                 .GreaterThan(0).WithMessage("Amount must be greater than 0");
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext Context { get; }
 
         /// <summary>
         /// Gets a value indicating whether the cart has an unique name or not.
@@ -52,8 +52,8 @@ namespace BlazorShop.Application.Validators.CartValidator
         /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
-            return await _context.Carts
-                .TagWith(nameof(HaveUniqueName))
+            return await this.Context.Carts
+                .TagWith(nameof(this.HaveUniqueName))
                 .AllAsync(l => l.Name != name, cancellationToken);
         }
     }

@@ -1,4 +1,4 @@
-﻿// <copyright file="RequestResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="RequestResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,17 +10,17 @@ namespace BlazorShop.Application.Common.Models
     public class RequestResponse
     {
         /// <summary>
-        /// A value indicating whether the request was successfully or not.
+        /// Gets or sets A value indicating whether the request was successfully or not.
         /// </summary>
         public bool Successful { get; set; } = false;
 
         /// <summary>
-        /// The error message if the request is not successful.
+        /// Gets or sets The error message if the request is not successful.
         /// </summary>
         public string? Error { get; set; } = null;
 
         /// <summary>
-        /// The id of the entity.
+        /// Gets or sets The id of the entity.
         /// </summary>
         public int EntityId { get; set; } = 0;
 

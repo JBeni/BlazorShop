@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateTodoItemCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateTodoItemCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
     /// </summary>
     public class CreateTodoItemCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly IMapper _mapper;
+        private IApplicationDbContext DbContext { get; }
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateTodoItemCommandHandlerTests"/> class.
         /// </summary>
         public CreateTodoItemCommandHandlerTests(IApplicationDbContext dbContext, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response></response>
-        public async Task Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+        public Task Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

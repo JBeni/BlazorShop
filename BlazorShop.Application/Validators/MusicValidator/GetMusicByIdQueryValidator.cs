@@ -1,4 +1,4 @@
-﻿// <copyright file="GetMusicByIdQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetMusicByIdQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.MusicValidator
         /// </summary>
         public GetMusicByIdQueryValidator()
         {
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

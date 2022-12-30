@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteAllCartsCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteAllCartsCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.CartValidator
         /// </summary>
         public DeleteAllCartsCommandValidator()
         {
-            RuleFor(v => v.UserId)
+            this.RuleFor(v => v.UserId)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }

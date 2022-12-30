@@ -1,4 +1,4 @@
-﻿// <copyright file="UserRole.cs" author="Beniamin Jitca">
+﻿// <copyright file="UserRole.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,12 +10,12 @@ namespace BlazorShop.Domain.Entities.Identity
     public class UserRole : IdentityUserRole<int>
     {
         /// <summary>
-        /// .
+        /// Gets or Sets the user.
         /// </summary>
         public virtual User User { get; set; }
 
         /// <summary>
-        /// .
+        /// Gets or Sets the role.
         /// </summary>
         public virtual Role Role { get; set; }
     }

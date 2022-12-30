@@ -1,4 +1,4 @@
-﻿// <copyright file="GetCartsQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetCartsQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,18 +9,18 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.CartHandler
     /// </summary>
     public class GetCartsQueryHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetCartsQueryHandlerTests> _logger;
-        private readonly IMapper _mapper;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<GetCartsQueryHandlerTests> Logger { get; }
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCartsQueryHandlerTests"/> class.
         /// </summary>
         public GetCartsQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetCartsQueryHandlerTests> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -29,8 +29,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.CartHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(GetCartsQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

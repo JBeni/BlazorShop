@@ -1,29 +1,20 @@
-﻿// <copyright file="AdminRoleRequirement.cs" author="Beniamin Jitca">
+﻿// <copyright file="AdminRoleHandler.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// A custom policy to check for the Admin role.
+    /// Handle the requirement of admin role.
     /// </summary>
-    public class AdminRoleRequirement : IAuthorizationRequirement
-    {
-        public string Role { get; }
-
-        public AdminRoleRequirement(string role)
-        {
-            Role = role;
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class AdminRoleHandler : AuthorizationHandler<AdminRoleRequirement>
     {
+        /// <summary>
+        /// Search for the admin role.
+        /// </summary>
+        /// <param name="context">The instance of the <see cref="AuthorizationHandlerContext"/>.</param>
+        /// <param name="requirement">The instance of the <see cref="UserRoleRequirement"/>.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRoleRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetReceiptsQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetReceiptsQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.ReceiptValidator
         /// </summary>
         public GetReceiptsQueryValidator()
         {
-            RuleFor(v => v.UserEmail)
+            this.RuleFor(v => v.UserEmail)
                 .MaximumLength(100).WithMessage("UserEmail maximum length exceeded")
                 .NotEmpty().WithMessage("UserEmail must not be empty")
                 .NotNull().WithMessage("UserEmail must not be null");

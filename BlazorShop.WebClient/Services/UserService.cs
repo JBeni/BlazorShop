@@ -1,4 +1,4 @@
-﻿// <copyright file="UserService.cs" author="Beniamin Jitca">
+﻿// <copyright file="UserService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,31 +10,31 @@ namespace BlazorShop.WebClient.Services
     public class UserService : IUserService
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly ISnackbar _snackBar;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        private readonly JsonSerializerOptions _options;
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="snackBar"></param>
+        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public UserService(HttpClient httpClient, ISnackbar snackBar)
         {
-            _httpClient = httpClient;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _snackBar = snackBar;
+            this.HttpClient = httpClient;
+            this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            this.SnackBar = snackBar;
         }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// </summary>
+        private HttpClient HttpClient { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="ISnackbar"/> to use.
+        /// </summary>
+        private ISnackbar SnackBar { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="JsonSerializerOptions"/> to use.
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> AddUser(UserResponse user)
@@ -44,22 +44,21 @@ namespace BlazorShop.WebClient.Services
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Role = user.RoleName
+                Role = user.RoleName,
             };
 
-            var response = await _httpClient.PostAsJsonAsync($"Users/user", data);
+            var response = await this.HttpClient.PostAsJsonAsync($"Users/user", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The user was added.", Severity.Success);
+                this.SnackBar.Add("The user was added.", Severity.Success);
             }
 
             return result;
@@ -70,22 +69,21 @@ namespace BlazorShop.WebClient.Services
         {
             var data = new ActivateUserCommand
             {
-                Id = userId
+                Id = userId,
             };
 
-            var response = await _httpClient.PostAsJsonAsync($"Users/userActivate", data);
+            var response = await this.HttpClient.PostAsJsonAsync($"Users/userActivate", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The user was activated.", Severity.Success);
+                this.SnackBar.Add("The user was activated.", Severity.Success);
             }
 
             return result;
@@ -94,19 +92,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteUser(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Users/user/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Users/user/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The user was deleted.", Severity.Success);
+                this.SnackBar.Add("The user was deleted.", Severity.Success);
             }
 
             return result;
@@ -115,15 +112,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<UserResponse> GetUser(int id)
         {
-            var response = await _httpClient.GetAsync($"Users/user/{id}");
+            var response = await this.HttpClient.GetAsync($"Users/user/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -134,15 +130,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsers()
         {
-            var response = await _httpClient.GetAsync("Users/users");
+            var response = await this.HttpClient.GetAsync("Users/users");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -153,15 +148,14 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsersInactive()
         {
-            var response = await _httpClient.GetAsync("Users/usersInactive");
+            var response = await this.HttpClient.GetAsync("Users/usersInactive");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
 
             return !response.IsSuccessStatusCode
@@ -177,22 +171,21 @@ namespace BlazorShop.WebClient.Services
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Role = user.RoleName
+                Role = user.RoleName,
             };
 
-            var response = await _httpClient.PutAsJsonAsync($"Users/user", data);
+            var response = await this.HttpClient.PutAsJsonAsync($"Users/user", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The user was updated.", Severity.Success);
+                this.SnackBar.Add("The user was updated.", Severity.Success);
             }
 
             return result;
@@ -201,19 +194,18 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user)
         {
-            var response = await _httpClient.PutAsJsonAsync($"Users/userEmail", user);
+            var response = await this.HttpClient.PutAsJsonAsync($"Users/userEmail", user);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, _options
-            );
+                responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
-                _snackBar.Add(result.Error, Severity.Error);
+                this.SnackBar.Add(result.Error, Severity.Error);
             }
             else
             {
-                _snackBar.Add("The user email address was updated.", Severity.Success);
+                this.SnackBar.Add("The user email address was updated.", Severity.Success);
             }
 
             return result;

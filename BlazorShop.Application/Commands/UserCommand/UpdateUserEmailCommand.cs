@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateUserEmailCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateUserEmailCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,17 +10,17 @@ namespace BlazorShop.Application.Commands.UserCommand
     public class UpdateUserEmailCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the user.
+        /// Gets or sets The id of the user.
         /// </summary>
         public int UserId { get; set; }
 
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// The new email of the user.
+        /// Gets or sets The new email of the user.
         /// </summary>
         public string? NewEmail { get; set; }
     }

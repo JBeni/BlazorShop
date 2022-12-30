@@ -1,4 +1,4 @@
-﻿// <copyright file="UserLoginConfiguration.cs" author="Beniamin Jitca">
+﻿// <copyright file="UserLoginConfiguration.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,9 +10,9 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations.Identity
     public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
     {
         /// <summary>
-        /// .
+        /// A method to configure an entity.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">The builder for configuring the entity metadata.</param>
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
             builder.ToTable("AppUserLogins");

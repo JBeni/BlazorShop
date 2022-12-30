@@ -1,4 +1,4 @@
-﻿// <copyright file="ResetPasswordCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="ResetPasswordCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IAccountService"/>.
-        /// </summary>
-        private readonly IAccountService _accountService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{ResetPasswordCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<ResetPasswordCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ResetPasswordCommandHandler"/> class.
         /// </summary>
-        /// <param name="accountService">An instance of <see cref="IAccountService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{ResetPasswordCommandHandler}"/>.</param>
+        /// <param name="accountService">Gets An instance of <see cref="IAccountService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{ResetPasswordCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public ResetPasswordCommandHandler(IAccountService accountService, ILogger<ResetPasswordCommandHandler> logger)
         {
-            _accountService = accountService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.AccountService = accountService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IAccountService"/>.
+        /// </summary>
+        private IAccountService AccountService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{ResetPasswordCommandHandler}"/>.
+        /// </summary>
+        private ILogger<ResetPasswordCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="ResetPasswordCommand"/>.
@@ -43,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 
             try
             {
-                response = await _accountService.ResetPasswordUserAsync(request);
+                response = await this.AccountService.ResetPasswordUserAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.ResetPasswordCommand);
+                this.Logger.LogError(ex, ErrorsManager.ResetPasswordCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.ResetPasswordCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

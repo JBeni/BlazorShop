@@ -1,29 +1,20 @@
-﻿// <copyright file="UserRoleRequirement.cs" author="Beniamin Jitca">
+﻿// <copyright file="UserRoleHandler.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebClient.AuthPolicies
 {
     /// <summary>
-    /// A custom policy to check for the User role.
+    /// Handle the requirement of user role.
     /// </summary>
-    public class UserRoleRequirement : IAuthorizationRequirement
-    {
-        public string Role { get; }
-
-        public UserRoleRequirement(string role)
-        {
-            Role = role;
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="todoItem">.</param>
-    /// <returns></returns>
     public class UserRoleHandler : AuthorizationHandler<UserRoleRequirement>
     {
+        /// <summary>
+        /// Search for the user role.
+        /// </summary>
+        /// <param name="context">The instance of the <see cref="AuthorizationHandlerContext"/>.</param>
+        /// <param name="requirement">The instance of the <see cref="UserRoleRequirement"/>.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, UserRoleRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)

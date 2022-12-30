@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteClotheCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteClotheCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.ClotheValidator
         /// </summary>
         public DeleteClotheCommandValidator()
         {
-            _ = RuleFor(v => v.Id)
+            _ = this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

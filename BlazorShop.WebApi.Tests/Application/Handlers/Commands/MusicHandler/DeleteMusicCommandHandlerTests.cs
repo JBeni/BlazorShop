@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteMusicCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteMusicCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.MusicHandler
     /// </summary>
     public class DeleteMusicCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<DeleteMusicCommandHandlerTests> _logger;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<DeleteMusicCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteMusicCommandHandlerTests"/> class.
         /// </summary>
         public DeleteMusicCommandHandlerTests(IApplicationDbContext dbContext, ILogger<DeleteMusicCommandHandlerTests> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.MusicHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(DeleteMusicCommand request, CancellationToken cancellationToken)
+        public Task Handle(DeleteMusicCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

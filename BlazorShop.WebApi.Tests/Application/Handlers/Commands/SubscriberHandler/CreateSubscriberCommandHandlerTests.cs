@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateSubscriberCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateSubscriberCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,18 +9,18 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
     /// </summary>
     public class CreateSubscriberCommandHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<CreateSubscriberCommandHandlerTests> _logger;
-        private readonly IUserService _userService;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<CreateSubscriberCommandHandlerTests> Logger { get; }
+        private IUserService UserService { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubscriberCommandHandlerTests"/> class.
         /// </summary>
         public CreateSubscriberCommandHandlerTests(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandlerTests> logger, IUserService userService)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         /// <summary>
@@ -29,8 +29,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandle
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(CreateSubscriberCommand request, CancellationToken cancellationToken)
+        public Task Handle(CreateSubscriberCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

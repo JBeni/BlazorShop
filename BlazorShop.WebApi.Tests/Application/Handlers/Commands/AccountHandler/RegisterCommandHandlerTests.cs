@@ -1,24 +1,24 @@
-﻿// <copyright file="RegisterCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="RegisterCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
-    /// Tests for <see cref="RegisterCommandHandler"/>.
+    /// for <see cref="RegisterCommandHandler"/>.
     /// </summary>
     public class RegisterCommandHandlerTests
     {
-        private readonly IAccountService _accountService;
-        private readonly ILogger<RegisterCommandHandlerTests> _logger;
+        private IAccountService AccountService { get; }
+        private ILogger<RegisterCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterCommandHandlerTests"/> class.
         /// </summary>
         public RegisterCommandHandlerTests(IAccountService accountService, ILogger<RegisterCommandHandlerTests> logger)
         {
-            _accountService = accountService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.AccountService = accountService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public Task Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

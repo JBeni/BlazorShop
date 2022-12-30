@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateReceiptCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateReceiptCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
     public class UpdateReceiptCommandHandler : IRequestHandler<UpdateReceiptCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateReceiptCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateReceiptCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateReceiptCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{UpdateReceiptCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{UpdateReceiptCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateReceiptCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateReceiptCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateReceiptCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateReceiptCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateReceiptCommand"/>.
@@ -43,22 +43,25 @@ namespace BlazorShop.Application.Handlers.Commands.ReceiptHandler
 
             try
             {
-                var entity = _dbContext.Receipts
+                var entity = this.DbContext.Receipts
                     .TagWith(nameof(UpdateReceiptCommandHandler))
                     .SingleOrDefault(d => d.Id == request.Id);
-                if (entity == null) throw new Exception("The receipt does not exists");
+                if (entity == null)
+                {
+                    throw new Exception("The receipt does not exists");
+                }
 
                 entity.ReceiptDate = request.ReceiptDate;
                 entity.ReceiptName = request.ReceiptName;
                 entity.ReceiptUrl = request.ReceiptUrl;
 
-                _dbContext.Receipts.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.Receipts.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
                 response = RequestResponse.Success(entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateReceiptCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateReceiptCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateReceiptCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

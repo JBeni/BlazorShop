@@ -1,4 +1,4 @@
-﻿// <copyright file="IRoleService.cs" author="Beniamin Jitca">
+﻿// <copyright file="IRoleService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,45 +10,43 @@ namespace BlazorShop.WebClient.Interfaces
     public interface IRoleService
     {
         /// <summary>
-        /// .
+        /// Get the roles.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<RoleResponse>> GetRoles();
 
         /// <summary>
-        /// .
+        /// Get the admin roles.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<RoleResponse>> GetRolesForAdmin();
 
         /// <summary>
-        /// .
+        /// Get a role.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RoleResponse> GetRole(int id);
 
         /// <summary>
-        /// .
+        /// Save a role.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="role">The role.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> AddRole(RoleResponse role);
 
         /// <summary>
-        /// .
+        /// Update a role.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="role">The role.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> UpdateRole(RoleResponse role);
 
         /// <summary>
-        /// .
+        /// Delete a role.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<RequestResponse> DeleteRole(int id);
     }
 }

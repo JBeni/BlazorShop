@@ -1,4 +1,4 @@
-﻿// <copyright file="IStripeService.cs" author="Beniamin Jitca">
+﻿// <copyright file="IStripeService.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,10 +10,10 @@ namespace BlazorShop.WebClient.Interfaces
     public interface IStripeService
     {
         /// <summary>
-        /// .
+        /// Cancel the membership.
         /// </summary>
-        /// <param name="todoItem">.</param>
-        /// <returns></returns>
+        /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task CancelMembership(string stripeSubscriptionCreationId);
     }
 }

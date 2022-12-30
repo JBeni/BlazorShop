@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserSubscribersQueryValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserSubscribersQueryValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.SubscriberValidator
         /// </summary>
         public GetUserSubscribersQueryValidator()
         {
-            RuleFor(x => x.UserId)
+            this.RuleFor(x => x.UserId)
                 .GreaterThan(0).WithMessage("UserId must be greater than 0");
         }
     }

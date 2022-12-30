@@ -1,4 +1,4 @@
-﻿// <copyright file="OrderResponse.cs" author="Beniamin Jitca">
+﻿// <copyright file="OrderResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,32 +10,32 @@ namespace BlazorShop.Application.Responses
     public class OrderResponse : IMapFrom<Order>
     {
         /// <summary>
-        /// The id of the order.
+        /// Gets or sets The id of the order.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string UserEmail { get; set; }
 
         /// <summary>
-        /// The name of the order.
+        /// Gets or sets The name of the order.
         /// </summary>
         public string OrderName { get; set; }
 
         /// <summary>
-        /// The date when the order was placed.
+        /// Gets or sets The date when the order was placed.
         /// </summary>
         public DateTime OrderDate { get; set; }
 
         /// <summary>
-        /// The items of the order.
+        /// Gets or sets The items of the order.
         /// </summary>
         public string LineItems { get; set; }
 
         /// <summary>
-        /// The total amount of the order.
+        /// Gets or sets The total amount of the order.
         /// </summary>
         public int AmountTotal { get; set; }
 

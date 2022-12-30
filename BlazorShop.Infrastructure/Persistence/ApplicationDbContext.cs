@@ -1,4 +1,4 @@
-﻿// <copyright file="ApplicationDbContext.cs" author="Beniamin Jitca">
+﻿// <copyright file="ApplicationDbContext.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -12,76 +12,55 @@ namespace BlazorShop.Infrastructure.Persistence
         RoleClaim, UserToken>, IApplicationDbContext
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
         /// </summary>
-        /// <param name="options"></param>
-        public ApplicationDbContext(DbContextOptions options) : base(options) { }
+        /// <param name="options">The options for the db context.</param>
+        public ApplicationDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Cart> Carts { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Clothe> Clothes { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Invoice> Invoices { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Music> Musics { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Order> Orders { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Subscriber> Subscribers { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Subscription> Subscriptions { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<Receipt> Receipts { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<TodoItem> TodoItems { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <inheritdoc/>
         public DbSet<TodoList> TodoLists { get; set; }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        /// <inheritdoc/>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
 
         /// <summary>
-        /// .
+        /// Adding more settings to the db context.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">The model builder of the db context.</param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

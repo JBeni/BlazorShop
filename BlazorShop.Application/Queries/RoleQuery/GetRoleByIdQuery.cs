@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRoleByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRoleByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.RoleQuery
     public class GetRoleByIdQuery : IRequest<Result<RoleResponse>>
     {
         /// <summary>
-        /// The id of the role.
+        /// Gets or sets The id of the role.
         /// </summary>
         public int Id { get; set; }
     }

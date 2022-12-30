@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteSubscriptionCommand.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteSubscriptionCommand.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,8 +10,8 @@ namespace BlazorShop.Application.Commands.SubscriptionCommand
     public class DeleteSubscriptionCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// The id of the subscription.
+        /// Gets or sets The id of the subscription.
         /// </summary>
-		public int Id { get; set; }
-	}
+        public int Id { get; set; }
+    }
 }

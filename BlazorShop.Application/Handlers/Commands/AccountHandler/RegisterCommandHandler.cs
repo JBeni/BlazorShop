@@ -1,4 +1,4 @@
-﻿// <copyright file="RegisterCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="RegisterCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, JwtTokenResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IAccountService"/>.
-        /// </summary>
-        private readonly IAccountService _accountService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{RegisterCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<RegisterCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RegisterCommandHandler"/> class.
         /// </summary>
-        /// <param name="accountService">An instance of <see cref="IAccountService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{RegisterCommandHandler}"/>.</param>
+        /// <param name="accountService">Gets An instance of <see cref="IAccountService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{RegisterCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public RegisterCommandHandler(IAccountService accountService, ILogger<RegisterCommandHandler> logger)
         {
-            _accountService = accountService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.AccountService = accountService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IAccountService"/>.
+        /// </summary>
+        private IAccountService AccountService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{RegisterCommandHandler}"/>.
+        /// </summary>
+        private ILogger<RegisterCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="RegisterCommand"/>.
@@ -43,11 +43,11 @@ namespace BlazorShop.Application.Handlers.Commands.AccountHandler
 
             try
             {
-                response = await _accountService.RegisterAsync(request);
+                response = await this.AccountService.RegisterAsync(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.RegisterCommand);
+                this.Logger.LogError(ex, ErrorsManager.RegisterCommand);
                 response = JwtTokenResponse.Failure($"{ErrorsManager.RegisterCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

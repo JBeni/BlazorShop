@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUserByIdQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUserByIdQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.UserQuery
     public class GetUserByIdQuery : IRequest<Result<UserResponse>>
     {
         /// <summary>
-        /// The id of the user.
+        /// Gets or sets The id of the user.
         /// </summary>
         public int Id { get; set; }
     }

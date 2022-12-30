@@ -1,4 +1,4 @@
-﻿// <copyright file="GetSubscriberByIdQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetSubscriberByIdQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,18 +9,18 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.SubscriberHandler
     /// </summary>
     public class GetSubscriberByIdQueryHandlerTests
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILogger<GetSubscriberByIdQueryHandlerTests> _logger;
-        private readonly IMapper _mapper;
+        private IApplicationDbContext DbContext { get; }
+        private ILogger<GetSubscriberByIdQueryHandlerTests> Logger { get; }
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSubscriberByIdQueryHandlerTests"/> class.
         /// </summary>
         public GetSubscriberByIdQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetSubscriberByIdQueryHandlerTests> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -29,8 +29,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.SubscriberHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

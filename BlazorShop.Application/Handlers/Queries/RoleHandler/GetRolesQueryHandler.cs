@@ -1,4 +1,4 @@
-﻿// <copyright file="GetRolesQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetRolesQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
     public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, Result<RoleResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IRoleService"/>.
-        /// </summary>
-        private readonly IRoleService _roleService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetRolesQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetRolesQueryHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetRolesQueryHandler"/> class.
         /// </summary>
-        /// <param name="roleService">An instance of <see cref="IRoleService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetRolesQueryHandler}"/>.</param>
+        /// <param name="roleService">Gets An instance of <see cref="IRoleService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetRolesQueryHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetRolesQueryHandler(IRoleService roleService, ILogger<GetRolesQueryHandler> logger)
         {
-            _roleService = roleService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.RoleService = roleService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IRoleService"/>.
+        /// </summary>
+        private IRoleService RoleService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetRolesQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetRolesQueryHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetRolesQuery"/>.
@@ -43,20 +43,20 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 
             try
             {
-                var result = _roleService.GetRoles();
+                var result = this.RoleService.GetRoles();
 
                 response = new Result<RoleResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<RoleResponse>()
+                    Items = result ?? new List<RoleResponse>(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetRolesQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetRolesQuery);
                 response = new Result<RoleResponse>
                 {
-                    Error = $"{ErrorsManager.GetRolesQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetRolesQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

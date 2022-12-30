@@ -1,7 +1,6 @@
-﻿// <copyright file="Program.cs" author="Beniamin Jitca">
+﻿// <copyright file="Program.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
-
 
 /// <summary>
 /// The configurations for the Core Web API.
@@ -55,7 +54,7 @@ try
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidAudience = builder.Configuration["JwtToken:Audience"],
-                ValidIssuer = builder.Configuration["JwtToken:Issuer"]
+                ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             };
         });
 
@@ -74,6 +73,7 @@ try
             {
                 context.Database.Migrate();
             }
+
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<Role>>();
 
@@ -141,13 +141,15 @@ try
         context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
         context.Response.Headers.Add("Referrer-Policy", "same-origin");
         context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
-        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src " +
-            "self  " +
-            "https://maxcdn.bootstrapcdn.com  " +
-            "https://login.microsoftonline.com " +
-            "https://sshmantest.azurewebsites.net " +
-            "https://code.jquery.com https://dc.services.visualstudio.com " +
-            " 'unsafe-inline' 'unsafe-eval'");
+        #pragma warning disable SA1118 // Parameter should not span multiple lines
+        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src "
+            + "self  "
+            + "https://maxcdn.bootstrapcdn.com  "
+            + "https://login.microsoftonline.com "
+            + "https://sshmantest.azurewebsites.net "
+            + "https://code.jquery.com https://dc.services.visualstudio.com "
+            + " 'unsafe-inline' 'unsafe-eval'");
+        #pragma warning restore SA1118 // Parameter should not span multiple lines
         context.Response.Headers.Add("SameSite", "Strict");
         context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
         await next();

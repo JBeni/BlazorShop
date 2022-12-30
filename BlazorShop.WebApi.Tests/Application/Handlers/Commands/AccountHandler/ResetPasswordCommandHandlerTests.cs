@@ -1,4 +1,4 @@
-﻿// <copyright file="ResetPasswordCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="ResetPasswordCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
     /// </summary>
     public class ResetPasswordCommandHandlerTests
     {
-        private readonly IAccountService _accountService;
-        private readonly ILogger<ResetPasswordCommandHandlerTests> _logger;
+        private IAccountService AccountService { get; }
+        private ILogger<ResetPasswordCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResetPasswordCommandHandlerTests"/> class.
         /// </summary>
         public ResetPasswordCommandHandlerTests(IAccountService accountService, ILogger<ResetPasswordCommandHandlerTests> logger)
         {
-            _accountService = accountService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.AccountService = accountService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+        public Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

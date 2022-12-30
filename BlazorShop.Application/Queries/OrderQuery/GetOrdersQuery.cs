@@ -1,4 +1,4 @@
-﻿// <copyright file="GetOrdersQuery.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetOrdersQuery.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.OrderQuery
     public class GetOrdersQuery : IRequest<Result<OrderResponse>>
     {
         /// <summary>
-        /// The email of the user.
+        /// Gets or sets The email of the user.
         /// </summary>
         public string UserEmail { get; set; }
     }

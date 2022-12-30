@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteRoleCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="DeleteRoleCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Validators.RoleValidator
         /// </summary>
         public DeleteRoleCommandValidator()
         {
-            RuleFor(v => v.Id)
+            this.RuleFor(v => v.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }

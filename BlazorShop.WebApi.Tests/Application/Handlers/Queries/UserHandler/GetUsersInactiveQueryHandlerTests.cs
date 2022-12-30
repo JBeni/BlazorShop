@@ -1,4 +1,4 @@
-﻿    // <copyright file="GetUsersInactiveQueryHandlerTests.cs" author="Beniamin Jitca">
+﻿    // <copyright file="GetUsersInactiveQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -17,7 +17,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <summary>
         /// Gets the <see cref="ILogger<GetUsersInactiveQueryHandlerTests>"/> instance to use.
         /// </summary>
-        private readonly ILogger<GetUsersInactiveQueryHandlerTests> Logger;
+        private ILogger<GetUsersInactiveQueryHandlerTests> Logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersInactiveQueryHandlerTests"/> class.
@@ -36,8 +36,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public async Task Handle(GetUsersInactiveQuery request, CancellationToken cancellationToken)
+        public Task Handle(GetUsersInactiveQuery request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

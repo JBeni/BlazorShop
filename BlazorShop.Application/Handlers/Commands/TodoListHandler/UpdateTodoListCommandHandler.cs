@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateTodoListCommandHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoListCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
     public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand, RequestResponse>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{UpdateTodoListCommandHandler}"/>.
-        /// </summary>
-        private readonly ILogger<UpdateTodoListCommandHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateTodoListCommandHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{CreateUserCommandHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public UpdateTodoListCommandHandler(IApplicationDbContext dbContext, ILogger<UpdateTodoListCommandHandler> logger)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{UpdateTodoListCommandHandler}"/>.
+        /// </summary>
+        private ILogger<UpdateTodoListCommandHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="UpdateTodoListCommand"/>.
@@ -43,21 +43,24 @@ namespace BlazorShop.Application.Handlers.Commands.TodoListHandler
 
             try
             {
-                var entity = _dbContext.TodoLists
+                var entity = this.DbContext.TodoLists
                     .TagWith(nameof(UpdateTodoListCommandHandler))
                     .FirstOrDefault(x => x.Id == request.Id);
-                if (entity == null) throw new Exception("The todo list record does not exists in the database");
+                if (entity == null)
+                {
+                    throw new Exception("The todo list record does not exists in the database");
+                }
 
                 entity.Title = request.Title;
 
-                _dbContext.TodoLists.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                this.DbContext.TodoLists.Update(entity);
+                await this.DbContext.SaveChangesAsync(cancellationToken);
 
                 response = RequestResponse.Success();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.UpdateTodoListCommand);
+                this.Logger.LogError(ex, ErrorsManager.UpdateTodoListCommand);
                 response = RequestResponse.Failure($"{ErrorsManager.UpdateTodoListCommand}. {ex.Message}. {ex.InnerException?.Message}");
             }
 

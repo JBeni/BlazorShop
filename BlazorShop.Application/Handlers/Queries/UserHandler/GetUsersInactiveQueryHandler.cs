@@ -1,4 +1,4 @@
-﻿// <copyright file="GetUsersInactiveQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetUsersInactiveQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,26 +10,26 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
     public class GetUsersInactiveQueryHandler : IRequestHandler<GetUsersInactiveQuery, Result<UserResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IUserService"/>.
-        /// </summary>
-        private readonly IUserService _userService;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetUsersInactiveQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetUsersInactiveQueryHandler> _logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersInactiveQueryHandler"/> class.
         /// </summary>
-        /// <param name="userService">An instance of <see cref="IUserService"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetUsersInactiveQueryHandler}"/>.</param>
+        /// <param name="userService">Gets An instance of <see cref="IUserService"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetUsersInactiveQueryHandler}"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetUsersInactiveQueryHandler(IUserService userService, ILogger<GetUsersInactiveQueryHandler> logger)
         {
-            _userService = userService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IUserService"/>.
+        /// </summary>
+        private IUserService UserService { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetUsersInactiveQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetUsersInactiveQueryHandler> Logger { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetUsersInactiveQuery"/>.
@@ -43,20 +43,20 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
 
             try
             {
-                var result = _userService.GetUsersInactive(request);
+                var result = this.UserService.GetUsersInactive(request);
 
                 response = new Result<UserResponse>
                 {
                     Successful = true,
-                    Items = result ?? new List<UserResponse>()
+                    Items = result ?? new List<UserResponse>(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetUsersInactiveQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetUsersInactiveQuery);
                 response = new Result<UserResponse>
                 {
-                    Error = $"{ErrorsManager.GetUsersInactiveQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetUsersInactiveQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

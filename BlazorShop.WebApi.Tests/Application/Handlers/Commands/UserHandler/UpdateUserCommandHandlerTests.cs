@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateUserCommandHandlerTests.cs" author="Beniamin Jitca">
+﻿// <copyright file="UpdateUserCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
     /// </summary>
     public class UpdateUserCommandHandlerTests
     {
-        private readonly IUserService _userService;
-        private readonly ILogger<UpdateUserCommandHandlerTests> _logger;
+        private IUserService UserService { get; }
+        private ILogger<UpdateUserCommandHandlerTests> Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateUserCommandHandlerTests"/> class.
         /// </summary>
         public UpdateUserCommandHandlerTests(IUserService userService, ILogger<UpdateUserCommandHandlerTests> logger)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -27,8 +27,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <response =s></response =s>
-        public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception();
         }
     }
 }

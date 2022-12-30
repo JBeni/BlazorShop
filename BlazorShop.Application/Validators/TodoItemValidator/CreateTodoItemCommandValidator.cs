@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateTodoItemCommandValidator.cs" author="Beniamin Jitca">
+﻿// <copyright file="CreateTodoItemCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,43 +10,43 @@ namespace BlazorShop.Application.Validators.TodoItemValidator
     public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCommand>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _context;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateTodoItemCommandValidator"/> class.
         /// </summary>
-        /// <param name="context">An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="context">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         public CreateTodoItemCommandValidator(IApplicationDbContext context)
         {
-            _context = context;
+            this.Context = context;
 
-            RuleFor(x => x.Id)
+            this.RuleFor(x => x.Id)
                 .Equal(0).WithMessage("Id must be equal with 0");
 
-            RuleFor(x => x.ListId)
+            this.RuleFor(x => x.ListId)
                 .GreaterThan(0).WithMessage("ListId must be greater than 0");
 
-            RuleFor(x => x.Title)
+            this.RuleFor(x => x.Title)
                 .MaximumLength(200).WithMessage("Title maximum length exceeded")
                 .NotEmpty().WithMessage("Title must not be empty")
                 .NotNull().WithMessage("Title must not be null")
-                .MustAsync(HaveUniqueTitle).WithMessage("The specified title already exists.");
+                .MustAsync(this.HaveUniqueTitle).WithMessage("The specified title already exists.");
 
-            RuleFor(x => x.Note)
+            this.RuleFor(x => x.Note)
                 .MaximumLength(1000).WithMessage("Note maximum length exceeded")
                 .NotEmpty().WithMessage("Note must not be empty")
                 .NotNull().WithMessage("Note must not be null");
 
-            RuleFor(x => x.Priority)
+            this.RuleFor(x => x.Priority)
                 .NotEmpty().WithMessage("Priority must not be empty")
                 .NotNull().WithMessage("Priority must not be null");
 
-            RuleFor(x => x.State)
+            this.RuleFor(x => x.State)
                 .NotEmpty().WithMessage("State must not be empty")
                 .NotNull().WithMessage("State must not be null");
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext Context { get; }
 
         /// <summary>
         /// Gets a value indicating whether the item has an unique title or not.
@@ -56,8 +56,8 @@ namespace BlazorShop.Application.Validators.TodoItemValidator
         /// <returns>A boolean value.</returns>
         public async Task<bool> HaveUniqueTitle(string title, CancellationToken cancellationToken)
         {
-            return await _context.TodoItems
-                .TagWith(nameof(HaveUniqueTitle))
+            return await this.Context.TodoItems
+                .TagWith(nameof(this.HaveUniqueTitle))
                 .AllAsync(l => l.Title != title, cancellationToken);
         }
     }

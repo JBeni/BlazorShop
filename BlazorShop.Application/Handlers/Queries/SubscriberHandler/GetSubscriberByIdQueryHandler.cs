@@ -1,4 +1,4 @@
-﻿// <copyright file="GetSubscriberByIdQueryHandler.cs" author="Beniamin Jitca">
+﻿// <copyright file="GetSubscriberByIdQueryHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,33 +10,33 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
     public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, Result<SubscriberResponse>>
     {
         /// <summary>
-        /// An instance of <see cref="IApplicationDbContext"/>.
-        /// </summary>
-        private readonly IApplicationDbContext _dbContext;
-
-        /// <summary>
-        /// An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.
-        /// </summary>
-        private readonly ILogger<GetSubscriberByIdQueryHandler> _logger;
-
-        /// <summary>
-        /// An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetSubscriberByIdQueryHandler"/> class.
         /// </summary>
-        /// <param name="dbContext">An instance of <see cref="IApplicationDbContext"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.</param>
-        /// <param name="mapper">An instance of <see cref="IMapper"/>.</param>
+        /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
+        /// <param name="logger">Gets An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.</param>
+        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetSubscriberByIdQueryHandler(IApplicationDbContext dbContext, ILogger<GetSubscriberByIdQueryHandler> logger, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper;
+            this.DbContext = dbContext;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.Mapper = mapper;
         }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IApplicationDbContext"/>.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="ILogger{GetSubscriberByIdQueryHandler}"/>.
+        /// </summary>
+        private ILogger<GetSubscriberByIdQueryHandler> Logger { get; }
+
+        /// <summary>
+        /// Gets An instance of <see cref="IMapper"/>.
+        /// </summary>
+        private IMapper Mapper { get; }
 
         /// <summary>
         /// An implementation of the handler for <see cref="GetSubscriberByIdQuery"/>.
@@ -50,23 +50,23 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 
             try
             {
-                var result = _dbContext.Subscribers
+                var result = this.DbContext.Subscribers
                     .TagWith(nameof(GetSubscriberByIdQueryHandler))
-                    .ProjectTo<SubscriberResponse>(_mapper.ConfigurationProvider)
+                    .ProjectTo<SubscriberResponse>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefault(x => x.CustomerId == request.UserId && x.Status == SubscriptionStatus.Active);
 
                 response = new Result<SubscriberResponse>
                 {
                     Successful = true,
-                    Item = result ?? new SubscriberResponse()
+                    Item = result ?? new SubscriberResponse(),
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
+                this.Logger.LogError(ex, ErrorsManager.GetSubscriberByIdQuery);
                 response = new Result<SubscriberResponse>
                 {
-                    Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}"
+                    Error = $"{ErrorsManager.GetSubscriberByIdQuery}. {ex.Message}. {ex.InnerException?.Message}",
                 };
             }
 

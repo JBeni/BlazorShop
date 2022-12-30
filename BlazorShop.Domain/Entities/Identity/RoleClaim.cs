@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleClaim.cs" author="Beniamin Jitca">
+﻿// <copyright file="RoleClaim.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.Domain.Entities.Identity
     public class RoleClaim : IdentityRoleClaim<int>
     {
         /// <summary>
-        /// .
+        /// Gets or Sets the role.
         /// </summary>
         public virtual Role Role { get; set; }
     }
