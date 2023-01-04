@@ -24,7 +24,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.Title" Label="Title"
                 For="@(() => music.Title)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -32,7 +32,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.Description" Label="Description"
                 For="@(() => music.Description)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -40,7 +40,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.Author" Label="Author"
                 For="@(() => music.Author)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -53,7 +53,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.ImageName" Label="ImageName"
                 For="@(() => music.ImageName)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -61,7 +61,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.ImagePath" Label="ImagePath"
                 For="@(() => music.ImagePath)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -69,15 +69,15 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="music.AccessLevel" Label="AccessLevel"
                 For="@(() => music.AccessLevel)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
 
     <div class="form-group" style="margin-bottom: 25px;">
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
             Save
         </MudButton>
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
             Cancel
         </MudButton>
     </div>

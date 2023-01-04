@@ -23,7 +23,7 @@
     <div class="row">
         <div class="input-group col shadow-lg p-3 bg-white rounded mb-5">
             <MudTextField InputType="InputType.Text" class="form-control"
-                Immediate="true" Variant="Variant.Outlined" Placeholder="Search receipt by name"
+                          Immediate="true" Variant="MudBlazor.Variant.Outlined" Placeholder="Search receipt by name"
                 @bind-Value="SearchString" OnKeyUp="FilterReceipts" />
             <div class="input-group-append" style="margin-left: 15px;">
                 <button class="btn btn-primary btn-lg" @onclick="ResetSearch">

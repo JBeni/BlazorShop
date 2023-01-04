@@ -24,7 +24,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="Subscription.StripeSubscriptionId" Label="StripeSubscriptionId"
                 For="@(() => Subscription.StripeSubscriptionId)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -32,7 +32,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="Subscription.Name" Label="Name"
                 For="@(() => Subscription.Name)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -41,7 +41,7 @@
                 @bind-Value="Subscription.Price" Label="Price"
                 For="@(() => Subscription.Price)"
                 Min="1"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -50,7 +50,7 @@
                 @bind-Value="Subscription.Options" Label="Options"
                 For="@(() => Subscription.Options)"
                 Lines="5"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -58,7 +58,7 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="Subscription.ImageName" Label="ImageName"
                 For="@(() => Subscription.ImageName)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
@@ -66,15 +66,15 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="Subscription.ImagePath" Label="ImagePath"
                 For="@(() => Subscription.ImagePath)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
 
     <div class="form-group" style="margin-bottom: 25px;">
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
             Save
         </MudButton>
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
             Cancel
         </MudButton>
     </div>

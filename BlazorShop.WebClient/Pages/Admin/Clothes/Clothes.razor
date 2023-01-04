@@ -54,11 +54,11 @@ else
                 <td>@context.ImagePath</td>
                 <td>@context.IsActive</td>
                 <td class="col-md-6">
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit"
+                    <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Edit"
                         Color="Color.Success" @onclick="() => NavigateToPage(context.Id)">
                         Edit
                     </MudButton>
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                    <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
                         Color="Color.Error" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
                         Delete
                     </MudButton>
@@ -73,7 +73,7 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Remove clothe</h3>
-                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Close"
+                            <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Close"
                                 Color="Color.Warning" @onclick="@ModalCancel"
                                 data-bs-dismiss="modal" aria-label="Close">
                                 Close
@@ -86,11 +86,11 @@ else
                             </small>
                         </div>
                         <div class="modal-footer">
-                            <MudButton class="mr-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                            <MudButton class="mr-2" Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
                                 Color="Color.Error" @onclick="(async () => { await DeleteClothe(clothe.Id); ModalOk(); })">
                                 Delete
                             </MudButton>
-                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                            <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
                                 Color="Color.Warning" @onclick="@ModalCancel">
                                 Cancel
                             </MudButton>

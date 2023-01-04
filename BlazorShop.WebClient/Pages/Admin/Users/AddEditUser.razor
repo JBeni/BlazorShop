@@ -24,28 +24,28 @@
         <div class="col-md-4">
             <MudTextField InputType="InputType.Text" class="form-control"
                 For="@(() => User.FirstName)"
-                @bind-Value="User.FirstName" Label="FirstName" Variant="Variant.Outlined"></MudTextField>
+                          @bind-Value="User.FirstName" Label="FirstName" Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
         <div class="col-md-4">
             <MudTextField InputType="InputType.Text" class="form-control"
                 For="@(() => User.LastName)"
-                @bind-Value="User.LastName" Label="LastName" Variant="Variant.Outlined"></MudTextField>
+                          @bind-Value="User.LastName" Label="LastName" Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
         <div class="col-md-4">
             <MudTextField InputType="InputType.Email" class="form-control"
                 For="@(() => User.Email)"
-                @bind-Value="User.Email" Label="LastName" Variant="Variant.Outlined"></MudTextField>
+                          @bind-Value="User.Email" Label="LastName" Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
     <div class="mb-3">
         <div class="col-md-4">
             <MudSelect T="string" InputType="InputType.Text" @bind-Value="@User.RoleName"
                 For="@(() => User.RoleName)"
-                Placeholder="Select Role Name" Label="Role Name" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                       Placeholder="Select Role Name" Label="Role Name" Variant="MudBlazor.Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
                     @foreach (var role in roles)
                     {
                         <MudSelectItem Value="@role.Name">@role.Name</MudSelectItem>
@@ -55,10 +55,10 @@
     </div>
 
     <div class="form-group">
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
             Save
         </MudButton>
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
             Cancel
         </MudButton>
     </div>

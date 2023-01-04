@@ -69,13 +69,13 @@
                                             <td class="border-0 align-middle">
                                                 <EditForm Model="item">
                                                     <MudTextField InputType="InputType.Text" class="form-control" style="width: 70px"
-                                                        @bind-Value="item.Amount" Label="Amount" Variant="Variant.Outlined"
+                                                          @bind-Value="item.Amount" Label="Amount" Variant="MudBlazor.Variant.Outlined"
                                                         Min="1" For="@(() => item.Amount)"
                                                         @onclick="@(async () => await UpdateClotheQuantity(item, item.Amount))" />
                                                 </EditForm>
                                             </td>
                                             <td class="border-0 align-middle">
-                                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
+                                                <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Delete"
                                                     Color="Color.Error" @onclick="(async () => { await DeleteItem(item.Id); })">
                                                     Delete
                                                 </MudButton>
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="d-flex flex-row-reverse" style="margin-top: -10px;">
-                        <MudButton class="btn btn-primary btn-lg" Variant="Variant.Filled"
+                        <MudButton class="btn btn-primary btn-lg" Variant="MudBlazor.Variant.Filled"
                             StartIcon="@Icons.Material.Filled.ShoppingCartCheckout"
                             Color="Color.Success" @onclick="PlaceOrder">
                             Procceed to checkout

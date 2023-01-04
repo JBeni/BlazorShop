@@ -24,15 +24,15 @@
             <MudTextField class="form-control" InputType="InputType.Text"
                 @bind-Value="Role.Name" Label="Name"
                 For="@(() => Role.Name)"
-                Variant="Variant.Outlined"></MudTextField>
+                          Variant="MudBlazor.Variant.Outlined"></MudTextField>
         </div>
     </div>
 
     <div class="form-group">
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
             Save
         </MudButton>
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
             Cancel
         </MudButton>
     </div>

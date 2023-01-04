@@ -24,10 +24,10 @@
     <div class="row">
         <div class="input-group col shadow-lg p-3 bg-white rounded mb-5">
             <MudTextField InputType="InputType.Text" class="form-control"
-                Immediate="true" Variant="Variant.Outlined" Placeholder="Search order by name"
+                          Immediate="true" Variant="MudBlazor.Variant.Outlined" Placeholder="Search order by name"
                 @bind-Value="SearchString" OnKeyUp="FilterOrders" />
             <div class="input-group-append" style="margin-left: 15px;">
-                <MudButton class="btn btn-primary btn-lg mt-3" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Clear"
+                <MudButton class="btn btn-primary btn-lg mt-3" Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Clear"
                     Color="Color.Success" @onclick="ResetSearch">
                     Reset Filter
                 </MudButton>
@@ -62,7 +62,7 @@
 
                         <div class="col-md-3">
                             <div class="border-0 d-flex flex-row-reverse">
-                                <MudButton class="btn btn-primary btn-lg" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.ViewHeadline"
+                                <MudButton class="btn btn-primary btn-lg" Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.ViewHeadline"
                                     Color="Color.Success" @onclick="(() => ViewOrder(order.Id))">
                                     View Order
                                 </MudButton>

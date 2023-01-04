@@ -257,7 +257,7 @@ namespace BlazorShop.WebApi.Controllers
         }
 
         /// <summary>
-        /// Complet the checkout.
+        /// Complete the checkout.
         /// </summary>
         /// <param name="stripeEvent">The stripe event.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
@@ -265,7 +265,7 @@ namespace BlazorShop.WebApi.Controllers
         {
             var sessionData = stripeEvent.Data.Object as Session;
             var service = new PaymentIntentService();
-            var result = service.Get(sessionData.PaymentIntentId);
+            var result = await service.GetAsync(sessionData.PaymentIntentId);
 
             var sessionService = new SessionService();
             StripeList<LineItem> lineItems = sessionService.ListLineItems(sessionData.Id);
@@ -292,12 +292,14 @@ namespace BlazorShop.WebApi.Controllers
             };
 
             await this.Mediator.Send(orderCommand);
+
+            // ToDo: The Stripes API removed Charges from their PaymentIntent.cs file. Will need to narrow down what that changed to. https://stripe.com/docs/payments/payment-intents/migration?web-migration=elements&lang=dotnet
             await this.Mediator.Send(new CreateReceiptCommand
             {
                 UserEmail = sessionData.CustomerDetails.Email,
                 ReceiptDate = DateTime.Now,
                 ReceiptName = "Receipt Nr. " + Guid.NewGuid(),
-                ReceiptUrl = result.Charges.Data.FirstOrDefault().ReceiptUrl,
+                ReceiptUrl = result.StatementDescriptor, // Old Code: result.Charges.Data.FirstOrDefault().ReceiptUrl 
             });
         }
     }

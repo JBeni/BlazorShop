@@ -23,7 +23,7 @@
             <h1 class="display-3 font-weight-bold mb-0 text-primary" style="margin-left: 10px;">My Subscriptions</h1>
 
             <h2 class="col-xxl-12 d-flex flex-row-reverse" style="margin-left: -75px; margin-top: -60px; border: none;">
-                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save"
+                <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Save"
                     class="btn btn-lg btn-outline-primary"
                     @onclick="(() => ModalShow())"
                     Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Button">
@@ -77,7 +77,7 @@
                                                             <li>@item</li>                                                                
                                                         }
                                                     </ul>
-                                                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Subscriptions"
+                                                    <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Subscriptions"
                                                         Color="Color.Success"
                                                        @onclick="(async () => { await ActivateMembership(subscription); ModalOk(); })">
                                                             @Title @subscription.Name Plan
@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                        <MudButton Variant="MudBlazor.Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
                             Color="Color.Warning" @onclick="@ModalCancel">
                                 Cancel
                         </MudButton>
@@ -154,7 +154,7 @@
     <div class="row mt-4 mb-5">
         <div class="input-group col shadow-lg p-3 bg-white rounded">
             <MudTextField InputType="InputType.Text" class="form-control"
-                Immediate="true" Variant="Variant.Outlined" Placeholder="Search subscription by name"
+                          Immediate="true" Variant="MudBlazor.Variant.Outlined" Placeholder="Search subscription by name"
                 @bind-Value="SearchString" OnKeyUp="FilterSubscriptions" />
             <div class="input-group-append" style="margin-left: 15px;">
                 <button class="btn btn-primary btn-lg" @onclick="ResetSearch">

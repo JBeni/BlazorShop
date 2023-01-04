@@ -21,7 +21,7 @@
 <div class="row">
     <div class="input-group col">
         <MudTextField InputType="InputType.Text" class="form-control"
-            Immediate="true" Variant="Variant.Outlined" Placeholder="Search music by title"
+                      Immediate="true" Variant="MudBlazor.Variant.Outlined" Placeholder="Search music by title"
             @bind-Value="SearchString" OnKeyUp="FilterMusics" />
         <div class="input-group-append" style="margin-left: 15px;">
             <button class="btn btn-primary btn-lg" @onclick="ResetSearch">

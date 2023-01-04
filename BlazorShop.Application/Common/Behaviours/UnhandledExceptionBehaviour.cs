@@ -10,6 +10,7 @@ namespace BlazorShop.Application.Common.Behaviours
     /// <typeparam name="TRequest">The request type.</typeparam>
     /// <typeparam name="TResponse">The response type.</typeparam>
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnhandledExceptionBehaviour{TRequest, TResponse}"/> class.
@@ -32,7 +33,7 @@ namespace BlazorShop.Application.Common.Behaviours
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="next">The next request to validate.</param>
         /// <returns>A <see cref="Task{TResponse}"/>.</returns>
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             try
             {

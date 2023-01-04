@@ -36,10 +36,7 @@ namespace BlazorShop.Application.Common.Behaviours
         /// <param name="next">The next request to validate.</param>
         /// <returns>A <see cref="Task{TResponse}"/>.</returns>
         /// <exception cref="ValidationException">Thrown if there is a validation rule not being met.</exception>
-        public async Task<TResponse> Handle(
-            TRequest request,
-            CancellationToken cancellationToken,
-            RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (this.Validators.Any())
             {
