@@ -7,7 +7,7 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Accounts.
     /// </summary>
-    public class AccountsController : ApiControllerBase
+    public class AccountsController : ApiBaseController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountsController"/> class.

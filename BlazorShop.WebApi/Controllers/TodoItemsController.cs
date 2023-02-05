@@ -8,7 +8,7 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for TodoItems.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class TodoItemsController : ApiControllerBase
+    public class TodoItemsController : ApiBaseController
     {
         /// <summary>
         /// Create the todo item.

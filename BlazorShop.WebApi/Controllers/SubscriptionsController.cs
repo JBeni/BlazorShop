@@ -7,7 +7,7 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Subscriptions.
     /// </summary>
-    public class SubscriptionsController : ApiControllerBase
+    public class SubscriptionsController : ApiBaseController
     {
         /// <summary>
         /// Create a subscription.

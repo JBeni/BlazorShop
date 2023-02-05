@@ -7,7 +7,7 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Orders.
     /// </summary>
-    public class OrdersController : ApiControllerBase
+    public class OrdersController : ApiBaseController
     {
         /// <summary>
         /// Create the order.

@@ -8,7 +8,7 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Home.
     /// </summary>
     [AllowAnonymous]
-    public class HomeController : ApiControllerBase
+    public class HomeController : ApiBaseController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.

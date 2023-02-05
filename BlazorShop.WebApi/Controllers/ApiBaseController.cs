@@ -1,4 +1,4 @@
-﻿// <copyright file="ApiControllerBase.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="ApiBaseController.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace BlazorShop.WebApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public abstract class ApiControllerBase : ControllerBase
+    public abstract class ApiBaseController : ControllerBase
     {
         /// <summary>
         /// Gets the instance of the <see cref="ISender"/> to use.

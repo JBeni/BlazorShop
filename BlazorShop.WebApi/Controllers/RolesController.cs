@@ -8,7 +8,7 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Roles.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}")]
-    public class RolesController : ApiControllerBase
+    public class RolesController : ApiBaseController
     {
         /// <summary>
         /// Create a role.

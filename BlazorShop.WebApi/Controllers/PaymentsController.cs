@@ -8,7 +8,7 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Payments.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class PaymentsController : ApiControllerBase
+    public class PaymentsController : ApiBaseController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentsController"/> class.

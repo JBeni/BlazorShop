@@ -7,7 +7,7 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Clothes.
     /// </summary>
-    public class ClothesController : ApiControllerBase
+    public class ClothesController : ApiBaseController
     {
         /// <summary>
         /// Create the clothe.
