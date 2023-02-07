@@ -90,7 +90,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         }
 
         /// <summary>
-        /// A test for <see cref="ResetPasswordCommandHandler.Handle(CreateCartCommand, CancellationToken)"/> method.
+        /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
         [Fact]
@@ -98,7 +98,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         {
             var response = Mock.Of<RequestResponse>(x =>
                 x.Successful == false &&
-                x.Error == ErrorsManager.CreateCartCommand &&
+                x.Error == ErrorsManager.CreateClotheCommand &&
                 x.EntityId == 0);
 
             var result = await this.SUT.Handle(It.IsAny<CreateClotheCommand>(), default);
