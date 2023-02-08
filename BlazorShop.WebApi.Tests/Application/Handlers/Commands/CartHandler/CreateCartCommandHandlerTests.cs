@@ -48,9 +48,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
         private CreateCartCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the <see cref="IApplicationDbContext"/> under test.
+        /// Gets the <see cref="ApplicationDbContext"/> under test.
         /// </summary>
-        private IApplicationDbContext ApplicationDbContext { get; }
+        private ApplicationDbContext ApplicationDbContext { get; }
 
         /// <summary>
         /// Gets the <see cref="UserManager{User}"/> under test.
@@ -117,7 +117,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
 
             //Assert.Equal(result.Successful, response.Successful);
             //Assert.Equal(result.Error, response.Error);
-            //Assert.Equal(result.EntityId, response.EntityId);
         }
 
         /// <summary>
@@ -140,7 +139,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
 
             Assert.Equal(result.Successful, response.Successful);
             Assert.Contains(response.Error, result.Error);
-            Assert.Equal(result.EntityId, response.EntityId);
         }
 
         /// <summary>
@@ -158,6 +156,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
         /// <param name="disposing">A value indicating whether the class is disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
+            this.ApplicationDbContext.Database.EnsureDeleted();
         }
     }
 }

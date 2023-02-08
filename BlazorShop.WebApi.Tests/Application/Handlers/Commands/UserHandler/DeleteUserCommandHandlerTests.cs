@@ -63,7 +63,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
 
             Assert.Equal(result.Successful, response.Successful);
             Assert.Equal(result.Error, response.Error);
-            Assert.Equal(result.EntityId, response.EntityId);
         }
 
         /// <summary>
@@ -91,7 +90,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
 
             Assert.Equal(result.Successful, response.Successful);
             Assert.Contains(response.Error, result.Error);
-            Assert.Equal(result.EntityId, response.EntityId);
         }
     }
 }

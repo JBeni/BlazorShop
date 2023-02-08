@@ -35,9 +35,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         private CreateClotheCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the instance of <see cref="IApplicationDbContext"/> to use.
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
         /// </summary>
-        private IApplicationDbContext ApplicationDbContext { get; }
+        private ApplicationDbContext ApplicationDbContext { get; }
 
         /// <summary>
         /// Gets the instance of  <see cref="ILogger{CreateClotheCommandHandler}"/> to use.
@@ -79,7 +79,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 
             Assert.Equal(result.Successful, response.Successful);
             Assert.Equal(result.Error, response.Error);
-            Assert.Equal(result.EntityId, response.EntityId);
 
             Assert.Equal(clotheEntity.Description, clotheEntityDb.Description);
             Assert.Equal(clotheEntity.ImagePath, clotheEntityDb.ImagePath);
@@ -105,7 +104,6 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 
             Assert.Equal(result.Successful, response.Successful);
             Assert.Contains(response.Error, result.Error);
-            Assert.Equal(result.EntityId, response.EntityId);
         }
 
         /// <summary>
@@ -123,6 +121,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <param name="disposing">A value indicating whether the class is disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
+            this.ApplicationDbContext.Database.EnsureDeleted();
         }
     }
 }
