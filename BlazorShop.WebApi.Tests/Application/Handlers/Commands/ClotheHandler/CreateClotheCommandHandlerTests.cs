@@ -10,7 +10,7 @@ using Xunit;
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
-    /// Tests for <see cref="CreateClotheCommandHandler"/>.
+    /// Tests for <see cref="CreateClotheCommandHandler"/> class.
     /// </summary>
     public class CreateClotheCommandHandlerTests : IDisposable
     {
@@ -30,24 +30,24 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         }
 
         /// <summary>
-        /// Gets the <see cref="CreateClotheCommandHandler"/> instance to use.
+        /// Gets the instance of <see cref="CreateClotheCommandHandler"/> to use.
         /// </summary>
         private CreateClotheCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the <see cref="IApplicationDbContext"/> under test.
+        /// Gets the instance of <see cref="IApplicationDbContext"/> to use.
         /// </summary>
         private IApplicationDbContext ApplicationDbContext { get; }
 
         /// <summary>
-        /// Gets the <see cref="ILogger{CreateClotheCommandHandler}"/> under test.
+        /// Gets the instance of  <see cref="ILogger{CreateClotheCommandHandler}"/> to use.
         /// </summary>
         private ILogger<CreateClotheCommandHandler> Logger { get; } = Mock.Of<ILogger<CreateClotheCommandHandler>>();
 
         /// <summary>
         /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        /// <returns>A <see cref="Task{RequestResponse}"/> async result.</returns>
         [Fact]
         public async Task Handle()
         {
@@ -92,7 +92,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        /// <returns>A <see cref="Task{RequestResponse}"/> async result.</returns>
         [Fact]
         public async Task Handle_ThrowException()
         {
