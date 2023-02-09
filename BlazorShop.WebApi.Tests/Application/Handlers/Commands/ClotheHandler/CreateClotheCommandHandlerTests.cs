@@ -51,13 +51,23 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         [Fact]
         public async Task Handle()
         {
-            var createClotheCommand = Mock.Of<CreateClotheCommand>(q =>
-                q.Description == string.Empty &&
-                q.ImageName == string.Empty &&
-                q.ImagePath == string.Empty &&
-                q.Name == string.Empty &&
-                q.Price == new decimal(new Random().NextDouble()) &&
-                q.IsActive == true);
+            //var createClotheCommand = Mock.Of<CreateClotheCommand>(q =>
+            //    q.Description == string.Empty &&
+            //    q.ImageName == string.Empty &&
+            //    q.ImagePath == string.Empty &&
+            //    q.Name == string.Empty &&
+            //    q.Price == new decimal(new Random().NextDouble()) &&
+            //    q.IsActive == true);
+
+            var createClotheCommand = new CreateClotheCommand
+            {
+                Description = string.Empty,
+                ImageName = string.Empty,
+                ImagePath = string.Empty,
+                Name = string.Empty,
+                Price = new decimal(new Random().NextDouble()),
+                IsActive = true,
+            };
 
             var clotheEntity = Mock.Of<Clothe>(q =>
                 q.Description == createClotheCommand.Description &&
@@ -69,8 +79,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 
             var response = Mock.Of<RequestResponse>(x =>
                 x.Successful == true &&
-                x.Error == null &&
-                x.EntityId == 1);
+                x.Error == null);
+
+            this.ApplicationDbContext.Clothes.Add(clotheEntity);
+            await this.ApplicationDbContext.SaveChangesAsync(default);
 
             var result = await this.SUT.Handle(createClotheCommand, default);
 
@@ -111,8 +123,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            this.ApplicationDbContext.Database.EnsureDeleted();
+
+            //this.Dispose(disposing: true);
+            //GC.SuppressFinalize(this);
         }
 
         /// <summary>

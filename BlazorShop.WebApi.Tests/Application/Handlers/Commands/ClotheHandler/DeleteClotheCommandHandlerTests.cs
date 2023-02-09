@@ -35,7 +35,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         private DeleteClotheCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// Gets the instance of <see cref="BlazorShop.Infrastructure.Persistence.ApplicationDbContext"/> to use.
         /// </summary>
         private ApplicationDbContext ApplicationDbContext { get; }
 
@@ -103,10 +103,15 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// Ensure garbage collector for db context.
         /// </summary>
+        //public void Dispose()
+        //{
+        //    this.Dispose(disposing: true);
+        //    GC.SuppressFinalize(this);
+        //}
+
         public void Dispose()
         {
-            this.Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            this.ApplicationDbContext.Database.EnsureDeleted();
         }
 
         /// <summary>
