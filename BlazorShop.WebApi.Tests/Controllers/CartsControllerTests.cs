@@ -3,6 +3,7 @@
 // </copyright>
 
 using BlazorShop.WebApi.Controllers;
+using BlazorShop.WebApi.Tests.Controllers.Utils;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
@@ -41,6 +42,8 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// </summary>
         private CartsController CartsController { get; }
 
+        private HttpContextISenderFixture Fixture { get; } = Mock.Of<HttpContextISenderFixture>();
+
         /// <summary>
         /// A test for <see cref="CartsController.CreateCart(CreateCartCommand)"/>.
         /// </summary>
@@ -55,27 +58,35 @@ namespace BlazorShop.WebApi.Tests.Controllers
                 x.Price == new decimal(new Random().NextDouble()) &&
                 x.Amount == new Random().Next());
 
-            var serviceScopeFactory = Mock.Of<IServiceScopeFactory>();
-            var scope = Mock.Of<IServiceScope>();
-            var httpContextAccessor = Mock.Of<IHttpContextAccessor>();
+            var mediator = this.Fixture.Mediator;
+            var httpContext = this.Fixture.HttpContextAccessor.HttpContext;
 
-            Mock.Get(scope).Setup(x => x.ServiceProvider)
-                .Returns(this.Services);
-            Mock.Get(serviceScopeFactory).Setup(s => s.CreateScope())
-                .Returns(scope);
+            // Act
+            var controller = new CartsController();
+            controller.ControllerContext.HttpContext = httpContext;
+            var result = await controller.CreateCart(command);
 
-            Mock.Get(this.Services).Setup(s => s.GetService(typeof(IServiceScopeFactory)))
-                .Returns(serviceScopeFactory);
-            Mock.Get(this.Services).Setup(s => s.GetService(typeof(ISender)))
-                .Returns(this.Mediator);
+            //var serviceScopeFactory = Mock.Of<IServiceScopeFactory>();
+            //var scope = Mock.Of<IServiceScope>();
+            //var httpContextAccessor = Mock.Of<IHttpContextAccessor>();
 
-            var httpContext = new Mock<HttpContext>();
-            httpContext.SetupGet(c => c.RequestServices)
-                .Returns(this.Services);
+            //Mock.Get(scope).Setup(x => x.ServiceProvider)
+            //    .Returns(this.Services);
+            //Mock.Get(serviceScopeFactory).Setup(s => s.CreateScope())
+            //    .Returns(scope);
 
-            this.HttpContextAccessor.SetupGet(s => s.HttpContext).Returns(httpContext.Object);
+            //Mock.Get(this.Services).Setup(s => s.GetService(typeof(IServiceScopeFactory)))
+            //    .Returns(serviceScopeFactory);
+            //Mock.Get(this.Services).Setup(s => s.GetService(typeof(ISender)))
+            //    .Returns(this.Mediator);
 
-            var cartsController = new TestCartsController(this.HttpContextAccessor.Object);
+            //var httpContext = new Mock<HttpContext>();
+            //httpContext.SetupGet(c => c.RequestServices)
+            //    .Returns(this.Services);
+
+            //this.HttpContextAccessor.SetupGet(s => s.HttpContext).Returns(httpContext.Object);
+
+            //var cartsController = new TestCartsController(this.HttpContextAccessor.Object);
 
             //var response = await CartsController.CreateCart(command);
             //var result = Assert.IsAssignableFrom<OkObjectResult>(response);
