@@ -8,8 +8,17 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Roles.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}")]
-    public class RolesController : ApiControllerBase
+    public class RolesController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RolesController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public RolesController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create a role.
         /// </summary>

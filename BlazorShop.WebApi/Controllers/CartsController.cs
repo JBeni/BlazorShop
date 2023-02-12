@@ -8,8 +8,17 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Carts.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class CartsController : ApiControllerBase
+    public class CartsController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CartsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public CartsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Creating the cart.
         /// </summary>

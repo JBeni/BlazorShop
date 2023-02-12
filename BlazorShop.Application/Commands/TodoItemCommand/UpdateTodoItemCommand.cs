@@ -35,7 +35,7 @@ namespace BlazorShop.Application.Commands.TodoItemCommand
         public TodoItemState State { get; set; }
 
         /// <summary>
-        /// Gets or sets The status of the item.
+        /// Gets or sets a value indicating whether the status is completed.
         /// </summary>
         public bool Done { get; set; }
     }

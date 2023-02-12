@@ -7,8 +7,17 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Orders.
     /// </summary>
-    public class OrdersController : ApiControllerBase
+    public class OrdersController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrdersController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public OrdersController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the order.
         /// </summary>

@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.RoleHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetRoleByNormalizedNameQuery, Result{RoleResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetRoleByNormalizedNameQuery, RoleResponse}"/>.
     /// </summary>
     public class GetRoleByNormalizedNameQueryHandler : IRequestHandler<GetRoleByNormalizedNameQuery, Result<RoleResponse>>
     {
@@ -36,7 +36,7 @@ namespace BlazorShop.Application.Handlers.Queries.RoleHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{RoleResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{RoleResponse}"/>.</returns>
         public Task<Result<RoleResponse>> Handle(GetRoleByNormalizedNameQuery request, CancellationToken cancellationToken)
         {
             Result<RoleResponse>? response;

@@ -21,7 +21,7 @@ namespace BlazorShop.WebApi.Filters
         }
 
         /// <summary>
-        /// Gets the instance of the <see cref="IDictionary{Type, Action{ExceptionContext}}"/> to use.
+        /// Gets the instance of the <see cref="IDictionary{Type, ExceptionContext}"/> to use.
         /// </summary>
         private IDictionary<Type, Action<ExceptionContext>> ExceptionHandlers { get; }
 

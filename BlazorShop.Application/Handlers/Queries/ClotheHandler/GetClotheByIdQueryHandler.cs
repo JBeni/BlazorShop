@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetClotheByIdQuery, Result{ClotheResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetClotheByIdQuery, ClotheResponse}"/>.
     /// </summary>
     public class GetClotheByIdQueryHandler : IRequestHandler<GetClotheByIdQuery, Result<ClotheResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.ClotheHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{ClotheResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{ClotheResponse}"/>.</returns>
         public Task<Result<ClotheResponse>> Handle(GetClotheByIdQuery request, CancellationToken cancellationToken)
         {
             Result<ClotheResponse>? response;

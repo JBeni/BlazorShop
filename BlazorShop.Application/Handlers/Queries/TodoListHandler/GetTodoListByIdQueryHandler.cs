@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetTodoListByIdQuery, Result{TodoListResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetTodoListByIdQuery, TodoListResponse}"/>.
     /// </summary>
     public class GetTodoListByIdQueryHandler : IRequestHandler<GetTodoListByIdQuery, Result<TodoListResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.TodoListHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{TodoListResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{TodoListResponse}"/>.</returns>
         public Task<Result<TodoListResponse>> Handle(GetTodoListByIdQuery request, CancellationToken cancellationToken)
         {
             Result<TodoListResponse>? response;
