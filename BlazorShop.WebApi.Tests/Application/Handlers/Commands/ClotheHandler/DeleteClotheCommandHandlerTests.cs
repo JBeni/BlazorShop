@@ -19,10 +19,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// </summary>
         public DeleteClotheCommandHandlerTests()
         {
-            this.ApplicationDbContext = new ApplicationDbContext(
-                new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase(databaseName: $"ApplicationDbContext-Core")
-                    .Options);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
 
             this.SUT = new DeleteClotheCommandHandler(
                 this.ApplicationDbContext,
@@ -35,9 +35,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         private DeleteClotheCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the instance of <see cref="BlazorShop.Infrastructure.Persistence.ApplicationDbContext"/> to use.
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
         /// </summary>
-        private ApplicationDbContext ApplicationDbContext { get; }
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
 
         /// <summary>
         /// Gets the instance of  <see cref="ILogger{DeleteClotheCommandHandler}"/> to use.
@@ -103,24 +103,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// Ensure garbage collector for db context.
         /// </summary>
-        //public void Dispose()
-        //{
-        //    this.Dispose(disposing: true);
-        //    GC.SuppressFinalize(this);
-        //}
-
         public void Dispose()
         {
             this.ApplicationDbContext.Database.EnsureDeleted();
-        }
-
-        /// <summary>
-        /// Ensure the context is reset.
-        /// </summary>
-        /// <param name="disposing">A value indicating whether the class is disposing.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

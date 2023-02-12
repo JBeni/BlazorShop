@@ -12,17 +12,17 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
     /// <summary>
     /// Tests for <see cref="UpdateClotheCommandHandler"/> class.
     /// </summary>
-    public class UpdateClotheCommandHandlerTests
+    public class UpdateClotheCommandHandlerTests : IDisposable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateClotheCommandHandlerTests"/> class.
         /// </summary>
         public UpdateClotheCommandHandlerTests()
         {
-            this.ApplicationDbContext = new ApplicationDbContext(
-                new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase(databaseName: $"ApplicationDbContext-Core")
-                    .Options);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
 
             this.SUT = new UpdateClotheCommandHandler(
                 this.ApplicationDbContext,
@@ -35,9 +35,9 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         private UpdateClotheCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets the instance of <see cref="BlazorShop.Infrastructure.Persistence.ApplicationDbContext"/> to use.
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
         /// </summary>
-        private ApplicationDbContext ApplicationDbContext { get; }
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
 
         /// <summary>
         /// Gets the instance of  <see cref="ILogger{UpdateClotheCommandHandler}"/> to use.
@@ -52,7 +52,12 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         public async Task Handle()
         {
             var updateClotheCommand = Mock.Of<UpdateClotheCommand>(q =>
-                q.Id == new Random().Next(1, 10));
+                q.Id == 1 &&
+                q.Description == "Update User" &&
+                q.ImageName == "UpdateTest" &&
+                q.ImagePath == "UpdateTest" &&
+                q.Name == "UpdateTest" &&
+                q.Price == new decimal(new Random().NextDouble()));
 
             var clotheEntity = Mock.Of<Clothe>(q =>
                 q.Id == updateClotheCommand.Id &&
@@ -80,7 +85,12 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
             Assert.Equal(result.Error, response.Error);
 
             Assert.NotNull(clotheEntityDb);
-            Assert.False(clotheEntityDb.IsActive);
+            Assert.Equal(clotheEntityDb.Description, updateClotheCommand.Description);
+            Assert.Equal(clotheEntityDb.ImageName, updateClotheCommand.ImageName);
+            Assert.Equal(clotheEntityDb.ImagePath, updateClotheCommand.ImagePath);
+            Assert.Equal(clotheEntityDb.Name, updateClotheCommand.Name);
+            Assert.Equal(clotheEntityDb.Price, updateClotheCommand.Price);
+            Assert.True(clotheEntityDb.IsActive);
         }
 
         /// <summary>
@@ -103,24 +113,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// Ensure garbage collector for db context.
         /// </summary>
-        //public void Dispose()
-        //{
-        //    this.Dispose(disposing: true);
-        //    GC.SuppressFinalize(this);
-        //}
-
         public void Dispose()
         {
             this.ApplicationDbContext.Database.EnsureDeleted();
-        }
-
-        /// <summary>
-        /// Ensure the context is reset.
-        /// </summary>
-        /// <param name="disposing">A value indicating whether the class is disposing.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

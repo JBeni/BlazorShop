@@ -19,10 +19,10 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// </summary>
         public CreateClotheCommandHandlerTests()
         {
-            this.ApplicationDbContext = new ApplicationDbContext(
-                new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase(databaseName: $"ApplicationDbContext-Core")
-                    .Options);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
 
             this.SUT = new CreateClotheCommandHandler(
                 this.ApplicationDbContext,
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
         /// </summary>
-        private ApplicationDbContext ApplicationDbContext { get; }
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
 
         /// <summary>
         /// Gets the instance of  <see cref="ILogger{CreateClotheCommandHandler}"/> to use.
@@ -51,23 +51,13 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         [Fact]
         public async Task Handle()
         {
-            //var createClotheCommand = Mock.Of<CreateClotheCommand>(q =>
-            //    q.Description == string.Empty &&
-            //    q.ImageName == string.Empty &&
-            //    q.ImagePath == string.Empty &&
-            //    q.Name == string.Empty &&
-            //    q.Price == new decimal(new Random().NextDouble()) &&
-            //    q.IsActive == true);
-
-            var createClotheCommand = new CreateClotheCommand
-            {
-                Description = string.Empty,
-                ImageName = string.Empty,
-                ImagePath = string.Empty,
-                Name = string.Empty,
-                Price = new decimal(new Random().NextDouble()),
-                IsActive = true,
-            };
+            var createClotheCommand = Mock.Of<CreateClotheCommand>(q =>
+                q.Description == string.Empty &&
+                q.ImageName == string.Empty &&
+                q.ImagePath == string.Empty &&
+                q.Name == string.Empty &&
+                q.Price == new decimal(new Random().NextDouble()) &&
+                q.IsActive == true);
 
             var clotheEntity = Mock.Of<Clothe>(q =>
                 q.Description == createClotheCommand.Description &&
@@ -119,23 +109,12 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         }
 
         /// <summary>
-        /// Ensure garbage collector for db context.
+        /// Ensure garbage collector for db context and reset the database.
         /// </summary>
         public void Dispose()
         {
             this.ApplicationDbContext.Database.EnsureDeleted();
-
-            //this.Dispose(disposing: true);
-            //GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Ensure the context is reset.
-        /// </summary>
-        /// <param name="disposing">A value indicating whether the class is disposing.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }
