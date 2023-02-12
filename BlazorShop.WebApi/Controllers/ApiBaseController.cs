@@ -5,7 +5,7 @@
 namespace BlazorShop.WebApi.Controllers
 {
     /// <summary>
-    /// Controller for setting the this.Mediator.
+    /// Controller for setting the Mediator.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -13,13 +13,17 @@ namespace BlazorShop.WebApi.Controllers
     public abstract class ApiBaseController : ControllerBase
     {
         /// <summary>
-        /// Gets the instance of the <see cref="ISender"/> to use.
+        /// Initializes a new instance of the <see cref="ApiBaseController"/> class.
         /// </summary>
-        private ISender mediator = null!;
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public ApiBaseController(IMediator mediator)
+        {
+            this.Mediator = mediator;
+        }
 
         /// <summary>
-        /// Gets the instance of the <see cref="ISender"/> to use.
+        /// Gets the instance of the <see cref="IMediator"/> to use.
         /// </summary>
-        protected ISender Mediator => this.mediator ??= this.HttpContext.RequestServices.GetRequiredService<ISender>();
+        protected IMediator Mediator { get; }
     }
 }

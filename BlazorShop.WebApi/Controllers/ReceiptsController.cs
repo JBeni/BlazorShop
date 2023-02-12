@@ -10,6 +10,15 @@ namespace BlazorShop.WebApi.Controllers
     public class ReceiptsController : ApiBaseController
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ReceiptsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public ReceiptsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
+        /// <summary>
         /// Create a receipt.
         /// </summary>
         /// <param name="command">The command.</param>

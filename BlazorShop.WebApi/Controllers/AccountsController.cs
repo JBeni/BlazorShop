@@ -14,9 +14,12 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="configuration">The instance of the <see cref="IConfiguration"/> to use.</param>
         /// <param name="emailService">The instance of the <see cref="IEmailService"/> to use.</param>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
         public AccountsController(
             IConfiguration configuration,
-            IEmailService emailService)
+            IEmailService emailService,
+            IMediator mediator)
+            : base(mediator)
         {
             this.Configuration = configuration;
             this.EmailService = emailService;

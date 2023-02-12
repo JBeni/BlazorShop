@@ -11,6 +11,15 @@ namespace BlazorShop.WebApi.Controllers
     public class InvoicesController : ApiBaseController
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="InvoicesController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public InvoicesController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
+        /// <summary>
         /// Create the invoice.
         /// </summary>
         /// <param name="command">The command.</param>

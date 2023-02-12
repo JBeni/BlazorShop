@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetSubscriberByIdQuery, Result{SubscriberResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetSubscriberByIdQuery, SubscriberResponse}"/>.
     /// </summary>
     public class GetSubscriberByIdQueryHandler : IRequestHandler<GetSubscriberByIdQuery, Result<SubscriberResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriberHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{SubscriberResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{SubscriberResponse}"/>.</returns>
         public Task<Result<SubscriberResponse>> Handle(GetSubscriberByIdQuery request, CancellationToken cancellationToken)
         {
             Result<SubscriberResponse>? response;

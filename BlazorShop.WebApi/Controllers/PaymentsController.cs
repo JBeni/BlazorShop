@@ -14,7 +14,9 @@ namespace BlazorShop.WebApi.Controllers
         /// Initializes a new instance of the <see cref="PaymentsController"/> class.
         /// </summary>
         /// <param name="configuration">The instance of the <see cref="IConfiguration"/> to use.</param>
-        public PaymentsController(IConfiguration configuration)
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public PaymentsController(IConfiguration configuration, IMediator mediator)
+            : base(mediator)
         {
             this.Configuration = configuration;
         }
@@ -179,13 +181,15 @@ namespace BlazorShop.WebApi.Controllers
                 CancelUrl = "https://localhost:7066/carts",
             };
 
+            #pragma warning disable CS1587 // XML comment is not placed on a valid language element
             /**
-             * https://localhost:7066/order-success
-             * SuccessUrl = https://localhost:44351/api/Payments/checkout-response?session_id={CHECKOUT_SESSION_ID}
-             */
+            * https://localhost:7066/order-success
+            * SuccessUrl = https://localhost:44351/api/Payments/checkout-response?session_id={CHECKOUT_SESSION_ID}
+            */
             var service = new SessionService();
-            Session session = service.Create(options);
+            #pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
+            Session session = service.Create(options);
             return this.Ok(session.Url);
         }
 

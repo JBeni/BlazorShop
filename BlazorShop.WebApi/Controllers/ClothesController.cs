@@ -10,6 +10,15 @@ namespace BlazorShop.WebApi.Controllers
     public class ClothesController : ApiBaseController
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ClothesController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public ClothesController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
+        /// <summary>
         /// Create the clothe.
         /// </summary>
         /// <param name="command">The command.</param>
@@ -75,6 +84,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothes")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetClothes()
         {
             var result = await this.Mediator.Send(new GetClothesQuery { });

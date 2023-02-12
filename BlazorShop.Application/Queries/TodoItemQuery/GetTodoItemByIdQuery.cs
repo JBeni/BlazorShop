@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Queries.TodoItemQuery
     public class GetTodoItemByIdQuery : IRequest<Result<TodoItemResponse>>
     {
         /// <summary>
-        /// .
+        /// Gets or sets the id of the todo item.
         /// </summary>
         public int Id { get; set; }
     }

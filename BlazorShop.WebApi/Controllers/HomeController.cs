@@ -14,7 +14,9 @@ namespace BlazorShop.WebApi.Controllers
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="webHostEnvironment">The instance of the <see cref="IWebHostEnvironment"/> to use.</param>
-        public HomeController(IWebHostEnvironment webHostEnvironment)
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public HomeController(IWebHostEnvironment webHostEnvironment, IMediator mediator)
+            : base(mediator)
         {
             this.WebHostEnvironment = webHostEnvironment;
         }

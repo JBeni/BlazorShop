@@ -6,7 +6,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<RootNamespace>BlazorShop.WebApi.Tests</RootNamespace>
 	<AssemblyName>BlazorShop.WebApi.Tests</AssemblyName>
-	<IsPackable>false</IsPackable>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

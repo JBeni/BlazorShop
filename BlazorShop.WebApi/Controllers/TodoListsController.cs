@@ -11,6 +11,15 @@ namespace BlazorShop.WebApi.Controllers
     public class TodoListsController : ApiBaseController
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TodoListsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public TodoListsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
+        /// <summary>
         /// Create the todo list.
         /// </summary>
         /// <param name="command">The command.</param>

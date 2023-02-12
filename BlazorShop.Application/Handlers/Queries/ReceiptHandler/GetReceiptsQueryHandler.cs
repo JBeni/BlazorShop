@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetReceiptsQuery, Result{ReceiptResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetReceiptsQuery, ReceiptResponse}"/>.
     /// </summary>
     public class GetReceiptsQueryHandler : IRequestHandler<GetReceiptsQuery, Result<ReceiptResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.ReceiptHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{ReceiptResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{ReceiptResponse}"/>.</returns>
         public Task<Result<ReceiptResponse>> Handle(GetReceiptsQuery request, CancellationToken cancellationToken)
         {
             Result<ReceiptResponse>? response;

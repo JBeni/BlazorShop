@@ -10,7 +10,7 @@ namespace BlazorShop.WebClient.Services
     public class OrderService : IOrderService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// Initializes a new instance of the <see cref="OrderService"/> class.
         /// </summary>
         /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
         /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>

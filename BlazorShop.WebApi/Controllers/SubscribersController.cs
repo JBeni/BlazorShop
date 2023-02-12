@@ -10,6 +10,15 @@ namespace BlazorShop.WebApi.Controllers
     public class SubscribersController : ApiBaseController
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SubscribersController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public SubscribersController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
+        /// <summary>
         /// Create a subscriber.
         /// </summary>
         /// <param name="command">The command.</param>
