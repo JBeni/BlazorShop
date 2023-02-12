@@ -2,41 +2,96 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.Application.Handlers.Commands.AccountHandler;
+using Moq;
+using Xunit;
+
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
-    /// Tests for <see cref="ChangePasswordCommandHandler"/>.
+    /// Tests for <see cref="ChangePasswordCommandHandler"/> class.
     /// </summary>
     public class ChangePasswordCommandHandlerTests
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangePasswordCommandHandlerTests"/> class.
         /// </summary>
-        public ChangePasswordCommandHandlerTests(IAccountService accountService, ILogger<ChangePasswordCommandHandlerTests> logger)
+        public ChangePasswordCommandHandlerTests()
         {
-            this.AccountService = accountService;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.SUT = new ChangePasswordCommandHandler(
+                this.AccountService,
+                this.Logger);
         }
 
         /// <summary>
-        /// Gets.
+        /// Gets the <see cref="ChangePasswordCommandHandler"/> instance to use.
         /// </summary>
-        private IAccountService AccountService { get; }
+        private ChangePasswordCommandHandler SUT { get; }
 
         /// <summary>
-        /// Gets.
+        /// Gets the instance of the <see cref="IAccountService"/> to use.
         /// </summary>
-        private ILogger<ChangePasswordCommandHandlerTests> Logger { get; }
+        private IAccountService AccountService { get; } = Mock.Of<IAccountService>();
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the <see cref="ILogger{ChangePasswordCommandHandler}"/> under test.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
+        private ILogger<ChangePasswordCommandHandler> Logger { get; } = Mock.Of<ILogger<ChangePasswordCommandHandler>>();
+
+        /// <summary>
+        /// A test for <see cref="ChangePasswordCommandHandler.Handle(ChangePasswordCommand, CancellationToken)"/> method.
+        /// </summary>
         /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            var changePassCommand = Mock.Of<ChangePasswordCommand>(x =>
+                x.NewPassword == "test" &&
+                x.ConfirmNewPassword == "test" &&
+                x.OldPassword == "test 1" &&
+                x.UserId == new Random().Next());
+
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == true &&
+                x.Error == string.Empty &&
+                x.EntityId == 0);
+
+            Mock.Get(this.AccountService)
+                .Setup(x => x.ChangePasswordUserAsync(changePassCommand))
+                .ReturnsAsync(response);
+
+            var result = await this.SUT.Handle(changePassCommand, default);
+
+            Mock.Get(this.AccountService)
+                .Verify(x => x.ChangePasswordUserAsync(It.IsAny<ChangePasswordCommand>()), Times.Once);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Equal(result.Error, response.Error);
+        }
+
+        /// <summary>
+        /// A test for <see cref="ChangePasswordCommandHandler.Handle(ChangePasswordCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == false &&
+                x.Error == ErrorsManager.ChangePasswordCommand &&
+                x.EntityId == 0);
+
+            Mock.Get(this.AccountService)
+                .Setup(x => x.ChangePasswordUserAsync(It.IsAny<ChangePasswordCommand>()))
+                .ThrowsAsync(new Exception());
+
+            var result = await this.SUT.Handle(It.IsAny<ChangePasswordCommand>(), default);
+
+            Mock.Get(this.AccountService)
+                .Verify(x => x.ChangePasswordUserAsync(It.IsAny<ChangePasswordCommand>()), Times.Once);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Contains(response.Error, result.Error);
         }
     }
 }

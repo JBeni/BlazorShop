@@ -15,8 +15,27 @@ namespace BlazorShop.Infrastructure.Persistence
         /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
         /// </summary>
         /// <param name="options">The options for the db context.</param>
-        public ApplicationDbContext(DbContextOptions options)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options)
             : base(options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options for the db context.</param>
+        protected ApplicationDbContext(
+            DbContextOptions options)
+
+            : base(options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
+        /// </summary>
+        protected ApplicationDbContext()
         {
         }
 
