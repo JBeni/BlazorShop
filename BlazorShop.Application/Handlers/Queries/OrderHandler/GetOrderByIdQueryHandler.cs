@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.OrderHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetOrderByIdQuery, Result{OrderResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetOrderByIdQuery, OrderResponse}"/>.
     /// </summary>
     public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Result<OrderResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.OrderHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{OrderResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{OrderResponse}"/>.</returns>
         public Task<Result<OrderResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
             Result<OrderResponse>? response;

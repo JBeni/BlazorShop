@@ -2,9 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-/// <summary>
-/// The configurations for the Core Web API.
-/// </summary>
+// The configurations for the Core Web API.
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -132,9 +130,7 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    /**
-     * Security Headers for Website
-     */
+    // Security Headers for Website
     app.Use(async (context, next) =>
     {
         context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");

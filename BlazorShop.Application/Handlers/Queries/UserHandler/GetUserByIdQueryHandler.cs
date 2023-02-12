@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.UserHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetUserByIdQuery, Result{UserResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetUserByIdQuery, UserResponse}"/>.
     /// </summary>
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<UserResponse>>
     {
@@ -36,7 +36,7 @@ namespace BlazorShop.Application.Handlers.Queries.UserHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{UserResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{UserResponse}"/>.</returns>
         public Task<Result<UserResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             Result<UserResponse>? response;

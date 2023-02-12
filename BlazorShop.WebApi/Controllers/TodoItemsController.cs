@@ -8,8 +8,17 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for TodoItems.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class TodoItemsController : ApiControllerBase
+    public class TodoItemsController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TodoItemsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public TodoItemsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the todo item.
         /// </summary>

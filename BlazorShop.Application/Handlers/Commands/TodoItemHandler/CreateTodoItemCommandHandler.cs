@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{CreateTodoItemCommand, Result{TodoItemResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{CreateTodoItemCommand, TodoItemResponse}"/>.
     /// </summary>
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, Result<TodoItemResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Commands.TodoItemHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{TodoItemResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{TodoItemResponse}"/>.</returns>
         public async Task<Result<TodoItemResponse>> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             Result<TodoItemResponse>? response;

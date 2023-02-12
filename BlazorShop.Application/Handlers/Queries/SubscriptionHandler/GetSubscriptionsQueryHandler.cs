@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetSubscriptionsQuery, Result{SubscriptionResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetSubscriptionsQuery, SubscriptionResponse}"/>.
     /// </summary>
     public class GetSubscriptionsQueryHandler : IRequestHandler<GetSubscriptionsQuery, Result<SubscriptionResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.SubscriptionHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{SubscriptionResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{SubscriptionResponse}"/>.</returns>
         public Task<Result<SubscriptionResponse>> Handle(GetSubscriptionsQuery request, CancellationToken cancellationToken)
         {
             Result<SubscriptionResponse>? response;

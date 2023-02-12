@@ -7,8 +7,17 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Users.
     /// </summary>
-    public class UsersController : ApiControllerBase
+    public class UsersController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public UsersController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the user.
         /// </summary>

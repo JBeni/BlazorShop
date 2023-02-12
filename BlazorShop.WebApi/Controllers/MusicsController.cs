@@ -7,8 +7,17 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Musics.
     /// </summary>
-    public class MusicsController : ApiControllerBase
+    public class MusicsController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public MusicsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the music.
         /// </summary>

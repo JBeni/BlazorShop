@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetCartsQuery, Result{CartResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetCartsQuery, CartResponse}"/>.
     /// </summary>
     public class GetCartsQueryHandler : IRequestHandler<GetCartsQuery, Result<CartResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{CartResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{CartResponse}"/>.</returns>
         public Task<Result<CartResponse>> Handle(GetCartsQuery request, CancellationToken cancellationToken)
         {
             Result<CartResponse>? response;

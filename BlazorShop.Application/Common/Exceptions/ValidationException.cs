@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Common.Exceptions
 {
     /// <summary>
-    /// A validation class to validate the commands & queries.
+    /// A validation class to validate the commands and queries.
     /// </summary>
     public class ValidationException : Exception
     {
