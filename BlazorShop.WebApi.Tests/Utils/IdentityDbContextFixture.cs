@@ -46,6 +46,7 @@ namespace BlazorShop.WebApi.Tests.Utils
         public void Dispose()
         {
             this.ServiceProvider.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
