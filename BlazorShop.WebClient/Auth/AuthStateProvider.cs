@@ -46,7 +46,7 @@ namespace BlazorShop.WebClient.Auth
         /// <summary>
         /// Authenticate the user if the user its not authenticated.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await this.LocalStorage.GetItemAsync<string>("authToken");

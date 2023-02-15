@@ -5,31 +5,87 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
 {
     /// <summary>
-    /// Tests for <see cref="DeleteUserCommandHandler"/>.
+    /// Tests for <see cref="DeleteUserCommandHandler"/> class.
     /// </summary>
     public class DeleteUserCommandHandlerTests
     {
-        private IUserService UserService { get; }
-        private ILogger<DeleteUserCommandHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteUserCommandHandlerTests"/> class.
         /// </summary>
-        public DeleteUserCommandHandlerTests(IUserService userService, ILogger<DeleteUserCommandHandlerTests> logger)
+        public DeleteUserCommandHandlerTests()
         {
-            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.SUT = new DeleteUserCommandHandler(
+                this.UserService,
+                this.Logger);
         }
 
         /// <summary>
-        /// .
+        /// Gets the <see cref="DeleteUserCommandHandler"/> instance to use.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <response =s></response =s>
-        public Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        private DeleteUserCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="IUserService"/> to use.
+        /// </summary>
+        private IUserService UserService { get; } = Mock.Of<IUserService>();
+
+        /// <summary>
+        /// Gets the <see cref="ILogger{DeleteUserCommandHandler}"/> under test.
+        /// </summary>
+        private ILogger<DeleteUserCommandHandler> Logger { get; } = Mock.Of<ILogger<DeleteUserCommandHandler>>();
+
+        /// <summary>
+        /// A test for <see cref="DeleteUserCommandHandler.Handle(DeleteUserCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task{RequestResponse}"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            var deleteUserCommand = Mock.Of<DeleteUserCommand>(x => x.Id == new Random().Next());
+
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == true &&
+                x.Error == string.Empty &&
+                x.EntityId == 0);
+
+            Mock.Get(this.UserService)
+                .Setup(x => x.DeleteUserAsync(deleteUserCommand.Id))
+                .ReturnsAsync(response);
+
+            var result = await this.SUT.Handle(deleteUserCommand, default);
+
+            Mock.Get(this.UserService)
+                .Verify(x => x.DeleteUserAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Equal(result.Error, response.Error);
+        }
+
+        /// <summary>
+        /// A test for <see cref="DeleteUserCommandHandler.Handle(DeleteUserCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task{RequestResponse}"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            var deleteUserCommand = Mock.Of<DeleteUserCommand>(x => x.Id == new Random().Next());
+
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == false &&
+                x.Error == ErrorsManager.DeleteUserCommand &&
+                x.EntityId == 0);
+
+            Mock.Get(this.UserService)
+                .Setup(x => x.DeleteUserAsync(It.IsAny<int>()))
+                .ThrowsAsync(new Exception());
+
+            var result = await this.SUT.Handle(deleteUserCommand, default);
+
+            Mock.Get(this.UserService)
+                .Verify(x => x.DeleteUserAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Contains(response.Error, result.Error);
         }
     }
 }

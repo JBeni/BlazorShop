@@ -5,31 +5,111 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
-    /// Tests for <see cref="CreateClotheCommandHandler"/>.
+    /// Tests for <see cref="CreateClotheCommandHandler"/> class.
     /// </summary>
-    public class CreateClotheCommandHandlerTests
+    public class CreateClotheCommandHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<CreateClotheCommandHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateClotheCommandHandlerTests"/> class.
         /// </summary>
-        public CreateClotheCommandHandlerTests(IApplicationDbContext dbContext, ILogger<CreateClotheCommandHandlerTests> logger)
+        public CreateClotheCommandHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new CreateClotheCommandHandler(
+                this.ApplicationDbContext,
+                this.Logger);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="CreateClotheCommandHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(CreateClotheCommand request, CancellationToken cancellationToken)
+        private CreateClotheCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{CreateClotheCommandHandler}"/> to use.
+        /// </summary>
+        private ILogger<CreateClotheCommandHandler> Logger { get; } = Mock.Of<ILogger<CreateClotheCommandHandler>>();
+
+        /// <summary>
+        /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            var createClotheCommand = Mock.Of<CreateClotheCommand>(q =>
+                q.Description == string.Empty &&
+                q.ImageName == string.Empty &&
+                q.ImagePath == string.Empty &&
+                q.Name == string.Empty &&
+                q.Price == new decimal(new Random().NextDouble()) &&
+                q.IsActive == true);
+
+            var clotheEntity = Mock.Of<Clothe>(q =>
+                q.Description == createClotheCommand.Description &&
+                q.ImageName == createClotheCommand.ImageName &&
+                q.ImagePath == createClotheCommand.ImagePath &&
+                q.Name == createClotheCommand.Name &&
+                q.Price == createClotheCommand.Price &&
+                q.IsActive == createClotheCommand.IsActive);
+
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == true &&
+                x.Error == null);
+
+            this.ApplicationDbContext.Clothes.Add(clotheEntity);
+            await this.ApplicationDbContext.SaveChangesAsync(default);
+
+            var result = await this.SUT.Handle(createClotheCommand, default);
+
+            var clotheEntityDb = await this.ApplicationDbContext.Clothes
+                .FirstOrDefaultAsync(x => x.Id == result.EntityId);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Equal(result.Error, response.Error);
+
+            Assert.Equal(clotheEntity.Description, clotheEntityDb.Description);
+            Assert.Equal(clotheEntity.ImagePath, clotheEntityDb.ImagePath);
+            Assert.Equal(clotheEntity.ImageName, clotheEntityDb.ImageName);
+            Assert.Equal(clotheEntity.Name, clotheEntityDb.Name);
+            Assert.Equal(clotheEntity.Price, clotheEntityDb.Price);
+            Assert.Equal(clotheEntity.IsActive, clotheEntityDb.IsActive);
+        }
+
+        /// <summary>
+        /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            var response = Mock.Of<RequestResponse>(x =>
+                x.Successful == false &&
+                x.Error == ErrorsManager.CreateClotheCommand &&
+                x.EntityId == 0);
+
+            var result = await this.SUT.Handle(It.IsAny<CreateClotheCommand>(), default);
+
+            Assert.Equal(result.Successful, response.Successful);
+            Assert.Contains(response.Error, result.Error);
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

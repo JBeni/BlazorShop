@@ -7,13 +7,22 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Receipts.
     /// </summary>
-    public class ReceiptsController : ApiControllerBase
+    public class ReceiptsController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceiptsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public ReceiptsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create a receipt.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPost("receipt")]
         public async Task<IActionResult> CreateReceipt([FromBody] CreateReceiptCommand command)
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update a receipt.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("receipt")]
         public async Task<IActionResult> UpdateReceipt([FromBody] UpdateReceiptCommand command)
@@ -43,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete a receipt.
         /// </summary>
         /// <param name="id">The id of the receipt.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpDelete("receipt/{id}")]
         public async Task<IActionResult> DeleteReceipt(int id)
@@ -59,7 +68,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the receipt.</param>
         /// <param name="userEmail">The email of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("receipt/{id}/{userEmail}")]
         public async Task<IActionResult> GetReceipt(int id, string userEmail)
@@ -74,7 +83,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the receipts.
         /// </summary>
         /// <param name="userEmail">The email of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("receipts/{userEmail}")]
         public async Task<IActionResult> GetReceipts(string userEmail)

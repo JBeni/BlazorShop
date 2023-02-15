@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetInvoiceByIdQuery, Result{InvoiceResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetInvoiceByIdQuery, InvoiceResponse}"/>.
     /// </summary>
     public class GetInvoiceByIdQueryHandler : IRequestHandler<GetInvoiceByIdQuery, Result<InvoiceResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.InvoiceHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{InvoiceResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{InvoiceResponse}"/>.</returns>
         public Task<Result<InvoiceResponse>> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
         {
             Result<InvoiceResponse>? response;

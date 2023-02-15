@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.MusicHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetMusicByIdQuery, Result{MusicResponse}}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetMusicByIdQuery, MusicResponse}"/>.
     /// </summary>
     public class GetMusicByIdQueryHandler : IRequestHandler<GetMusicByIdQuery, Result<MusicResponse>>
     {
@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.MusicHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{Result{MusicResponse}}"/>.</returns>
+        /// <returns>A <see cref="Result{MusicResponse}"/>.</returns>
         public Task<Result<MusicResponse>> Handle(GetMusicByIdQuery request, CancellationToken cancellationToken)
         {
             Result<MusicResponse>? response;

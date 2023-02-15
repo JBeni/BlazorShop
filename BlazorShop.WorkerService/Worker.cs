@@ -41,7 +41,7 @@ namespace BlazorShop.WorkerService
         /// The background task to execute the instructions.
         /// </summary>
         /// <param name="stoppingToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try

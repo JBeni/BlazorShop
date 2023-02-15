@@ -8,13 +8,22 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Invoices.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class InvoicesController : ApiControllerBase
+    public class InvoicesController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvoicesController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public InvoicesController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the invoice.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("invoice")]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceCommand command)
         {
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the invoice.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("invoice")]
         public async Task<IActionResult> UpdateInvoice([FromBody] UpdateInvoiceCommand command)
         {
@@ -42,7 +51,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the invoice.
         /// </summary>
         /// <param name="id">The id of the invoice.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("invoice/{id}")]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
@@ -56,7 +65,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the invoice.
         /// </summary>
         /// <param name="id">The id of the invoice.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("invoice/{id}")]
         public async Task<IActionResult> GetInvoice(int id)
         {
@@ -69,7 +78,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the invoices.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("invoices")]
         public async Task<IActionResult> GetInvoices()
         {

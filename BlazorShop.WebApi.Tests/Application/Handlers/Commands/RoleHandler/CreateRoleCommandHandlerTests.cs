@@ -5,31 +5,74 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.RoleHandler
 {
     /// <summary>
-    /// Tests for <see cref="CreateRoleCommandHandler"/>.
+    /// Tests for <see cref="CreateRoleCommandHandler"/> class.
     /// </summary>
-    public class CreateRoleCommandHandlerTests
+    public class CreateRoleCommandHandlerTests : IDisposable
     {
-        private IRoleService RoleService { get; }
-        private ILogger<CreateRoleCommandHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateRoleCommandHandlerTests"/> class.
         /// </summary>
-        public CreateRoleCommandHandlerTests(IRoleService roleService, ILogger<CreateRoleCommandHandlerTests> logger)
+        public CreateRoleCommandHandlerTests()
         {
-            this.RoleService = roleService;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the <see cref="CreateRoleCommandHandler"/> instance to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+        private CreateRoleCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="Microsoft.Extensions.DependencyInjection.ServiceProvider"/> to use.
+        /// </summary>
+        private ServiceProvider ServiceProvider { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ApplicationDbContext"/> under test.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IUserStore{User}"/> under test.
+        /// </summary>
+        private IUserStore<User> UserStore { get; }
+
+        /// <summary>
+        /// Gets the <see cref="UserManager{User}"/> under test.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ILogger{CreateRoleCommandHandler}"/> under test.
+        /// </summary>
+        private ILogger<CreateRoleCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateRoleCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateRoleCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context.
+        /// </summary>
+        public void Dispose()
+        {
+            // this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

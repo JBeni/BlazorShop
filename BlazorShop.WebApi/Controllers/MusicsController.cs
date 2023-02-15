@@ -7,13 +7,22 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Musics.
     /// </summary>
-    public class MusicsController : ApiControllerBase
+    public class MusicsController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicsController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public MusicsController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the music.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("music")]
         public async Task<IActionResult> CreateMusic([FromBody] CreateMusicCommand command)
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the music.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("music")]
         public async Task<IActionResult> UpdateMusic([FromBody] UpdateMusicCommand command)
@@ -43,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the music.
         /// </summary>
         /// <param name="id">The id of the music.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("music/{id}")]
         public async Task<IActionResult> DeleteMusic(int id)
@@ -58,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the music.
         /// </summary>
         /// <param name="id">The id of the music.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("music/{id}")]
         public async Task<IActionResult> GetMusic(int id)
@@ -72,7 +81,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the musics.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("musics")]
         public async Task<IActionResult> GetMusics()

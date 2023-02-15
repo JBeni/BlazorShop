@@ -5,40 +5,77 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetUserByIdQueryHandler"/>.
+    /// Tests for <see cref="GetUserByIdQueryHandler"/> class.
     /// </summary>
-    public class GetUserByIdQueryHandlerTests
+    public class GetUserByIdQueryHandlerTests : IDisposable
     {
-        /// <summary>
-        /// Gets the <see cref="IUserService"/> instance to use.
-        /// </summary>
-        private readonly IUserService UserService;
-
-        /// <summary>
-        /// Gets the <see cref="ILogger<GetUserByIdQueryHandlerTests>"/> instance to use.
-        /// </summary>
-        private ILogger<GetUserByIdQueryHandlerTests> Logger;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUserByIdQueryHandlerTests"/> class.
         /// </summary>
-        /// <param name="userService">The <see cref="IUserService"/> instance to use.</param>
-        /// <param name="logger">The <see cref="ILogger<GetUserByIdQueryHandlerTests>"/> instance to use.</param>
-        public GetUserByIdQueryHandlerTests(IUserService userService, ILogger<GetUserByIdQueryHandlerTests> logger)
+        public GetUserByIdQueryHandlerTests()
         {
-            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetUserByIdQueryHandler(
+                this.UserService,
+                this.Logger);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetUserByIdQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        private GetUserByIdQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetUserByIdQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetUserByIdQueryHandler> Logger { get; } = Mock.Of<ILogger<GetUserByIdQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IUserService"/> to use.
+        /// </summary>
+        private IUserService UserService { get; } = Mock.Of<IUserService>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetUserByIdQueryHandler.Handle(GetUserByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetUserByIdQueryHandler.Handle(GetUserByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -7,13 +7,22 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Subscribers.
     /// </summary>
-    public class SubscribersController : ApiControllerBase
+    public class SubscribersController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscribersController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public SubscribersController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create a subscriber.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPost("subscriber")]
         public async Task<IActionResult> CreateSubscriber([FromBody] CreateSubscriberCommand command)
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update a subscriber.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("subscriber")]
         public async Task<IActionResult> UpdateSubscriber([FromBody] UpdateSubscriberCommand command)
@@ -43,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete a subscriber.
         /// </summary>
         /// <param name="id">The id of the subscriber.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("subscriber/{id}")]
         public async Task<IActionResult> DeleteSubscriber(int id)
@@ -58,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get a subscriber.
         /// </summary>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscriber/{userId}")]
         public async Task<IActionResult> GetSubscriber(int userId)
@@ -73,7 +82,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get user subscribers.
         /// </summary>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("subscribers/{userId}")]
         public async Task<IActionResult> GetUserSubscribers(int userId)
@@ -87,7 +96,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the subscribers.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = "Admin, User, Default")]
         [HttpGet("subscribers")]
         public async Task<IActionResult> GetSubscribers()

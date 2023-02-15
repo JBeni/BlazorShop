@@ -7,6 +7,7 @@
 	<RootNamespace>BlazorShop.WebClient</RootNamespace>
 	<AssemblyName>BlazorShop.WebClient</AssemblyName>
 	<UserSecretsId>7e62e638-3014-4139-b791-deba53a0d741</UserSecretsId>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<RootNamespace>BlazorShop.Infrastructure</RootNamespace>
     <AssemblyName>BlazorShop.Infrastructure</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

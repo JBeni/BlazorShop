@@ -14,7 +14,7 @@ namespace BlazorShop.WebClient.AuthPolicies
         /// </summary>
         /// <param name="context">The instance of the <see cref="AuthorizationHandlerContext"/>.</param>
         /// <param name="requirement">The instance of the <see cref="UserRoleRequirement"/>.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomerRoleRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)

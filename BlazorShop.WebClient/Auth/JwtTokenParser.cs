@@ -13,7 +13,7 @@ namespace BlazorShop.WebClient.Auth
         /// Taking the claims from the token.
         /// </summary>
         /// <param name="jwt">The token.</param>
-        /// <returns>The user claims list</returns>
+        /// <returns>The user claims list.</returns>
         public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var claims = new List<Claim>();

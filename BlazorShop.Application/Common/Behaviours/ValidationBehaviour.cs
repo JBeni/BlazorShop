@@ -29,17 +29,14 @@ namespace BlazorShop.Application.Common.Behaviours
         private IEnumerable<IValidator<TRequest>> Validators { get; }
 
         /// <summary>
-        /// An implementation of the handler validation of commands & queries.
+        /// An implementation of the handler validation of commands and queries.
         /// </summary>
         /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="next">The next request to validate.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task{TResponse}"/>.</returns>
         /// <exception cref="ValidationException">Thrown if there is a validation rule not being met.</exception>
-        public async Task<TResponse> Handle(
-            TRequest request,
-            CancellationToken cancellationToken,
-            RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (this.Validators.Any())
             {

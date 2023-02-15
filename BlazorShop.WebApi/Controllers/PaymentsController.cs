@@ -8,13 +8,15 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Payments.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-    public class PaymentsController : ApiControllerBase
+    public class PaymentsController : ApiBaseController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentsController"/> class.
         /// </summary>
         /// <param name="configuration">The instance of the <see cref="IConfiguration"/> to use.</param>
-        public PaymentsController(IConfiguration configuration)
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public PaymentsController(IConfiguration configuration, IMediator mediator)
+            : base(mediator)
         {
             this.Configuration = configuration;
         }
@@ -28,7 +30,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the subscription session.
         /// </summary>
         /// <param name="req">The req data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("create-subscription")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
@@ -69,7 +71,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Cancel the stripe subscription.
         /// </summary>
         /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
         public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
         {
@@ -96,7 +98,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Updating the stripe subscription.
         /// </summary>
         /// <param name="req">The req data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("update-subscription")]
         public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
         {
@@ -145,7 +147,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the checkout operation.
         /// </summary>
         /// <param name="cartItems">The cart items.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
@@ -179,20 +181,22 @@ namespace BlazorShop.WebApi.Controllers
                 CancelUrl = "https://localhost:7066/carts",
             };
 
+            #pragma warning disable CS1587 // XML comment is not placed on a valid language element
             /**
-             * https://localhost:7066/order-success
-             * SuccessUrl = https://localhost:44351/api/Payments/checkout-response?session_id={CHECKOUT_SESSION_ID}
-             */
+            * https://localhost:7066/order-success
+            * SuccessUrl = https://localhost:44351/api/Payments/checkout-response?session_id={CHECKOUT_SESSION_ID}
+            */
             var service = new SessionService();
-            Session session = service.Create(options);
+            #pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
+            Session session = service.Create(options);
             return this.Ok(session.Url);
         }
 
         /// <summary>
         /// Activate the background webhook.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
         [HttpPost("webhook")]
         public async Task<IActionResult> WebHook()
@@ -260,7 +264,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Complet the checkout.
         /// </summary>
         /// <param name="stripeEvent">The stripe event.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task CompleteAcceptCheckout(Event stripeEvent)
         {
             var sessionData = stripeEvent.Data.Object as Session;

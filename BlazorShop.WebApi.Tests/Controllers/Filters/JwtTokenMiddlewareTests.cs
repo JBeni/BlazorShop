@@ -5,7 +5,7 @@
 namespace BlazorShop.WebApi.Tests.Controllers.Filters
 {
     /// <summary>
-    /// Tests for <see cref="JwtTokenMiddleware"/>.
+    /// Tests for <see cref="JwtTokenMiddleware"/> class.
     /// </summary>
     public class JwtTokenMiddlewareTests
     {

@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        /// <returns>A <see cref="Task{RequestResponse}"/> representing the result of the asynchronous operation.</returns>
         public async Task<RequestResponse> Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
             RequestResponse? response;

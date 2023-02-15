@@ -7,13 +7,22 @@ namespace BlazorShop.WebApi.Controllers
     /// <summary>
     /// Controller for Users.
     /// </summary>
-    public class UsersController : ApiControllerBase
+    public class UsersController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public UsersController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create the user.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Activate the user.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("userActivate")]
         public async Task<IActionResult> ActivateUser([FromBody] ActivateUserCommand command)
@@ -43,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the user.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
@@ -58,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the user email.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("userEmail")]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
@@ -73,7 +82,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the user.
         /// </summary>
         /// <param name="id">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("user/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -88,7 +97,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get user.
         /// </summary>
         /// <param name="id">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("user/{id}")]
         public async Task<IActionResult> GetUserById(int id)
@@ -102,7 +111,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get active users.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
@@ -116,7 +125,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get inactive users.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpGet("usersInactive")]
         public async Task<IActionResult> GetUsersInactive()

@@ -13,14 +13,14 @@ namespace BlazorShop.WebClient.Interfaces
         /// Change the password.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task<RequestResponse> ChangePassword(ChangePasswordCommand command);
 
         /// <summary>
         /// Reset the user password.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task<RequestResponse> ResetPassword(ResetPasswordCommand command);
     }
 }

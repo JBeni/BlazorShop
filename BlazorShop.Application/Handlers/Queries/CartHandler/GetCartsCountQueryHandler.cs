@@ -5,7 +5,7 @@
 namespace BlazorShop.Application.Handlers.Queries.CartHandler
 {
     /// <summary>
-    /// An implementation of the <see cref="IRequestHandler{GetCartsCountQuery, int}"/>.
+    /// An implementation of the <see cref="IRequestHandler{GetCartsCountQuery}"/>.
     /// </summary>
     public class GetCartsCountQueryHandler : IRequestHandler<GetCartsCountQuery, int>
     {
@@ -14,7 +14,6 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
         /// </summary>
         /// <param name="dbContext">Gets An instance of <see cref="IApplicationDbContext"/>.</param>
         /// <param name="logger">Gets An instance of <see cref="ILogger{GetCartsCountQueryHandler}"/>.</param>
-        /// <param name="mapper">Gets An instance of <see cref="IMapper"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown if there is no logger provided.</exception>
         public GetCartsCountQueryHandler(IApplicationDbContext dbContext, ILogger<GetCartsCountQueryHandler> logger)
         {
@@ -33,16 +32,11 @@ namespace BlazorShop.Application.Handlers.Queries.CartHandler
         private ILogger<GetCartsCountQueryHandler> Logger { get; }
 
         /// <summary>
-        /// Gets An instance of <see cref="IMapper"/>.
-        /// </summary>
-        private IMapper Mapper { get; }
-
-        /// <summary>
         /// An implementation of the handler for <see cref="GetCartsCountQuery"/>.
         /// </summary>
         /// <param name="request">The request object to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{int}"/>.</returns>
+        /// <returns>A <see cref="int"/>.</returns>
         public Task<int> Handle(GetCartsCountQuery request, CancellationToken cancellationToken)
         {
             var result = 0;

@@ -8,13 +8,22 @@ namespace BlazorShop.WebApi.Controllers
     /// Controller for Roles.
     /// </summary>
     [Authorize(Roles = $"{StringRoleResources.Admin}")]
-    public class RolesController : ApiControllerBase
+    public class RolesController : ApiBaseController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RolesController"/> class.
+        /// </summary>
+        /// <param name="mediator">The instance of the <see cref="IMediator"/> to use.</param>
+        public RolesController(IMediator mediator)
+            : base(mediator)
+        {
+        }
+
         /// <summary>
         /// Create a role.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("role")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
@@ -28,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update a role.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("role")]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
         {
@@ -42,7 +51,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete a role.
         /// </summary>
         /// <param name="id">The id of the role.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("role/{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
@@ -56,7 +65,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the role.
         /// </summary>
         /// <param name="id">The id of the role.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("role/{id}")]
         public async Task<IActionResult> GetRoleById(int id)
         {
@@ -69,7 +78,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the user roles for a non admin role.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles()
         {
@@ -82,7 +91,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the roles for an admin user.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("rolesAdmin")]
         public async Task<IActionResult> GetRolesForAdmin()
         {

@@ -5,33 +5,73 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.CartHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetCartByIdQueryHandler"/>.
+    /// Tests for <see cref="GetCartByIdQueryHandler"/> class.
     /// </summary>
-    public class GetCartByIdQueryHandlerTests
+    public class GetCartByIdQueryHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<GetCartByIdQueryHandlerTests> Logger { get; }
-        private IMapper Mapper { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCartByIdQueryHandlerTests"/> class.
         /// </summary>
-        public GetCartByIdQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetCartByIdQueryHandlerTests> logger, IMapper mapper)
+        public GetCartByIdQueryHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.Mapper = mapper;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetCartByIdQueryHandler(
+                this.ApplicationDbContext,
+                this.Logger,
+                this.Mapper);
         }
 
         /// <summary>
-        /// 
+        /// Gets the instance of <see cref="GetCartByIdQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public Task Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
+        private GetCartByIdQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetCartByIdQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetCartByIdQueryHandler> Logger { get; } = Mock.Of<ILogger<GetCartByIdQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetCartByIdQueryHandler.Handle(GetCartByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetCartByIdQueryHandler.Handle(GetCartByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }
