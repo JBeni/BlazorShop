@@ -2,11 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Commands.ClotheHandler;
-using BlazorShop.Infrastructure.Persistence;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
@@ -47,7 +42,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/> async result.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle()
         {
@@ -93,7 +88,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/> async result.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle_ThrowException()
         {

@@ -5,33 +5,74 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.SubscriberHandler
 {
     /// <summary>
-    /// Tests for <see cref="CreateSubscriberCommandHandler"/>.
+    /// Tests for <see cref="CreateSubscriberCommandHandler"/> class.
     /// </summary>
-    public class CreateSubscriberCommandHandlerTests
+    public class CreateSubscriberCommandHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<CreateSubscriberCommandHandlerTests> Logger { get; }
-        private IUserService UserService { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubscriberCommandHandlerTests"/> class.
         /// </summary>
-        public CreateSubscriberCommandHandlerTests(IApplicationDbContext dbContext, ILogger<CreateSubscriberCommandHandlerTests> logger, IUserService userService)
+        public CreateSubscriberCommandHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the <see cref="CreateSubscriberCommandHandler"/> instance to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(CreateSubscriberCommand request, CancellationToken cancellationToken)
+        private CreateSubscriberCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="Microsoft.Extensions.DependencyInjection.ServiceProvider"/> to use.
+        /// </summary>
+        private ServiceProvider ServiceProvider { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ApplicationDbContext"/> under test.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IUserStore{User}"/> under test.
+        /// </summary>
+        private IUserStore<User> UserStore { get; }
+
+        /// <summary>
+        /// Gets the <see cref="UserManager{User}"/> under test.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ILogger{CreateSubscriberCommandHandler}"/> under test.
+        /// </summary>
+        private ILogger<CreateSubscriberCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// A test for <see cref="CreateSubscriberCommandHandler.Handle(CreateSubscriberCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="CreateSubscriberCommandHandler.Handle(CreateSubscriberCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context.
+        /// </summary>
+        public void Dispose()
+        {
+            // this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

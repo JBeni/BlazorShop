@@ -30,7 +30,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the subscription session.
         /// </summary>
         /// <param name="req">The req data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("create-subscription")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
@@ -71,7 +71,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Cancel the stripe subscription.
         /// </summary>
         /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
         public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
         {
@@ -98,7 +98,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Updating the stripe subscription.
         /// </summary>
         /// <param name="req">The req data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("update-subscription")]
         public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
         {
@@ -147,7 +147,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the checkout operation.
         /// </summary>
         /// <param name="cartItems">The cart items.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("checkout")]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
@@ -196,7 +196,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Activate the background webhook.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
         [HttpPost("webhook")]
         public async Task<IActionResult> WebHook()
@@ -264,7 +264,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Complet the checkout.
         /// </summary>
         /// <param name="stripeEvent">The stripe event.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task CompleteAcceptCheckout(Event stripeEvent)
         {
             var sessionData = stripeEvent.Data.Object as Session;

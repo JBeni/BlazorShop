@@ -79,7 +79,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Delete a todo list.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public async Task DeleteList()
         {
             var list = this.TodoLists.First(l => l.Id == this.SelectedList.Id);
@@ -92,7 +92,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Initialize the component on load.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         protected override async Task OnInitializedAsync()
         {
             this.TodoLists = await this.TodoListService.GetTodoListsAsync();

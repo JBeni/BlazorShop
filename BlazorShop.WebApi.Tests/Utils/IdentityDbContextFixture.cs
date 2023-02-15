@@ -2,8 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Infrastructure.Persistence;
-
 namespace BlazorShop.WebApi.Tests.Utils
 {
     /// <summary>

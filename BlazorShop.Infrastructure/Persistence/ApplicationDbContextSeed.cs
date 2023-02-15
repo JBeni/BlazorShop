@@ -14,7 +14,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// </summary>
         /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
         /// <param name="seedData">The seed data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedRolesAsync(RoleManager<Role> roleManager, RolesSeedModel seedData)
         {
             var adminRole = new Role
@@ -55,7 +55,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
         /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
         /// <param name="seedData">The seed data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedAdminUserAsync(UserManager<User> userManager, RoleManager<Role> roleManager, AdminSeedModel seedData)
         {
             var admin = new User
@@ -83,7 +83,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// Adding the clothes data when the app is deploy the first time.
         /// </summary>
         /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedClothesDataAsync(ApplicationDbContext context)
         {
             if (!context.Clothes.Any())
@@ -216,7 +216,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// Adding the musics data when the app is deploy the first time.
         /// </summary>
         /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedMusicsDataAsync(ApplicationDbContext context)
         {
             if (!context.Musics.Any())
@@ -310,7 +310,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// Adding the subscription data when the app is deploy the first time.
         /// </summary>
         /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedSubscriptionsDataAsync(ApplicationDbContext context)
         {
             if (!context.Subscriptions.Any())
@@ -360,7 +360,7 @@ namespace BlazorShop.Infrastructure.Persistence
         /// Adding the todos data when the app is deploy the first time.
         /// </summary>
         /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task SeedTodosDataAsync(ApplicationDbContext context)
         {
             if (!context.TodoLists.Any())

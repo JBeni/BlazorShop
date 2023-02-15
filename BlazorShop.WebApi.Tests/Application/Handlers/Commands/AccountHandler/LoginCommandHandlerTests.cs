@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Commands.AccountHandler;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>

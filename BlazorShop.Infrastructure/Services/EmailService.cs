@@ -12,6 +12,11 @@ namespace BlazorShop.Infrastructure.Services
         /// <inheritdoc/>
         public async Task SendEmail(string? email, EmailSettings mail)
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentNullException("The email should not be null or empty.");
+            }
+
             using (var client = new SmtpClient())
             {
                 var credential = new NetworkCredential

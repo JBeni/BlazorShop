@@ -34,7 +34,7 @@ namespace BlazorShop.WebApi.Filters
         /// The method running every time a request its being made to the server.
         /// </summary>
         /// <param name="httpContext">The http context.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public async Task Invoke(HttpContext httpContext)
         {
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();

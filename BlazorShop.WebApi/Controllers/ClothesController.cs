@@ -22,7 +22,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the clothe.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPost("clothe")]
         public async Task<IActionResult> CreateClothe([FromBody] CreateClotheCommand command)
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the clothe.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpPut("clothe")]
         public async Task<IActionResult> UpdateClothe([FromBody] UpdateClotheCommand command)
@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the clothe.
         /// </summary>
         /// <param name="id">The id of the clothe.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("clothe/{id}")]
         public async Task<IActionResult> DeleteClothe(int id)
@@ -67,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the clothe.
         /// </summary>
         /// <param name="id">The id of the clothe.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothe/{id}")]
         public async Task<IActionResult> GetClothe(int id)
@@ -81,7 +81,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the clothes.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("clothes")]
         [AllowAnonymous]

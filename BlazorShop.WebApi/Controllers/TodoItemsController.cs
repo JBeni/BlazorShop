@@ -23,7 +23,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the todo item.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("item")]
         public async Task<IActionResult> CreateTodoItem([FromBody] CreateTodoItemCommand command)
         {
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the todo item.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("item")]
         public async Task<IActionResult> UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
         {
@@ -51,7 +51,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the todo item.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("item/{id}")]
         public async Task<IActionResult> DeleteTodoItem(int id)
         {
@@ -65,7 +65,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the todo item.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("item/{id}")]
         public async Task<IActionResult> GetTodoItemById(int id)
         {

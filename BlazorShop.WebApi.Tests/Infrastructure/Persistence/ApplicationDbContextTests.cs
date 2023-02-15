@@ -5,7 +5,7 @@
 namespace BlazorShop.WebApi.Tests.Infrastructure.Persistence
 {
     /// <summary>
-    /// Tests for <see cref="ApplicationDbContext"/>.
+    /// Tests for <see cref="ApplicationDbContext"/> class.
     /// </summary>
     public class ApplicationDbContextTests
     {

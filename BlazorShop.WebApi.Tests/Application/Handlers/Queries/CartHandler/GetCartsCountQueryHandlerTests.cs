@@ -5,31 +5,72 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.CartHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetCartsCountQueryHandler"/>.
+    /// Tests for <see cref="GetCartsCountQueryHandler"/> class.
     /// </summary>
-    public class GetCartsCountQueryHandlerTests
+    public class GetCartsCountQueryHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<GetCartsCountQueryHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCartsCountQueryHandlerTests"/> class.
         /// </summary>
-        public GetCartsCountQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetCartsCountQueryHandlerTests> logger)
+        public GetCartsCountQueryHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetCartsCountQueryHandler(
+                this.ApplicationDbContext,
+                this.Logger);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetCartsCountQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetCartsCountQuery request, CancellationToken cancellationToken)
+        private GetCartsCountQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetCartsCountQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetCartsCountQueryHandler> Logger { get; } = Mock.Of<ILogger<GetCartsCountQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetCartsCountQueryHandler.Handle(GetCartsCountQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetCartsCountQueryHandler.Handle(GetCartsCountQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

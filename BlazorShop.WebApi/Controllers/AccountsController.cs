@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Log in the user.
         /// </summary>
         /// <param name="login">The login command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromForm] LoginCommand login)
@@ -55,7 +55,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Register the user.
         /// </summary>
         /// <param name="register">The register command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterCommand register)
@@ -70,7 +70,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Changing the password.
         /// </summary>
         /// <param name="changePassword">The change password command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePasswordUser([FromBody] ChangePasswordCommand changePassword)
         {
@@ -84,7 +84,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Resetting the user password.
         /// </summary>
         /// <param name="resetPassword">The reset password command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPasswordUser([FromForm] ResetPasswordCommand resetPassword)

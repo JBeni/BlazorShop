@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Commands.AccountHandler;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
@@ -41,7 +37,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
         /// <summary>
         /// A test for <see cref="ResetPasswordCommandHandler.Handle(ResetPasswordCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        /// <returns>A <see cref="Task{RequestResponse}"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle()
         {
@@ -71,7 +67,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
         /// <summary>
         /// A test for <see cref="ResetPasswordCommandHandler.Handle(ResetPasswordCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
+        /// <returns>A <see cref="Task{RequestResponse}"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle_ThrowException()
         {

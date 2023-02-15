@@ -5,31 +5,74 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
 {
     /// <summary>
-    /// Tests for <see cref="DeleteTodoItemCommandHandler"/>.
+    /// Tests for <see cref="DeleteTodoItemCommandHandler"/> class.
     /// </summary>
-    public class DeleteTodoItemCommandHandlerTests
+    public class DeleteTodoItemCommandHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<DeleteTodoItemCommandHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteTodoItemCommandHandlerTests"/> class.
         /// </summary>
-        public DeleteTodoItemCommandHandlerTests(IApplicationDbContext dbContext, ILogger<DeleteTodoItemCommandHandlerTests> logger)
+        public DeleteTodoItemCommandHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// .
+        /// Gets the <see cref="DeleteTodoItemCommandHandler"/> instance to use.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <response =s></response =s>
-        public Task Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
+        private DeleteTodoItemCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="Microsoft.Extensions.DependencyInjection.ServiceProvider"/> to use.
+        /// </summary>
+        private ServiceProvider ServiceProvider { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ApplicationDbContext"/> under test.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IUserStore{User}"/> under test.
+        /// </summary>
+        private IUserStore<User> UserStore { get; }
+
+        /// <summary>
+        /// Gets the <see cref="UserManager{User}"/> under test.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ILogger{DeleteTodoItemCommandHandler}"/> under test.
+        /// </summary>
+        private ILogger<DeleteTodoItemCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// A test for <see cref="DeleteTodoItemCommandHandler.Handle(DeleteTodoItemCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="DeleteTodoItemCommandHandler.Handle(DeleteTodoItemCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context.
+        /// </summary>
+        public void Dispose()
+        {
+            // this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

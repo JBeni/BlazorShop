@@ -2,15 +2,10 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Queries.ClotheHandler;
-using BlazorShop.Infrastructure.Persistence;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.ClotheHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetClothesQueryHandler"/>.
+    /// Tests for <see cref="GetClothesQueryHandler"/> class.
     /// </summary>
     public class GetClothesQueryHandlerTests : IDisposable
     {

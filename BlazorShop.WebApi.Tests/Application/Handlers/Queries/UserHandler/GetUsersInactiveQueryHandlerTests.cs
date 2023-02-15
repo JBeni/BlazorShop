@@ -1,44 +1,81 @@
-﻿    // <copyright file="GetUsersInactiveQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="GetUsersInactiveQueryHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetUsersInactiveQueryHandler"/>.
+    /// Tests for <see cref="GetUsersInactiveQueryHandler"/> class.
     /// </summary>
-    public class GetUsersInactiveQueryHandlerTests
+    public class GetUsersInactiveQueryHandlerTests : IDisposable
     {
-        /// <summary>
-        /// Gets the <see cref="IUserService"/> instance to use.
-        /// </summary>
-        private readonly IUserService UserService;
-
-        /// <summary>
-        /// Gets the <see cref="ILogger<GetUsersInactiveQueryHandlerTests>"/> instance to use.
-        /// </summary>
-        private ILogger<GetUsersInactiveQueryHandlerTests> Logger;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUsersInactiveQueryHandlerTests"/> class.
         /// </summary>
-        /// <param name="userService">The <see cref="IUserService"/> instance to use.</param>
-        /// <param name="logger">The <see cref="ILogger<GetUsersInactiveQueryHandlerTests>"/> instance to use.</param>
-        public GetUsersInactiveQueryHandlerTests(IUserService userService, ILogger<GetUsersInactiveQueryHandlerTests> logger)
+        public GetUsersInactiveQueryHandlerTests()
         {
-            this.UserService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetUsersInactiveQueryHandler(
+                this.UserService,
+                this.Logger);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetUsersInactiveQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetUsersInactiveQuery request, CancellationToken cancellationToken)
+        private GetUsersInactiveQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IUserService"/> to use.
+        /// </summary>
+        private IUserService UserService { get; } = Mock.Of<IUserService>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetUsersInactiveQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetUsersInactiveQueryHandler> Logger { get; } = Mock.Of<ILogger<GetUsersInactiveQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetUsersInactiveQueryHandler.Handle(GetUsersInactiveQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetUsersInactiveQueryHandler.Handle(GetUsersInactiveQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

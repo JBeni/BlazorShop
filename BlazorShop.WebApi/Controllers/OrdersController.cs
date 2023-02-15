@@ -22,7 +22,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the order.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPost("order")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the order.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpPut("order")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the order.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
         [HttpDelete("order")]
         public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
@@ -68,7 +68,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the order.</param>
         /// <param name="userEmail">The email of the customer.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("order/{id}/{userEmail}")]
         public async Task<IActionResult> GetOrder(int id, string userEmail)
@@ -83,7 +83,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the orders.
         /// </summary>
         /// <param name="userEmail">The email of the customer.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
         [HttpGet("orders/{userEmail}")]
         public async Task<IActionResult> GetOrders(string userEmail)

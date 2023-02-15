@@ -5,31 +5,77 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.RoleHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetRolesQueryHandler"/>.
+    /// Tests for <see cref="GetRolesQueryHandler"/> class.
     /// </summary>
-    public class GetRolesQueryHandlerTests
+    public class GetRolesQueryHandlerTests : IDisposable
     {
-        private IRoleService RoleService { get; }
-        private ILogger<GetRolesQueryHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetRolesQueryHandlerTests"/> class.
         /// </summary>
-        public GetRolesQueryHandlerTests(IRoleService roleService, ILogger<GetRolesQueryHandlerTests> logger)
+        public GetRolesQueryHandlerTests()
         {
-            this.RoleService = roleService;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetRolesQueryHandler(
+                this.RoleService,
+                this.Logger);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetRolesQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetRolesQuery request, CancellationToken cancellationToken)
+        private GetRolesQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IRoleService"/> to use.
+        /// </summary>
+        private IRoleService RoleService { get; } = Mock.Of<IRoleService>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetRolesQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetRolesQueryHandler> Logger { get; } = Mock.Of<ILogger<GetRolesQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetRolesQueryHandler.Handle(GetRolesQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetRolesQueryHandler.Handle(GetRolesQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

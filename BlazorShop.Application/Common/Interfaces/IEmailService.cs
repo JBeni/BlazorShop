@@ -14,7 +14,7 @@ namespace BlazorShop.Application.Common.Interfaces
         /// </summary>
         /// <param name="email">The email address where to send the email.</param>
         /// <param name="mail">The mail body.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task SendEmail(string? email, EmailSettings mail);
     }
 }
