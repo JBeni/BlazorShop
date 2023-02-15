@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.WebApi.Controllers;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Controllers
 {
     /// <summary>
@@ -34,7 +30,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="TodoItemsController.CreateTodoItem(CreateTodoItemCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateTodoItem()
         {
@@ -44,7 +40,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="TodoItemsController.UpdateTodoItem(UpdateTodoItemCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateTodoItem()
         {
@@ -54,7 +50,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="TodoItemsController.DeleteTodoItem(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteTodoItem()
         {
@@ -64,7 +60,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="TodoItemsController.GetTodoItemById(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetTodoItemById()
         {

@@ -13,7 +13,7 @@ namespace BlazorShop.WebClient.Interfaces
         /// Cancel the membership.
         /// </summary>
         /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task CancelMembership(string stripeSubscriptionCreationId);
     }
 }

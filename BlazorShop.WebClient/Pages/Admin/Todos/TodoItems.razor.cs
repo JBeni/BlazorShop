@@ -43,7 +43,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Adding an item.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task AddItem()
         {
             var newItem = new TodoItemResponse { ListId = this.State.SelectedList.Id };
@@ -57,7 +57,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="args">The event.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task ToggleDone(TodoItemResponse item, ChangeEventArgs args)
         {
             if (args != null && args.Value is bool value)
@@ -71,7 +71,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// Edit an item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task EditItem(TodoItemResponse item)
         {
             this.SelectedItem = item;
@@ -86,7 +86,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Saving an item.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task SaveItem()
         {
             if (this.SelectedItem.Id == 0)
@@ -118,7 +118,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Save a list.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task SaveList()
         {
             await this.State.TodoListService.PutTodoListAsync(this.State.SelectedList);
@@ -130,7 +130,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Delete a list.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task DeleteList()
         {
             await this.State.TodoListService.DeleteTodoListAsync(this.State.SelectedList.Id);

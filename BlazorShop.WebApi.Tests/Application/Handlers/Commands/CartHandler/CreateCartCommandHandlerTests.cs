@@ -2,11 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Commands.CartHandler;
-using BlazorShop.Infrastructure.Persistence;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
 {
     /// <summary>
@@ -54,19 +49,21 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
         /// <summary>
         /// A test for <see cref="CreateCartCommandHandler.Handle(CreateCartCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CreateCartCommandHandler.Handle(CreateCartCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task Handle_ThrowException()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>

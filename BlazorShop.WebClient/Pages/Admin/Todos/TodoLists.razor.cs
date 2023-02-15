@@ -33,7 +33,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Creating a new list.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task NewList()
         {
             this.newTodoList = new TodoListResponse();
@@ -48,7 +48,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// <summary>
         /// Adding item to list.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task CreateNewList()
         {
             var list = await this.State.TodoListService.PostTodoListAsync(this.newTodoList);
@@ -72,7 +72,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         /// Select a list.
         /// </summary>
         /// <param name="list">The todo list.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         private async Task SelectList(TodoListResponse list)
         {
             if (this.IsSelected(list))

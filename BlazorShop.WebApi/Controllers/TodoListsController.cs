@@ -23,7 +23,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Create the todo list.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("list")]
         public async Task<IActionResult> CreateTodoList([FromBody] CreateTodoListCommand command)
         {
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Update the todo list.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("list")]
         public async Task<IActionResult> UpdateTodoList([FromBody] UpdateTodoListCommand command)
         {
@@ -51,7 +51,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Delete the todo list.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("list/{id}")]
         public async Task<IActionResult> DeleteTodoList(int id)
         {
@@ -65,7 +65,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the todo list.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("list/{id}")]
         public async Task<IActionResult> GetTodoListById(int id)
         {
@@ -78,7 +78,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Get the todo lists.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("lists")]
         public async Task<IActionResult> GetTodoLists()
         {

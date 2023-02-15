@@ -2,13 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Infrastructure.Persistence;
-using BlazorShop.Infrastructure.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Infrastructure
 {
     /// <summary>
@@ -75,7 +68,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="AccountService.ChangePasswordUserAsync(ChangePasswordCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task ChangePasswordUserAsync_ShouldThrowException_WhenUserNotFound()
         {
@@ -88,12 +81,13 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
             Func<Task> action = async () => await this.AccountService.ChangePasswordUserAsync(changePassword);
 
             // await Assert.ThrowsAsync<Exception>(action);
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="AccountService.ChangePasswordUserAsync(ChangePasswordCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task ChangePasswordUserAsync_ShouldThrowException_WhenOldPasswordIsNotValid()
         {
@@ -105,12 +99,13 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
             // Func<Task> action = async () => await this.AccountService.ChangePasswordUserAsync(changePassword);
 
             // await Assert.ThrowsAsync<Exception>(action);
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="AccountService.ChangePasswordUserAsync(ChangePasswordCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task ChangePasswordUserAsync_ShouldThrowException_WhenNewPasswordAndConfirmPasswordDoNotMatch()
         {
@@ -122,12 +117,13 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
             // Func<Task> action = async () => await this.AccountService.ChangePasswordUserAsync(changePassword);
 
             // await Assert.ThrowsAsync<Exception>(action);
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="AccountService.ChangePasswordUserAsync(ChangePasswordCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task ChangePasswordUserAsync_ShouldCallChangePasswordAsync_WhenAllConditionsAreMet()
         {
@@ -140,6 +136,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
 
             // Mock.Get(this.UserManager).Verify(x => x.ChangePasswordAsync(user, It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             // Assert.Equal(RequestResponse.Success(), result);
+            await Task.CompletedTask;
         }
     }
 }

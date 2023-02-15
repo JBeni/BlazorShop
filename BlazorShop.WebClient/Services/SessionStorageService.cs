@@ -34,7 +34,7 @@ namespace BlazorShop.WebClient.Services
         /// </summary>
         /// <typeparam name="T">The generic type of the object.</typeparam>
         /// <param name="key">The key to be added.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public async Task<T> GetItemAsync<T>(string key)
         {
             var json = await this.Js.InvokeAsync<string>(
@@ -52,7 +52,7 @@ namespace BlazorShop.WebClient.Services
         /// <typeparam name="T">The generic type of the object.</typeparam>
         /// <param name="key">The key to be added.</param>
         /// <param name="item">The item of type T.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public async Task SetItemAsync<T>(string key, T item)
         {
             await this.Js.InvokeVoidAsync(

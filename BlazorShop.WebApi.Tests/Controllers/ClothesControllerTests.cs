@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.WebApi.Controllers;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Controllers
 {
     /// <summary>
@@ -34,7 +30,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="ClothesController.CreateClothe(CreateClotheCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateClothe()
         {
@@ -44,7 +40,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="ClothesController.UpdateClothe(UpdateClotheCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateClothe()
         {
@@ -54,7 +50,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="ClothesController.DeleteClothe(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteClothe()
         {
@@ -64,7 +60,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="ClothesController.GetClothe(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetClothe()
         {
@@ -74,7 +70,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="ClothesController.GetClothes()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetClothes()
         {

@@ -5,33 +5,73 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.SubscriberHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetSubscribersQueryHandler"/>.
+    /// Tests for <see cref="GetSubscribersQueryHandler"/> class.
     /// </summary>
-    public class GetSubscribersQueryHandlerTests
+    public class GetSubscribersQueryHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<GetSubscribersQueryHandlerTests> Logger { get; }
-        private IMapper Mapper { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSubscribersQueryHandlerTests"/> class.
         /// </summary>
-        public GetSubscribersQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetSubscribersQueryHandlerTests> logger, IMapper mapper)
+        public GetSubscribersQueryHandlerTests()
         {
-            this.DbContext = dbContext; 
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.Mapper = mapper;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetSubscribersQueryHandler(
+                this.ApplicationDbContext,
+                this.Logger,
+                this.Mapper);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetSubscribersQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetSubscribersQuery request, CancellationToken cancellationToken)
+        private GetSubscribersQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetSubscribersQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetSubscribersQueryHandler> Logger { get; } = Mock.Of<ILogger<GetSubscribersQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetSubscribersQueryHandler.Handle(GetSubscribersQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetSubscribersQueryHandler.Handle(GetSubscribersQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Infrastructure.Services;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Infrastructure
 {
     /// <summary>
@@ -47,7 +43,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.CheckUserRolesAsync(User)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CheckUserRolesAsync()
         {
@@ -57,7 +53,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetDefaultRole()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetDefaultRole()
         {
@@ -67,7 +63,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetUserRole()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUserRole()
         {
@@ -77,7 +73,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetAdminRole()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetAdminRole()
         {
@@ -87,7 +83,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.SetUserRoleAsync(User, string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task SetUserRoleAsync()
         {
@@ -97,7 +93,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetRoles()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRoles()
         {
@@ -107,7 +103,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetRolesForAdmin()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRolesForAdmin()
         {
@@ -117,7 +113,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetRoleById(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRoleById()
         {
@@ -127,7 +123,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.GetRoleByNormalizedName(string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRoleByNormalizedName()
         {
@@ -137,7 +133,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.CreateRoleAsync(CreateRoleCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateRoleAsync()
         {
@@ -147,7 +143,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.UpdateRoleAsync(UpdateRoleCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateRoleAsync()
         {
@@ -157,7 +153,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.DeleteRoleAsync(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteRoleAsync()
         {
@@ -167,7 +163,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.FindRoleByIdAsync(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task FindRoleByIdAsync()
         {
@@ -177,7 +173,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="RoleService.FindRoleByNameAsync(string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task FindRoleByNameAsync()
         {

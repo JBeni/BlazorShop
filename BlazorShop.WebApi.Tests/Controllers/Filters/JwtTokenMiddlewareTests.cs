@@ -2,8 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.WebApi.Filters;
-
 namespace BlazorShop.WebApi.Tests.Controllers.Filters
 {
     /// <summary>

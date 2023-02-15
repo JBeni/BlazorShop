@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.WebApi.Controllers;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Controllers
 {
     /// <summary>
@@ -34,7 +30,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="OrdersController.CreateOrder(CreateOrderCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateOrder()
         {
@@ -44,7 +40,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="OrdersController.UpdateOrder(UpdateOrderCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateOrder()
         {
@@ -54,7 +50,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="OrdersController.DeleteOrder(DeleteOrderCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteOrder()
         {
@@ -64,7 +60,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="OrdersController.GetOrder(int, string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetOrder()
         {
@@ -74,7 +70,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="OrdersController.GetOrders(string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetOrders()
         {

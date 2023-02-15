@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.WebApi.Controllers;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Controllers
 {
     /// <summary>
@@ -34,7 +30,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.CreateRole(CreateRoleCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateRole()
         {
@@ -44,7 +40,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.UpdateRole(UpdateRoleCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateRole()
         {
@@ -54,7 +50,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.DeleteRole(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteRole()
         {
@@ -64,7 +60,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.GetRoleById(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRoleById()
         {
@@ -74,7 +70,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.GetRoles()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRoles()
         {
@@ -84,7 +80,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="RolesController.GetRolesForAdmin()"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetRolesForAdmin()
         {

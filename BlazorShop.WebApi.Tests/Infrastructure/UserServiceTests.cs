@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Infrastructure.Services;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Infrastructure
 {
     /// <summary>
@@ -47,7 +43,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.CreateUserAsync(CreateUserCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task CreateUserAsync()
         {
@@ -57,7 +53,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.DeleteUserAsync(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteUserAsync()
         {
@@ -67,7 +63,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.FindUserByEmailAsync(string)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task FindUserByEmailAsync()
         {
@@ -77,7 +73,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.FindUserByIdAsync(int)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task FindUserByIdAsync()
         {
@@ -87,7 +83,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.GetUserById(GetUserByIdQuery)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUserById()
         {
@@ -97,7 +93,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.GetUserByEmail(GetUserByEmailQuery)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUserByEmail()
         {
@@ -107,7 +103,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.GetUserRoleAsync(User)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUserRoleAsync()
         {
@@ -117,7 +113,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.UpdateUserAsync(UpdateUserCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateUserAsync()
         {
@@ -127,7 +123,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.ActivateUserAsync(ActivateUserCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task ActivateUserAsync()
         {
@@ -137,7 +133,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.UpdateUserEmailAsync(UpdateUserEmailCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateUserEmailAsync()
         {
@@ -147,7 +143,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.GetUsers(GetUsersQuery)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUsers()
         {
@@ -157,7 +153,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.GetUsersInactive(GetUsersInactiveQuery)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task GetUsersInactive()
         {
@@ -167,7 +163,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="UserService.AssignUserToRoleAsync(AssignUserToRoleCommand)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task AssignUserToRoleAsync()
         {

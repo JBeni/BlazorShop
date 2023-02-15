@@ -2,10 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Infrastructure.Services;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Infrastructure
 {
     /// <summary>
@@ -28,7 +24,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task SendEmail_Success()
         {
@@ -46,7 +42,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task SendEmail_NullRecipient_ThrowsArgumentNullException()
         {
@@ -55,6 +51,8 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             Assert.ThrowsAsync<ArgumentException>(async () => await this.EmailService.SendEmail(null, mailSettings));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
+            await Task.CompletedTask;
         }
     }
 }

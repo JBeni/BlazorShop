@@ -5,33 +5,73 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.SubscriptionHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetSubscriptionByIdQueryHandler"/>.
+    /// Tests for <see cref="GetSubscriptionByIdQueryHandler"/> class.
     /// </summary>
-    public class GetSubscriptionByIdQueryHandlerTests
+    public class GetSubscriptionByIdQueryHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<GetSubscriptionByIdQueryHandlerTests> Logger { get; }
-        private IMapper Mapper { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSubscriptionByIdQueryHandlerTests"/> class.
         /// </summary>
-        public GetSubscriptionByIdQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetSubscriptionByIdQueryHandlerTests> logger, IMapper mapper)
+        public GetSubscriptionByIdQueryHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.Mapper = mapper;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetSubscriptionByIdQueryHandler(
+                this.ApplicationDbContext,
+                this.Logger,
+                this.Mapper);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetSubscriptionByIdQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetSubscriptionByIdQuery request, CancellationToken cancellationToken)
+        private GetSubscriptionByIdQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetSubscriptionByIdQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetSubscriptionByIdQueryHandler> Logger { get; } = Mock.Of<ILogger<GetSubscriptionByIdQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetSubscriptionByIdQueryHandler.Handle(GetSubscriptionByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetSubscriptionByIdQueryHandler.Handle(GetSubscriptionByIdQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

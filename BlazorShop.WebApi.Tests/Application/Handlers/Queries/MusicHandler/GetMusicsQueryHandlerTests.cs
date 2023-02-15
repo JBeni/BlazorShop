@@ -5,33 +5,73 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.MusicHandler
 {
     /// <summary>
-    /// Tests for <see cref="GetMusicsQueryHandler"/>.
+    /// Tests for <see cref="GetMusicsQueryHandler"/> class.
     /// </summary>
-    public class GetMusicsQueryHandlerTests
+    public class GetMusicsQueryHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<GetMusicsQueryHandlerTests> Logger { get; }
-        private IMapper Mapper { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMusicsQueryHandlerTests"/> class.
         /// </summary>
-        public GetMusicsQueryHandlerTests(IApplicationDbContext dbContext, ILogger<GetMusicsQueryHandlerTests> logger, IMapper mapper)
+        public GetMusicsQueryHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.Mapper = mapper;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            this.ApplicationDbContext = new ApplicationDbContext(options);
+
+            this.SUT = new GetMusicsQueryHandler(
+                this.ApplicationDbContext,
+                this.Logger,
+                this.Mapper);
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the instance of <see cref="GetMusicsQueryHandler"/> to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(GetMusicsQuery request, CancellationToken cancellationToken)
+        private GetMusicsQueryHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="ApplicationDbContext"/> to use.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; } = Mock.Of<ApplicationDbContext>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="ILogger{GetMusicsQueryHandler}"/> to use.
+        /// </summary>
+        private ILogger<GetMusicsQueryHandler> Logger { get; } = Mock.Of<ILogger<GetMusicsQueryHandler>>();
+
+        /// <summary>
+        /// Gets the instance of  <see cref="IMapper"/> to use.
+        /// </summary>
+        private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// A test for <see cref="GetMusicsQueryHandler.Handle(GetMusicsQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="GetMusicsQueryHandler.Handle(GetMusicsQuery, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context and reset the database.
+        /// </summary>
+        public void Dispose()
+        {
+            this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

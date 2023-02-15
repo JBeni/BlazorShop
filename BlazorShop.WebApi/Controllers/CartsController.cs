@@ -23,7 +23,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Creating the cart.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("cart")]
         public async Task<IActionResult> CreateCart([FromBody] CreateCartCommand command)
         {
@@ -37,7 +37,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Updating the cart.
         /// </summary>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("cart")]
         public async Task<IActionResult> UpdateCart([FromBody] UpdateCartCommand command)
         {
@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the cart.</param>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("cart/{id}/{userId}")]
         public async Task<IActionResult> DeleteCart(int id, int userId)
         {
@@ -66,7 +66,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Deleting all the user carts.
         /// </summary>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpDelete("carts/{userId}")]
         public async Task<IActionResult> DeleteAllCarts(int userId)
         {
@@ -81,7 +81,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the cart.</param>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("cart/{id}/{userId}")]
         public async Task<IActionResult> GetCart(int id, int userId)
         {
@@ -95,7 +95,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the user carts.
         /// </summary>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("carts/{userId}")]
         public async Task<IActionResult> GetCarts(int userId)
         {
@@ -109,7 +109,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the carts number.
         /// </summary>
         /// <param name="userId">The id of the user.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpGet("count/{userId}")]
         public async Task<IActionResult> GetCartsCount(int userId)
         {

@@ -5,31 +5,74 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.OrderHandler
 {
     /// <summary>
-    /// Tests for <see cref="DeleteOrderCommandHandler"/>.
+    /// Tests for <see cref="DeleteOrderCommandHandler"/> class.
     /// </summary>
-    public class DeleteOrderCommandHandlerTests
+    public class DeleteOrderCommandHandlerTests : IDisposable
     {
-        private IApplicationDbContext DbContext { get; }
-        private ILogger<DeleteOrderCommandHandlerTests> Logger { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteOrderCommandHandlerTests"/> class.
         /// </summary>
-        public DeleteOrderCommandHandlerTests(IApplicationDbContext dbContext, ILogger<DeleteOrderCommandHandlerTests> logger)
+        public DeleteOrderCommandHandlerTests()
         {
-            this.DbContext = dbContext;
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// An implementation of the handler for <see cref="DeleteSubscriberCommand"/>.
+        /// Gets the <see cref="DeleteOrderCommandHandler"/> instance to use.
         /// </summary>
-        /// <param name="request">The request object to handle.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task{RequestResponse}"/>.</returns>
-        public Task Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
+        private DeleteOrderCommandHandler SUT { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="Microsoft.Extensions.DependencyInjection.ServiceProvider"/> to use.
+        /// </summary>
+        private ServiceProvider ServiceProvider { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ApplicationDbContext"/> under test.
+        /// </summary>
+        private ApplicationDbContext ApplicationDbContext { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IUserStore{User}"/> under test.
+        /// </summary>
+        private IUserStore<User> UserStore { get; }
+
+        /// <summary>
+        /// Gets the <see cref="UserManager{User}"/> under test.
+        /// </summary>
+        private UserManager<User> UserManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="ILogger{DeleteOrderCommandHandler}"/> under test.
+        /// </summary>
+        private ILogger<DeleteOrderCommandHandler> Logger { get; }
+
+        /// <summary>
+        /// A test for <see cref="DeleteOrderCommandHandler.Handle(DeleteOrderCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle()
         {
-            throw new Exception();
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="DeleteOrderCommandHandler.Handle(DeleteOrderCommand, CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task Handle_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Ensure garbage collector for db context.
+        /// </summary>
+        public void Dispose()
+        {
+            // this.ApplicationDbContext.Database.EnsureDeleted();
+            GC.SuppressFinalize(this);
         }
     }
 }

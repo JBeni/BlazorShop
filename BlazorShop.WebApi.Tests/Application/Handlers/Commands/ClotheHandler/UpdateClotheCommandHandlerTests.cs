@@ -2,11 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Handlers.Commands.ClotheHandler;
-using BlazorShop.Infrastructure.Persistence;
-using Moq;
-using Xunit;
-
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
