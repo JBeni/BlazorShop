@@ -5,7 +5,7 @@
 namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.RoleHandler
 {
     /// <summary>
-    /// Tests for <see cref="CreateRoleCommandHandler"/>.
+    /// Tests for <see cref="BlazorShop.Application.Handlers.Commands.RoleHandler.CreateRoleCommandHandler"/>.
     /// </summary>
     public class CreateRoleCommandHandlerTests
     {

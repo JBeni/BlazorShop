@@ -28,7 +28,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task SendEmail_Success()
         {
@@ -46,7 +46,7 @@ namespace BlazorShop.WebApi.Tests.Infrastructure
         /// <summary>
         /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task"/> operation.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task SendEmail_NullRecipient_ThrowsArgumentNullException()
         {

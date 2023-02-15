@@ -47,7 +47,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
         /// <summary>
         /// A test for <see cref="CreateClotheCommandHandler.Handle(CreateClotheCommand, CancellationToken)"/> method.
         /// </summary>
-        /// <returns>A <see cref="Task{RequestResponse}"/> async result.</returns>
+        /// <returns>A <see cref="Task"/> async result.</returns>
         [Fact]
         public async Task Handle()
         {

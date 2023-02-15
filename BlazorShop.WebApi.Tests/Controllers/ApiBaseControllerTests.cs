@@ -20,7 +20,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         }
 
         /// <summary>
-        /// 
+        /// A test for <see cref="ApiBaseController(IMediator)"/> method.
         /// </summary>
         [Fact]
         public void Mediator_Property_Should_Return_IMediator_Instance()

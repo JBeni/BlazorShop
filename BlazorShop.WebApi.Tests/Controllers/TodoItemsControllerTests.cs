@@ -2,10 +2,14 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.WebApi.Controllers;
+using Moq;
+using Xunit;
+
 namespace BlazorShop.WebApi.Tests.Controllers
 {
     /// <summary>
-    /// Tests for <see cref="TodoItemsController"/>.
+    /// Tests for <see cref="TodoItemsController"/> class.
     /// </summary>
     public class TodoItemsControllerTests
     {
@@ -14,6 +18,57 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// </summary>
         public TodoItemsControllerTests()
         {
+            this.TodoItemsController = new TodoItemsController(this.Mediator);
+        }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="TodoItemsController"/> to use.
+        /// </summary>
+        private TodoItemsController TodoItemsController { get; }
+
+        /// <summary>
+        /// Gets the instance of the <see cref="IMediator"/> to use.
+        /// </summary>
+        private IMediator Mediator { get; } = Mock.Of<IMediator>();
+
+        /// <summary>
+        /// A test for <see cref="TodoItemsController.CreateTodoItem(CreateTodoItemCommand)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CreateTodoItem()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="TodoItemsController.UpdateTodoItem(UpdateTodoItemCommand)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task UpdateTodoItem()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="TodoItemsController.DeleteTodoItem(int)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task DeleteTodoItem()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="TodoItemsController.GetTodoItemById(int)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task GetTodoItemById()
+        {
+            await Task.CompletedTask;
         }
     }
 }

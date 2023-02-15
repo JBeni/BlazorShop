@@ -2,7 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Common.Models;
 using BlazorShop.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -36,7 +35,7 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="CartsController.CreateCart(CreateCartCommand)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task CreateCart()
         {
@@ -68,55 +67,61 @@ namespace BlazorShop.WebApi.Tests.Controllers
         /// <summary>
         /// A test for <see cref="CartsController.DeleteAllCarts(int)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteAllCarts()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CartsController.DeleteCart(int, int)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task DeleteCart()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CartsController.GetCart(int, int)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task GetCart()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CartsController.GetCarts(int)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task GetCarts()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CartsController.GetCartsCount(int)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task GetCartsCount()
         {
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// A test for <see cref="CartsController.UpdateCart(UpdateCartCommand)"/>.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [Fact]
         public async Task UpdateCart()
         {
+            await Task.CompletedTask;
         }
     }
 }

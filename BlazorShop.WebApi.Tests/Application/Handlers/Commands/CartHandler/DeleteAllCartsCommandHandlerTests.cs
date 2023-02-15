@@ -10,6 +10,7 @@ namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.CartHandler
     public class DeleteAllCartsCommandHandlerTests
     {
         private IApplicationDbContext DbContext { get; }
+
         private ILogger<DeleteAllCartsCommandHandlerTests> Logger { get; }
 
         /// <summary>

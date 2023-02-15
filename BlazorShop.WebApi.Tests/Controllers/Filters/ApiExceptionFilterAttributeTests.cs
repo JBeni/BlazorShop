@@ -2,10 +2,12 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.WebApi.Filters;
+
 namespace BlazorShop.WebApi.Tests.Controllers.Filters
 {
     /// <summary>
-    /// Tests for <see cref="ApiExceptionFilterAttribute"/>.
+    /// Tests for <see cref="ApiExceptionFilterAttribute"/> class.
     /// </summary>
     public class ApiExceptionFilterAttributeTests
     {
