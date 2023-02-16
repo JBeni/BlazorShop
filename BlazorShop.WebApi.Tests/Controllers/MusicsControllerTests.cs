@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Controllers
+namespace BlazorShop.Tests.Controllers
 {
     /// <summary>
     /// Tests for <see cref="MusicsController"/> class.

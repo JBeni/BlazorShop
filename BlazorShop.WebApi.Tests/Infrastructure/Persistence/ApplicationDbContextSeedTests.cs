@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Infrastructure.Persistence
+namespace BlazorShop.Tests.Infrastructure.Persistence
 {
     /// <summary>
     /// Tests for <see cref="ApplicationDbContextSeed"/> class.

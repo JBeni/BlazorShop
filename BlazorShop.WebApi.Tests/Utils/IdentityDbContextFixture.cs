@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Utils
+namespace BlazorShop.Tests.Utils
 {
     /// <summary>
     /// A fixture class to help setup IdentityDbContext.

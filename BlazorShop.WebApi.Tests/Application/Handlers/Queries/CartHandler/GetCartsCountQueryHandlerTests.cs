@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.CartHandler
+namespace BlazorShop.Tests.Application.Handlers.Queries.CartHandler
 {
     /// <summary>
     /// Tests for <see cref="GetCartsCountQueryHandler"/> class.

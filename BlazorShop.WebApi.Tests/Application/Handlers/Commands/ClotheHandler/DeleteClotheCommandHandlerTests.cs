@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ClotheHandler
+namespace BlazorShop.Tests.Application.Handlers.Commands.ClotheHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteClotheCommandHandler"/> class.

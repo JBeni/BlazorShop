@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.TodoListHandler
+namespace BlazorShop.Tests.Application.Handlers.Queries.TodoListHandler
 {
     /// <summary>
     /// Tests for <see cref="GetTodoListByIdQueryHandler"/> class.

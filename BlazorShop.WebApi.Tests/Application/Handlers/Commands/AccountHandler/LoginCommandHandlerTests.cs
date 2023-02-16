@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.AccountHandler
+namespace BlazorShop.Tests.Application.Handlers.Commands.AccountHandler
 {
     /// <summary>
     /// Tests for <see cref="LoginCommandHandler"/> class.

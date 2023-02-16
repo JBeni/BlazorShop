@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.MusicHandler
+namespace BlazorShop.Tests.Application.Handlers.Commands.MusicHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteMusicCommandHandler"/> class.

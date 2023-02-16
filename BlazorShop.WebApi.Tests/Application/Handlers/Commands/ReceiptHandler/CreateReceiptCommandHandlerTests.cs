@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.ReceiptHandler
+namespace BlazorShop.Tests.Application.Handlers.Commands.ReceiptHandler
 {
     /// <summary>
     /// Tests for <see cref="CreateReceiptCommandHandler"/> class.

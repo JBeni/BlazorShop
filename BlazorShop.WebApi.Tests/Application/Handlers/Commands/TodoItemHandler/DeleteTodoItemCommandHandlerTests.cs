@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoItemHandler
+namespace BlazorShop.Tests.Application.Handlers.Commands.TodoItemHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteTodoItemCommandHandler"/> class.

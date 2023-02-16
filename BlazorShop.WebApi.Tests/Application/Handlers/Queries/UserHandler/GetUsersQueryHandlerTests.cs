@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.UserHandler
+namespace BlazorShop.Tests.Application.Handlers.Queries.UserHandler
 {
     /// <summary>
     /// Tests for <see cref="GetUsersQueryHandler"/> class.

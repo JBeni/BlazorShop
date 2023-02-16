@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Controllers.Filters
+namespace BlazorShop.Tests.Controllers.Filters
 {
     /// <summary>
     /// Tests for <see cref="ApiExceptionFilterAttribute"/> class.
