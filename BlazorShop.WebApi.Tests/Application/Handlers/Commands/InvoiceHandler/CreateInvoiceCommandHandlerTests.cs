@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.InvoiceHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.InvoiceHandler
 {
     /// <summary>
     /// Tests for <see cref="CreateInvoiceCommandHandler"/> class.

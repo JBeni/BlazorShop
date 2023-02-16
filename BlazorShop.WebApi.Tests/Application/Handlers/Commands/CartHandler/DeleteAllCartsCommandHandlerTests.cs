@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.CartHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.CartHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteAllCartsCommandHandler"/> class.

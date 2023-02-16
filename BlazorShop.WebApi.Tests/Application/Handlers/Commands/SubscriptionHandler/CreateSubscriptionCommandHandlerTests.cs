@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.SubscriptionHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.SubscriptionHandler
 {
     /// <summary>
     /// Tests for <see cref="CreateSubscriptionCommandHandler"/> class.

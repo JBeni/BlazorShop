@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.ReceiptHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.ReceiptHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteReceiptCommandHandler"/> class.

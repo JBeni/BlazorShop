@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Controllers.Filters
+namespace BlazorShop.UnitTests.Controllers.Filters
 {
     /// <summary>
     /// Tests for <see cref="JwtTokenMiddleware"/> class.

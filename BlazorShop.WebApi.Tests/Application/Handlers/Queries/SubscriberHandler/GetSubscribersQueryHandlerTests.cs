@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Queries.SubscriberHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.SubscriberHandler
 {
     /// <summary>
     /// Tests for <see cref="GetSubscribersQueryHandler"/> class.

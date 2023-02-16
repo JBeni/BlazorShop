@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.RoleHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.RoleHandler
 {
     /// <summary>
     /// Tests for <see cref="CreateRoleCommandHandler"/> class.

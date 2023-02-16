@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Infrastructure.Persistence
+namespace BlazorShop.UnitTests.Infrastructure.Persistence
 {
     /// <summary>
     /// Tests for <see cref="ApplicationDbContext"/> class.

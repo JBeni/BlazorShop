@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Queries.OrderHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.OrderHandler
 {
     /// <summary>
     /// Tests for <see cref="GetOrdersQueryHandler"/> class.

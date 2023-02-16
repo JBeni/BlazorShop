@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Queries.TodoItemHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.TodoItemHandler
 {
     /// <summary>
     /// Tests for <see cref="GetTodoItemByIdQueryHandler"/> class.

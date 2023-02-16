@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.Tests.Application.Handlers.Commands.MusicHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.MusicHandler
 {
     /// <summary>
     /// Tests for <see cref="UpdateMusicCommandHandler"/> class.

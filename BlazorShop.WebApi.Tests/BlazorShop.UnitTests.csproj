@@ -4,8 +4,8 @@
 	<TargetFramework>net6.0</TargetFramework>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
-	<RootNamespace>BlazorShop.WebApi.Tests</RootNamespace>
-	<AssemblyName>BlazorShop.WebApi.Tests</AssemblyName>
+	<RootNamespace>BlazorShop.UnitTests</RootNamespace>
+	<AssemblyName>BlazorShop.UnitTests</AssemblyName>
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorShop.WebApi\BlazorShop.WebApi.csproj" />
+    <ProjectReference Include="..\BlazorShop.WorkerService\BlazorShop.WorkerService.csproj" />
   </ItemGroup>
 
 </Project>
