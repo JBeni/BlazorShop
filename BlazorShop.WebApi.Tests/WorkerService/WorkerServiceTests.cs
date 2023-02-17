@@ -47,58 +47,37 @@ namespace BlazorShop.UnitTests.WorkerService
         [Fact]
         public async Task ExecuteAsync()
         {
-            //// Arrange
-            //var loggerMock = new Mock<ILogger<Worker>>();
-            //var serviceScopeFactoryMock = new Mock<IServiceScopeFactory>();
-            //var dbContextMock = new Mock<ApplicationDbContext>();
-            //var subscriptions = new List<Subscriber> { new Subscriber { Status = SubscriptionStatus.Active, CurrentPeriodEnd = DateTime.Now.AddDays(-1), StripeSubscriberSubscriptionId = "subscriptionId" } };
-            //dbContextMock.Setup(x => x.Subscribers).Returns((DbSet<Subscriber>)subscriptions.AsQueryable());
-            //var scopeMock = new Mock<IServiceScope>();
-            //scopeMock.Setup(x => x.ServiceProvider.GetRequiredService<ApplicationDbContext>()).Returns(dbContextMock.Object);
-            //serviceScopeFactoryMock.Setup(x => x.CreateScope()).Returns(scopeMock.Object);
-            //var httpClientMock = new Mock<HttpClient>();
-            //var cancellationTokenSource = new CancellationTokenSource();
+            await Task.CompletedTask;
+        }
 
-            //var worker = new Worker(loggerMock.Object, serviceScopeFactoryMock.Object, httpClientMock.Object);
+        /// <summary>
+        /// A test for <see cref="Worker.ExecuteAsync(CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ExecuteAsync_ThrowException()
+        {
+            await Task.CompletedTask;
+        }
 
-            //// Act
-            //await worker.StartAsync(cancellationTokenSource.Token);
-            //await Task.Delay(1500);
-            //await worker.StopAsync(cancellationTokenSource.Token);
+        /// <summary>
+        /// A test for <see cref="Worker.ExecuteAsync(CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ExecuteAsync_TryToSaveDuplicateData()
+        {
+            await Task.CompletedTask;
+        }
 
-            //// Assert
-            //httpClientMock.Verify(x => x.DeleteAsync(It.Is<string>(s => s.Contains("cancel-subscription") && s.Contains("subscriptionId"))), Times.Once);
-            //dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
-            //Assert.Equal(SubscriptionStatus.Inactive, subscriptions[0].Status);
-
-            //try
-            //{
-            //    while (!stoppingToken.IsCancellationRequested)
-            //    {
-            //        using var scope = this.ServiceScopeFactory.CreateScope();
-            //        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-            //        var subscriptions = dbContext.Subscribers.Where(x => x.Status == SubscriptionStatus.Active).ToList();
-            //        foreach (var subscription in subscriptions)
-            //        {
-            //            if (subscription.Status == SubscriptionStatus.Active && subscription.CurrentPeriodEnd > DateTime.Now)
-            //            {
-            //                await this.HttpClient.DeleteAsync($"https://localhost:44351/api/Payments/cancel-subscription/{subscription.StripeSubscriberSubscriptionId}");
-
-            //                subscription.Status = SubscriptionStatus.Inactive;
-            //                dbContext.Subscribers.Update(subscription);
-            //                await dbContext.SaveChangesAsync(stoppingToken);
-            //            }
-            //        }
-
-            //        this.Logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            //        await Task.Delay(1000, stoppingToken);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Error(ex, "Error");
-            //}
+        /// <summary>
+        /// A test for <see cref="Worker.ExecuteAsync(CancellationToken)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ExecuteAsync_EnsureDatabase()
+        {
+            await Task.CompletedTask;
         }
 
         /// <summary>

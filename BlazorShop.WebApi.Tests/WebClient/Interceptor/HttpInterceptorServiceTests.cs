@@ -27,7 +27,7 @@ namespace BlazorShop.UnitTests.WebClient.Interceptor
         /// <summary>
         /// Gets the instance of the <see cref="HttpClientInterceptor"/> to use.
         /// </summary>
-        private HttpClientInterceptor Interceptor { get; } = Mock.Of<HttpClientInterceptor>();
+        private HttpClientInterceptor Interceptor { get; }
 
         /// <summary>
         /// Gets the instance of the <see cref="NavigationManager"/> to use.

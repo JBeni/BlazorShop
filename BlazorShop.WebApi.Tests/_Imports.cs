@@ -5,6 +5,7 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Security.Claims;
+global using System.Text.Json;
 global using System.Threading;
 global using System.Threading.Tasks;
 
@@ -86,8 +87,8 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.JSInterop;
 global using Moq;
+global using MudBlazor;
 global using Toolbelt.Blazor;
 global using Xunit;
-global using System.Text.Json;
-global using MudBlazor;
