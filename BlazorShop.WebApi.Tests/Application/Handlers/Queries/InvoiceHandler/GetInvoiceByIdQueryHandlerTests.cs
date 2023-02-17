@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.InvoiceHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.InvoiceHandler
 {
     /// <summary>
     /// Tests for <see cref="GetInvoiceByIdQueryHandler"/> class.

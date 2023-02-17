@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.TodoListHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.TodoListHandler
 {
     /// <summary>
     /// Tests for <see cref="DeleteTodoListCommandHandler"/> class.

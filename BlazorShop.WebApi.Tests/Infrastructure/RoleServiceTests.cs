@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Infrastructure
+namespace BlazorShop.UnitTests.Infrastructure
 {
     /// <summary>
     /// Tests for <see cref="RoleService"/> class.

@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.MusicHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.MusicHandler
 {
     /// <summary>
     /// Tests for <see cref="GetMusicByIdQueryHandler"/> class.

@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Controllers
+namespace BlazorShop.UnitTests.Controllers
 {
     /// <summary>
     /// Tests for <see cref="ClothesController"/> class.

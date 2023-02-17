@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WebApi", "Blazor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WorkerService", "BlazorShop.WorkerService\BlazorShop.WorkerService.csproj", "{466B239B-8ECD-4C6C-86E8-1DC8660DDACA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.WebApi.Tests", "BlazorShop.WebApi.Tests\BlazorShop.WebApi.Tests.csproj", "{59F48558-9268-474E-821A-7815CC087232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.UnitTests", "BlazorShop.WebApi.Tests\BlazorShop.UnitTests.csproj", "{59F48558-9268-474E-821A-7815CC087232}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Commands.UserHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Commands.UserHandler
 {
     /// <summary>
     /// Tests for <see cref="ActivateUserCommandHandler"/> class.
