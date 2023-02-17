@@ -2,7 +2,7 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-namespace BlazorShop.WebApi.Tests.Application.Handlers.Queries.RoleHandler
+namespace BlazorShop.UnitTests.Application.Handlers.Queries.RoleHandler
 {
     /// <summary>
     /// Tests for <see cref="GetRolesForAdminQueryHandler"/> class.

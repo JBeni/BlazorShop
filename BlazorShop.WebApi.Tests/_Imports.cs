@@ -4,10 +4,14 @@
 
 global using System;
 global using System.Collections.Generic;
+global using System.Security.Claims;
+global using System.Text.Json;
 global using System.Threading;
 global using System.Threading.Tasks;
 
 global using AutoMapper;
+global using Blazored.LocalStorage;
+global using Blazored.Toast.Services;
 global using BlazorShop.Application.Commands.AccountCommand;
 global using BlazorShop.Application.Commands.CartCommand;
 global using BlazorShop.Application.Commands.ClotheCommand;
@@ -68,7 +72,14 @@ global using BlazorShop.Infrastructure.Persistence;
 global using BlazorShop.Infrastructure.Services;
 global using BlazorShop.WebApi.Controllers;
 global using BlazorShop.WebApi.Filters;
+global using BlazorShop.WebClient.Auth;
+global using BlazorShop.WebClient.AuthPolicies;
+global using BlazorShop.WebClient.Interceptor;
+global using BlazorShop.WorkerService;
 global using MediatR;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Mvc;
@@ -76,5 +87,8 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.JSInterop;
 global using Moq;
+global using MudBlazor;
+global using Toolbelt.Blazor;
 global using Xunit;
