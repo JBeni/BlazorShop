@@ -47,7 +47,10 @@ namespace BlazorShop.WebClient.Interceptor
         /// <summary>
         /// Intercept the response and check for the error code received from the server.
         /// </summary>
-        private void InterceptResponse(object sender, HttpClientInterceptorEventArgs e)
+        /// <param name="sender">The object send.</param>
+        /// <param name="e">The http client interceptor args.</param>
+        /// <exception cref="HttpResponseException"> The http response exception type.</exception>
+        protected void InterceptResponse(object sender, HttpClientInterceptorEventArgs e)
         {
             if (!e.Response.IsSuccessStatusCode)
             {

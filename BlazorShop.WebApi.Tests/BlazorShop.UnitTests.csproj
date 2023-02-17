@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorShop.WebApi\BlazorShop.WebApi.csproj" />
+    <ProjectReference Include="..\BlazorShop.WebClient\BlazorShop.WebClient.csproj" />
     <ProjectReference Include="..\BlazorShop.WorkerService\BlazorShop.WorkerService.csproj" />
   </ItemGroup>
 
