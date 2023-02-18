@@ -2,6 +2,8 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.Infrastructure.Files;
+
 namespace BlazorShop.Infrastructure
 {
     /// <summary>
@@ -31,6 +33,7 @@ namespace BlazorShop.Infrastructure
 
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             var builder = services.AddIdentityCore<User>(opt =>
             {

@@ -3,6 +3,9 @@
 // </copyright>
 
 // The configurations for the Core Web API.
+using BlazorShop.WebApi.Services;
+using Stripe;
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +32,9 @@ try
     builder.Services.AddControllers(options =>
         options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
