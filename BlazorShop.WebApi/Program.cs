@@ -3,6 +3,9 @@
 // </copyright>
 
 // The configurations for the Core Web API.
+using FluentValidation;
+using Stripe;
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -25,10 +28,8 @@ try
     builder.Services.AddInfrastructureLayer(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
-
-    builder.Services.AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilterAttribute>())
-            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddValidatorsFromAssemblyContaining<ApiExceptionFilterAttribute>();
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
@@ -151,13 +152,9 @@ try
         await next();
     });
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action=Index}/{id?}");
-        endpoints.MapControllers();
-    });
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action=Index}/{id?}");
 
     await app.RunAsync();
 }
