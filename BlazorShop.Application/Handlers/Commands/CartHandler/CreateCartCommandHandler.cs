@@ -53,12 +53,8 @@ namespace BlazorShop.Application.Handlers.Commands.CartHandler
                 var clothe = this.DbContext.Clothes
                     .TagWith(nameof(CreateCartCommandHandler))
                     .FirstOrDefault(x => x.Id == request.ClotheId);
-                var user = await this.UserManager.FindByIdAsync(request.UserId.ToString());
-                if (user == null)
-                {
-                    throw new Exception("The user does not exists");
-                }
-
+                var user = await this.UserManager.FindByIdAsync(request.UserId.ToString())
+                    ?? throw new Exception("The user does not exists");
                 var entity = new Cart
                 {
                     Name = request.Name,

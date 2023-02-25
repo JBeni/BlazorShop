@@ -4,7 +4,6 @@
 
 // The configurations for the Core Web API.
 using FluentValidation;
-using Stripe;
 
 try
 {
