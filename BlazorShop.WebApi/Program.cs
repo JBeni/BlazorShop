@@ -3,6 +3,8 @@
 // </copyright>
 
 // The configurations for the Core Web API.
+using FluentValidation;
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -25,10 +27,8 @@ try
     builder.Services.AddInfrastructureLayer(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
-
-    builder.Services.AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilterAttribute>())
-            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddValidatorsFromAssemblyContaining<ApiExceptionFilterAttribute>();
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
@@ -55,6 +55,10 @@ try
                 ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             };
         });
+
+    builder.Services.AddHealthChecks();
+    builder.Services.AddAuthorization();
+    builder.Services.AddControllers();
 
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
@@ -151,13 +155,9 @@ try
         await next();
     });
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action=Index}/{id?}");
-        endpoints.MapControllers();
-    });
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action=Index}/{id?}");
 
     await app.RunAsync();
 }
