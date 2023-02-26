@@ -99,5 +99,21 @@ namespace BlazorShop.Application.Common.Interfaces
         /// <param name="userId">The id of the user.</param>
         /// <returns>The request response.</returns>
         Task<RequestResponse> DeleteUserAsync(int userId);
+
+        /// <summary>
+        /// Check if a user have a role.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="role">The role name.</param>
+        /// <returns>A boolean value.</returns>
+        Task<bool> IsInRoleAsync(int userId, string role);
+
+        /// <summary>
+        /// Authorize an user based on policy.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="policyName">The policy name.</param>
+        /// <returns>A boolean value.</returns>
+        Task<bool> AuthorizeAsync(int userId, string policyName);
     }
 }

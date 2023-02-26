@@ -104,5 +104,15 @@ namespace BlazorShop.Infrastructure.Persistence
             builder.ApplyConfiguration(new TodoItemConfiguration());
             builder.ApplyConfiguration(new TodoListConfiguration());
         }
+
+        /// <summary>
+        /// Configure db context.
+        /// </summary>
+        /// <param name="optionsBuilder">The model builder of the db context.</param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // https://github.com/jasontaylordev/CleanArchitecture/blob/main/src/Infrastructure/Persistence/Interceptors/AuditableEntitySaveChangesInterceptor.cs
+            // optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+        }
     }
 }

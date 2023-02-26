@@ -17,7 +17,9 @@ namespace BlazorShop.UnitTests.Infrastructure
             this.UserService = new UserService(
                 this.UserManager,
                 this.RoleService,
-                this.Mapper);
+                this.Mapper,
+                this.UserClaimsPrincipalFactory,
+                this.AuthorizationService);
         }
 
         /// <summary>
@@ -39,6 +41,16 @@ namespace BlazorShop.UnitTests.Infrastructure
         /// Gets the instance of <see cref="IMapper"/> to use.
         /// </summary>
         private IMapper Mapper { get; } = Mock.Of<IMapper>();
+
+        /// <summary>
+        /// Gets the instance of <see cref="IUserClaimsPrincipalFactory{User}"/> to use.
+        /// </summary>
+        private IUserClaimsPrincipalFactory<User> UserClaimsPrincipalFactory { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="IAuthorizationService"/> to use.
+        /// </summary>
+        private IAuthorizationService AuthorizationService { get; }
 
         /// <summary>
         /// A test for <see cref="UserService.CreateUserAsync(CreateUserCommand)"/> method.
@@ -166,6 +178,26 @@ namespace BlazorShop.UnitTests.Infrastructure
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task AssignUserToRoleAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="UserService.IsInRoleAsync(int, string)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task IsInRoleAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// A test for <see cref="UserService.AuthorizeAsync(int, string)"/> method.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task AuthorizeAsync()
         {
             await Task.CompletedTask;
         }
