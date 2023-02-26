@@ -36,8 +36,8 @@ namespace BlazorShop.WebApi.Services
         /// <returns>An int value.</returns>
         private int GetCurrentUserId()
         {
-            int userId = int.Parse(this.httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier));
-            return userId;
+            var userId = this.httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0";
+            return int.Parse(userId);
         }
     }
 }

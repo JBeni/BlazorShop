@@ -3,6 +3,7 @@
 // </copyright>
 
 // The configurations for the Core Web API.
+using BlazorShop.WebApi.Services;
 using FluentValidation;
 
 try
@@ -59,6 +60,8 @@ try
                 ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             };
         });
+
+    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
     builder.Services.AddHealthChecks();
     builder.Services.AddAuthorization();
