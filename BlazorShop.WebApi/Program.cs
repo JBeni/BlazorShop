@@ -56,6 +56,10 @@ try
             };
         });
 
+    builder.Services.AddHealthChecks();
+    builder.Services.AddAuthorization();
+    builder.Services.AddControllers();
+
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
 
