@@ -21,8 +21,8 @@ namespace BlazorShop.UnitTests.Infrastructure
                 .Options;
 
             this.ApplicationDbContext = new ApplicationDbContext(options);
-            this.UserManager = new UserManager<User>(this.UserStore, null, null, null, null, null, null, null, null);
-            this.RoleManager = new RoleManager<Role>(this.RoleStore, null, null, null, null);
+            this.UserManager = new UserManager<User>(this.UserStore, null!, null!, null!, null!, null!, null!, null!, null!);
+            this.RoleManager = new RoleManager<Role>(this.RoleStore, null!, null!, null!, null!);
 
             this.AccountService = new AccountService(
                 this.UserManager,

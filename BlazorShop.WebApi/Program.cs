@@ -3,6 +3,9 @@
 // </copyright>
 
 // The configurations for the Core Web API.
+using BlazorShop.WebApi.Services;
+using FluentValidation;
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +28,8 @@ try
     builder.Services.AddInfrastructureLayer(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
+    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddValidatorsFromAssemblyContaining<ApiExceptionFilterAttribute>();
 
     builder.Services.AddControllers(options =>
         options.Filters.Add<ApiExceptionFilterAttribute>())
@@ -55,6 +60,12 @@ try
                 ValidIssuer = builder.Configuration["JwtToken:Issuer"],
             };
         });
+
+    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+    builder.Services.AddHealthChecks();
+    builder.Services.AddAuthorization();
+    builder.Services.AddControllers();
 
     // Stripe Configuration - Secret Key
     StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
@@ -151,13 +162,9 @@ try
         await next();
     });
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action=Index}/{id?}");
-        endpoints.MapControllers();
-    });
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action=Index}/{id?}");
 
     await app.RunAsync();
 }

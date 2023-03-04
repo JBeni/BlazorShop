@@ -2,6 +2,8 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace BlazorShop.Infrastructure.Services
 {
     /// <summary>
@@ -15,14 +17,20 @@ namespace BlazorShop.Infrastructure.Services
         /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
         /// <param name="roleService">The instance of <see cref="IRoleService"/> to use.</param>
         /// <param name="mapper">The instance of <see cref="IMapper"/> to use.</param>
+        /// <param name="userClaimsPrincipalFactory">The instance of <see cref="IUserClaimsPrincipalFactory{User}"/> to use.</param>
+        /// <param name="authorizationService">The instance of <see cref="IAuthorizationService"/> to use.</param>
         public UserService(
             UserManager<User> userManager,
             IRoleService roleService,
-            IMapper mapper)
+            IMapper mapper,
+            IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory,
+            IAuthorizationService authorizationService)
         {
             this.UserManager = userManager;
             this.RoleService = roleService;
             this.Mapper = mapper;
+            this.UserClaimsPrincipalFactory = userClaimsPrincipalFactory;
+            this.AuthorizationService = authorizationService;
         }
 
         /// <summary>
@@ -39,6 +47,16 @@ namespace BlazorShop.Infrastructure.Services
         /// Gets the instance of <see cref="IMapper"/> to use.
         /// </summary>
         private IMapper Mapper { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="IUserClaimsPrincipalFactory{User}"/> to use.
+        /// </summary>
+        private IUserClaimsPrincipalFactory<User> UserClaimsPrincipalFactory { get; }
+
+        /// <summary>
+        /// Gets the instance of <see cref="IAuthorizationService"/> to use.
+        /// </summary>
+        private IAuthorizationService AuthorizationService { get; }
 
         /// <inheritdoc/>
         public async Task<RequestResponse> CreateUserAsync(CreateUserCommand command)
@@ -220,6 +238,31 @@ namespace BlazorShop.Infrastructure.Services
             await this.UserManager.AddToRoleAsync(user, role.Name);
 
             return RequestResponse.Success(user.Id);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> IsInRoleAsync(int userId, string role)
+        {
+            var user = this.UserManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            return user != null && await this.UserManager.IsInRoleAsync(user, role);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> AuthorizeAsync(int userId, string policyName)
+        {
+            var user = this.UserManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var principal = await this.UserClaimsPrincipalFactory.CreateAsync(user);
+
+            var result = await this.AuthorizationService.AuthorizeAsync(principal, policyName);
+
+            return result.Succeeded;
         }
     }
 }
