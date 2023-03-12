@@ -373,3 +373,5 @@ FodyWeavers.xsd
 
 # Remove Logs
 /BlazorShop.Logs
+
+/BlazorShop.UnitTests/codecoverage
