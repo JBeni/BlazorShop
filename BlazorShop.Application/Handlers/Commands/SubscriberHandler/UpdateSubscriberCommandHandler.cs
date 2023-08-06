@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateSubscriberCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="UpdateSubscriberCommandHandler.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

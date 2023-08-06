@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateTodoListCommandHandler.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="UpdateTodoListCommandHandler.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

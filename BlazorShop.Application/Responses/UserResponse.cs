@@ -1,4 +1,4 @@
-﻿// <copyright file="UserResponse.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="UserResponse.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
