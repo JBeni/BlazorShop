@@ -1,4 +1,4 @@
-﻿// <copyright file="ApiExceptionFilterAttributeTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="ApiExceptionFilterAttributeTests.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 

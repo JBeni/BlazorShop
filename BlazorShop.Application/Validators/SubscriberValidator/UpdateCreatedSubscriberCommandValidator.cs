@@ -1,4 +1,4 @@
-﻿// <copyright file="UpdateCreatedSubscriberCommandValidator.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="UpdateCreatedSubscriberCommandValidator.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
