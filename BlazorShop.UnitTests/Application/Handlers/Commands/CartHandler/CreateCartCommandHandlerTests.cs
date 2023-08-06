@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateCartCommandHandlerTests.cs" company="Beniamin Jitca" author="Beniamin Jitca">
+﻿// <copyright file="CreateCartCommandHandlerTests.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
