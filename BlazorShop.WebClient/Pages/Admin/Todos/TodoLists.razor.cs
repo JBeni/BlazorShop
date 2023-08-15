@@ -15,18 +15,18 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         private TodoListResponse newTodoList = new ();
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="TodoState"/> to use.
+        /// Gets or sets the instance of the <see cref="TodoState"/> to use.
         /// </summary>
         [CascadingParameter]
         public TodoState State { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ElementReference"/> to use.
+        /// Gets or sets the instance of the <see cref="ElementReference"/> to use.
         /// </summary>
         private ElementReference TitleInput { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ElementReference"/> to use.
+        /// Gets or sets the instance of the <see cref="ElementReference"/> to use.
         /// </summary>
         private ElementReference NewListModal { get; set; }
 

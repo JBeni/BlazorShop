@@ -10,23 +10,23 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
     public partial class TodoItems
     {
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="TodoState"/> to use.
+        /// Gets or sets the instance of the <see cref="TodoState"/> to use.
         /// </summary>
         [CascadingParameter]
         public TodoState State { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="TodoItemResponse"/> to use.
+        /// Gets or sets the instance of the <see cref="TodoItemResponse"/> to use.
         /// </summary>
         public TodoItemResponse SelectedItem { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ElementReference"/> to use.
+        /// Gets or sets the instance of the <see cref="ElementReference"/> to use.
         /// </summary>
         private ElementReference TitleInput { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ElementReference"/> to use.
+        /// Gets or sets the instance of the <see cref="ElementReference"/> to use.
         /// </summary>
         private ElementReference ListOptionsModal { get; set; }
 

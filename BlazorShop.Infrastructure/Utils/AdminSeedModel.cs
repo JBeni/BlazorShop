@@ -10,27 +10,27 @@ namespace BlazorShop.Infrastructure.Utils
     public class AdminSeedModel
     {
         /// <summary>
-        /// Gets or Sets the firstname.
+        /// Gets or sets the firstname.
         /// </summary>
         public string? FirstName { get; set; }
 
         /// <summary>
-        /// Gets or Sets the lastname.
+        /// Gets or sets the lastname.
         /// </summary>
         public string? LastName { get; set; }
 
         /// <summary>
-        /// Gets or Sets the email.
+        /// Gets or sets the email.
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// Gets or Sets the password.
+        /// Gets or sets the password.
         /// </summary>
         public string? Password { get; set; }
 
         /// <summary>
-        /// Gets or Sets the role name.
+        /// Gets or sets the role name.
         /// </summary>
         public string? RoleName { get; set; }
     }

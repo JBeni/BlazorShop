@@ -10,36 +10,36 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
     public partial class TodoState
     {
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="RenderFragment"/> to use.
+        /// Gets or sets the instance of the <see cref="RenderFragment"/> to use.
         /// </summary>
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ITodoListService"/> to use.
+        /// Gets or sets the instance of the <see cref="ITodoListService"/> to use.
         /// </summary>
         [Inject]
         public ITodoListService TodoListService { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ITodoItemService"/> to use.
+        /// Gets or sets the instance of the <see cref="ITodoItemService"/> to use.
         /// </summary>
         [Inject]
         public ITodoItemService TodoItemService { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="IJSInProcessRuntime"/> to use.
+        /// Gets or sets the instance of the <see cref="IJSInProcessRuntime"/> to use.
         /// </summary>
         [Inject]
         public IJSInProcessRuntime JS { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="ICollection{TodoListResponse}"/> to use.
+        /// Gets or sets the instance of the <see cref="ICollection{TodoListResponse}"/> to use.
         /// </summary>
         public ICollection<TodoListResponse> TodoLists { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="TodoListResponse"/> to use.
+        /// Gets or sets the instance of the <see cref="TodoListResponse"/> to use.
         /// </summary>
         public TodoListResponse SelectedList
         {
@@ -61,7 +61,7 @@ namespace BlazorShop.WebClient.Pages.Admin.Todos
         public bool Initialised { get; set; }
 
         /// <summary>
-        /// Gets or Sets the instance of the <see cref="TodoListResponse"/> to use.
+        /// Gets or sets the instance of the <see cref="TodoListResponse"/> to use.
         /// </summary>
         private TodoListResponse SelectedListPriv { get; set; }
 

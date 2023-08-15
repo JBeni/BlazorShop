@@ -10,7 +10,7 @@ namespace BlazorShop.Domain.Entities.Identity
     public class RoleClaim : IdentityRoleClaim<int>
     {
         /// <summary>
-        /// Gets or Sets the role.
+        /// Gets or sets the role.
         /// </summary>
         public virtual Role Role { get; set; }
     }

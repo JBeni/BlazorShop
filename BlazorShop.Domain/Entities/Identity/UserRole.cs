@@ -10,12 +10,12 @@ namespace BlazorShop.Domain.Entities.Identity
     public class UserRole : IdentityUserRole<int>
     {
         /// <summary>
-        /// Gets or Sets the user.
+        /// Gets or sets the user.
         /// </summary>
         public virtual User User { get; set; }
 
         /// <summary>
-        /// Gets or Sets the role.
+        /// Gets or sets the role.
         /// </summary>
         public virtual Role Role { get; set; }
     }

@@ -99,7 +99,7 @@ namespace BlazorShop.WebApi.Controllers
                 Password = this.Configuration["BusinessEmail:Password"],
             };
 
-            // await _emailService.SendEmail(resetPassword.Email, emailSettings);
+            // await this.EmailService.SendEmail(resetPassword.Email, emailSettings);
             var result = await this.Mediator.Send(resetPassword);
             return result.Successful == true
                 ? this.Ok(result)

@@ -10,7 +10,7 @@ namespace BlazorShop.Application.Commands.SubscriberCommand
     public class DeleteSubscriberCommand : IRequest<RequestResponse>
     {
         /// <summary>
-        /// Gets or Sets The id of the subscriber.
+        /// Gets or sets The id of the subscriber.
         /// </summary>
         public int Id { get; set; }
     }

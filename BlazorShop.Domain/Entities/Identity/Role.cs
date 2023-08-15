@@ -10,12 +10,12 @@ namespace BlazorShop.Domain.Entities.Identity
     public class Role : IdentityRole<int>
     {
         /// <summary>
-        /// Gets or Sets the users.
+        /// Gets or sets the users.
         /// </summary>
         public virtual ICollection<UserRole> Users { get; set; }
 
         /// <summary>
-        /// Gets or Sets the users claims.
+        /// Gets or sets the users claims.
         /// </summary>
         public virtual ICollection<RoleClaim> Claims { get; set; }
     }

@@ -10,7 +10,7 @@ namespace BlazorShop.Domain.Entities.Identity
     public class UserClaim : IdentityUserClaim<int>
     {
         /// <summary>
-        /// Gets or Sets the user.
+        /// Gets or sets the user.
         /// </summary>
         public virtual User User { get; set; }
     }

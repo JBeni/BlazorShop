@@ -10,37 +10,37 @@ namespace BlazorShop.Domain.Entities
     public class Music : EntityBase
     {
         /// <summary>
-        /// Gets or Sets the title of the music.
+        /// Gets or sets the title of the music.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or Sets the description of the music.
+        /// Gets or sets the description of the music.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or Sets the author of the music.
+        /// Gets or sets the author of the music.
         /// </summary>
         public string Author { get; set; }
 
         /// <summary>
-        /// Gets or Sets the release date of the music.
+        /// Gets or sets the release date of the music.
         /// </summary>
         public DateTime DateRelease { get; set; }
 
         /// <summary>
-        /// Gets or Sets the image name of the music.
+        /// Gets or sets the image name of the music.
         /// </summary>
         public string ImageName { get; set; }
 
         /// <summary>
-        /// Gets or Sets the image path of the music.
+        /// Gets or sets the image path of the music.
         /// </summary>
         public string ImagePath { get; set; }
 
         /// <summary>
-        /// Gets or Sets the access level of the music.
+        /// Gets or sets the access level of the music.
         /// </summary>
         public int AccessLevel { get; set; }
     }

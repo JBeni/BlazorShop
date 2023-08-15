@@ -10,27 +10,27 @@ namespace BlazorShop.Domain.Entities
     public class Invoice : EntityBase
     {
         /// <summary>
-        /// Gets or Sets the email of the user.
+        /// Gets or sets the email of the user.
         /// </summary>
         public string UserEmail { get; set; }
 
         /// <summary>
-        /// Gets or Sets the name of the invoice.
+        /// Gets or sets the name of the invoice.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets the sub total amount of the invoice.
+        /// Gets or sets the sub total amount of the invoice.
         /// </summary>
         public int AmountSubTotal { get; set; }
 
         /// <summary>
-        /// Gets or Sets the total amount of the invoice.
+        /// Gets or sets the total amount of the invoice.
         /// </summary>
         public int AmountTotal { get; set; }
 
         /// <summary>
-        /// Gets or Sets the quantity of the invoice.
+        /// Gets or sets the quantity of the invoice.
         /// </summary>
         public int Quantity { get; set; }
     }
