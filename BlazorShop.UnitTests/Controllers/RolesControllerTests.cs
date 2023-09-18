@@ -28,7 +28,7 @@ namespace BlazorShop.UnitTests.Controllers
         private IMediator Mediator { get; } = Mock.Of<IMediator>();
 
         /// <summary>
-        /// A test for <see cref="RolesController.CreateRole(CreateRoleCommand)"/> method.
+        /// A test for <see cref="RolesController.CreateRole(CreateClaimCommand)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
@@ -38,7 +38,7 @@ namespace BlazorShop.UnitTests.Controllers
         }
 
         /// <summary>
-        /// A test for <see cref="RolesController.UpdateRole(UpdateRoleCommand)"/> method.
+        /// A test for <see cref="RolesController.UpdateRole(UpdateClaimCommand)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]

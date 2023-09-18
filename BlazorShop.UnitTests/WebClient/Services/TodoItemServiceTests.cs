@@ -27,7 +27,7 @@ namespace BlazorShop.UnitTests.WebClient.Services
         private TodoItemService TodoItemService { get; }
 
         /// <summary>
-        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
         /// </summary>
         private HttpClient HttpClient { get; } = Mock.Of<HttpClient>();
 

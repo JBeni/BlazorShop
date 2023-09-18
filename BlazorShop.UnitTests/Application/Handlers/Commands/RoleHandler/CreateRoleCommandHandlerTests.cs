@@ -47,7 +47,7 @@ namespace BlazorShop.UnitTests.Application.Handlers.Commands.RoleHandler
         private ILogger<CreateRoleCommandHandler> Logger { get; }
 
         /// <summary>
-        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateRoleCommand, CancellationToken)"/> method.
+        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateClaimCommand, CancellationToken)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
@@ -57,7 +57,7 @@ namespace BlazorShop.UnitTests.Application.Handlers.Commands.RoleHandler
         }
 
         /// <summary>
-        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateRoleCommand, CancellationToken)"/> method.
+        /// A test for <see cref="CreateRoleCommandHandler.Handle(CreateClaimCommand, CancellationToken)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
