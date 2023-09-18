@@ -45,11 +45,6 @@ namespace BlazorShop.Application.Responses
         public string ImagePath { get; set; }
 
         /// <summary>
-        /// Gets or sets The access level of the music.
-        /// </summary>
-        public int AccessLevel { get; set; }
-
-        /// <summary>
         /// Convert the entity (Data Access Layer) to model (Business Logic Layer).
         /// </summary>
         /// <param name="profile">The profile to use for the mapping operation.</param>
@@ -62,7 +57,6 @@ namespace BlazorShop.Application.Responses
                 .ForMember(x => x.Author, opt => opt.MapFrom(s => s.Author))
                 .ForMember(x => x.DateRelease, opt => opt.MapFrom(s => s.DateRelease))
                 .ForMember(x => x.ImageName, opt => opt.MapFrom(s => s.ImageName))
-                .ForMember(x => x.AccessLevel, opt => opt.MapFrom(s => s.AccessLevel))
                 .ForMember(x => x.ImagePath, opt => opt.MapFrom(s => s.ImagePath));
         }
     }

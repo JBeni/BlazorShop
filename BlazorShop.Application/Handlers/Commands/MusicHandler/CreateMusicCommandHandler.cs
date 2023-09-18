@@ -59,7 +59,6 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
                     DateRelease = request.DateRelease,
                     ImageName = request.ImageName,
                     ImagePath = request.ImagePath,
-                    AccessLevel = request.AccessLevel,
                 };
 
                 this.DbContext.Musics.Add(entity);

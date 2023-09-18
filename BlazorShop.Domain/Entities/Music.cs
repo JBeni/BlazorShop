@@ -38,10 +38,5 @@ namespace BlazorShop.Domain.Entities
         /// Gets or Sets the image path of the music.
         /// </summary>
         public string ImagePath { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the access level of the music.
-        /// </summary>
-        public int AccessLevel { get; set; }
     }
 }
