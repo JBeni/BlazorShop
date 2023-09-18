@@ -51,6 +51,7 @@ try
     // Inject Services
     builder.Services.AddTransient<IClotheService, ClotheService>();
     builder.Services.AddTransient<ICartService, CartService>();
+    builder.Services.AddTransient<IClaimService, ClaimService>();
     builder.Services.AddTransient<IRoleService, RoleService>();
     builder.Services.AddTransient<IUserService, UserService>();
     builder.Services.AddTransient<IAccountService, AccountService>();
