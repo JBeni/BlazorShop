@@ -12,7 +12,7 @@ namespace BlazorShop.WebClient.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleService"/> class.
         /// </summary>
-        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="httpClient">The instance of the <see cref="System.Net.Http.HttpClient"/> to use.</param>
         /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
         public RoleService(HttpClient httpClient, ISnackbar snackBar)
         {
@@ -22,7 +22,7 @@ namespace BlazorShop.WebClient.Services
         }
 
         /// <summary>
-        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
         /// </summary>
         private HttpClient HttpClient { get; }
 
@@ -133,7 +133,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateRole(RoleResponse role)
         {
-            var data = new UpdateRoleCommand
+            var data = new UpdateClaimCommand
             {
                 Id = role.Id,
                 Name = role.Name,

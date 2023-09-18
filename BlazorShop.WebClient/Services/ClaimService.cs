@@ -1,20 +1,20 @@
-﻿// <copyright file="SubscriberService.cs" company="Beniamin Jitca">
+﻿// <copyright file="ClaimService.cs" company="Beniamin Jitca">
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
 namespace BlazorShop.WebClient.Services
 {
     /// <summary>
-    /// An implementation of <see cref="ISubscriberService"/>.
+    /// An implementation of <see cref="IClaimService"/>.
     /// </summary>
-    public class SubscriberService : ISubscriberService
+    public class ClaimService : IClaimService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriberService"/> class.
+        /// Initializes a new instance of the <see cref="ClaimService"/> class.
         /// </summary>
         /// <param name="httpClient">The instance of the <see cref="System.Net.Http.HttpClient"/> to use.</param>
         /// <param name="snackBar">The instance of the <see cref="ISnackbar"/> to use.</param>
-        public SubscriberService(HttpClient httpClient, ISnackbar snackBar)
+        public ClaimService(HttpClient httpClient, ISnackbar snackBar)
         {
             this.HttpClient = httpClient;
             this.Options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -37,47 +37,51 @@ namespace BlazorShop.WebClient.Services
         private JsonSerializerOptions Options { get; }
 
         /// <inheritdoc/>
-        public async Task<List<SubscriberResponse>> GetSubscribers()
+        public async Task<RequestResponse> AddClaim(ClaimResponse claim)
         {
-            var response = await this.HttpClient.GetAsync("Subscribers/subscribers");
+            var response = await this.HttpClient.PostAsJsonAsync($"Claims/Claim", claim);
             var responseResult = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
+            var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
                 this.SnackBar.Add(result.Error, Severity.Error);
             }
+            else
+            {
+                this.SnackBar.Add("The Claim was added.", Severity.Success);
+            }
 
-            return !response.IsSuccessStatusCode
-                ? null
-                : result.Items;
+            return result;
         }
 
         /// <inheritdoc/>
-        public async Task<List<SubscriberResponse>> GetUserAllSubscribers(int userId)
+        public async Task<RequestResponse> DeleteClaim(int id)
         {
-            var response = await this.HttpClient.GetAsync($"Subscribers/subscribers/{userId}");
+            var response = await this.HttpClient.DeleteAsync($"Claims/Claim/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
+            var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
                 this.SnackBar.Add(result.Error, Severity.Error);
             }
+            else
+            {
+                this.SnackBar.Add("The Claim was deleted.", Severity.Success);
+            }
 
-            return !response.IsSuccessStatusCode
-                ? null
-                : result.Items;
+            return result;
         }
 
         /// <inheritdoc/>
-        public async Task<SubscriberResponse> GetUserSubscriber(int userId)
+        public async Task<ClaimResponse> GetClaim(int id)
         {
-            var response = await this.HttpClient.GetAsync($"Subscribers/subscriber/{userId}");
+            var response = await this.HttpClient.GetAsync($"Claims/Claim/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
+            var result = JsonSerializer.Deserialize<Result<ClaimResponse>>(
                 responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
@@ -91,29 +95,34 @@ namespace BlazorShop.WebClient.Services
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> AddSubscriber(SubscriberResponse subscriber)
+        public async Task<List<ClaimResponse>> GetClaims()
         {
-            var response = await this.HttpClient.PostAsJsonAsync("Subscribers/subscriber", subscriber);
+            var response = await this.HttpClient.GetAsync("Claims/Claims");
             var responseResult = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<RequestResponse>(
+            var result = JsonSerializer.Deserialize<Result<ClaimResponse>>(
                 responseResult, this.Options);
 
             if (response.IsSuccessStatusCode == false)
             {
                 this.SnackBar.Add(result.Error, Severity.Error);
             }
-            else
-            {
-                this.SnackBar.Add("The Subscriber was added.", Severity.Success);
-            }
 
-            return result;
+            return !response.IsSuccessStatusCode
+                ? null
+                : result.Items;
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse subscriber)
+        public async Task<RequestResponse> UpdateClaim(ClaimResponse claim)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("Subscribers/subscriber", subscriber);
+            var data = new UpdateClaimCommand
+            {
+                Id = Claim.Id,
+                Value = Claim.Value,
+                Type = Claim.Type,
+            };
+
+            var response = await this.HttpClient.PutAsJsonAsync($"Claims/Claim", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -124,27 +133,7 @@ namespace BlazorShop.WebClient.Services
             }
             else
             {
-                this.SnackBar.Add("The Subscriber was updated.", Severity.Success);
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public async Task<RequestResponse> DeleteSubscriber(int id)
-        {
-            var response = await this.HttpClient.DeleteAsync($"Subscribers/subscriber/{id}");
-            var responseResult = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<RequestResponse>(
-                responseResult, this.Options);
-
-            if (response.IsSuccessStatusCode == false)
-            {
-                this.SnackBar.Add(result.Error, Severity.Error);
-            }
-            else
-            {
-                this.SnackBar.Add("The Subscriber was deleted.", Severity.Success);
+                this.SnackBar.Add("The Claim was updated.", Severity.Success);
             }
 
             return result;

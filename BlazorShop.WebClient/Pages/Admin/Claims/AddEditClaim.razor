@@ -1,0 +1,105 @@
+﻿@*
+  <copyright file="AddEditClaim.razor" company="Beniamin Jitca">
+   Copyright (c) Beniamin Jitca. All rights reserved.
+  </copyright>
+*@
+
+@page "/admin/claims/add"
+@page "/admin/claims/edit/{Id:int}"
+
+@attribute [Authorize(Policy = StringRoleResources.Admin)]
+
+@inject IClaimService ClaimService
+@inject NavigationManager NavManager
+@inject HttpInterceptorService Interceptor
+
+<h1>@Title Claim</h1>
+<hr />
+
+<EditForm Model="@claim" OnValidSubmit="SaveClaim">
+    <FluentValidationValidator />
+
+    <div class="mb-3">
+        <div class="col-md-4">
+            <MudTextField class="form-control" InputType="InputType.Text"
+                          @bind-Value="claim.Value" Label="Value"
+                          For="@(() => claim.Value)"
+                          Variant="Variant.Outlined"></MudTextField>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="col-md-4">
+            <MudTextField class="form-control" InputType="InputType.Text"
+                          @bind-Value="claim.Type" Label="Type"
+                          For="@(() => claim.Type)"
+                          Variant="Variant.Outlined"></MudTextField>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" ButtonType="MudBlazor.ButtonType.Submit">
+            Save
+        </MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" @onclick="Cancel">
+            Cancel
+        </MudButton>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected string Title = "Add";
+
+    public ClaimResponse claim = new();
+
+    public void Dispose() => Interceptor.DisposeEvent();
+
+    /// <summary>
+    /// Initialize the component on load.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+    }
+
+    /// <summary>
+    /// Initialize the component using the parameter.
+    /// </summary>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            Title = "Edit";
+            claim = await ClaimService.GetClaim(Id);
+        }
+    }
+
+    /// <summary>
+    /// Save the Claim.
+    /// </summary>
+    protected async Task SaveClaim()
+    {
+        RequestResponse result = new();
+        if (claim.Id != 0)
+        {
+            result = await ClaimService.UpdateClaim(claim);
+        }
+        else
+        {
+            result = await ClaimService.AddClaim(claim);
+        }
+        if (result.Successful)
+        {
+            Cancel();
+        }
+    }
+
+    /// <summary>
+    /// Cancel.
+    /// </summary>
+    public void Cancel()
+    {
+        NavManager.NavigateTo("/admin/claims");
+    }
+}

@@ -12,7 +12,7 @@ namespace BlazorShop.WebClient.Auth
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthStateProvider"/> class.
         /// </summary>
-        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="httpClient">The instance of the <see cref="System.Net.Http.HttpClient"/> to use.</param>
         /// <param name="localStorage">The instance of the <see cref="ILocalStorageService"/> to use.</param>
         /// <param name="navMagager">The instance of the <see cref="NavigationManager"/> to use.</param>
         public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage, NavigationManager navMagager)
@@ -24,7 +24,7 @@ namespace BlazorShop.WebClient.Auth
         }
 
         /// <summary>
-        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
         /// </summary>
         private HttpClient HttpClient { get; }
 
