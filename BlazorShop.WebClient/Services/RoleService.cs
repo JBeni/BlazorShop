@@ -133,7 +133,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateRole(RoleResponse role)
         {
-            var data = new UpdateClaimCommand
+            var data = new UpdateRoleCommand
             {
                 Id = role.Id,
                 Name = role.Name,

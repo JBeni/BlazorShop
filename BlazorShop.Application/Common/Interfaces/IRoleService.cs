@@ -61,14 +61,14 @@ namespace BlazorShop.Application.Common.Interfaces
         /// </summary>
         /// <param name="role">The name of the role.</param>
         /// <returns>The created role.</returns>
-        Task<RequestResponse> CreateRoleAsync(CreateClaimCommand role);
+        Task<RequestResponse> CreateRoleAsync(CreateRoleCommand role);
 
         /// <summary>
         /// Updates the role data.
         /// </summary>
         /// <param name="role">The role data.</param>
         /// <returns>The request response.</returns>
-        Task<RequestResponse> UpdateRoleAsync(UpdateClaimCommand role);
+        Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand role);
 
         /// <summary>
         /// Deletes a role.

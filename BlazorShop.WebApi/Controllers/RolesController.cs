@@ -25,7 +25,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPost("role")]
-        public async Task<IActionResult> CreateRole([FromBody] CreateClaimCommand command)
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
             var result = await this.Mediator.Send(command);
             return result.Successful == true
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [HttpPut("role")]
-        public async Task<IActionResult> UpdateRole([FromBody] UpdateClaimCommand command)
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
         {
             var result = await this.Mediator.Send(command);
             return result.Successful == true
@@ -55,7 +55,7 @@ namespace BlazorShop.WebApi.Controllers
         [HttpDelete("role/{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
-            var result = await this.Mediator.Send(new DeleteClaimCommand { Id = id });
+            var result = await this.Mediator.Send(new DeleteRoleCommand { Id = id });
             return result.Successful == true
                 ? this.Ok(result)
                 : this.BadRequest(result);
@@ -69,7 +69,7 @@ namespace BlazorShop.WebApi.Controllers
         [HttpGet("role/{id}")]
         public async Task<IActionResult> GetRoleById(int id)
         {
-            var result = await this.Mediator.Send(new GetClaimByIdQuery { Id = id });
+            var result = await this.Mediator.Send(new GetRoleByIdQuery { Id = id });
             return result.Successful == true
                 ? this.Ok(result)
                 : this.BadRequest(result);
@@ -82,7 +82,7 @@ namespace BlazorShop.WebApi.Controllers
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles()
         {
-            var result = await this.Mediator.Send(new GetClaimsQuery { });
+            var result = await this.Mediator.Send(new GetRolesQuery { });
             return result.Successful == true
                 ? this.Ok(result)
                 : this.BadRequest(result);
@@ -95,7 +95,7 @@ namespace BlazorShop.WebApi.Controllers
         [HttpGet("rolesAdmin")]
         public async Task<IActionResult> GetRolesForAdmin()
         {
-            var result = await this.Mediator.Send(new GetClaimByTypeQuery { });
+            var result = await this.Mediator.Send(new GetRolesForAdminQuery { });
             return result.Successful == true
                 ? this.Ok(result)
                 : this.BadRequest(result);

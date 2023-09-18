@@ -117,9 +117,9 @@ namespace BlazorShop.WebClient.Services
         {
             var data = new UpdateClaimCommand
             {
-                Id = Claim.Id,
-                Value = Claim.Value,
-                Type = Claim.Type,
+                Id = claim.Id,
+                Value = claim.Value,
+                Type = claim.Type,
             };
 
             var response = await this.HttpClient.PutAsJsonAsync($"Claims/Claim", data);

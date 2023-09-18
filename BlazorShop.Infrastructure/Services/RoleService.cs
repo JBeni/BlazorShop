@@ -149,7 +149,7 @@ namespace BlazorShop.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> CreateRoleAsync(CreateClaimCommand command)
+        public async Task<RequestResponse> CreateRoleAsync(CreateRoleCommand command)
         {
             var role = await this.RoleManager.FindByNameAsync(command.Name);
             if (role != null)
@@ -168,7 +168,7 @@ namespace BlazorShop.Infrastructure.Services
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResponse> UpdateRoleAsync(UpdateClaimCommand command)
+        public async Task<RequestResponse> UpdateRoleAsync(UpdateRoleCommand command)
         {
             var existsRole = await this.RoleManager.FindByNameAsync(command.Name);
             if (existsRole != null)
