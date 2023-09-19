@@ -39,7 +39,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddClaim(ClaimResponse claim)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"Claims/Claim", claim);
+            var response = await this.HttpClient.PostAsJsonAsync($"Claims/claim", claim);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -59,7 +59,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteClaim(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Claims/Claim/{id}");
+            var response = await this.HttpClient.DeleteAsync($"Claims/claim/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -79,7 +79,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<ClaimResponse> GetClaim(int id)
         {
-            var response = await this.HttpClient.GetAsync($"Claims/Claim/{id}");
+            var response = await this.HttpClient.GetAsync($"Claims/claim/{id}");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ClaimResponse>>(
                 responseResult, this.Options);
@@ -97,7 +97,7 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<ClaimResponse>> GetClaims()
         {
-            var response = await this.HttpClient.GetAsync("Claims/Claims");
+            var response = await this.HttpClient.GetAsync("Claims/claims");
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ClaimResponse>>(
                 responseResult, this.Options);
@@ -122,7 +122,7 @@ namespace BlazorShop.WebClient.Services
                 Type = claim.Type,
             };
 
-            var response = await this.HttpClient.PutAsJsonAsync($"Claims/Claim", data);
+            var response = await this.HttpClient.PutAsJsonAsync($"Claims/claim", data);
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

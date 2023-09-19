@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("Claim")]
+        [HttpPost("claim")]
         public async Task<IActionResult> CreateClaim([FromBody] CreateClaimCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("Claim")]
+        [HttpPut("claim")]
         public async Task<IActionResult> UpdateClaim([FromBody] UpdateClaimCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the Claim.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("Claim/{id}")]
+        [HttpDelete("claim/{id}")]
         public async Task<IActionResult> DeleteClaim(int id)
         {
             var result = await this.Mediator.Send(new DeleteClaimCommand { Id = id });
@@ -66,7 +66,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the Claim.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("Claim/{id}")]
+        [HttpGet("claim/{id}")]
         public async Task<IActionResult> GetClaimById(int id)
         {
             var result = await this.Mediator.Send(new GetClaimByIdQuery { Id = id });
@@ -79,7 +79,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the user Claims for a non admin Claim.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("Claims")]
+        [HttpGet("claims")]
         public async Task<IActionResult> GetClaims()
         {
             var result = await this.Mediator.Send(new GetClaimsQuery { });

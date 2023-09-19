@@ -2,8 +2,6 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
-using BlazorShop.Application.Commands.ClaimCommand;
-
 namespace BlazorShop.Infrastructure.Services
 {
     /// <summary>
@@ -16,12 +14,15 @@ namespace BlazorShop.Infrastructure.Services
         /// </summary>
         /// <param name="userManager">The instance of <see cref="UserManager{User}"/> to use.</param>
         /// <param name="mapper">The instance of <see cref="IMapper"/> to use.</param>
+        /// <param name="dbContext">The instance of <see cref="IApplicationDbContext"/> to use.</param>
         public ClaimService(
             UserManager<User> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            IApplicationDbContext dbContext)
         {
             this.UserManager = userManager;
             this.Mapper = mapper;
+            this.DbContext = dbContext;
         }
 
         /// <summary>
@@ -34,71 +35,72 @@ namespace BlazorShop.Infrastructure.Services
         /// </summary>
         private IMapper Mapper { get; }
 
+        /// <summary>
+        /// Gets the instance of <see cref="IApplicationDbContext"/> to use.
+        /// </summary>
+        private IApplicationDbContext DbContext { get; }
+
+        /// <inheritdoc/>
         public Task<List<string>> CheckUserClaimsAsync(User user)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Task<RequestResponse> CreateClaimAsync(CreateClaimCommand claim)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Task<RequestResponse> DeleteClaimAsync(int claimId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CustomClaim> FindClaimByIdAsync(int claimId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<CustomClaim> FindClaimByNameAsync(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ClaimResponse GetAdminClaim()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <inheritdoc/>
         public ClaimResponse GetClaimById(int id)
         {
-            throw new NotImplementedException();
+            var result = this.DbContext.CustomClaims
+                .TagWith(nameof(this.GetClaimById))
+                .ProjectTo<ClaimResponse>(this.Mapper.ConfigurationProvider)
+                .FirstOrDefault(c => c.Id == id);
+            return result;
         }
 
-        public ClaimResponse GetClaimByNormalizedName(string normalizedName)
+        /// <inheritdoc/>
+        public ClaimResponse GetClaimByValue(string claimValue)
         {
-            throw new NotImplementedException();
+            var result = this.DbContext.CustomClaims
+                .TagWith(nameof(this.GetClaimById))
+                .ProjectTo<ClaimResponse>(this.Mapper.ConfigurationProvider)
+                .FirstOrDefault(c => c.Value.Equals(claimValue, StringComparison.OrdinalIgnoreCase));
+            return result;
         }
 
+        /// <inheritdoc/>
         public List<ClaimResponse> GetClaims()
         {
-            throw new NotImplementedException();
+            var result = this.DbContext.CustomClaims
+                .TagWith(nameof(this.GetClaims))
+                .ProjectTo<ClaimResponse>(this.Mapper.ConfigurationProvider)
+                .ToList();
+            return result;
         }
 
-        public List<ClaimResponse> GetClaimsForAdmin()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ClaimResponse GetDefaultClaim()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <inheritdoc/>
         public ClaimResponse GetUserClaim()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Task<RequestResponse> SetUserClaimAsync(User user, string claimValue)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Task<RequestResponse> UpdateClaimAsync(UpdateClaimCommand claim)
         {
             throw new NotImplementedException();

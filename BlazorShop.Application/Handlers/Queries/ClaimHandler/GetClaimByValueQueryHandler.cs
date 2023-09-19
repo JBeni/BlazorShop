@@ -43,7 +43,7 @@ namespace BlazorShop.Application.Handlers.Queries.ClaimHandler
 
             try
             {
-                var result = this.ClaimService.GetClaimByNormalizedName(request.Value);
+                var result = this.ClaimService.GetClaimByValue(request.Value);
 
                 response = new Result<ClaimResponse>
                 {

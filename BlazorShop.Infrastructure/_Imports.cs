@@ -13,6 +13,7 @@ global using System.Text;
 global using AutoMapper;
 global using AutoMapper.QueryableExtensions;
 global using BlazorShop.Application.Commands.AccountCommand;
+global using BlazorShop.Application.Commands.ClaimCommand;
 global using BlazorShop.Application.Commands.RoleCommand;
 global using BlazorShop.Application.Commands.UserCommand;
 global using BlazorShop.Application.Common.Interfaces;
