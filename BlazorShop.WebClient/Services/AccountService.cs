@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> ChangePassword(ChangePasswordCommand command)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("Accounts/change-password", command);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync("Accounts/change-password", command));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -66,7 +70,11 @@ namespace BlazorShop.WebClient.Services
                 new KeyValuePair<string, string>("NewConfirmPassword", command.NewConfirmPassword),
             });
 
-            var response = await this.HttpClient.PostAsync("Accounts/reset-password", data);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsync("Accounts/reset-password", data));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
