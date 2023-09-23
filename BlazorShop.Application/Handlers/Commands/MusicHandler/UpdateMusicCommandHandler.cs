@@ -57,7 +57,6 @@ namespace BlazorShop.Application.Handlers.Commands.MusicHandler
                 entity.DateRelease = request.DateRelease;
                 entity.ImageName = request.ImageName;
                 entity.ImagePath = request.ImagePath;
-                entity.AccessLevel = request.AccessLevel;
 
                 this.DbContext.Musics.Update(entity);
                 await this.DbContext.SaveChangesAsync(cancellationToken);

@@ -131,7 +131,7 @@ namespace BlazorShop.UnitTests.Infrastructure
         }
 
         /// <summary>
-        /// A test for <see cref="RoleService.CreateRoleAsync(CreateRoleCommand)"/> method.
+        /// A test for <see cref="RoleService.CreateRoleAsync(CreateClaimCommand)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
@@ -141,7 +141,7 @@ namespace BlazorShop.UnitTests.Infrastructure
         }
 
         /// <summary>
-        /// A test for <see cref="RoleService.UpdateRoleAsync(UpdateRoleCommand)"/> method.
+        /// A test for <see cref="RoleService.UpdateRoleAsync(UpdateClaimCommand)"/> method.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]

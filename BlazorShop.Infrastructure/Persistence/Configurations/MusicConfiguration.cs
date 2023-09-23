@@ -35,8 +35,6 @@ namespace BlazorShop.Infrastructure.Persistence.Configurations
             builder.Property(t => t.ImagePath)
                 .HasMaxLength(200)
                 .IsRequired();
-            builder.Property(t => t.AccessLevel)
-                .IsRequired();
         }
     }
 }

@@ -43,7 +43,7 @@
     </div>
     <div class="mb-3">
         <div class="col-md-4">
-            <MudSelect T="string" InputType="InputType.Text" @bind-Value="@User.RoleName"
+            <MudSelect @bind-Value="@User.RoleName"
                 For="@(() => User.RoleName)"
                 Placeholder="Select Role Name" Label="Role Name" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
                     @foreach (var role in roles)

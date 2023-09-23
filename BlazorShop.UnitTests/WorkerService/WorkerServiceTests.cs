@@ -36,7 +36,7 @@ namespace BlazorShop.UnitTests.WorkerService
         private IServiceScopeFactory ServiceScopeFactory { get; }
 
         /// <summary>
-        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
         /// </summary>
         private HttpClient HttpClient { get; } = Mock.Of<HttpClient>();
 

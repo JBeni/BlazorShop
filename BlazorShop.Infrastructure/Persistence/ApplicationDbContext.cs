@@ -70,6 +70,9 @@ namespace BlazorShop.Infrastructure.Persistence
         public DbSet<TodoList> TodoLists { get; set; }
 
         /// <inheritdoc/>
+        public DbSet<CustomClaim> CustomClaims { get; set; }
+
+        /// <inheritdoc/>
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var result = await base.SaveChangesAsync(cancellationToken);
@@ -103,6 +106,8 @@ namespace BlazorShop.Infrastructure.Persistence
             builder.ApplyConfiguration(new SubscriptionConfiguration());
             builder.ApplyConfiguration(new TodoItemConfiguration());
             builder.ApplyConfiguration(new TodoListConfiguration());
+
+            builder.ApplyConfiguration(new CustomClaimConfiguration());
         }
 
         /// <summary>

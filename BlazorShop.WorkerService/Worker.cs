@@ -14,7 +14,7 @@ namespace BlazorShop.WorkerService
         /// </summary>
         /// <param name="logger">The instance of the <see cref="ILogger{Worker}"/> to use.</param>
         /// <param name="serviceScopeFactory">The instance of the <see cref="IServiceScopeFactory"/> to use.</param>
-        /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+        /// <param name="httpClient">The instance of the <see cref="System.Net.Http.HttpClient"/> to use.</param>
         public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory, HttpClient httpClient)
         {
             this.Logger = logger;
@@ -33,7 +33,7 @@ namespace BlazorShop.WorkerService
         private IServiceScopeFactory ServiceScopeFactory { get; }
 
         /// <summary>
-        /// Gets the instance of the <see cref="HttpClient"/> to use.
+        /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
         /// </summary>
         private HttpClient HttpClient { get; }
 

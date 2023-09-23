@@ -31,9 +31,8 @@ try
     builder.Services.AddFluentValidationAutoValidation();
     builder.Services.AddValidatorsFromAssemblyContaining<ApiExceptionFilterAttribute>();
 
-    builder.Services.AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilterAttribute>())
-            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+    builder.Services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>())
+        .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
@@ -110,6 +109,7 @@ try
             await ApplicationDbContextSeed.SeedMusicsDataAsync(context);
             await ApplicationDbContextSeed.SeedSubscriptionsDataAsync(context);
             await ApplicationDbContextSeed.SeedTodosDataAsync(context);
+            await ApplicationDbContextSeed.SeedCustomClaimsAsync(context);
         }
         catch (Exception ex)
         {

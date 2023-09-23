@@ -43,10 +43,5 @@ namespace BlazorShop.Application.Commands.MusicCommand
         /// Gets or sets The image path of the music.
         /// </summary>
         public string ImagePath { get; set; }
-
-        /// <summary>
-        /// Gets or sets The access level of the music.
-        /// </summary>
-        public int AccessLevel { get; set; }
     }
 }

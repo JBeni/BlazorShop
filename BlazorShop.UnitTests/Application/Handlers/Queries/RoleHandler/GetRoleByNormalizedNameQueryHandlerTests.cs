@@ -50,7 +50,7 @@ namespace BlazorShop.UnitTests.Application.Handlers.Queries.RoleHandler
         private IMapper Mapper { get; } = Mock.Of<IMapper>();
 
         /// <summary>
-        /// A test for <see cref="GetRoleByNormalizedNameQueryHandler.Handle(GetRoleByNormalizedNameQuery, CancellationToken)"/> method.
+        /// A test for <see cref="GetRoleByNormalizedNameQueryHandler.Handle(GetClaimByValueQuery, CancellationToken)"/> method.
         /// </summary>
         /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
         [Fact]
@@ -60,7 +60,7 @@ namespace BlazorShop.UnitTests.Application.Handlers.Queries.RoleHandler
         }
 
         /// <summary>
-        /// A test for <see cref="GetRoleByNormalizedNameQueryHandler.Handle(GetRoleByNormalizedNameQuery, CancellationToken)"/> method.
+        /// A test for <see cref="GetRoleByNormalizedNameQueryHandler.Handle(GetClaimByValueQuery, CancellationToken)"/> method.
         /// </summary>
         /// <returns>A <see cref="Result{ClotheResponse}"/> async result.</returns>
         [Fact]

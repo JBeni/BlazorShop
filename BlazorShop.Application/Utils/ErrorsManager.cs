@@ -142,6 +142,21 @@ namespace BlazorShop.Application.Utils
         public const string? UpdateRoleCommand = "There was an error updating the role";
 
         /// <summary>
+        /// The error message for creating the claim.
+        /// </summary>
+        public const string? CreateClaimCommand = "There was an error creating the claim";
+
+        /// <summary>
+        /// The error message for deleting the claim.
+        /// </summary>
+        public const string? DeleteClaimCommand = "There was an error deleting the claim";
+
+        /// <summary>
+        /// The error message for updating the claim.
+        /// </summary>
+        public const string? UpdateClaimCommand = "There was an error updating the claim";
+
+        /// <summary>
         /// The error message for creating the subscriber.
         /// </summary>
         public const string? CreateSubscriberCommand = "There was an error creating the subscriber";
@@ -327,6 +342,21 @@ namespace BlazorShop.Application.Utils
         /// The error message for GetRolesQuery.
         /// </summary>
         public const string? GetRolesQuery = "There was an error getting the roles";
+
+        /// <summary>
+        /// The error message for GetClaimByIdQuery.
+        /// </summary>
+        public const string? GetClaimByIdQuery = "There was an error getting the claim by id";
+
+        /// <summary>
+        /// The error message for GetClaimByValueQuery.
+        /// </summary>
+        public const string? GetClaimByValueQuery = "There was an error getting the claim by value";
+
+        /// <summary>
+        /// The error message for GetClaimsQuery.
+        /// </summary>
+        public const string? GetClaimsQuery = "There was an error getting the claims";
 
         /// <summary>
         /// The error message for GetSubscriberByIdQuery.

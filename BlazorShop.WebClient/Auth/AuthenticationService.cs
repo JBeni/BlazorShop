@@ -12,7 +12,7 @@ public class AuthenticationService : IAuthenticationService
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
     /// </summary>
-    /// <param name="httpClient">The instance of the <see cref="HttpClient"/> to use.</param>
+    /// <param name="httpClient">The instance of the <see cref="System.Net.Http.HttpClient"/> to use.</param>
     /// <param name="authStateProvider">The instance of the <see cref="AuthenticationStateProvider"/> to use.</param>
     /// <param name="localStorage">The instance of the <see cref="ILocalStorageService"/> to use.</param>
     /// <param name="toastService">The instance of the <see cref="IToastService"/> to use.</param>
@@ -29,7 +29,7 @@ public class AuthenticationService : IAuthenticationService
     }
 
     /// <summary>
-    /// Gets the instance of the <see cref="HttpClient"/> to use.
+    /// Gets the instance of the <see cref="System.Net.Http.HttpClient"/> to use.
     /// </summary>
     private HttpClient HttpClient { get; }
 

@@ -50,9 +50,6 @@ namespace BlazorShop.Application.Validators.MusicValidator
                 .MaximumLength(200).WithMessage("ImagePath maximum length exceeded")
                 .NotEmpty().WithMessage("ImagePath must not be empty")
                 .NotNull().WithMessage("ImagePath must not be null");
-
-            this.RuleFor(x => x.AccessLevel)
-                .GreaterThan(0).WithMessage("AccessLevel must be greater than 0");
         }
 
         /// <summary>

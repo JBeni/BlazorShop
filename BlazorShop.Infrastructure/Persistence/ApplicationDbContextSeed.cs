@@ -10,6 +10,38 @@ namespace BlazorShop.Infrastructure.Persistence
     public static class ApplicationDbContextSeed
     {
         /// <summary>
+        /// Adding the custom claims data when the app is deploy the first time.
+        /// </summary>
+        /// <param name="context">The instance of <see cref="IApplicationDbContext"/> to use.</param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        public static async Task SeedCustomClaimsAsync(ApplicationDbContext context)
+        {
+            if (!context.CustomClaims.Any())
+            {
+                context.CustomClaims.AddRange(new List<CustomClaim>
+                {
+                    new CustomClaim
+                    {
+                        ClaimType = ClaimTypes.Role,
+                        ClaimValue = "BASIC",
+                    },
+                    new CustomClaim
+                    {
+                        ClaimType = ClaimTypes.Role,
+                        ClaimValue = "PRO",
+                    },
+                    new CustomClaim
+                    {
+                        ClaimType = ClaimTypes.Role,
+                        ClaimValue = "ENTERPRISE",
+                    },
+                });
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
         /// Adding the roles data when the app is deploy the first time.
         /// </summary>
         /// <param name="roleManager">The instance of <see cref="RoleManager{Role}"/> to use.</param>
@@ -229,7 +261,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2020, 12, 25),
                     ImageName = "music-1",
                     ImagePath = "music-1.jpg",
-                    AccessLevel = 1,
                 });
                 context.Musics.Add(new Music
                 {
@@ -239,7 +270,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2022, 1, 15),
                     ImageName = "music-2",
                     ImagePath = "music-2.jpg",
-                    AccessLevel = 1,
                 });
                 context.Musics.Add(new Music
                 {
@@ -249,7 +279,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2019, 8, 30),
                     ImageName = "music-3",
                     ImagePath = "music-3.jpg",
-                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -259,7 +288,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2011, 11, 11),
                     ImageName = "music-4",
                     ImagePath = "music-4.jpg",
-                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -269,7 +297,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2022, 1, 19),
                     ImageName = "music-5",
                     ImagePath = "music-5.jpg",
-                    AccessLevel = 2,
                 });
                 context.Musics.Add(new Music
                 {
@@ -279,7 +306,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2015, 5, 15),
                     ImageName = "music-6",
                     ImagePath = "music-6.jpg",
-                    AccessLevel = 3,
                 });
                 context.Musics.Add(new Music
                 {
@@ -289,7 +315,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2013, 9, 15),
                     ImageName = "music-2",
                     ImagePath = "music-2.jpg",
-                    AccessLevel = 3,
                 });
                 context.Musics.Add(new Music
                 {
@@ -299,7 +324,6 @@ namespace BlazorShop.Infrastructure.Persistence
                     DateRelease = new DateTime(2019, 5, 15),
                     ImageName = "music-6",
                     ImagePath = "music-6.jpg",
-                    AccessLevel = 3,
                 });
 
                 await context.SaveChangesAsync();

@@ -44,10 +44,6 @@ else
                 <td class="col-md-3">@context.Name</td>
                 <td class="col-md-3">@context.NormalizedName</td>
                 <td class="col-md-6">
-                    <a href='admin/roles/edit/@context.Id' class="btn btn-outline-dark" role="button">Edit</a>
-                    <button class="btn btn-danger" @onclick="(() => { DeleteConfirm(context.Id); ModalShow(); })">
-                        Delete
-                    </button>
                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit"
                         Color="Color.Success" @onclick="() => NavigateToPage(context.Id)">
                         Edit
