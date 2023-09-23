@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<OrderResponse>> GetOrders(string userEmail)
         {
-            var response = await this.HttpClient.GetAsync($"Orders/orders/{userEmail}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Orders/orders/{userEmail}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<OrderResponse>>(
                 responseResult, this.Options);
@@ -57,7 +61,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<OrderResponse> GetOrder(int id, string userEmail)
         {
-            var response = await this.HttpClient.GetAsync($"Orders/order/{id}/{userEmail}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Orders/order/{id}/{userEmail}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<OrderResponse>>(
                 responseResult, this.Options);
@@ -75,7 +83,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddOrder(OrderResponse order)
         {
-            var response = await this.HttpClient.PostAsJsonAsync("Orders/order", order);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync("Orders/order", order));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -95,7 +107,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateOrder(OrderResponse order)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("Orders/order", order);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync("Orders/order", order));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -115,7 +131,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteOrder(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Orders/order/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Orders/order/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

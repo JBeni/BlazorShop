@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddCart(CartResponse cart)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"Carts/cart", cart);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Carts/cart", cart));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -59,7 +63,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteCart(int id, int userId)
         {
-            var response = await this.HttpClient.DeleteAsync($"Carts/cart/{id}/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Carts/cart/{id}/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -79,7 +87,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> EmptyCart(int userId)
         {
-            var response = await this.HttpClient.DeleteAsync($"Carts/carts/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Carts/carts/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -99,7 +111,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<CartResponse> GetCart(int id, int userId)
         {
-            var response = await this.HttpClient.GetAsync($"Carts/cart/{id}/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Carts/cart/{id}/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<CartResponse>>(
                 responseResult, this.Options);
@@ -117,7 +133,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<int> GetCartCounts(int userId)
         {
-            var response = await this.HttpClient.GetAsync($"Carts/count/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Carts/count/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
 
             var result = 0;
@@ -140,7 +160,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<CartResponse>> GetCarts(int userId)
         {
-            var response = await this.HttpClient.GetAsync($"Carts/carts/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Carts/carts/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<CartResponse>>(
                 responseResult, this.Options);
@@ -158,7 +182,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateCart(CartResponse cart)
         {
-            var response = await this.HttpClient.PutAsJsonAsync($"Carts/cart", cart);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync($"Carts/cart", cart));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -179,7 +207,12 @@ namespace BlazorShop.WebClient.Services
         public async Task<string> Checkout(int userId)
         {
             var carts = await this.GetCarts(userId);
-            var response = await this.HttpClient.PostAsJsonAsync("Payments/checkout", carts.ToList());
+
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync("Payments/checkout", carts.ToList()));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

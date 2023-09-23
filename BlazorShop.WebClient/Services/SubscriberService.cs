@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetSubscribers()
         {
-            var response = await this.HttpClient.GetAsync("Subscribers/subscribers");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("Subscribers/subscribers"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult, this.Options);
@@ -57,7 +61,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<SubscriberResponse>> GetUserAllSubscribers(int userId)
         {
-            var response = await this.HttpClient.GetAsync($"Subscribers/subscribers/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Subscribers/subscribers/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult, this.Options);
@@ -75,7 +83,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<SubscriberResponse> GetUserSubscriber(int userId)
         {
-            var response = await this.HttpClient.GetAsync($"Subscribers/subscriber/{userId}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Subscribers/subscriber/{userId}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<SubscriberResponse>>(
                 responseResult, this.Options);
@@ -93,7 +105,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddSubscriber(SubscriberResponse subscriber)
         {
-            var response = await this.HttpClient.PostAsJsonAsync("Subscribers/subscriber", subscriber);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync("Subscribers/subscriber", subscriber));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -113,7 +129,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateSubscriber(SubscriberResponse subscriber)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("Subscribers/subscriber", subscriber);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync("Subscribers/subscriber", subscriber));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -133,7 +153,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteSubscriber(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Subscribers/subscriber/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Subscribers/subscriber/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

@@ -35,6 +35,7 @@ global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
 global using MudBlazor;
 global using MudBlazor.Services;
+global using Polly;
 global using Serilog;
 global using Toolbelt.Blazor;
 global using Toolbelt.Blazor.Extensions.DependencyInjection;
