@@ -37,10 +37,10 @@ try
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
-        {
-            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
+    {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
         .AddJwtBearer(options =>
         {
             options.Audience = builder.Configuration["JwtToken:Audience"];
@@ -97,6 +97,7 @@ try
             };
             var adminSeed = new AdminSeedModel
             {
+                Username = builder.Configuration["AdminSeedModel:Username"],
                 FirstName = builder.Configuration["AdminSeedModel:FirstName"],
                 LastName = builder.Configuration["AdminSeedModel:LastName"],
                 Email = builder.Configuration["AdminSeedModel:Email"],
@@ -148,7 +149,7 @@ try
         context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
         context.Response.Headers.Add("Referrer-Policy", "same-origin");
         context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
-        #pragma warning disable SA1118 // Parameter should not span multiple lines
+#pragma warning disable SA1118 // Parameter should not span multiple lines
         context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src "
             + "self  "
             + "https://maxcdn.bootstrapcdn.com  "
@@ -156,7 +157,7 @@ try
             + "https://sshmantest.azurewebsites.net "
             + "https://code.jquery.com https://dc.services.visualstudio.com "
             + " 'unsafe-inline' 'unsafe-eval'");
-        #pragma warning restore SA1118 // Parameter should not span multiple lines
+#pragma warning restore SA1118 // Parameter should not span multiple lines
         context.Response.Headers.Add("SameSite", "Strict");
         context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
         await next();
