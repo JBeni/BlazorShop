@@ -21,9 +21,9 @@ try
         options.AddPolicy(corsPolicy, builder =>
         {
             builder.WithOrigins(allowedOrigins)
-           .AllowAnyHeader()
-           .AllowAnyMethod()
-           .AllowCredentials();
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
     });
 
@@ -41,10 +41,10 @@ try
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
-        {
-            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
+    {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
         .AddJwtBearer(options =>
         {
             options.Audience = builder.Configuration["JwtToken:Audience"];

@@ -60,12 +60,14 @@ namespace BlazorShop.Infrastructure.Persistence
         {
             var admin = new User
             {
-                UserName = seedData.FirstName + "@" + seedData.LastName,
+                UserName = seedData.Username,
                 Email = seedData.Email,
                 FirstName = seedData.FirstName,
                 LastName = seedData.LastName,
                 IsActive = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
             };
+
             var adminRole = roleManager.Roles.Where(x => x.Name == seedData.RoleName).FirstOrDefault();
             if (adminRole == null)
             {
@@ -74,7 +76,14 @@ namespace BlazorShop.Infrastructure.Persistence
 
             if (userManager.Users.All(u => u.Email != admin.Email))
             {
-                await userManager.CreateAsync(admin, seedData.Password);
+                var result = await userManager.CreateAsync(admin, seedData.Password);
+
+                if (result.Errors.Any())
+                {
+                    // likely password requirement errors
+                    throw new Exception("Errors creating admin: " + string.Join(",", result.Errors.Select(x => x.Description)));
+                }
+
                 await userManager.AddToRoleAsync(admin, adminRole.Name);
             }
         }
@@ -92,7 +101,8 @@ namespace BlazorShop.Infrastructure.Persistence
                 {
                     Name = "Jeans 1",
                     Description = "asdsad sdasd sad asd dsa",
-                    Price = new decimal(344.00), Amount = 12,
+                    Price = new decimal(344.00),
+                    Amount = 12,
                     ImageName = "buy-3",
                     ImagePath = "buy-3.jpg",
                     IsActive = true,

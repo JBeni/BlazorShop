@@ -5,6 +5,13 @@
 * <strike>Video Demo Link: (In the Future)</strike>
 * <strike>Unit of Work Project to demonstrate the Unit of Work with Repository Pattern design pattern</strike>
 
+# Setup Project
+
+* Run 'update-database' command to setup migrations.
+* Uncomment and update the seed fields in appsettings.json.
+* Run application to apply seeding.
+* Empty the seed fields from appsettings.json and comment again.
+
 # Web API functionalities
 	* Worker Service Project - to deactivate a user subscription
 	* Unit Test Project (Under Development)
