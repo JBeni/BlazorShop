@@ -13,13 +13,17 @@ try
     builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.File(builder.Configuration["Serilog:Json:Path"], LogEventLevel.Warning));
 
+    var allowedOrigins = builder.Configuration["AllowedOrigins"];
+    var corsPolicy = "EnableCORS";
+
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy("EnableCORS", builder =>
+        options.AddPolicy(corsPolicy, builder =>
         {
-            builder.AllowAnyOrigin()
+            builder.WithOrigins(allowedOrigins)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
     });
 
@@ -76,41 +80,45 @@ try
     {
         try
         {
-            var services = scope.ServiceProvider;
-            var context = services.GetRequiredService<ApplicationDbContext>();
-            if (context.Database.IsSqlServer())
+            var runSeeding = Convert.ToBoolean(builder.Configuration["RunSeedingOnStartup"]);
+
+            if (runSeeding)
             {
-                context.Database.Migrate();
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                if (context.Database.IsSqlServer())
+                {
+                    context.Database.Migrate();
+                }
+
+                var userManager = services.GetRequiredService<UserManager<User>>();
+                var roleManager = services.GetRequiredService<RoleManager<Role>>();
+
+                var rolesSeed = new RolesSeedModel
+                {
+                    AdminRoleName = builder.Configuration["RolesSeedModel:AdminRoleName"],
+                    AdminRoleNormalizedName = builder.Configuration["RolesSeedModel:AdminRoleNormalizedName"],
+                    UserRoleName = builder.Configuration["RolesSeedModel:UserRoleName"],
+                    UserRoleNormalizedName = builder.Configuration["RolesSeedModel:UserRoleNormalizedName"],
+                    DefaultRoleName = builder.Configuration["RolesSeedModel:DefaultRoleName"],
+                    DefaultRoleNormalizedName = builder.Configuration["RolesSeedModel:DefaultRoleNormalizedName"],
+                };
+                var adminSeed = new AdminSeedModel
+                {
+                    FirstName = builder.Configuration["AdminSeedModel:FirstName"],
+                    LastName = builder.Configuration["AdminSeedModel:LastName"],
+                    Email = builder.Configuration["AdminSeedModel:Email"],
+                    Password = builder.Configuration["AdminSeedModel:Password"],
+                    RoleName = builder.Configuration["AdminSeedModel:RoleName"],
+                };
+
+                await ApplicationDbContextSeed.SeedRolesAsync(roleManager, rolesSeed);
+                await ApplicationDbContextSeed.SeedAdminUserAsync(userManager, roleManager, adminSeed);
+                await ApplicationDbContextSeed.SeedClothesDataAsync(context);
+                await ApplicationDbContextSeed.SeedMusicsDataAsync(context);
+                await ApplicationDbContextSeed.SeedSubscriptionsDataAsync(context);
+                await ApplicationDbContextSeed.SeedTodosDataAsync(context);
             }
-
-            var userManager = services.GetRequiredService<UserManager<User>>();
-            var roleManager = services.GetRequiredService<RoleManager<Role>>();
-
-            var rolesSeed = new RolesSeedModel
-            {
-                AdminRoleName = builder.Configuration["RolesSeedModel:AdminRoleName"],
-                AdminRoleNormalizedName = builder.Configuration["RolesSeedModel:AdminRoleNormalizedName"],
-                UserRoleName = builder.Configuration["RolesSeedModel:UserRoleName"],
-                UserRoleNormalizedName = builder.Configuration["RolesSeedModel:UserRoleNormalizedName"],
-                DefaultRoleName = builder.Configuration["RolesSeedModel:DefaultRoleName"],
-                DefaultRoleNormalizedName = builder.Configuration["RolesSeedModel:DefaultRoleNormalizedName"],
-            };
-            var adminSeed = new AdminSeedModel
-            {
-                Username = builder.Configuration["AdminSeedModel:Username"],
-                FirstName = builder.Configuration["AdminSeedModel:FirstName"],
-                LastName = builder.Configuration["AdminSeedModel:LastName"],
-                Email = builder.Configuration["AdminSeedModel:Email"],
-                Password = builder.Configuration["AdminSeedModel:Password"],
-                RoleName = builder.Configuration["AdminSeedModel:RoleName"],
-            };
-
-            await ApplicationDbContextSeed.SeedRolesAsync(roleManager, rolesSeed);
-            await ApplicationDbContextSeed.SeedAdminUserAsync(userManager, roleManager, adminSeed);
-            await ApplicationDbContextSeed.SeedClothesDataAsync(context);
-            await ApplicationDbContextSeed.SeedMusicsDataAsync(context);
-            await ApplicationDbContextSeed.SeedSubscriptionsDataAsync(context);
-            await ApplicationDbContextSeed.SeedTodosDataAsync(context);
         }
         catch (Exception ex)
         {
@@ -130,10 +138,12 @@ try
         app.UseHsts();
     }
 
-    app.UseCors("EnableCORS");
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();
+
+    // this must be places after 'useRouting' and before 'UseAuthorization'
+    app.UseCors(corsPolicy);
 
     app.UseMiddleware<JwtTokenMiddleware>();
 
@@ -146,6 +156,7 @@ try
     app.Use(async (context, next) =>
     {
         context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+        context.Response.Headers.Add("Access-Control-Allow-Origin", allowedOrigins);
         context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
         context.Response.Headers.Add("Referrer-Policy", "same-origin");
         context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
