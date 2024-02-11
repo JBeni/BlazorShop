@@ -48,9 +48,9 @@ namespace BlazorShop.UnitTests.Infrastructure
         {
             var mailSettings = Mock.Of<EmailSettings>();
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Assert.ThrowsAsync<ArgumentException>(async () => await this.EmailService.SendEmail(null, mailSettings));
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            await Assert.ThrowsAsync<ArgumentException>(async () => await this.EmailService.SendEmail(null, mailSettings));
+            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
             await Task.CompletedTask;
         }
