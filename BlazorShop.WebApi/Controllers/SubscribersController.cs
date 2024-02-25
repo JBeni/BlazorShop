@@ -39,9 +39,10 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("subscriber")]
-        public async Task<IActionResult> UpdateSubscriber([FromBody] UpdateSubscriberCommand command)
+        [HttpPut("subscriber/{id:int}")]
+        public async Task<IActionResult> UpdateSubscriber(int id, [FromBody] UpdateSubscriberCommand command)
         {
+            command.Id = id;
             var result = await this.Mediator.Send(command);
             return result.Successful == true
                 ? this.Ok(result)
@@ -69,10 +70,10 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("subscriber/{userId}")]
-        public async Task<IActionResult> GetSubscriber(int userId)
+        [HttpGet("subscriber/{id}")]
+        public async Task<IActionResult> GetSubscriber(int id)
         {
-            var result = await this.Mediator.Send(new GetSubscriberByIdQuery { UserId = userId });
+            var result = await this.Mediator.Send(new GetSubscriberByIdQuery { UserId = id });
             return result.Successful == true
                 ? this.Ok(result)
                 : this.BadRequest(result);

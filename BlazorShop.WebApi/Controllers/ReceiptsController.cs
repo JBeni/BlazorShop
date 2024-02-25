@@ -39,9 +39,10 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("receipt")]
-        public async Task<IActionResult> UpdateReceipt([FromBody] UpdateReceiptCommand command)
+        [HttpPut("receipt/{id:int}")]
+        public async Task<IActionResult> UpdateReceipt(int id, [FromBody] UpdateReceiptCommand command)
         {
+            command.Id = id;
             var result = await this.Mediator.Send(command);
             return result.Successful == true
                 ? this.Ok(result)

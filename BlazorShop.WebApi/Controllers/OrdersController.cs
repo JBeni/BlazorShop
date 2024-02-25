@@ -39,9 +39,10 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("order")]
-        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
+        [HttpPut("order/{id:int}")]
+        public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderCommand command)
         {
+            command.Id = id;
             var result = await this.Mediator.Send(command);
             return result.Successful == true
                 ? this.Ok(result)
@@ -54,9 +55,10 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("order")]
-        public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
+        [HttpDelete("order/{id:int}")]
+        public async Task<IActionResult> DeleteOrder(int id, DeleteOrderCommand command)
         {
+            command.Id = id;
             var result = await this.Mediator.Send(command);
             return result.Successful == true
                 ? this.Ok(result)

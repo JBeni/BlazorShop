@@ -2,13 +2,15 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using Asp.Versioning;
+
 namespace BlazorShop.WebApi.Controllers
 {
     /// <summary>
     /// Controller for setting the Mediator.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion(1.0)]
     [Authorize]
     public abstract class ApiBaseController : ControllerBase
     {

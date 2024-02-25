@@ -27,16 +27,6 @@ namespace BlazorShop.WebApi.Controllers
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         /// <summary>
-        /// A test request.
-        /// </summary>
-        /// <returns>An empty result.</returns>
-        [HttpGet("test")]
-        public IActionResult Index()
-        {
-            return this.Ok();
-        }
-
-        /// <summary>
         /// Get the home page from server.
         /// </summary>
         /// <returns>A default html page.</returns>

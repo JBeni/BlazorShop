@@ -38,8 +38,8 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("item")]
-        public async Task<IActionResult> UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
+        [HttpPut("item/{id:int}")]
+        public async Task<IActionResult> UpdateTodoItem(int id, [FromBody] UpdateTodoItemCommand command)
         {
             var result = await this.Mediator.Send(command);
             return result.Successful == true
