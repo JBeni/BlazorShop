@@ -80,8 +80,6 @@
     /// </summary>
     protected async override Task OnInitializedAsync()
     {
-        await httpClient.GetAsync("Home/test");
-
         var authstate = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authstate.User;
 
