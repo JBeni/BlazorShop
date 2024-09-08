@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorShop.Contracts", "Bla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorConsoleApp", "BlazorConsoleApp\BlazorConsoleApp.csproj", "{4FF88C78-A927-4050-ABE4-1818F0CFA99D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorShop.Shared", "BlazorShop.Shared\BlazorShop.Shared.csproj", "{58E165DB-5F33-4BD6-BD2E-24E19425560A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{4FF88C78-A927-4050-ABE4-1818F0CFA99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF88C78-A927-4050-ABE4-1818F0CFA99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF88C78-A927-4050-ABE4-1818F0CFA99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58E165DB-5F33-4BD6-BD2E-24E19425560A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E165DB-5F33-4BD6-BD2E-24E19425560A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E165DB-5F33-4BD6-BD2E-24E19425560A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E165DB-5F33-4BD6-BD2E-24E19425560A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
