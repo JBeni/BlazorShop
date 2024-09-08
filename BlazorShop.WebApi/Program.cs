@@ -32,12 +32,16 @@ try
     builder.Services.AddInfrastructureLayer(builder.Configuration);
 
     builder.Services.AddHttpContextAccessor();
-    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddFluentValidationAutoValidation()
+        .AddFluentValidationClientsideAdapters();
     builder.Services.AddValidatorsFromAssemblyContaining<ApiExceptionFilterAttribute>();
 
-    builder.Services.AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilterAttribute>())
-            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+    // [Obsolete("Remove Comments")]
+    /*
+        builder.Services.AddControllers(options =>
+            options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+    */
 
     // Add JWT TOKEN Settings
     builder.Services.AddAuthentication(opt =>
@@ -155,13 +159,13 @@ try
     // Security Headers for Website
     app.Use(async (context, next) =>
     {
-        context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
-        context.Response.Headers.Add("Access-Control-Allow-Origin", allowedOrigins);
-        context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-        context.Response.Headers.Add("Referrer-Policy", "same-origin");
-        context.Response.Headers.Add("Permissions-Policy", "geolocation=(), camera=()");
+        context.Response.Headers.Append("X-Frame-Options", "SAMEORIGIN");
+        context.Response.Headers.Append("Access-Control-Allow-Origin", allowedOrigins);
+        context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+        context.Response.Headers.Append("Referrer-Policy", "same-origin");
+        context.Response.Headers.Append("Permissions-Policy", "geolocation=(), camera=()");
 #pragma warning disable SA1118 // Parameter should not span multiple lines
-        context.Response.Headers.Add(builder.Configuration["ContentPolicy"], "default-src "
+        context.Response.Headers.Append(builder.Configuration["ContentPolicy"], "default-src "
             + "self  "
             + "https://maxcdn.bootstrapcdn.com  "
             + "https://login.microsoftonline.com "
@@ -169,8 +173,8 @@ try
             + "https://code.jquery.com https://dc.services.visualstudio.com "
             + " 'unsafe-inline' 'unsafe-eval'");
 #pragma warning restore SA1118 // Parameter should not span multiple lines
-        context.Response.Headers.Add("SameSite", "Strict");
-        context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+        context.Response.Headers.Append("SameSite", "Strict");
+        context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
         await next();
     });
 

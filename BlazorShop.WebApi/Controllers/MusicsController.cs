@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPost("music")]
+        [HttpPost(ApiEndpoints.Musics.Create)]
         public async Task<IActionResult> CreateMusic([FromBody] CreateMusicCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPut("music/{id:int}")]
+        [HttpPut(ApiEndpoints.Musics.Update)]
         public async Task<IActionResult> UpdateMusic(int id, [FromBody] UpdateMusicCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -54,7 +54,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the music.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("music/{id}")]
+        [HttpDelete(ApiEndpoints.Musics.Delete)]
         public async Task<IActionResult> DeleteMusic(int id)
         {
             var result = await this.Mediator.Send(new DeleteMusicCommand { Id = id });
@@ -69,7 +69,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the music.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("music/{id}")]
+        [HttpGet(ApiEndpoints.Musics.Get)]
         public async Task<IActionResult> GetMusic(int id)
         {
             var result = await this.Mediator.Send(new GetMusicByIdQuery { Id = id });
@@ -83,7 +83,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("musics")]
+        [HttpGet(ApiEndpoints.Musics.GetAll)]
         public async Task<IActionResult> GetMusics()
         {
             var result = await this.Mediator.Send(new GetMusicsQuery { });

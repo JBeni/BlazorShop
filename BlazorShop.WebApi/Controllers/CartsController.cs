@@ -24,7 +24,12 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("cart")]
+        [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPost(ApiEndpoints.Carts.Create)]
         public async Task<IActionResult> CreateCart([FromBody] CreateCartCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -36,9 +41,15 @@ namespace BlazorShop.WebApi.Controllers
         /// <summary>
         /// Updating the cart.
         /// </summary>
+        /// <param name="id">The cart id.</param>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("cart/{id:int}")]
+        [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPut(ApiEndpoints.Carts.Update)]
         public async Task<IActionResult> UpdateCart(int id, [FromBody] UpdateCartCommand command)
         {
             command.UserId = id;
@@ -54,7 +65,12 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the cart.</param>
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("cart/{id}/{userId}")]
+        [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpDelete(ApiEndpoints.Carts.Delete)]
         public async Task<IActionResult> DeleteCart(int id, int userId)
         {
             var result = await this.Mediator.Send(new DeleteCartCommand { Id = id, UserId = userId });
@@ -68,7 +84,12 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("carts/{userId}")]
+        [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpDelete(ApiEndpoints.Carts.DeleteAll)]
         public async Task<IActionResult> DeleteAllCarts(int userId)
         {
             var result = await this.Mediator.Send(new DeleteAllCartsCommand { UserId = userId });
@@ -83,7 +104,12 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the cart.</param>
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("cart/{id}/{userId}")]
+        [ProducesResponseType(typeof(Result<CartResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet(ApiEndpoints.Carts.GetCart)]
         public async Task<IActionResult> GetCart(int id, int userId)
         {
             var result = await this.Mediator.Send(new GetCartByIdQuery { Id = id, UserId = userId });
@@ -97,7 +123,12 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("carts/{userId}")]
+        [ProducesResponseType(typeof(Result<CartResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet(ApiEndpoints.Carts.GetUserCarts)]
         public async Task<IActionResult> GetCarts(int userId)
         {
             var result = await this.Mediator.Send(new GetCartsQuery { UserId = userId });
@@ -111,7 +142,12 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("count/{userId}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet(ApiEndpoints.Carts.GetUserCartCount)]
         public async Task<IActionResult> GetCartsCount(int userId)
         {
             var result = await this.Mediator.Send(new GetCartsCountQuery { UserId = userId });

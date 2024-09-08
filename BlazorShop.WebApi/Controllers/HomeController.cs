@@ -30,7 +30,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the home page from server.
         /// </summary>
         /// <returns>A default html page.</returns>
-        [HttpGet("home")]
+        [HttpGet(ApiEndpoints.Home.HomePage)]
         public IActionResult Home()
         {
             return new PhysicalFileResult(
@@ -42,7 +42,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the error page from server.
         /// </summary>
         /// <returns>A default error page.</returns>
-        [HttpGet("error")]
+        [HttpGet(ApiEndpoints.Home.ErrorPage)]
         public IActionResult Error()
         {
             return new PhysicalFileResult(

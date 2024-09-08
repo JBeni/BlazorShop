@@ -40,7 +40,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="clientId">The client id.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("_configuration/{clientId}")]
+        [HttpGet(ApiEndpoints.OidcConfiguration.Get)]
         public IActionResult GetClientRequestParameters([FromRoute] string clientId)
         {
             var parameters = this.ClientRequestParametersProvider.GetClientParameters(this.HttpContext, clientId);

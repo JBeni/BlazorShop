@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("invoice")]
+        [HttpPost(ApiEndpoints.Invoices.Create)]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("invoice/{id:int}")]
+        [HttpPut(ApiEndpoints.Invoices.Update)]
         public async Task<IActionResult> UpdateInvoice(int id, [FromBody] UpdateInvoiceCommand command)
         {
             command.Id = id;
@@ -53,7 +53,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the invoice.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("invoice/{id}")]
+        [HttpDelete(ApiEndpoints.Invoices.Delete)]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
             var result = await this.Mediator.Send(new DeleteInvoiceCommand { Id = id });
@@ -67,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the invoice.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("invoice/{id}")]
+        [HttpGet(ApiEndpoints.Invoices.Get)]
         public async Task<IActionResult> GetInvoice(int id)
         {
             var result = await this.Mediator.Send(new GetInvoiceByIdQuery { Id = id });
@@ -80,7 +80,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the invoices.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("invoices")]
+        [HttpGet(ApiEndpoints.Invoices.GetAll)]
         public async Task<IActionResult> GetInvoices()
         {
             var result = await this.Mediator.Send(new GetInvoicesQuery { });

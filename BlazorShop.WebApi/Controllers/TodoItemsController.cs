@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("item")]
+        [HttpPost(ApiEndpoints.TodoItems.Create)]
         public async Task<IActionResult> CreateTodoItem([FromBody] CreateTodoItemCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("item/{id:int}")]
+        [HttpPut(ApiEndpoints.TodoItems.Update)]
         public async Task<IActionResult> UpdateTodoItem(int id, [FromBody] UpdateTodoItemCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -52,7 +52,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("item/{id}")]
+        [HttpDelete(ApiEndpoints.TodoItems.Delete)]
         public async Task<IActionResult> DeleteTodoItem(int id)
         {
             var result = await this.Mediator.Send(new DeleteTodoItemCommand { Id = id });
@@ -66,7 +66,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("item/{id}")]
+        [HttpGet(ApiEndpoints.TodoItems.Get)]
         public async Task<IActionResult> GetTodoItemById(int id)
         {
             var result = await this.Mediator.Send(new GetTodoItemByIdQuery { Id = id });

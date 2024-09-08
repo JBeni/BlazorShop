@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPost("subscriber")]
+        [HttpPost(ApiEndpoints.Subscribers.Create)]
         public async Task<IActionResult> CreateSubscriber([FromBody] CreateSubscriberCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("subscriber/{id:int}")]
+        [HttpPut(ApiEndpoints.Subscribers.Update)]
         public async Task<IActionResult> UpdateSubscriber(int id, [FromBody] UpdateSubscriberCommand command)
         {
             command.Id = id;
@@ -55,7 +55,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the subscriber.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("subscriber/{id}")]
+        [HttpDelete(ApiEndpoints.Subscribers.Delete)]
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
             var result = await this.Mediator.Send(new DeleteSubscriberCommand { Id = id });
@@ -70,7 +70,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("subscriber/{id}")]
+        [HttpGet(ApiEndpoints.Subscribers.Get)]
         public async Task<IActionResult> GetSubscriber(int id)
         {
             var result = await this.Mediator.Send(new GetSubscriberByIdQuery { UserId = id });
@@ -85,7 +85,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="userId">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("subscribers/{userId}")]
+        [HttpGet(ApiEndpoints.Subscribers.Get)]
         public async Task<IActionResult> GetUserSubscribers(int userId)
         {
             var result = await this.Mediator.Send(new GetUserSubscribersQuery { UserId = userId });
@@ -99,7 +99,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = "Admin, User, Default")]
-        [HttpGet("subscribers")]
+        [HttpGet(ApiEndpoints.Subscribers.GetAll)]
         public async Task<IActionResult> GetSubscribers()
         {
             var result = await this.Mediator.Send(new GetSubscribersQuery { });

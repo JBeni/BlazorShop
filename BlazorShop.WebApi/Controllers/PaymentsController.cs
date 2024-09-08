@@ -31,7 +31,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="req">The req data.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("create-subscription")]
+        [HttpPost(ApiEndpoints.Payments.CreateSubscription)]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] CreateSubscriberCommand req)
         {
             var options = new SessionCreateOptions
@@ -72,7 +72,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="stripeSubscriptionCreationId">The id of the stripe created subscription.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("cancel-subscription/{stripeSubscriptionCreationId}")]
+        [HttpDelete(ApiEndpoints.Payments.CancelSubscription)]
         public async Task<IActionResult> CancelSubscriptionSession(string stripeSubscriptionCreationId)
         {
             try
@@ -99,7 +99,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="req">The req data.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("update-subscription")]
+        [HttpPost(ApiEndpoints.Payments.UpdateSubscription)]
         public async Task<IActionResult> UpdateSubscriptionSession([FromBody] UpdateSubscriberCommand req)
         {
             var subscriptionService = new SubscriptionService();
@@ -148,7 +148,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="cartItems">The cart items.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("checkout")]
+        [HttpPost(ApiEndpoints.Payments.Checkout)]
         public IActionResult CreateCheckout([FromBody] List<CartResponse> cartItems)
         {
             var lineItems = new List<SessionLineItemOptions>();
@@ -198,7 +198,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
-        [HttpPost("webhook")]
+        [HttpPost(ApiEndpoints.Payments.WebHook)]
         public async Task<IActionResult> WebHook()
         {
             var json = await new StreamReader(this.HttpContext.Request.Body).ReadToEndAsync();

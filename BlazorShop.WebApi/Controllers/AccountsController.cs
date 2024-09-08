@@ -40,8 +40,13 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="login">The login command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [ProducesResponseType(typeof(JwtTokenResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost(ApiEndpoints.Accounts.Login)]
         public async Task<IActionResult> LoginUser([FromForm] LoginCommand login)
         {
             var result = await this.Mediator.Send(login);
@@ -57,7 +62,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="register">The register command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost(ApiEndpoints.Accounts.Register)]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterCommand register)
         {
             var result = await this.Mediator.Send(register);
@@ -71,7 +76,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="changePassword">The change password command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("change-password")]
+        [HttpPut(ApiEndpoints.Accounts.ChangePassword)]
         public async Task<IActionResult> ChangePasswordUser([FromBody] ChangePasswordCommand changePassword)
         {
             var result = await this.Mediator.Send(changePassword);
@@ -86,7 +91,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="resetPassword">The reset password command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [AllowAnonymous]
-        [HttpPost("reset-password")]
+        [HttpPost(ApiEndpoints.Accounts.ResetPassword)]
         public async Task<IActionResult> ResetPasswordUser([FromForm] ResetPasswordCommand resetPassword)
         {
             var emailSettings = new EmailSettings

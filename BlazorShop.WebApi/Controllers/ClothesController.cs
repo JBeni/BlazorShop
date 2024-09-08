@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPost("clothe")]
+        [HttpPost(ApiEndpoints.Clothes.Create)]
         public async Task<IActionResult> CreateClothe([FromBody] CreateClotheCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPut("clothe/{id:int}")]
+        [HttpPut(ApiEndpoints.Clothes.Update)]
         public async Task<IActionResult> UpdateClothe(int id, [FromBody] UpdateClotheCommand command)
         {
             command.Id = id;
@@ -55,7 +55,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the clothe.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("clothe/{id}")]
+        [HttpDelete(ApiEndpoints.Clothes.Delete)]
         public async Task<IActionResult> DeleteClothe(int id)
         {
             var result = await this.Mediator.Send(new DeleteClotheCommand { Id = id });
@@ -70,7 +70,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the clothe.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("clothe/{id}")]
+        [HttpGet(ApiEndpoints.Clothes.Get)]
         public async Task<IActionResult> GetClothe(int id)
         {
             var result = await this.Mediator.Send(new GetClotheByIdQuery { Id = id });
@@ -84,7 +84,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("clothes")]
+        [HttpGet(ApiEndpoints.Clothes.GetAll)]
         [AllowAnonymous]
         public async Task<IActionResult> GetClothes()
         {

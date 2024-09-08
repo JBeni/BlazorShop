@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPost("user")]
+        [HttpPost(ApiEndpoints.Users.Create)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPost("userActivate")]
+        [HttpPost(ApiEndpoints.Users.Activate)]
         public async Task<IActionResult> ActivateUser([FromBody] ActivateUserCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -54,7 +54,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("user/{id:int}")]
+        [HttpPut(ApiEndpoints.Users.Update)]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserCommand command)
         {
             command.Id = id;
@@ -70,7 +70,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpPut("userEmail")]
+        [HttpPut(ApiEndpoints.Users.UpdateEmail)]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UpdateUserEmailCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -85,7 +85,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("user/{id}")]
+        [HttpDelete(ApiEndpoints.Users.Delete)]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var result = await this.Mediator.Send(new DeleteUserCommand { Id = id });
@@ -100,7 +100,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="id">The id of the user.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}, {StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("user/{id}")]
+        [HttpGet(ApiEndpoints.Users.Get)]
         public async Task<IActionResult> GetUserById(int id)
         {
             var result = await this.Mediator.Send(new GetUserByIdQuery { Id = id });
@@ -114,7 +114,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpGet("users")]
+        [HttpGet(ApiEndpoints.Users.GetUsers)]
         public async Task<IActionResult> GetUsers()
         {
             var result = await this.Mediator.Send(new GetUsersQuery { });
@@ -128,7 +128,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpGet("usersInactive")]
+        [HttpGet(ApiEndpoints.Users.GetInactiveUsers)]
         public async Task<IActionResult> GetUsersInactive()
         {
             var result = await this.Mediator.Send(new GetUsersInactiveQuery { });

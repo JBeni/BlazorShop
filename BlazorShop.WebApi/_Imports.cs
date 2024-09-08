@@ -42,6 +42,7 @@ global using BlazorShop.Domain.Entities.Identity;
 global using BlazorShop.Infrastructure;
 global using BlazorShop.Infrastructure.Persistence;
 global using BlazorShop.Infrastructure.Utils;
+global using BlazorShop.Shared;
 global using BlazorShop.WebApi.Filters;
 global using FluentValidation.AspNetCore;
 global using MediatR;

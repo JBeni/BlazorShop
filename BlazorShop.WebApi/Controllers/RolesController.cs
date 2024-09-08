@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("role")]
+        [HttpPost(ApiEndpoints.Roles.Create)]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("role/{id:int}")]
+        [HttpPut(ApiEndpoints.Roles.Update)]
         public async Task<IActionResult> UpdateRole(int id, [FromBody] UpdateRoleCommand command)
         {
             command.Id = id;
@@ -53,7 +53,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the role.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("role/{id}")]
+        [HttpDelete(ApiEndpoints.Roles.Delete)]
         public async Task<IActionResult> DeleteRole(int id)
         {
             var result = await this.Mediator.Send(new DeleteRoleCommand { Id = id });
@@ -67,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id of the role.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("role/{id}")]
+        [HttpGet(ApiEndpoints.Roles.Get)]
         public async Task<IActionResult> GetRoleById(int id)
         {
             var result = await this.Mediator.Send(new GetRoleByIdQuery { Id = id });
@@ -80,7 +80,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the user roles for a non admin role.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("roles")]
+        [HttpGet(ApiEndpoints.Roles.GetAll)]
         public async Task<IActionResult> GetRoles()
         {
             var result = await this.Mediator.Send(new GetRolesQuery { });
@@ -93,7 +93,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the roles for an admin user.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("rolesAdmin")]
+        [HttpGet(ApiEndpoints.Roles.GetAllForAdmin)]
         public async Task<IActionResult> GetRolesForAdmin()
         {
             var result = await this.Mediator.Send(new GetRolesForAdminQuery { });

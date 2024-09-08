@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPost("list")]
+        [HttpPost(ApiEndpoints.TodoLists.Create)]
         public async Task<IActionResult> CreateTodoList([FromBody] CreateTodoListCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -38,7 +38,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpPut("list/{id:int}")]
+        [HttpPut(ApiEndpoints.TodoLists.Update)]
         public async Task<IActionResult> UpdateTodoList(int id, [FromBody] UpdateTodoListCommand command)
         {
             command.Id = id;
@@ -53,7 +53,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpDelete("list/{id}")]
+        [HttpDelete(ApiEndpoints.TodoLists.Delete)]
         public async Task<IActionResult> DeleteTodoList(int id)
         {
             var result = await this.Mediator.Send(new DeleteTodoListCommand { Id = id });
@@ -67,7 +67,7 @@ namespace BlazorShop.WebApi.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("list/{id}")]
+        [HttpGet(ApiEndpoints.TodoLists.Get)]
         public async Task<IActionResult> GetTodoListById(int id)
         {
             var result = await this.Mediator.Send(new GetTodoListByIdQuery { Id = id });
@@ -80,7 +80,7 @@ namespace BlazorShop.WebApi.Controllers
         /// Get the todo lists.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet("lists")]
+        [HttpGet(ApiEndpoints.TodoLists.GetAll)]
         public async Task<IActionResult> GetTodoLists()
         {
             var result = await this.Mediator.Send(new GetTodoListsQuery { });

@@ -24,7 +24,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPost("order")]
+        [HttpPost(ApiEndpoints.Orders.Create)]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -39,7 +39,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpPut("order/{id:int}")]
+        [HttpPut(ApiEndpoints.Orders.Update)]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderCommand command)
         {
             command.Id = id;
@@ -55,7 +55,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.Admin}")]
-        [HttpDelete("order/{id:int}")]
+        [HttpDelete(ApiEndpoints.Orders.Delete)]
         public async Task<IActionResult> DeleteOrder(int id, DeleteOrderCommand command)
         {
             command.Id = id;
@@ -72,7 +72,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="userEmail">The email of the customer.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("order/{id}/{userEmail}")]
+        [HttpGet(ApiEndpoints.Orders.Get)]
         public async Task<IActionResult> GetOrder(int id, string userEmail)
         {
             var result = await this.Mediator.Send(new GetOrderByIdQuery { Id = id, UserEmail = userEmail });
@@ -87,7 +87,7 @@ namespace BlazorShop.WebApi.Controllers
         /// <param name="userEmail">The email of the customer.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Authorize(Roles = $"{StringRoleResources.User}, {StringRoleResources.Default}")]
-        [HttpGet("orders/{userEmail}")]
+        [HttpGet(ApiEndpoints.Orders.GetAll)]
         public async Task<IActionResult> GetOrders(string userEmail)
         {
             var result = await this.Mediator.Send(new GetOrdersQuery { UserEmail = userEmail });
