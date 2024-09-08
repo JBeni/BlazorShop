@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorShop.Application\BlazorShop.Application.csproj" />
+    <ProjectReference Include="..\BlazorShop.Shared\BlazorShop.Shared.csproj" />
   </ItemGroup>
 
 </Project>

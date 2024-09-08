@@ -18,6 +18,7 @@ global using BlazorShop.Application.Commands.UserCommand;
 global using BlazorShop.Application.Common.Models;
 global using BlazorShop.Application.Responses;
 global using BlazorShop.Application.Utils;
+global using BlazorShop.Shared;
 global using BlazorShop.WebClient;
 global using BlazorShop.WebClient.Auth;
 global using BlazorShop.WebClient.AuthPolicies;
