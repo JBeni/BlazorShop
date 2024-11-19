@@ -50,7 +50,7 @@ namespace BlazorShop.WebClient.Services
             var response = await Policy<HttpResponseMessage>
                 .Handle<Exception>()
                 .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
-                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Users/user", data));
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"{ApiEndpoints.Users.Create}", data));
 
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
@@ -79,7 +79,7 @@ namespace BlazorShop.WebClient.Services
             var response = await Policy<HttpResponseMessage>
                 .Handle<Exception>()
                 .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
-                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Users/userActivate", data));
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"{ApiEndpoints.Users.Activate}", data));
 
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
@@ -103,7 +103,7 @@ namespace BlazorShop.WebClient.Services
             var response = await Policy<HttpResponseMessage>
                 .Handle<Exception>()
                 .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
-                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Users/user/{id}"));
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"{ApiEndpoints.Users.Delete}"));
 
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
