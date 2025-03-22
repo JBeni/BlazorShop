@@ -9,75 +9,113 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class AccountsControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountsControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly AccountsController _controller;
+
         public AccountsControllerTests()
         {
-            this.AccountsController = new AccountsController(
-                this.Configuration,
-                this.EmailService,
-                this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new AccountsController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="AccountsController"/> to use.
-        /// </summary>
-        private AccountsController AccountsController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IConfiguration"/> to use.
-        /// </summary>
-        private IConfiguration Configuration { get; } = Mock.Of<IConfiguration>();
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IEmailService"/> to use.
-        /// </summary>
-        private IEmailService EmailService { get; } = Mock.Of<IEmailService>();
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="AccountsController.LoginUser(LoginCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task LoginUser()
+        public async Task Login_ValidCredentials_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new LoginCommand 
+            { 
+                Email = "test@example.com",
+                Password = "Password123!"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<LoginCommand>(), default))
+                .ReturnsAsync(new AuthenticationResult { Success = true, Token = "test-token" });
+
+            // Act
+            var result = await _controller.Login(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var authResult = Assert.IsType<AuthenticationResult>(okResult.Value);
+            Assert.True(authResult.Success);
+            Assert.NotNull(authResult.Token);
         }
 
-        /// <summary>
-        /// A test for <see cref="AccountsController.RegisterUser(RegisterCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task RegisterUser()
+        public async Task Register_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new RegisterCommand 
+            { 
+                Email = "test@example.com",
+                Password = "Password123!",
+                ConfirmPassword = "Password123!"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.Register(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="AccountsController.ChangePasswordUser(ChangePasswordCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task ChangePasswordUser()
+        public async Task ForgotPassword_ValidEmail_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new ForgotPasswordCommand { Email = "test@example.com" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ForgotPasswordCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.ForgotPassword(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
 
-        /// <summary>
-        /// A test for <see cref="AccountsController.ResetPasswordUser(ResetPasswordCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task ResetPasswordUser()
+        public async Task ResetPassword_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new ResetPasswordCommand 
+            { 
+                Email = "test@example.com",
+                Token = "reset-token",
+                Password = "NewPassword123!",
+                ConfirmPassword = "NewPassword123!"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ResetPasswordCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.ResetPassword(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public async Task ChangePassword_ValidCommand_ReturnsOkResult()
+        {
+            // Arrange
+            var command = new ChangePasswordCommand 
+            { 
+                UserId = 1,
+                CurrentPassword = "CurrentPass123!",
+                NewPassword = "NewPass123!",
+                ConfirmNewPassword = "NewPass123!"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ChangePasswordCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.ChangePassword(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }

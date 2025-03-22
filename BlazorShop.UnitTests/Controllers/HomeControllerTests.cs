@@ -9,59 +9,121 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class HomeControllerTests
     {
+        private readonly Mock<ILogger<HomeController>> _loggerMock;
+        private readonly HomeController _controller;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeControllerTests"/> class.
         /// </summary>
         public HomeControllerTests()
         {
-            this.HomeController = new HomeController(
-                this.WebHostEnvironment,
-                this.Mediator);
+            _loggerMock = new Mock<ILogger<HomeController>>();
+            _controller = new HomeController(_loggerMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="HomeController"/> to use.
-        /// </summary>
-        private HomeController HomeController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IWebHostEnvironment"/> to use.
-        /// </summary>
-        private IWebHostEnvironment WebHostEnvironment { get; } = Mock.Of<IWebHostEnvironment>();
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="HomeController.Index()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task Index()
+        public void Index_ReturnsViewResult()
         {
-            await Task.CompletedTask;
+            // Act
+            var result = _controller.Index();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Null(viewResult.ViewName); // Default view
         }
 
-        /// <summary>
-        /// A test for <see cref="HomeController.Home()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task Home()
+        public void Privacy_ReturnsViewResult()
         {
-            await Task.CompletedTask;
+            // Act
+            var result = _controller.Privacy();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Null(viewResult.ViewName); // Default view
         }
 
-        /// <summary>
-        /// A test for <see cref="HomeController.Error()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task Error()
+        public void Error_ReturnsViewResultWithErrorViewModel()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var expectedRequestId = "TestRequestId";
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+            Activity.Current = new Activity("TestActivity").SetParentId(expectedRequestId);
+
+            // Act
+            var result = _controller.Error();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
+            Assert.Equal(expectedRequestId, model.RequestId);
+        }
+
+        [Fact]
+        public void Error_WithoutRequestId_ReturnsViewResultWithShowRequestIdFalse()
+        {
+            // Arrange
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+            Activity.Current = null;
+
+            // Act
+            var result = _controller.Error();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
+            Assert.False(model.ShowRequestId);
+        }
+
+        [Fact]
+        public void Error_WithTraceIdentifier_UsesHttpContextTraceIdentifier()
+        {
+            // Arrange
+            var expectedRequestId = "TestTraceIdentifier";
+            var httpContext = new DefaultHttpContext();
+            httpContext.TraceIdentifier = expectedRequestId;
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+
+            // Act
+            var result = _controller.Error();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
+            Assert.Equal(expectedRequestId, model.RequestId);
+        }
+
+        [Fact]
+        public void Error_LogsError()
+        {
+            // Arrange
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+
+            // Act
+            _controller.Error();
+
+            // Assert
+            _loggerMock.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => true),
+                    It.IsAny<Exception>(),
+                    It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)),
+                Times.Once);
         }
     }
 }

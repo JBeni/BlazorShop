@@ -9,72 +9,108 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class MusicsControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MusicsControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly MusicsController _controller;
+
         public MusicsControllerTests()
         {
-            this.MusicsController = new MusicsController(this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new MusicsController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="MusicsController"/> to use.
-        /// </summary>
-        private MusicsController MusicsController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="MusicsController.CreateMusic(CreateMusicCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateMusic()
+        public async Task CreateMusic_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new CreateMusicCommand 
+            { 
+                Title = "Test Song",
+                Artist = "Test Artist",
+                Price = 0.99m
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateMusicCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CreateMusic(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="MusicsController.UpdateMusic(UpdateMusicCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task UpdateMusic()
+        public async Task GetMusicById_ExistingMusic_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var musicId = 1;
+            var musicDto = new MusicDto { Id = musicId, Title = "Test Song" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetMusicByIdQuery>(), default))
+                .ReturnsAsync(musicDto);
+
+            // Act
+            var result = await _controller.GetMusicById(musicId);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedMusic = Assert.IsType<MusicDto>(okResult.Value);
+            Assert.Equal(musicId, returnedMusic.Id);
         }
 
-        /// <summary>
-        /// A test for <see cref="MusicsController.DeleteMusic(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task DeleteMusic()
+        public async Task GetMusics_ReturnsListOfMusics()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var musics = new List<MusicDto> 
+            { 
+                new MusicDto { Id = 1, Title = "Song 1" },
+                new MusicDto { Id = 2, Title = "Song 2" }
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetMusicsQuery>(), default))
+                .ReturnsAsync(musics);
+
+            // Act
+            var result = await _controller.GetMusics();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedMusics = Assert.IsType<List<MusicDto>>(okResult.Value);
+            Assert.Equal(2, returnedMusics.Count);
         }
 
-        /// <summary>
-        /// A test for <see cref="MusicsController.GetMusic(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetMusic()
+        public async Task UpdateMusic_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new UpdateMusicCommand 
+            { 
+                Id = 1,
+                Title = "Updated Song",
+                Price = 1.99m
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateMusicCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.UpdateMusic(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
 
-        /// <summary>
-        /// A test for <see cref="MusicsController.GetMusics()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetMusics()
+        public async Task DeleteMusic_ExistingMusic_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var musicId = 1;
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteMusicCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.DeleteMusic(musicId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }

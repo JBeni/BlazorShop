@@ -9,72 +9,107 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class SubscriptionsControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionsControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly SubscriptionsController _controller;
+
         public SubscriptionsControllerTests()
         {
-            this.SubscriptionsController = new SubscriptionsController(this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new SubscriptionsController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="SubscriptionsController"/> to use.
-        /// </summary>
-        private SubscriptionsController SubscriptionsController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="SubscriptionsController.CreateSubscription(CreateSubscriptionCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateSubscription()
+        public async Task CreateSubscription_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new CreateSubscriptionCommand 
+            { 
+                UserId = 1,
+                PlanType = "Premium",
+                StartDate = DateTime.UtcNow
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSubscriptionCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CreateSubscription(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="SubscriptionsController.UpdateSubscription(UpdateSubscriptionCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task UpdateSubscription()
+        public async Task GetSubscriptionById_ExistingSubscription_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var subscriptionId = 1;
+            var subscriptionDto = new SubscriptionDto { Id = subscriptionId, UserId = 1 };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSubscriptionByIdQuery>(), default))
+                .ReturnsAsync(subscriptionDto);
+
+            // Act
+            var result = await _controller.GetSubscriptionById(subscriptionId);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedSubscription = Assert.IsType<SubscriptionDto>(okResult.Value);
+            Assert.Equal(subscriptionId, returnedSubscription.Id);
         }
 
-        /// <summary>
-        /// A test for <see cref="SubscriptionsController.DeleteSubscription(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task DeleteSubscription()
+        public async Task GetSubscriptions_ReturnsListOfSubscriptions()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var subscriptions = new List<SubscriptionDto> 
+            { 
+                new SubscriptionDto { Id = 1, UserId = 1 },
+                new SubscriptionDto { Id = 2, UserId = 2 }
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSubscriptionsQuery>(), default))
+                .ReturnsAsync(subscriptions);
+
+            // Act
+            var result = await _controller.GetSubscriptions();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedSubscriptions = Assert.IsType<List<SubscriptionDto>>(okResult.Value);
+            Assert.Equal(2, returnedSubscriptions.Count);
         }
 
-        /// <summary>
-        /// A test for <see cref="SubscriptionsController.GetSubscription(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetSubscription()
+        public async Task UpdateSubscription_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new UpdateSubscriptionCommand 
+            { 
+                Id = 1,
+                PlanType = "Premium Plus"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateSubscriptionCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.UpdateSubscription(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
 
-        /// <summary>
-        /// A test for <see cref="SubscriptionsController.GetSubscriptions()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetSubscriptions()
+        public async Task CancelSubscription_ExistingSubscription_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var subscriptionId = 1;
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CancelSubscriptionCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CancelSubscription(subscriptionId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }

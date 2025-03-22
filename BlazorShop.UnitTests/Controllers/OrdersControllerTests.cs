@@ -9,72 +9,107 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class OrdersControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrdersControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly OrdersController _controller;
+
         public OrdersControllerTests()
         {
-            this.OrdersController = new OrdersController(this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new OrdersController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="OrdersController"/> to use.
-        /// </summary>
-        private OrdersController OrdersController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="OrdersController.CreateOrder(CreateOrderCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateOrder()
+        public async Task CreateOrder_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new CreateOrderCommand 
+            { 
+                UserId = 1,
+                TotalAmount = 199.99m,
+                Status = "Pending"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateOrderCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CreateOrder(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="OrdersController.UpdateOrder(UpdateOrderCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task UpdateOrder()
+        public async Task GetOrderById_ExistingOrder_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var orderId = 1;
+            var orderDto = new OrderDto { Id = orderId, UserId = 1, Status = "Pending" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetOrderByIdQuery>(), default))
+                .ReturnsAsync(orderDto);
+
+            // Act
+            var result = await _controller.GetOrderById(orderId);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedOrder = Assert.IsType<OrderDto>(okResult.Value);
+            Assert.Equal(orderId, returnedOrder.Id);
         }
 
-        /// <summary>
-        /// A test for <see cref="OrdersController.DeleteOrder(DeleteOrderCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task DeleteOrder()
+        public async Task GetOrders_ReturnsListOfOrders()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var orders = new List<OrderDto> 
+            { 
+                new OrderDto { Id = 1, UserId = 1, Status = "Pending" },
+                new OrderDto { Id = 2, UserId = 1, Status = "Completed" }
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetOrdersQuery>(), default))
+                .ReturnsAsync(orders);
+
+            // Act
+            var result = await _controller.GetOrders();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedOrders = Assert.IsType<List<OrderDto>>(okResult.Value);
+            Assert.Equal(2, returnedOrders.Count);
         }
 
-        /// <summary>
-        /// A test for <see cref="OrdersController.GetOrder(int, string)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetOrder()
+        public async Task UpdateOrder_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new UpdateOrderCommand 
+            { 
+                Id = 1,
+                Status = "Completed"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateOrderCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.UpdateOrder(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
 
-        /// <summary>
-        /// A test for <see cref="OrdersController.GetOrders(string)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetOrders()
+        public async Task DeleteOrder_ExistingOrder_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var orderId = 1;
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteOrderCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.DeleteOrder(orderId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }

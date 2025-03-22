@@ -2,6 +2,10 @@
 // Copyright (c) Beniamin Jitca. All rights reserved.
 // </copyright>
 
+using BlazorShop.Infrastructure.Email;
+using Microsoft.Extensions.Logging;
+using System.Net.Mail;
+
 namespace BlazorShop.UnitTests.Infrastructure
 {
     /// <summary>
@@ -9,50 +13,146 @@ namespace BlazorShop.UnitTests.Infrastructure
     /// </summary>
     public class EmailServiceTests
     {
+        private readonly Mock<ILogger<EmailService>> _loggerMock;
+        private readonly EmailService _emailService;
+        private readonly EmailSettings _validSettings;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailServiceTests"/> class.
         /// </summary>
         public EmailServiceTests()
         {
+            _loggerMock = new Mock<ILogger<EmailService>>();
+            _validSettings = new EmailSettings
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                Username = "example@gmail.com",
+                Password = "password",
+                Subject = "Test Email",
+                Message = "This is a test email."
+            };
+            _emailService = new EmailService(_loggerMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of <see cref="IEmailService"/> to use.
-        /// </summary>
-        private IEmailService EmailService { get; } = Mock.Of<IEmailService>();
-
-        /// <summary>
-        /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task SendEmail_Success()
+        public async Task SendEmail_WithValidParameters_SendsEmail()
         {
-            var mailSettings = Mock.Of<EmailSettings>(x =>
-                x.Host == "smtp.gmail.com" &&
-                x.Port == 587 &&
-                x.Username == "example@gmail.com" &&
-                x.Password == "password" &&
-                x.Subject == "Test Email" &&
-                x.Message == "This is a test email.");
+            // Arrange
+            var recipient = "recipient@example.com";
 
-            await this.EmailService.SendEmail("recipient@example.com", mailSettings);
+            // Act
+            await _emailService.SendEmail(recipient, _validSettings);
+
+            // Assert
+            _loggerMock.Verify(
+                x => x.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => true),
+                    null,
+                    It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)),
+                Times.Once);
         }
 
-        /// <summary>
-        /// A test for <see cref="EmailService.SendEmail(string?, EmailSettings)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task SendEmail_NullRecipient_ThrowsArgumentNullException()
+        public async Task SendEmail_WithNullRecipient_ThrowsArgumentException()
         {
-            var mailSettings = Mock.Of<EmailSettings>();
+            // Arrange
+            string recipient = null;
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Assert.ThrowsAsync<ArgumentException>(async () => await this.EmailService.SendEmail(null, mailSettings));
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ArgumentException>(
+                () => _emailService.SendEmail(recipient, _validSettings));
+            
+            Assert.Contains("recipient", exception.Message);
+        }
 
-            await Task.CompletedTask;
+        [Fact]
+        public async Task SendEmail_WithNullSettings_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var recipient = "recipient@example.com";
+            EmailSettings settings = null;
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                () => _emailService.SendEmail(recipient, settings));
+        }
+
+        [Fact]
+        public async Task SendEmail_WithInvalidEmail_ThrowsFormatException()
+        {
+            // Arrange
+            var recipient = "invalid-email";
+
+            // Act & Assert
+            await Assert.ThrowsAsync<FormatException>(
+                () => _emailService.SendEmail(recipient, _validSettings));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task SendEmail_WithEmptyOrWhitespaceRecipient_ThrowsArgumentException(string recipient)
+        {
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ArgumentException>(
+                () => _emailService.SendEmail(recipient, _validSettings));
+            
+            Assert.Contains("recipient", exception.Message);
+        }
+
+        [Fact]
+        public async Task SendEmail_WithInvalidSmtpSettings_ThrowsSmtpException()
+        {
+            // Arrange
+            var recipient = "recipient@example.com";
+            var invalidSettings = new EmailSettings
+            {
+                Host = "invalid-host",
+                Port = 0,
+                Username = "",
+                Password = "",
+                Subject = "Test",
+                Message = "Test"
+            };
+
+            // Act & Assert
+            await Assert.ThrowsAsync<SmtpException>(
+                () => _emailService.SendEmail(recipient, invalidSettings));
+        }
+
+        [Fact]
+        public async Task SendEmail_LogsError_WhenExceptionOccurs()
+        {
+            // Arrange
+            var recipient = "recipient@example.com";
+            var invalidSettings = new EmailSettings
+            {
+                Host = "invalid-host",
+                Port = 0
+            };
+
+            // Act
+            try
+            {
+                await _emailService.SendEmail(recipient, invalidSettings);
+            }
+            catch
+            {
+                // Expected exception
+            }
+
+            // Assert
+            _loggerMock.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => true),
+                    It.IsAny<Exception>(),
+                    It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)),
+                Times.Once);
         }
     }
 }

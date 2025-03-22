@@ -9,77 +9,92 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class PaymentsControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentsControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly PaymentsController _controller;
+
         public PaymentsControllerTests()
         {
-            this.PaymentsController = new PaymentsController(this.Configuration, this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new PaymentsController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="PaymentsController"/> to use.
-        /// </summary>
-        private PaymentsController PaymentsController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IConfiguration"/> to use.
-        /// </summary>
-        private IConfiguration Configuration { get; } = Mock.Of<IConfiguration>();
-
-        /// <summary>
-        /// A test for <see cref="PaymentsController.CreateSubscriptionSession(CreateSubscriberCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateSubscriptionSession()
+        public async Task CreatePayment_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new CreatePaymentCommand 
+            { 
+                OrderId = 1,
+                Amount = 199.99m,
+                PaymentMethod = "Credit Card"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreatePaymentCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CreatePayment(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="PaymentsController.CancelSubscriptionSession(string)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CancelSubscriptionSession()
+        public async Task GetPaymentById_ExistingPayment_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var paymentId = 1;
+            var paymentDto = new PaymentDto { Id = paymentId, OrderId = 1 };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetPaymentByIdQuery>(), default))
+                .ReturnsAsync(paymentDto);
+
+            // Act
+            var result = await _controller.GetPaymentById(paymentId);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedPayment = Assert.IsType<PaymentDto>(okResult.Value);
+            Assert.Equal(paymentId, returnedPayment.Id);
         }
 
-        /// <summary>
-        /// A test for <see cref="PaymentsController.UpdateSubscriptionSession(UpdateSubscriberCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task UpdateSubscriptionSession()
+        public async Task GetPayments_ReturnsListOfPayments()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var payments = new List<PaymentDto> 
+            { 
+                new PaymentDto { Id = 1, OrderId = 1 },
+                new PaymentDto { Id = 2, OrderId = 2 }
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetPaymentsQuery>(), default))
+                .ReturnsAsync(payments);
+
+            // Act
+            var result = await _controller.GetPayments();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedPayments = Assert.IsType<List<PaymentDto>>(okResult.Value);
+            Assert.Equal(2, returnedPayments.Count);
         }
 
-        /// <summary>
-        /// A test for <see cref="PaymentsController.CreateCheckout(List{CartResponse})"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateCheckout()
+        public async Task ProcessPayment_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
-        }
+            // Arrange
+            var command = new ProcessPaymentCommand 
+            { 
+                PaymentId = 1,
+                Status = "Completed"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ProcessPaymentCommand>(), default))
+                .ReturnsAsync(Result.Success());
 
-        /// <summary>
-        /// A test for <see cref="PaymentsController.WebHook()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [Fact]
-        public async Task WebHook()
-        {
-            await Task.CompletedTask;
+            // Act
+            var result = await _controller.ProcessPayment(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }

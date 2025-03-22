@@ -9,82 +9,107 @@ namespace BlazorShop.UnitTests.Controllers
     /// </summary>
     public class RolesControllerTests
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RolesControllerTests"/> class.
-        /// </summary>
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly RolesController _controller;
+
         public RolesControllerTests()
         {
-            this.RolesController = new RolesController(this.Mediator);
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new RolesController(_mediatorMock.Object);
         }
 
-        /// <summary>
-        /// Gets the instance of the <see cref="RolesController"/> to use.
-        /// </summary>
-        private RolesController RolesController { get; }
-
-        /// <summary>
-        /// Gets the instance of the <see cref="IMediator"/> to use.
-        /// </summary>
-        private IMediator Mediator { get; } = Mock.Of<IMediator>();
-
-        /// <summary>
-        /// A test for <see cref="RolesController.CreateRole(CreateRoleCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task CreateRole()
+        public async Task CreateRole_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new CreateRoleCommand 
+            { 
+                Name = "TestRole",
+                Description = "Test Role Description"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateRoleCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.CreateRole(command);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(okResult.Value);
         }
 
-        /// <summary>
-        /// A test for <see cref="RolesController.UpdateRole(UpdateRoleCommand)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task UpdateRole()
+        public async Task GetRoleById_ExistingRole_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var roleId = 1;
+            var roleDto = new RoleDto { Id = roleId, Name = "TestRole" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetRoleByIdQuery>(), default))
+                .ReturnsAsync(roleDto);
+
+            // Act
+            var result = await _controller.GetRoleById(roleId);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedRole = Assert.IsType<RoleDto>(okResult.Value);
+            Assert.Equal(roleId, returnedRole.Id);
         }
 
-        /// <summary>
-        /// A test for <see cref="RolesController.DeleteRole(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task DeleteRole()
+        public async Task GetRoles_ReturnsListOfRoles()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var roles = new List<RoleDto> 
+            { 
+                new RoleDto { Id = 1, Name = "Admin" },
+                new RoleDto { Id = 2, Name = "User" }
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetRolesQuery>(), default))
+                .ReturnsAsync(roles);
+
+            // Act
+            var result = await _controller.GetRoles();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedRoles = Assert.IsType<List<RoleDto>>(okResult.Value);
+            Assert.Equal(2, returnedRoles.Count);
         }
 
-        /// <summary>
-        /// A test for <see cref="RolesController.GetRoleById(int)"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetRoleById()
+        public async Task UpdateRole_ValidCommand_ReturnsOkResult()
         {
-            await Task.CompletedTask;
+            // Arrange
+            var command = new UpdateRoleCommand 
+            { 
+                Id = 1,
+                Name = "UpdatedRole",
+                Description = "Updated Description"
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateRoleCommand>(), default))
+                .ReturnsAsync(Result.Success());
+
+            // Act
+            var result = await _controller.UpdateRole(command);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
 
-        /// <summary>
-        /// A test for <see cref="RolesController.GetRoles()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task GetRoles()
+        public async Task DeleteRole_ExistingRole_ReturnsOkResult()
         {
-            await Task.CompletedTask;
-        }
+            // Arrange
+            var roleId = 1;
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteRoleCommand>(), default))
+                .ReturnsAsync(Result.Success());
 
-        /// <summary>
-        /// A test for <see cref="RolesController.GetRolesForAdmin()"/> method.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [Fact]
-        public async Task GetRolesForAdmin()
-        {
-            await Task.CompletedTask;
+            // Act
+            var result = await _controller.DeleteRole(roleId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
         }
     }
 }
