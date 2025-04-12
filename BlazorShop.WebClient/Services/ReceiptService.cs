@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<ReceiptResponse>> GetReceipts(string userEmail)
         {
-            var response = await this.HttpClient.GetAsync($"Receipts/receipts/{userEmail}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Receipts/receipts/{userEmail}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ReceiptResponse>>(
                 responseResult, this.Options);
@@ -57,7 +61,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<ReceiptResponse> GetReceipt(int id, string userEmail)
         {
-            var response = await this.HttpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Receipts/receipt/{id}/{userEmail}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<ReceiptResponse>>(
                 responseResult, this.Options);
@@ -75,7 +83,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddReceipt(ReceiptResponse receipt)
         {
-            var response = await this.HttpClient.PostAsJsonAsync("Receipts/receipt", receipt);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync("Receipts/receipt", receipt));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -95,7 +107,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateReceipt(ReceiptResponse receipt)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("Receipts/receipt", receipt);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync("Receipts/receipt", receipt));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -115,7 +131,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteReceipt(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Receipts/receipt/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Receipts/receipt/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

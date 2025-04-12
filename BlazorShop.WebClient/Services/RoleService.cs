@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> AddRole(RoleResponse role)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"Roles/role", role);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Roles/role", role));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -59,7 +63,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteRole(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Roles/role/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Roles/role/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -79,7 +87,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RoleResponse> GetRole(int id)
         {
-            var response = await this.HttpClient.GetAsync($"Roles/role/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Roles/role/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult, this.Options);
@@ -97,7 +109,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRoles()
         {
-            var response = await this.HttpClient.GetAsync("Roles/roles");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("Roles/roles"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult, this.Options);
@@ -115,7 +131,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<RoleResponse>> GetRolesForAdmin()
         {
-            var response = await this.HttpClient.GetAsync("Roles/rolesAdmin");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("Roles/rolesAdmin"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<RoleResponse>>(
                 responseResult, this.Options);
@@ -138,7 +158,12 @@ namespace BlazorShop.WebClient.Services
                 Id = role.Id,
                 Name = role.Name,
             };
-            var response = await this.HttpClient.PutAsJsonAsync($"Roles/role", data);
+
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync($"Roles/role", data));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

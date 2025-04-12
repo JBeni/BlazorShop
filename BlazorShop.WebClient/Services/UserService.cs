@@ -47,7 +47,11 @@ namespace BlazorShop.WebClient.Services
                 Role = user.RoleName,
             };
 
-            var response = await this.HttpClient.PostAsJsonAsync($"Users/user", data);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Users/user", data));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -72,7 +76,11 @@ namespace BlazorShop.WebClient.Services
                 Id = userId,
             };
 
-            var response = await this.HttpClient.PostAsJsonAsync($"Users/userActivate", data);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"Users/userActivate", data));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -92,7 +100,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteUser(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"Users/user/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"Users/user/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -112,7 +124,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<UserResponse> GetUser(int id)
         {
-            var response = await this.HttpClient.GetAsync($"Users/user/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"Users/user/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
                 responseResult, this.Options);
@@ -130,7 +146,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsers()
         {
-            var response = await this.HttpClient.GetAsync("Users/users");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("Users/users"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
                 responseResult, this.Options);
@@ -148,7 +168,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<UserResponse>> GetUsersInactive()
         {
-            var response = await this.HttpClient.GetAsync("Users/usersInactive");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("Users/usersInactive"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<UserResponse>>(
                 responseResult, this.Options);
@@ -174,7 +198,11 @@ namespace BlazorShop.WebClient.Services
                 Role = user.RoleName,
             };
 
-            var response = await this.HttpClient.PutAsJsonAsync($"Users/user", data);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync($"Users/user", data));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -194,7 +222,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> UpdateUserEmail(UpdateUserEmailCommand user)
         {
-            var response = await this.HttpClient.PutAsJsonAsync($"Users/userEmail", user);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync($"Users/userEmail", user));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);

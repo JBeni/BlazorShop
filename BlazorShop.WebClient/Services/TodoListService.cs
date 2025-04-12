@@ -39,7 +39,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<List<TodoListResponse>> GetTodoListsAsync()
         {
-            var response = await this.HttpClient.GetAsync("TodoLists/lists");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync("TodoLists/lists"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult, this.Options);
@@ -58,7 +62,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<TodoListResponse> GetTodoListAsync(int id)
         {
-            var response = await this.HttpClient.GetAsync($"TodoLists/list/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.GetAsync($"TodoLists/list/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult, this.Options);
@@ -76,7 +84,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<TodoListResponse> PostTodoListAsync(TodoListResponse todoList)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"TodoLists/list", todoList);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PostAsJsonAsync($"TodoLists/list", todoList));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<Result<TodoListResponse>>(
                 responseResult, this.Options);
@@ -98,7 +110,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> PutTodoListAsync(TodoListResponse todoList)
         {
-            var response = await this.HttpClient.PutAsJsonAsync("TodoLists/list", todoList);
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.PutAsJsonAsync("TodoLists/list", todoList));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
@@ -118,7 +134,11 @@ namespace BlazorShop.WebClient.Services
         /// <inheritdoc/>
         public async Task<RequestResponse> DeleteTodoListAsync(int id)
         {
-            var response = await this.HttpClient.DeleteAsync($"TodoLists/list/{id}");
+            var response = await Policy<HttpResponseMessage>
+                .Handle<Exception>()
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromSeconds(1))
+                .ExecuteAsync(async () => await this.HttpClient.DeleteAsync($"TodoLists/list/{id}"));
+
             var responseResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<RequestResponse>(
                 responseResult, this.Options);
